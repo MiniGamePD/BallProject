@@ -1,0 +1,38 @@
+{
+	"engineVersion": "5.2.2",
+	"compilerVersion": "5.2.2",
+	"template": {},
+	"target": {
+		"current": "web"
+	},
+	"modules": [
+		{
+			"name": "egret"
+		},
+		{
+			"name": "game"
+		},
+		{
+			"name": "tween"
+		},
+		{
+			"name": "assetsmanager"
+		},
+		{
+			"name": "socket"
+		},
+		{
+			"name": "promise"
+		},
+		{
+			"name": "Particle",
+			"path": "../libsrc_particle"
+		}
+	],
+	"targets": {
+		"android": {
+			"appname": "MeiLeXiao",
+			"packagename": "com.unicorn.meilexiao"
+		}
+	}
+}
