@@ -322,6 +322,9 @@ var RES;
             return this.getResource(key, true).type;
         };
         ResourceConfig.prototype.addResourceData = function (data) {
+            if (RES.hasRes(data.name)) {
+                return;
+            }
             if (!data.type) {
                 data.type = this.__temp__get__type__via__url(data.url);
             }
@@ -417,8 +420,19 @@ var RES;
             this.queueIndex = 0;
         }
         ResourceLoader.prototype.load = function (list, groupName, priority, reporter) {
+            var _this = this;
             if (this.itemListDic[groupName]) {
-                return Promise.resolve();
+                if (!this.dispatcherDic[groupName]) {
+                    var dispatcher_1 = new egret.EventDispatcher();
+                    this.dispatcherDic[groupName] = dispatcher_1;
+                }
+                var promise_1 = new Promise(function (reslove, reject) {
+                    _this.dispatcherDic[groupName].addEventListener("complete", reslove, null);
+                    _this.dispatcherDic[groupName].addEventListener("error", function (e) {
+                        reject(e.data);
+                    }, null);
+                });
+                return promise_1;
             }
             var total = list.length;
             for (var i = 0; i < total; i++) {
@@ -986,7 +1000,7 @@ var RES;
         processor_1.SheetProcessor = {
             onLoadStart: function (host, resource) {
                 return __awaiter(this, void 0, void 0, function () {
-                    var data, imageName, r, texture, frames, spriteSheet, subkey, config, texture;
+                    var data, imageName, r, texture, frames, spriteSheet, subkey, config, texture, str, list;
                     return __generator(this, function (_a) {
                         switch (_a.label) {
                             case 0: return [4 /*yield*/, host.load(resource, "json")];
@@ -1006,16 +1020,12 @@ var RES;
                                 for (subkey in frames) {
                                     config = frames[subkey];
                                     texture = spriteSheet.createTexture(subkey, config.x, config.y, config.w, config.h, config.offX, config.offY, config.sourceW, config.sourceH);
-                                    // if (config["scale9grid"]) {
-                                    //     var str: string = config["scale9grid"];
-                                    //     var list: Array<string> = str.split(",");
-                                    //     texture["scale9Grid"] = new egret.Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
-                                    // }
-                                    //     if (name) {
-                                    //         this.addSubkey(subkey, name);
-                                    //     }
+                                    if (config["scale9grid"]) {
+                                        str = config["scale9grid"];
+                                        list = str.split(",");
+                                        texture["scale9Grid"] = new egret.Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
+                                    }
                                 }
-                                // todo refactor
                                 host.save(r, texture);
                                 return [2 /*return*/, spriteSheet];
                         }
@@ -1035,6 +1045,7 @@ var RES;
             onRemoveStart: function (host, resource) {
                 var sheet = host.get(resource);
                 var r = sheet["$resourceInfo"];
+                sheet.dispose();
                 host.unload(r);
                 return Promise.resolve();
             }
@@ -2609,6 +2620,7 @@ var RES;
                 }
             }
             return RES.queue.loadResource(r).then(function (value) {
+                RES.host.save(r, value);
                 if (compFunc && r) {
                     compFunc.call(thisObject, value, r.url);
                 }
