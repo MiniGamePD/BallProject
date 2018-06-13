@@ -2,7 +2,7 @@ class PauseItem extends egret.DisplayObjectContainer
 {
     private pauseIcon:egret.Bitmap;
 
-    private bgCover:egret.Sprite;
+    private bgCover:FullScreenCover;
     private pauseTitle:egret.DisplayObjectContainer;
     private continueButton:egret.DisplayObjectContainer;
     private gotoLobbyButton:egret.DisplayObjectContainer;
@@ -27,10 +27,7 @@ class PauseItem extends egret.DisplayObjectContainer
 
         this.addChild(this.pauseIcon);
 
-        this.bgCover = new egret.Sprite();
-        this.bgCover.graphics.beginFill(0x000000, 0.8);
-        this.bgCover.graphics.drawRect(-1000,-1000,width+2000,height+2000);
-        this.bgCover.graphics.endFill();
+        this.bgCover = new FullScreenCover(0x000000, 0.8);
 
         this.pauseTitle = new egret.DisplayObjectContainer();
         let textField = new egret.TextField();

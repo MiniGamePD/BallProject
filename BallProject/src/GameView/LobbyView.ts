@@ -18,7 +18,7 @@ class LobbyView extends GameView
 
     private LoadBackGround()
     {
-        let bg = this.mResModule.CreateBitmapByName("pd_res_json.NewBackGround");
+        var bg = new FullScreenCover(0x000000, 1);
         this.addChild(bg);
         // bg.width = this.mStageWidth;
         // bg.height = this.mStageHeight;
@@ -32,8 +32,13 @@ class LobbyView extends GameView
         this.textField.fontFamily = "Impact";
         this.textField.size *= 2;
         this.textField.textAlign = "center";
-        this.textField.text = "Pocket Doctor";
+        this.textField.text = "正版！C C 弹";
         this.addChild(this.textField);
+
+        var button = new ShapeBgButton(0xAB0A0B, 6, "pd_res_json.Boom2", 100, 100, 30, 30);
+        button.x = 100;
+        button.y = 100;
+        this.addChild(button);
 
         this.mAdaptedStage = GameMain.GetInstance().GetAdaptedStageContainer();;
 
