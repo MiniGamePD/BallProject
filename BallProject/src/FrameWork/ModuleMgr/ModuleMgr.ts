@@ -21,7 +21,7 @@ class ModuleMgr implements IModuleMgr
 		this.mModuleList.push(new SoundModule);
 		this.mModuleList.push(new ProgrameAnimationModule);
 		this.mModuleList.push(new LobbyModule);
-		this.mModuleList.push(new MatchModule);
+		this.mModuleList.push(new BallMatchModule);
 
 		this.mModuleCount = this.mModuleList.length;
 	}
