@@ -2,6 +2,8 @@ abstract class ButtonBase extends egret.DisplayObjectContainer
 {
     protected bg:egret.DisplayObject;
     protected fg:egret.DisplayObject;
+    protected clickCallback:Function;
+    protected callbackObj:any;
 
     protected OnButtonClick()
     {

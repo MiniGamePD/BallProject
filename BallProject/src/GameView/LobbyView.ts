@@ -35,18 +35,19 @@ class LobbyView extends GameView
         this.textField.text = "正版！C C 弹";
         this.addChild(this.textField);
 
-        var button = new ShapeBgButton(0xAB0A0B, 6, "pd_res_json.Boom2", 100, 100, 30, 30);
-        button.x = 100;
-        button.y = 100;
-        this.addChild(button);
-
         this.mAdaptedStage = GameMain.GetInstance().GetAdaptedStageContainer();;
 
         var shape: egret.Shape = new egret.Shape();
         shape.graphics.beginFill(0x00A2E8);
         shape.graphics.drawRect(this.mStageWidth / 2 - 100, this.mStageHeight / 5 * 3, 200, 100);
         shape.graphics.endFill();
-        this.addChild(shape);
+        //this.addChild(shape);
+
+        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B, 6, 25, "pd_res_json.Boom2", 250, 120, 50, 50,
+            this.OnClickStartGame, this);
+        button.x = this.mStageWidth / 2;
+        button.y = this.mStageHeight / 5 * 3.05;
+        this.addChild(button);
 
         //设置显示对象可以相应触摸事件
         shape.touchEnabled = true;
