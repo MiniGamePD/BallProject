@@ -4,6 +4,7 @@ class BallMatchView extends GameView
     {
         super();
         var bg = new FullScreenCover(0x000000, 1);
+        bg.touchEnabled = true;
         this.addChild(bg);
     }
 } 

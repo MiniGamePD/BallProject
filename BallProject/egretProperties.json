@@ -26,7 +26,11 @@
 		},
 		{
 			"name": "Particle",
-			"path": "../libsrc_particle"
+			"path": "../libsrc/Particle"
+		},
+		{
+			"name": "physics",
+			"path": "../libsrc/Physics"
 		}
 	],
 	"targets": {

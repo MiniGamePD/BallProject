@@ -74,3 +74,9 @@ const Frame_Anim_Virus_Yellow_Fever = ["Virus_Yellow_Fever1", "Virus_Yellow_Feve
 const Frame_Anim_Pill_Land_Effect = ["LuoDi_00000", "LuoDi_00001", "LuoDi_00002", "LuoDi_00003", 
                                 "LuoDi_00004", "LuoDi_00005", "LuoDi_00006", "LuoDi_00007", "LuoDi_00008", "LuoDi_00009", "LuoDi_00010"];
 const Frame_Anim_Pill_Boom_Effect = ["Pill_Boom_01", "Pill_Boom_02", "Pill_Boom_03", "Pill_Boom_04", "Pill_Boom_05", "Pill_Boom_06"];           
+
+
+
+// 弹球游戏相关
+const Collision_Layer_Ball = Math.pow(2,0);
+const Collision_Layer_Box =  Math.pow(2,1);
