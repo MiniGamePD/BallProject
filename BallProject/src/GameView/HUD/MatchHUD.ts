@@ -74,9 +74,6 @@ class MatchHUD extends egret.DisplayObjectContainer
             case HUDEventType.ChangeScore:
                 this.ChangeScore(event.param);
                 break;
-            case HUDEventType.ChangeStep:
-                this.ChangeStep(event.param);
-                break;
             case HUDEventType.ShowPauseMenu:
                 this.pause.ShowPauseMenu();
                 break;
@@ -96,11 +93,5 @@ class MatchHUD extends egret.DisplayObjectContainer
     {
         let score:number = <number>param;
         this.score.SetScore(score);
-    }
-
-    private ChangeStep(param:any)
-    {
-        let step:number = <number>param;
-        this.score.SetStep(step);
     }
 }

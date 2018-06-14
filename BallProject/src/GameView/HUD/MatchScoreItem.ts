@@ -1,64 +1,45 @@
 class MatchScoreItem extends egret.DisplayObjectContainer
 {
-	private scoreText: egret.BitmapText;
-	private stepText: egret.TextField;
+	private scoreText: egret.TextField;
+	private historyHighScoreText: egret.TextField;
+
 	private curShowScore: number;
 	private targetScore: number;
-	private scoreIcon: egret.Bitmap;
+	private curShowHistoryHighScore:number;
+	private targetHistoryHighScore:number;
 
 	private lerpTime = 500;
 	private deltaScore = 0;
 	private minDeltaScorePreSecond = 30;
+	private deltaHistoryHighScore = 0;
+	private minDeltaHistoryHighScorePreSecond = 30;
 
 	public Init()
 	{
-		var stageWidth = GameMain.GetInstance().GetStageWidth();
-		var stageHeight = GameMain.GetInstance().GetStageHeight();
-
-		let adaptedStageWidth = GameMain.GetInstance().GetAdaptedStageWidth();
-		let adaptedStageHeight = GameMain.GetInstance().GetAdaptedStageHeight();
-
 		this.curShowScore = 0;
 		this.targetScore = 0;
 
-		var resModule = <IResModule> GameMain.GetInstance().GetModule(ModuleType.RES);
-		//得分图标
-		this.scoreIcon = resModule.CreateBitmapByName("pd_res_json.Defen");
-		this.scoreIcon.x = 200;
-		this.scoreIcon.y = 20;
-		GameMain.GetInstance().AdapteDisplayObject(this.scoreIcon);
-		this.addChild(this.scoreIcon);
-
 		//得分数字
-		this.scoreText = resModule.CreateBitmapText("font_num3_fnt");
-		this.scoreText.x = 315;
-		this.scoreText.y = 38;
+		this.scoreText = new egret.TextField();
+		this.scoreText.x = 220;
+		this.scoreText.y = 30;
 		this.scoreText.width = 200;
 		this.scoreText.height = 100;
-		this.scoreText.scaleX = 0.8;
-		this.scoreText.scaleY = 0.8;
-		// this.scoreText.textColor = 0xffffff;
-		// this.scoreText.fontFamily = "Impact";
-		// this.scoreText.size = 40;
-		this.scoreText.text = "0";
-		GameMain.GetInstance().AdapteDisplayObject(this.scoreText);
-		GameMain.GetInstance().AdapteDisplayObjectScale(this.scoreText);
+		this.scoreText.size = 30;
+		this.scoreText.text = "得分:0";
+		this.scoreText.textAlign = "center";
 		this.addChild(this.scoreText);
 
-		if(DEBUG)
-		{
-			this.stepText = new egret.TextField();
-			this.stepText.x = stageWidth/2 + 150;
-			this.stepText.y = 70;
-			this.stepText.width = 200;
-			this.stepText.height = 100;
-			this.stepText.textColor = 0xff0000;
-			this.stepText.fontFamily = "Impact";
-			this.stepText.size = 40;
-			this.stepText.textAlign = "left";
-			GameMain.GetInstance().AdaptTextField(this.stepText);
-			this.addChild(this.stepText);
-		}
+		//历史最高分数字
+		this.historyHighScoreText = new egret.TextField();
+		this.historyHighScoreText.x = 440;
+		this.historyHighScoreText.y = 30;
+		this.historyHighScoreText.width = 200;
+		this.historyHighScoreText.height = 100;
+		this.historyHighScoreText.size = 30;
+		this.historyHighScoreText.text = "历史最高:0";
+		this.historyHighScoreText.textAlign = "center";
+		this.addChild(this.historyHighScoreText);
 
 		this.Reset();
 	}
@@ -74,6 +55,16 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 			}
 			this.scoreText.text = Math.floor(this.curShowScore).toString();
 		}
+		
+		if (this.curShowHistoryHighScore < this.targetHistoryHighScore)
+		{
+			this.curShowHistoryHighScore += (deltaTime / 1000) * this.deltaHistoryHighScore;
+			if (this.curShowHistoryHighScore > this.targetHistoryHighScore)
+			{
+				this.curShowHistoryHighScore = this.targetHistoryHighScore;
+			}
+			this.historyHighScoreText.text = Math.floor(this.curShowHistoryHighScore).toString();
+		}
 	}
 
 	public SetScore(score: number)
@@ -86,15 +77,19 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 		}
 	}
 
-	public SetStep(step: number)
+	public SetHistoryHighScore(score: number)
 	{
-		if(DEBUG)
-			this.stepText.text = "Move:" + step.toString();
+		this.targetHistoryHighScore = score;
+		this.deltaHistoryHighScore = (this.targetHistoryHighScore - this.curShowHistoryHighScore) / (this.lerpTime / 1000);
+		if (this.deltaHistoryHighScore < this.minDeltaHistoryHighScorePreSecond)
+		{
+			this.deltaHistoryHighScore = this.minDeltaHistoryHighScorePreSecond;
+		}
 	}
 
 	public Reset()
 	{
 		this.SetScore(0);
-		this.SetStep(0);
+		this.SetHistoryHighScore(0);
 	}
 }
