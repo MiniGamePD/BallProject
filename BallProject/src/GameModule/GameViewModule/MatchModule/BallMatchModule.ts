@@ -11,6 +11,7 @@ class BallMatchModule extends GameViewModule
     protected CreateView(): boolean
     {
         this.matchView = new BallMatchView();
+        this.matchView.CreateView();
         this.gameViewList.push(this.matchView);
 
         this.pause = false;
