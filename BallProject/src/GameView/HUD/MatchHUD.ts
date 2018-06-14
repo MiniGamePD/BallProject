@@ -3,9 +3,6 @@ class MatchHUD extends egret.DisplayObjectContainer
     private readyGo:ReadyGoItem;
     private score:MatchScoreItem;
     private gameover:GameOverItem;
-    private controlablePreview:ControlablePreviewItem;
-    private fever:FeverItem;
-    private combo:ComboItem;
     private pause:PauseItem;
 
     public Init()
@@ -16,18 +13,6 @@ class MatchHUD extends egret.DisplayObjectContainer
         this.score = new MatchScoreItem();
         this.score.Init();
         this.addChild(this.score);
-
-        this.controlablePreview = new ControlablePreviewItem(0, 0, this.width, this.height);
-        this.controlablePreview.Init();
-        this.addChild(this.controlablePreview);
-
-        this.combo = new ComboItem();
-        this.combo.Init();
-        this.addChild(this.combo);
-
-        this.fever = new FeverItem(0, 0, this.width, this.height);
-        this.fever.Init();
-        this.addChild(this.fever);
 
         this.pause = new PauseItem(0, 0, this.width, this.height);
         this.pause.Init();
@@ -45,9 +30,6 @@ class MatchHUD extends egret.DisplayObjectContainer
     {
         this.readyGo = null;
 
-        this.controlablePreview.Release();
-        this.fever.Release();
-        this.combo.Release();
         this.pause.Release();
 
         GameMain.GetInstance().RemoveEventListener(HUDEvent.EventName, this.OnHUDEvent, this);
@@ -59,13 +41,11 @@ class MatchHUD extends egret.DisplayObjectContainer
     {
         this.score.Reset();
         this.gameover.Hide();
-        this.controlablePreview.Reset();
     }
 
     public Update(deltaTime:number)
     {
         this.score.Update(deltaTime);
-        this.fever.Update(deltaTime);
     }
 
     private OnGameOver(event:GameOverEvent)
@@ -90,24 +70,6 @@ class MatchHUD extends egret.DisplayObjectContainer
                 break;
             case HUDEventType.ChangeStep:
                 this.ChangeStep(event.param);
-                break;
-            case HUDEventType.RefreshControlablePreview:
-                this.RefreshControlablePreview(event.param);
-                break;
-            case HUDEventType.PlayPreviewDropDownAnim:
-                this.PlayPreviewDropDownAnim(event.param);
-                break;
-            case HUDEventType.SetFeverControl:
-                this.SetFeverControl(event.param);
-                break;
-            case HUDEventType.ShowFeverSprite:
-                this.ShowFeverSprite(event.param);
-                break;
-            case HUDEventType.ShowCombo:
-                this.ShowCombo(event.param);
-                break;
-            case HUDEventType.ShowComboEvaluation:
-                this.ShowComboEvaluation(event.param);
                 break;
             case HUDEventType.ShowPauseMenu:
                 this.pause.ShowPauseMenu();
@@ -134,40 +96,5 @@ class MatchHUD extends egret.DisplayObjectContainer
     {
         let step:number = <number>param;
         this.score.SetStep(step);
-    }
-
-    private RefreshControlablePreview(param:any)
-    {
-        var nextControlableElementArray:ControlableElement[] = <ControlableElement[]>param;
-        this.controlablePreview.RefreshControlablePreview(nextControlableElementArray);
-    }
-
-    private PlayPreviewDropDownAnim(param:any)
-    {
-        var durationInMS:number = <number>param;
-        this.controlablePreview.PlayDropAnim(durationInMS);
-    }
-
-    private SetFeverControl(param:any)
-    {
-        var feverControl:FeverControl = <FeverControl>param;
-        this.fever.SetFeverControl(feverControl);
-    }
-
-    private ShowFeverSprite(param:any)
-    {
-        this.fever.ShowFeverSprite();
-    }
-
-    private ShowCombo(param:any)
-    {
-        var comboNum:number = <number>param;
-        this.combo.ShowCombo(comboNum);
-    }
-
-    private ShowComboEvaluation(param:any)
-    {
-        var comboEvaluation:string = <string>param;
-        this.combo.ShowEvaluation(comboEvaluation);
     }
 }
