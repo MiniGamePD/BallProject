@@ -13,7 +13,8 @@ class BallGameWorld
 		this.world = new p2.World();
 		this.world.sleepMode = p2.World.BODY_SLEEPING;
 		this.world.applyGravity = false;
-		this.world.defaultContactMaterial.restitution = 0.99;
+		this.world.defaultContactMaterial.restitution = 1;
+		// this.world.setGlobalStiffness(Number.MAX_VALUE);
 		this.center = new egret.Point(GameMain.GetInstance().GetStageWidth() / 2, 
 									GameMain.GetInstance().GetStageHeight() / 2)
 	}
@@ -31,26 +32,30 @@ class BallGameWorld
 		for (var i: number = 0; i < l; i++)
 		{
 			var boxBody: p2.Body = this.world.bodies[i];
-			var box: egret.DisplayObject = boxBody.displays[0];
-			if (box)
+			for (var disId = 0; disId < boxBody.displays.length; ++disId)
 			{
-				box.x = boxBody.position[0] * this.factor;
-				box.y = stageHeight - boxBody.position[1] * this.factor;
-				box.rotation = 360 - (boxBody.angle + boxBody.shapes[0].angle) * 180 / Math.PI;
-				
-				if (DEBUG)
+				var displayObj: egret.DisplayObject = boxBody.displays[disId];
+				if (displayObj)
 				{
-					// 如果是sleep状态，改变一下Alpha
-					if (boxBody.sleepState == p2.Body.SLEEPING)
+					displayObj.x = boxBody.position[0] * this.factor;
+					displayObj.y = stageHeight - boxBody.position[1] * this.factor;
+					displayObj.rotation = 360 - (boxBody.angle + boxBody.shapes[0].angle) * 180 / Math.PI;
+					
+					if (DEBUG)
 					{
-						box.alpha = 0.5;
-					}
-					else
-					{
-						box.alpha = 1;
+						// 如果是sleep状态，改变一下Alpha
+						if (boxBody.sleepState == p2.Body.SLEEPING)
+						{
+							displayObj.alpha = 0.5;
+						}
+						else
+						{
+							displayObj.alpha = 1;
+						}
 					}
 				}
 			}
+			
 		}
 	}
 

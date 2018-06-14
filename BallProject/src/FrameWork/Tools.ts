@@ -377,4 +377,15 @@ class Tools
             return 0;
 		}
 	}
+
+	public static DetachDisplayObjFromParent(disPlayObj: egret.DisplayObject)
+	{
+		if (disPlayObj != undefined
+			&& disPlayObj != null
+			&& disPlayObj.parent != undefined
+			&& disPlayObj.parent != null)
+		{
+			disPlayObj.parent.removeChild(disPlayObj);
+		}
+	}
 }

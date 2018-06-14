@@ -3,13 +3,13 @@ class BallEmitter
 	private resModule: IResModule;    
 
 	public ballGameWorld: BallGameWorld;
-	public emitInterval = 100;
+	public emitInterval = 200;
 	public emitLeftTime = 0;
 	public emitPos: egret.Point;
 	public emitDir: egret.Point;
-	public emitSpeed: number = 500;
+	public emitSpeed: number = 1500;
 	public ballMass: number = 1;
-	public ballRadius: number = 20;
+	public ballRadius: number = 15;
 
 	public ballList: p2.Body[] = [];
 	
