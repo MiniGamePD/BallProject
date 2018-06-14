@@ -1,5 +1,7 @@
 class ShapeBgButton extends ButtonBase
 {
+    private clickResponseAnimTimer:egret.Timer;
+
     public constructor(shapeBgType:ShapeBgType, bgColor:number, bgThickness:number, bgEllipse:number, 
         fgPath:string, bgWidth:number, bgHeight:number, fgWidth:number, fgHeight:number, 
         clickCallback:Function, callbackObj:any)
@@ -38,6 +40,25 @@ class ShapeBgButton extends ButtonBase
 
     protected OnButtonClick()
     {
+        var scaleParam = new PaScalingParam();
+        scaleParam.displayObj = this;
+        scaleParam.duration = 150;
+        scaleParam.interval = 75;
+        scaleParam.reverse = true;
+        scaleParam.targetScaleX = 1.05;
+        scaleParam.targetScaleY = 1.05;
+        var scaleEvent = new PlayProgramAnimationEvent();
+        scaleEvent.param = scaleParam;
+        GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+        this.clickResponseAnimTimer = new egret.Timer(250, 1);
+        this.clickResponseAnimTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.OnButtonResponseAnimFinish, this);
+        this.clickResponseAnimTimer.start();
+    }
+
+    protected OnButtonResponseAnimFinish()
+    {
+        this.clickResponseAnimTimer = null;
         this.clickCallback();
     }
 }
