@@ -4,6 +4,7 @@ class MatchHUD extends egret.DisplayObjectContainer
     private score:MatchScoreItem;
     private gameover:GameOverItem;
     private pause:PauseItem;
+    private help:HelpItem;
 
     public Init()
     {
@@ -18,6 +19,10 @@ class MatchHUD extends egret.DisplayObjectContainer
         this.pause.Init();
         this.addChild(this.pause);
 
+        this.help = new HelpItem(0, 0, this.width, this.height);
+        this.help.Init();
+        this.addChild(this.help);
+
         this.gameover = new GameOverItem(this.width, this.height);
         this.addChild(this.gameover);
 
@@ -31,6 +36,7 @@ class MatchHUD extends egret.DisplayObjectContainer
         this.readyGo = null;
 
         this.pause.Release();
+        this.help.Release();
 
         GameMain.GetInstance().RemoveEventListener(HUDEvent.EventName, this.OnHUDEvent, this);
         GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOver, this);
