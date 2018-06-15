@@ -51,6 +51,9 @@ class ShapeBgButton extends ButtonBase
         scaleEvent.param = scaleParam;
         GameMain.GetInstance().DispatchEvent(scaleEvent);
 
+        var soundEvent: PlaySoundEvent = new PlaySoundEvent("PillRotation_mp3", 1);
+        GameMain.GetInstance().DispatchEvent(soundEvent);
+
         this.clickResponseAnimTimer = new egret.Timer(250, 1);
         this.clickResponseAnimTimer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.OnButtonResponseAnimFinish, this);
         this.clickResponseAnimTimer.start();
