@@ -5,8 +5,8 @@ class Box
 	public initPos: egret.Point;
 	public boxSize: egret.Point;
 	public targetPos: egret.Point;
-	public boxMass = 2000;
-	public moveSpeed: number = 10;
+	public boxMass = 20000;
+	public moveSpeed: number = 20;
 
 	public boxDisplayObj: egret.Shape;
 	public healthDisplayObj: egret.TextField;
@@ -62,11 +62,12 @@ class Box
 		this.phyShape = new p2.Box({ width: this.boxSize.x, height: this.boxSize.y });
 		this.phyShape.id = this.id;
 		this.phyShape.collisionGroup = Collision_Layer_Box;
-		this.phyShape.collisionMask = Collision_Layer_Ball;
+		this.phyShape.collisionMask = Collision_Layer_Ball | Collision_Layer_Box;
 		this.phyBody = new p2.Body({id: this.id,
 			mass: this.boxMass, position: [this.initPos.x, this.initPos.y],
 			velocity: [moveDir.x, moveDir.y], type: p2.Body.KINEMATIC
 		});
+		this.phyBody.collisionResponse = true;
 		this.phyBody.addShape(this.phyShape);
 		this.phyBody.displays = [this.boxDisplayObj, this.healthDisplayObj];
 	}
@@ -96,9 +97,9 @@ class Box
 		}
 	}
 
-	public ReduceHealth(reduceValue: number)
+	public changeHealth(healthValue: number)
 	{
-		this.health -= reduceValue;
+		this.health += healthValue;
 		this.health = this.health < 0 ? 0 : this.health;
 		this.SetHide(true);
 		this.RefreshDisplay();

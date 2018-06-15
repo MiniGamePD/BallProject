@@ -8,6 +8,7 @@ class BoxEmitter
 	public center: egret.Point;
 	public boxList: Box[] = [];
 	public instanceId = 0;
+	public boxCreateStrategy: BoxCreateStrategy;
 	
 	public constructor()
 	{
@@ -26,6 +27,9 @@ class BoxEmitter
 		this.instanceId = 0;
 
 		this.ballGameWorld.world.on("beginContact", this.OnBeginContact, this);
+
+		this.boxCreateStrategy = new BoxCreateStrategy();
+		this.boxCreateStrategy.Init();
 	}
 
 	public Update(deltaTime: number)
@@ -34,7 +38,8 @@ class BoxEmitter
 		if (this.emitLeftTime < 0)
 		{
 			this.emitLeftTime = this.emitInterval;
-			this.EmitBox();
+			var randomBirthPos = this.boxCreateStrategy.GetRandomBirthPos();
+			this.EmitBox(randomBirthPos, 12);
 		}
 
 		for (var i = 0; i < this.boxList.length; ++i)
@@ -44,18 +49,16 @@ class BoxEmitter
 				this.boxList[i].Update(deltaTime);
 			}
 		} 
-		// this.ClearBall();
+
+		// this.CheckBoxOverlay();
 	}
 
-	public EmitBox()
+	public EmitBox(birthPos: egret.Point, health: number)
 	{	
-		var randomX = (Math.random() > 0.5 ? 1 : 0) * GameMain.GetInstance().GetStageWidth();
-		var randomY = Math.random() * GameMain.GetInstance().GetStageHeight();
-
 		++this.instanceId;
 		var id = this.instanceId;
 		var box = new Box();
-		box.Init(id, new egret.Point(randomX, randomY), this.center, 12);
+		box.Init(id, new egret.Point(birthPos.x, birthPos.y), this.center, health);
 		GameMain.GetInstance().GetGameStage().addChild(box.boxDisplayObj);
 		GameMain.GetInstance().GetGameStage().addChild(box.healthDisplayObj);
 		this.ballGameWorld.world.addBody(box.phyBody);
@@ -80,7 +83,7 @@ class BoxEmitter
 		if (box != null 
 			&& box != undefined)
 		{
-			box.ReduceHealth(1);
+			box.changeHealth(-1);
 			if (box.health <= 0)
 			{
 				this.DeleteBox(box);
@@ -107,6 +110,37 @@ class BoxEmitter
 		}
 	}
 
+	private CheckBoxOverlay()
+	{
+		for (var i = 0; i < this.boxList.length; ++i)
+		{
+			for (var j = i + 1; j < this.boxList.length; ++j)
+			{
+				var boxA = this.boxList[i];
+				var boxB = this.boxList[j];
+				if (boxA.phyBody.overlaps(boxB.phyBody))
+				{
+					this.MergeBox(boxA, boxB);
+				}
+			}
+		}
+	}
+
+
+	private MergeBox(boxA: Box, boxB: Box)
+	{
+		if (boxA != null
+			&& boxB != null)
+		{
+			var disA = this.center.subtract(new egret.Point(boxA.boxDisplayObj.x, boxA.boxDisplayObj.y)).length;
+			var disB = this.center.subtract(new egret.Point(boxB.boxDisplayObj.x, boxB.boxDisplayObj.y)).length;
+			var nearBox = disA < disB ? boxA : boxB;
+			var farBox = disA < disB ? boxB : boxA;
+			farBox.changeHealth(nearBox.health);
+			this.DeleteBox(nearBox);
+		}
+	}
+
 	private OnBeginContact(event)
     {
         var shapeA: p2.Shape = event.shapeA;
@@ -129,6 +163,14 @@ class BoxEmitter
                 var box = this.GetBoxById(shapeB.id);
 				this.OnHitBox(box);
             }
+
+			if (shapeA.collisionGroup == Collision_Layer_Box
+				&& shapeB.collisionGroup == Collision_Layer_Box)
+            {
+				var boxA = this.GetBoxById(shapeA.id);
+				var boxB = this.GetBoxById(shapeB.id);
+				this.MergeBox(boxA, boxB);
+			}
         }
     }
 
