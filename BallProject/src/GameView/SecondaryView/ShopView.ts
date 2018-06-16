@@ -43,11 +43,11 @@ class ShopView extends egret.DisplayObjectContainer
 
         this.noGoodsDetail.textFlow = <Array<egret.ITextElement>>
         [
-            { text:"在商店里，你可以使用弹球游戏中获得的金币购买其他", style:{"textColor":0xFFFFFF, "size":30} },
+            { text:"在商店里，你可以使用弹球游戏中获得的", style:{"textColor":0xFFFFFF, "size":30} },
             { text:"金币", style:{"textColor":0xFFC900, "size":30} },
-            { text:"购买其他", style:{"textColor":0xFFFFFF, "size":30} },
+            { text:"购买", style:{"textColor":0xFFFFFF, "size":30} },
             { text:"炫酷且具有特殊技能", style:{"textColor":0xFFC900, "size":30} },
-            { text:"的弹球\n但是店里没有存货了\n", style:{"textColor":0xFFFFFF, "size":30} },
+            { text:"的弹球\n\n但是店里没有存货了\n", style:{"textColor":0xFFFFFF, "size":30} },
             { text:"兔女郎", style:{"textColor":0xB90086, "size":30}},
             { text:"已经出门进货了\n", style:{"textColor":0xFFFFFF, "size":30}},
             { text:"所以尽请期待吧~", style:{"textColor":0xFFFFFF, "size":30}},

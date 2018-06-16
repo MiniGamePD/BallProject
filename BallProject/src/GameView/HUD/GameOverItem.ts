@@ -13,6 +13,9 @@ class GameOverItem extends egret.DisplayObjectContainer
     private lottery:egret.DisplayObjectContainer;
     private gotoLobby:ShapeBgButton;
 
+    //商店
+    private shop:ShopView;
+
     public constructor(width:number, height:number)
     {
         super();
@@ -27,6 +30,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.CreateMoreCoin();
         this.CreateLottery();
         this.CreateGotoLobby();
+        this.CreateShop();
     }
 
     public Init()
@@ -181,7 +185,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         lotteryText.size = 30;
         lotteryText.textAlign = "left";
         lotteryText.verticalAlign = "center";
-        lotteryText.text = "抽弹珠";
+        lotteryText.text = "兔女郎的弹珠商店";
         this.lottery.addChild(lotteryText);
 
         var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
@@ -213,6 +217,17 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         this.gotoLobby.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.gotoLobby.y = 800;
+    }
+
+    private CreateShop()
+    {
+        this.shop = new ShopView();
+        this.shop.Init(this.OnCloseShop, this);
+    }
+
+    private OnCloseShop(callbackobj:any)
+    {
+        callbackobj.removeChild(callbackobj.shop);
     }
 
     public ShowGameOverMenu()
@@ -247,9 +262,9 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     }
 
-    private OnClickLottery()
+    private OnClickLottery(callbackobj:any)
     {
-
+        callbackobj.addChild(callbackobj.shop);
     }
 
     private OnClickBackToLobby(): void
