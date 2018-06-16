@@ -44,14 +44,14 @@ class Box
 		this.boxDisplayObj.graphics.drawRect(0, 0, this.boxSize.x, this.boxSize.y);
 		this.boxDisplayObj.graphics.endFill();
 		this.boxDisplayObj.x = this.initPos.x;
-		this.boxDisplayObj.y = -this.initPos.y;
+		this.boxDisplayObj.y = this.initPos.y;
 		this.boxDisplayObj.anchorOffsetX = this.boxDisplayObj.width / 2;
 		this.boxDisplayObj.anchorOffsetY = this.boxDisplayObj.height / 2;
 
 		this.healthDisplayObj = new egret.TextField();
 		this.healthDisplayObj.text = this.health.toString();
         this.healthDisplayObj.x = this.initPos.x;
-        this.healthDisplayObj.y = -this.initPos.y;
+        this.healthDisplayObj.y = this.initPos.y;
 		this.healthDisplayObj.width = this.boxSize.x;
         this.healthDisplayObj.height = this.boxSize.y;
 		this.healthDisplayObj.anchorOffsetX = this.healthDisplayObj.width / 2;

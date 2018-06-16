@@ -7,7 +7,7 @@ class BallEmitter
 	public emitLeftTime = 0;
 	public emitPos: egret.Point;
 	public emitDir: egret.Point;
-	public emitSpeed: number = 1500;
+	public emitSpeed: number = 1000;
 	public ballMass: number = 1;
 	public ballRadius: number = 15;
 
@@ -48,7 +48,7 @@ class BallEmitter
 
 		this.emitPos = ballGameWorld.center;
 
-		this.emitDir = new egret.Point(0, -this.emitSpeed);
+		this.emitDir = new egret.Point(0, this.emitSpeed);
 
 		this.ballList = [];
 
@@ -79,13 +79,13 @@ class BallEmitter
 		var ballShape: p2.Shape = new p2.Circle({ radius: this.ballRadius });
 		ballShape.collisionGroup = Collision_Layer_Ball;
 		ballShape.collisionMask = Collision_Layer_Box;
-		var ballBody: p2.Body = new p2.Body({ mass: this.ballMass, position: [this.emitPos.x, this.emitPos.y], velocity: [this.emitDir.x, -this.emitDir.y] });
+		var ballBody: p2.Body = new p2.Body({ mass: this.ballMass, position: [this.emitPos.x, this.emitPos.y], velocity: [this.emitDir.x, this.emitDir.y] });
 		ballBody.addShape(ballShape);
 		this.ballGameWorld.world.addBody(ballBody);
 
 		var display = this.resModule.CreateBitmapByName("Pill_Single_Yellow");
-		display.width = (<p2.Circle>ballShape).radius * 2 * this.ballGameWorld.factor;
-		display.height = (<p2.Circle>ballShape).radius * 2 * this.ballGameWorld.factor;
+		display.width = (<p2.Circle>ballShape).radius * 1.5 * this.ballGameWorld.factor;
+		display.height = (<p2.Circle>ballShape).radius * 1.5 * this.ballGameWorld.factor;
 		display.x = this.emitPos.x;
 		display.y = this.emitPos.y;
 
