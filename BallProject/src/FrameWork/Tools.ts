@@ -404,4 +404,11 @@ class Tools
 		targetDir.normalize(1);
 		return targetDir;
 	}
+
+	public static GetRandomBoxColor(): number
+	{
+		var randomIdx = Math.floor(Math.random() * BoxColorPool.length);
+		return BoxColorPool[randomIdx];
+	}
+
 }

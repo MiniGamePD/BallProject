@@ -13,6 +13,7 @@ enum BoxType
 class BoxEmitter
 {
 	private resModule: IResModule;
+	private soundModule: ISoundModule;
 
 	public ballGameWorld: BallGameWorld;
 
@@ -22,17 +23,21 @@ class BoxEmitter
 	public boxCreateStrategy: BoxCreateStrategy;
 	public battleGround: egret.DisplayObjectContainer;
 
+	public hitSoundCdTime = 0;
+
 	public constructor()
 	{
 	}
 
 	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer)
 	{
+		this.resModule = <IResModule> GameMain.GetInstance().GetModule(ModuleType.RES);
+		this.soundModule = <ISoundModule> GameMain.GetInstance().GetModule(ModuleType.SOUND);	
+
 		this.ballGameWorld = ballGameWorld;
 
 		this.battleGround = battleGround;
 
-		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 
 		this.center = this.ballGameWorld.center;
 
@@ -48,6 +53,11 @@ class BoxEmitter
 
 	public Update(deltaTime: number)
 	{
+		if (this.hitSoundCdTime > 0)
+		{
+			this.hitSoundCdTime -= deltaTime;
+		}
+		
 		this.boxCreateStrategy.Update(deltaTime);
 
 		for (var i = 0; i < this.boxList.length; ++i)
@@ -116,12 +126,23 @@ class BoxEmitter
 		return null;
 	}
 
+	private PlayHitSound()
+	{
+		if (this.hitSoundCdTime <= 0)
+		{
+			this.hitSoundCdTime = BoxHitSoundCDTime;
+			// this.soundModule.PlaySound("hitBox_mp3", 1);
+			this.soundModule.PlaySound("PillRotation_mp3", 1);
+		}
+	}
+
 	private OnHitBox(box: Box)
 	{
 		if (box != null
 			&& box != undefined)
 		{
 			box.changeHealth(-1);
+			this.PlayHitSound();
 			if (box.health <= 0)
 			{
 				box.OnEliminate();

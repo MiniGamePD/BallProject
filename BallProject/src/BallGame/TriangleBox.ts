@@ -22,7 +22,6 @@ class TriangleBox extends Box
 		this.InitTriangleBoxType();
 		this.CreatePoint();
 		this.CreateBox();
-		this.SetColor(0x00ff00);
 	}
 
 	private InitTriangleBoxType()
@@ -92,8 +91,8 @@ class TriangleBox extends Box
 	public CreateDisplay(): egret.DisplayObject
 	{
 		var shape = new egret.Shape();
-		shape.graphics.lineStyle(2, 0x00ff00);
-		shape.graphics.beginFill(0xFF0000, 0);
+		shape.graphics.lineStyle(2, this.color);
+		shape.graphics.beginFill(this.color, 0);
 		shape.graphics.moveTo(this.pointList[this.pointList.length - 1].x, 
 										   this.pointList[this.pointList.length - 1].y);
 										   
@@ -124,6 +123,7 @@ class TriangleBox extends Box
 		this.healthDisplayObj.anchorOffsetY = this.width / 2 - this.healthOffset.y;
 		this.healthDisplayObj.textAlign = egret.HorizontalAlign.CENTER;
 		this.healthDisplayObj.verticalAlign = egret.VerticalAlign.MIDDLE;
+		this.healthDisplayObj.textColor = this.color;
 
 		var vertices = [];
 		for (var i = 0; i < this.pointList.length; ++i)

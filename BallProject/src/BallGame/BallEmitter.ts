@@ -1,6 +1,7 @@
 class BallEmitter
 {
 	private resModule: IResModule;
+	private soundModule: ISoundModule;
 
 	public ballGameWorld: BallGameWorld;
 	public emitLeftTime = 0;
@@ -23,6 +24,8 @@ class BallEmitter
 
 	private ballEmitterSprite: egret.Bitmap;
 	private levelUpEvent: BallEmitterLevelUpEvent;
+
+	private emitSoundCdTime = 0;
 
 	public constructor()
 	{
@@ -77,11 +80,12 @@ class BallEmitter
 
 	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer)
 	{
+		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
+		
 		this.ballGameWorld = ballGameWorld;
 
 		this.battleGround = battleGround;
-
-		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 
 		this.emitPos = ballGameWorld.center;
 
@@ -169,6 +173,11 @@ class BallEmitter
 		// 	this.SetMultipleDirections(10000, 6);
 		// }
 
+		if (this.emitSoundCdTime > 0)
+		{
+			this.emitSoundCdTime -= deltaTime;
+		}
+
 		if (this.fireUpLeftTime > 0)
 		{
 			this.fireUpLeftTime -= deltaTime;
@@ -211,6 +220,7 @@ class BallEmitter
 
 	public EmitBall(emitDir: egret.Point, speed: number)
 	{
+		this.PlayBallEmitSound();
 		++this.emitBallCount;
 		emitDir.normalize(this.emitPosOffsetDis);
 		var emitPos = new egret.Point(this.emitPos.x + emitDir.x, this.emitPos.y + emitDir.y);
@@ -251,6 +261,15 @@ class BallEmitter
 				Tools.DetachDisplayObjFromParent(this.ballList[i].displays[0]);
 				this.ballGameWorld.world.removeBody(this.ballList[i]);
 			}
+		}
+	}
+
+	private PlayBallEmitSound()
+	{
+		if (this.emitSoundCdTime <= 0)
+		{
+			this.emitSoundCdTime = BallEmitSoundCDTime;
+			this.soundModule.PlaySound("ballEmit_mp3", 1);
 		}
 	}
 

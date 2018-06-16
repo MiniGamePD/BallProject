@@ -28,6 +28,7 @@ abstract class Box
 		this.boxSize = new egret.Point(80, 80);
 		this.targetPos = targetPos;
 		this.moveSpeed = BoxMoveSpeed;
+		this.SetColor(Tools.GetRandomBoxColor());
 	}
 
 	public abstract GetBoxType(): BoxType;

@@ -9,7 +9,6 @@ class CircleBox extends Box
 		this.canMerge = true;
 
 		this.CreateBox();
-		this.SetColor(0x00ff00);
 	}
 
 	public GetBoxType(): BoxType
@@ -20,8 +19,8 @@ class CircleBox extends Box
 	public CreateDisplay(): egret.DisplayObject
 	{
 		var shape = new egret.Shape();
-		shape.graphics.lineStyle(2, 0x00ff00);
-		shape.graphics.beginFill(0xFF0000, 0);
+		shape.graphics.lineStyle(2, this.color);
+		shape.graphics.beginFill(this.color, 0);
 		shape.graphics.drawCircle(0, 0, this.radius);
 		shape.graphics.endFill();
 		shape.x = this.initPos.x;
@@ -45,7 +44,9 @@ class CircleBox extends Box
 		this.healthDisplayObj.anchorOffsetX = this.healthDisplayObj.width / 2;
 		this.healthDisplayObj.anchorOffsetY = this.healthDisplayObj.height / 2;
 		this.healthDisplayObj.textAlign = egret.HorizontalAlign.CENTER;
-		this.healthDisplayObj.verticalAlign = egret.VerticalAlign.MIDDLE;
+		this.healthDisplayObj.verticalAlign = egret.VerticalAlign.MIDDLE;	
+		this.healthDisplayObj.textColor = this.color;
+
 
 		this.phyShape = new p2.Circle({ radius: this.radius });
 		this.phyShape.id = this.id;

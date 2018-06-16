@@ -87,9 +87,12 @@ const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
 
 const BoxMoveSpeed = 20;
 const BoxHitHideCDTime = 30;
+const BoxHitSoundCDTime = 30;
+const BallEmitSoundCDTime = 30;
 
 const GameOverCenterSize = new egret.Point(70, 70);
 
 const SpecialBoxRandomBirthPos_Stage_Range = 0.5
 const SpecialBoxRandomBirthPos_Center_Offset = 300
 
+const BoxColorPool = [0x6726a5, 0xd6340a, 0xf1be22, 0x11fdff, 0x3562ec, 0xff8526, 0x59d61b];
