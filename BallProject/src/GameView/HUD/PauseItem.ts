@@ -48,7 +48,7 @@ class PauseItem extends egret.DisplayObjectContainer
     {
         this.helpIcon = new egret.TextField();
         this.helpIcon.x = 100;
-        this.helpIcon.y = 25;
+        this.helpIcon.y = 23;
         this.helpIcon.width = 50;
         this.helpIcon.height = 50;
         this.helpIcon.textAlign = "center";

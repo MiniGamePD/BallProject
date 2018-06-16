@@ -5,6 +5,8 @@ class LobbyView extends GameView
     private mStageHeight: number;
     private textField: egret.TextField;
     private particleSys: particle.GravityParticleSystem;
+    private title:egret.Bitmap;
+    private logo:egret.Bitmap;
 
     public CreateView(): void
     {
@@ -13,6 +15,8 @@ class LobbyView extends GameView
         this.mStageHeight = GameMain.GetInstance().GetStageHeight();
 
         this.LoadBackGround();
+        this.CreateTitle();
+        this.CreateLogo();
         this.PlayBgm();
     }
 
@@ -23,17 +27,17 @@ class LobbyView extends GameView
         // bg.width = this.mStageWidth;
         // bg.height = this.mStageHeight;
 
-        this.textField = new egret.TextField();
-        this.textField.x = 0;
-        this.textField.y = this.mStageHeight / 4;
-        this.textField.width = this.mStageWidth;
-        this.textField.height = 100;
-        this.textField.rotation = -5;
-        this.textField.fontFamily = "Impact";
-        this.textField.size *= 2;
-        this.textField.textAlign = "center";
-        this.textField.text = "正版！C C 弹";
-        this.addChild(this.textField);
+        // this.textField = new egret.TextField();
+        // this.textField.x = 0;
+        // this.textField.y = this.mStageHeight / 4;
+        // this.textField.width = this.mStageWidth;
+        // this.textField.height = 100;
+        // this.textField.rotation = -5;
+        // this.textField.fontFamily = "Impact";
+        // this.textField.size *= 2;
+        // this.textField.textAlign = "center";
+        // this.textField.text = "正版！C C 弹";
+        // this.addChild(this.textField);
 
         this.mAdaptedStage = GameMain.GetInstance().GetAdaptedStageContainer();;
 
@@ -43,10 +47,10 @@ class LobbyView extends GameView
         shape.graphics.endFill();
         //this.addChild(shape);
 
-        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B00, 6, 25, "pd_res_json.play", 250, 120, 50, 50,
+        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B00, 6, 25, "pd_res_json.play", 250, 80, 50, 50,
             this.OnClickStartGame, this);
         button.x = this.mStageWidth / 2;
-        button.y = this.mStageHeight / 5 * 3.05;
+        button.y = 1000;
         this.addChild(button);
 
         //设置显示对象可以相应触摸事件
@@ -62,8 +66,28 @@ class LobbyView extends GameView
         // this.PlayMoving(text);
         // this.PlayDynamicMoving();
 
-        var angle = Tools.GetRotateAngle(0, 0, 1, 1);
-        egret.log("angle = " + angle);
+        // var angle = Tools.GetRotateAngle(0, 0, 1, 1);
+        // egret.log("angle = " + angle);
+    }
+
+    private CreateTitle()
+    {
+        this.title = this.mResModule.CreateBitmapByName("pd_res_json.Logo");
+        this.title.anchorOffsetX = this.title.width / 2;
+        this.title.anchorOffsetY = this.title.height / 2;
+        this.title.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.title.y = 200;
+        this.addChild(this.title);
+    }
+
+    private CreateLogo()
+    {
+        this.logo = this.mResModule.CreateBitmapByName("pd_res_json.Lobby_platfrom");
+        this.logo.anchorOffsetX = this.logo.width / 2;
+        this.logo.anchorOffsetY = this.logo.height / 2;
+        this.logo.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.logo.y = 600;
+        this.addChild(this.logo);
     }
 
     private OnClickStartGame(): void
