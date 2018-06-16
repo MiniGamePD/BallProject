@@ -37,7 +37,7 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 		this.historyHighScoreText.width = 200;
 		this.historyHighScoreText.height = 100;
 		this.historyHighScoreText.size = 30;
-		this.historyHighScoreText.text = "历史最高:0";
+		this.historyHighScoreText.text = "纪录:0";
 		this.historyHighScoreText.textAlign = "center";
 		this.addChild(this.historyHighScoreText);
 

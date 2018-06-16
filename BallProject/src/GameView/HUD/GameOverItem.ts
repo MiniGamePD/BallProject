@@ -1,11 +1,11 @@
 class GameOverItem extends egret.DisplayObjectContainer
 {
     private bgCover:FullScreenCover;
-    private gameoverTitle:egret.DisplayObjectContainer;
-    private backToLobbyButton:egret.DisplayObjectContainer;
-    private replayButton:egret.DisplayObjectContainer;
-    private reviveButton:egret.DisplayObjectContainer;
 
+    //复活界面
+    private reviveMenu:egret.DisplayObjectContainer;
+
+    //结算界面
     private score:egret.DisplayObjectContainer;
     private historyHighScore:egret.DisplayObjectContainer;
     private coin:egret.DisplayObjectContainer;
@@ -19,12 +19,58 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.bgCover = new FullScreenCover(0x000000, 0.8);
         this.bgCover.touchEnabled = true;
 
+        this.CreateReviveMenu();
+
         this.CreateScore();
         this.CreateHistoryHighScore();
         this.CreateCoin();
         this.CreateMoreCoin();
         this.CreateLottery();
         this.CreateGotoLobby();
+    }
+
+    public Init()
+    {
+        GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.ShowReviveMenu, this);
+        GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.Hide, this);
+    }
+
+    public Release()
+    {
+        GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.ShowReviveMenu, this);
+        GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.Hide, this);
+    }
+
+    private CreateReviveMenu()
+    {
+        this.reviveMenu = new egret.DisplayObjectContainer();
+        this.reviveMenu.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.reviveMenu.y = GameMain.GetInstance().GetStageHeight() / 2;
+
+        var bg = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 600, 460, 0, 0, null, null);
+        this.reviveMenu.addChild(bg);
+        
+        var title = new egret.TextField();
+        title.text = "复活吗？";
+        title.size = 60;
+        title.width = 300;
+        title.height = 60;
+        title.textAlign = "center";
+        title.anchorOffsetX = title.width / 2;
+        title.anchorOffsetY = title.height / 2;
+        title.x = 0;
+        title.y = -160; 
+        this.reviveMenu.addChild(title);
+
+        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 16, "pd_res_json.xingxing1", 570, 140, 
+            100, 100, this.OnClickRevive, this);
+        reviveButton.y = -20;
+        this.reviveMenu.addChild(reviveButton);
+
+        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 16, "pd_res_json.xingxing1", 570, 140, 
+            100, 100, this.OnClickGiveup, this);
+        giveUpButton.y = 140;
+        this.reviveMenu.addChild(giveUpButton);
     }
 
     private CreateScore()
@@ -159,8 +205,10 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.gotoLobby.y = 800;
     }
 
-    public Show()
+    public ShowGameOverMenu()
     {
+        this.Hide();
+
         this.addChild(this.bgCover);
         this.addChild(this.score);
         this.addChild(this.historyHighScore);
@@ -168,6 +216,12 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.addChild(this.moreCoin);
         this.addChild(this.lottery);
         this.addChild(this.gotoLobby);
+    }
+
+    public ShowReviveMenu()
+    {
+        this.addChild(this.bgCover);
+        this.addChild(this.reviveMenu);
 
         var soundEvent: PlaySoundEvent = new PlaySoundEvent("GameOver_mp3", 1);
         GameMain.GetInstance().DispatchEvent(soundEvent);
@@ -206,6 +260,11 @@ class GameOverItem extends egret.DisplayObjectContainer
        
         let event = new ReplayGameEvent();
         GameMain.GetInstance().DispatchEvent(event);
+    }
+
+    private OnClickGiveup(callbackObj:any)
+    {
+        callbackObj.ShowGameOverMenu();
     }
 
     private OnClickRevive(): void

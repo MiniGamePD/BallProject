@@ -19,11 +19,10 @@ class MatchHUD extends egret.DisplayObjectContainer
         this.addChild(this.pause);
 
         this.gameover = new GameOverItem(this.width, this.height);
+        this.gameover.Init();
         this.addChild(this.gameover);
 
         GameMain.GetInstance().AddEventListener(HUDEvent.EventName, this.OnHUDEvent, this);
-        GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOver, this);
-        GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnRevive, this);
     }
 
     public Release()
@@ -31,10 +30,9 @@ class MatchHUD extends egret.DisplayObjectContainer
         this.readyGo = null;
 
         this.pause.Release();
+        this.gameover.Release();
 
         GameMain.GetInstance().RemoveEventListener(HUDEvent.EventName, this.OnHUDEvent, this);
-        GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOver, this);
-        GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnRevive, this);
     }
 
     public Reset()
@@ -46,16 +44,6 @@ class MatchHUD extends egret.DisplayObjectContainer
     public Update(deltaTime:number)
     {
         this.score.Update(deltaTime);
-    }
-
-    private OnGameOver(event:GameOverEvent)
-    {
-        this.gameover.Show();
-    }
-
-    private OnRevive(event:ReviveEvent)
-    {
-        this.gameover.Hide();
     }
 
     private OnHUDEvent(event:HUDEvent)
