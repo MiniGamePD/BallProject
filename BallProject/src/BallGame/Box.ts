@@ -8,7 +8,7 @@ abstract class Box
 	public boxMass = 20000;
 	public moveSpeed: number = BoxMoveSpeed;
 
-	public boxDisplayObj: egret.Shape;
+	public boxDisplayObj: egret.DisplayObject;
 	public healthDisplayObj: egret.TextField;
 	public phyBody: p2.Body;
 	public phyShape: p2.Shape;
@@ -38,12 +38,6 @@ abstract class Box
 	{
 		this.color = color;
 		
-		if (this.boxDisplayObj != undefined
-			&& this.boxDisplayObj != null)
-		{
-			this.boxDisplayObj.graphics.lineStyle(2, this.color);
-		}
-
 		if (this.healthDisplayObj != undefined
 			&& this.healthDisplayObj != null)
 		{

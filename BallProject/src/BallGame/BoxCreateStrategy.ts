@@ -1,5 +1,9 @@
 class BoxCreateStrategy
 {
+	private boxEmitter: BoxEmitter;
+	public emitInterval = 1000;
+	public emitLeftTime = 0;
+
 	private widthCount = 5;
 	private heightCount = 8;
 
@@ -12,8 +16,10 @@ class BoxCreateStrategy
 	{
 	}
 
-	public Init()
+	public Init(boxEmitter: BoxEmitter)
 	{
+		this.boxEmitter = boxEmitter;
+
 		var minWidth = -this.extraWidth;
 		var maxWidth = GameMain.GetInstance().GetStageWidth() + this.extraWidth;
 		var widthStep = (maxWidth - minWidth) / this.widthCount;
@@ -36,6 +42,18 @@ class BoxCreateStrategy
 			var rightPoint = new egret.Point(maxWidth, minHeight + i * heightStep);
 			this.birthPoint.push(leftPoint);
 			this.birthPoint.push(rightPoint);
+		}
+	}
+
+	public Update(deltaTime: number)
+	{
+		this.emitLeftTime -= deltaTime;
+		if (this.emitLeftTime < 0)
+		{
+			this.emitLeftTime = this.emitInterval;
+			var randomBirthPos = this.GetRandomBirthPos();
+			var randomBoxType = this.GetRandomBoxType();
+			this.boxEmitter.EmitBox(randomBoxType, randomBirthPos, 12);
 		}
 	}
 

@@ -89,23 +89,30 @@ class TriangleBox extends Box
 		return BoxType.Square;
 	}
 
+	public CreateDisplay(): egret.DisplayObject
+	{
+		var shape = new egret.Shape();
+		shape.graphics.lineStyle(2, 0x00ff00);
+		shape.graphics.beginFill(0xFF0000, 0);
+		shape.graphics.moveTo(this.pointList[this.pointList.length - 1].x, 
+										   this.pointList[this.pointList.length - 1].y);
+										   
+		for (var i = 0; i < this.pointList.length; ++i)
+		{
+			shape.graphics.lineTo(this.pointList[i].x, this.pointList[i].y);
+		}
+		shape.graphics.endFill();
+		shape.x = this.initPos.x;
+		shape.y = this.initPos.y;
+		return shape;
+	}
+
 	public CreateBox()
 	{
 		var moveDir = new egret.Point(this.targetPos.x - this.initPos.x, this.targetPos.y - this.initPos.y);
 		moveDir.normalize(this.moveSpeed);
 
-		this.boxDisplayObj = new egret.Shape();
-		this.boxDisplayObj.graphics.lineStyle(2, 0x00ff00);
-		this.boxDisplayObj.graphics.beginFill(0xFF0000, 0);
-		this.boxDisplayObj.graphics.moveTo(this.pointList[this.pointList.length - 1].x, 
-										   this.pointList[this.pointList.length - 1].y);
-		for (var i = 0; i < this.pointList.length; ++i)
-		{
-			this.boxDisplayObj.graphics.lineTo(this.pointList[i].x, this.pointList[i].y);
-		}
-		this.boxDisplayObj.graphics.endFill();
-		this.boxDisplayObj.x = this.initPos.x;
-		this.boxDisplayObj.y = this.initPos.y;
+		this.boxDisplayObj = this.CreateDisplay();
 
 		this.healthDisplayObj = new egret.TextField();
 		this.healthDisplayObj.text = this.health.toString();

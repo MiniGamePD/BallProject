@@ -22,6 +22,7 @@ class BallEmitter
 	public multipleDirectionsCount = 0;
 
 	private ballEmitterSprite: egret.Bitmap;
+	private levelUpEvent: BallEmitterLevelUpEvent;
 
 	public constructor()
 	{
@@ -33,6 +34,7 @@ class BallEmitter
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
+		GameMain.GetInstance().AddEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 	}
 
 	private UnRegisterTouchEvent(): void
@@ -40,6 +42,7 @@ class BallEmitter
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
+		GameMain.GetInstance().RemoveEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 	}
 
 	private OnTouchEvent(evt: egret.TouchEvent): void
@@ -52,6 +55,25 @@ class BallEmitter
 		}
 	}
 	// 输入相关 end
+
+	private OnSpecialBoxEliminateEvent(evt: SpecialBoxEliminateEvent): void
+	{
+		if (evt != null)
+		{
+			if (evt.boxType == BoxType.SixMulDir)
+			{
+				this.SetMultipleDirections(5000, 6);
+			}
+			else if (evt.boxType == BoxType.FireUp)
+			{
+				this.EnterFireUp(5000);
+			}
+			else if (evt.boxType == BoxType.LevelUp)
+			{
+				this.SetLevel(this.level + 1);
+			}
+		}
+	}
 
 	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer)
 	{
@@ -73,9 +95,9 @@ class BallEmitter
 
 		this.RefreshBallEmitterSprite();
 	}
-	
+
 	private RefreshBallEmitterSprite()
-	{	
+	{
 		Tools.DetachDisplayObjFromParent(this.ballEmitterSprite);
 		if (this.multipleDirectionsCount > 0)
 		{
@@ -100,6 +122,13 @@ class BallEmitter
 	public SetLevel(level: number)
 	{
 		this.level = level;
+		if (this.levelUpEvent == undefined
+			|| this.levelUpEvent == null)
+		{
+			this.levelUpEvent = new BallEmitterLevelUpEvent();
+		}
+		this.levelUpEvent.curLevel = this.level;
+		GameMain.GetInstance().DispatchEvent(this.levelUpEvent);
 	}
 
 	public SetMultipleDirections(leftTime: number, dirCount: number)
@@ -107,6 +136,11 @@ class BallEmitter
 		this.multipleDirectionsLeftTime = leftTime;
 		this.multipleDirectionsCount = dirCount;
 		this.RefreshBallEmitterSprite();
+	}
+
+	public EnterFireUp(fireUpDuration: number)
+	{
+		this.fireUpLeftTime = fireUpDuration;
 	}
 
 	public GetEmitInterval()
@@ -129,10 +163,10 @@ class BallEmitter
 
 	public Update(deltaTime: number)
 	{
-		if (this.emitBallCount == 20)
-		{
-			this.SetMultipleDirections(10000, 6);
-		}
+		// if (this.emitBallCount == 20)
+		// {
+		// 	this.SetMultipleDirections(10000, 6);
+		// }
 
 		if (this.fireUpLeftTime > 0)
 		{
