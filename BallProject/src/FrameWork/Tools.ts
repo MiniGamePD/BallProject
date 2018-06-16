@@ -284,6 +284,11 @@ class Tools
 		return radians * 180 / Math.PI;
 	}
 
+	public static Angle2Radians(angel: number)
+	{
+		return Math.PI * angel / 180;
+	}
+
 	public static PointDistance(fromX: number, fromY: number, toX: number, toY: number): number
 	{
 		return Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
@@ -387,5 +392,16 @@ class Tools
 		{
 			disPlayObj.parent.removeChild(disPlayObj);
 		}
+	}
+
+	public static RotateDirection(dir: egret.Point, angle: number): egret.Point
+	{
+		var targetDir = new egret.Point(dir.x, dir.y);
+		var matrix = new egret.Matrix();
+		matrix.identity();
+		matrix.rotate(angle);
+		matrix.transformPoint(dir.x, dir.y, targetDir)
+		targetDir.normalize(1);
+		return targetDir;
 	}
 }

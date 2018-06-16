@@ -11,7 +11,7 @@ class BallMatchView extends GameView
         this.addChild(bg);
 
         this.CreateBattleGround();
-        this.CreateBallEmitterSprite();
+        // this.CreateBallEmitterSprite();
         this.CreateHUD();
     }
 

@@ -80,3 +80,7 @@ const Frame_Anim_Pill_Boom_Effect = ["Pill_Boom_01", "Pill_Boom_02", "Pill_Boom_
 // 弹球游戏相关
 const Collision_Layer_Ball = Math.pow(2,0);
 const Collision_Layer_Box =  Math.pow(2,1);
+
+const BallEmitCountPerSecondBase = 5;   // 基础发射频率（个/秒）
+const BallEmitCountPerLevelUp = 0.5;    // 每升一级增加的发射频率（个/秒）
+const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
