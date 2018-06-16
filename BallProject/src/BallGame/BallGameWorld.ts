@@ -4,6 +4,8 @@ class BallGameWorld
 	public factor: number = 1;
 	public center: egret.Point;
 
+	private debugDraw: p2DebugDraw;
+
 	public constructor()
 	{
 	}
@@ -17,12 +19,34 @@ class BallGameWorld
 		// this.world.setGlobalStiffness(Number.MAX_VALUE);
 		this.center = new egret.Point(GameMain.GetInstance().GetStageWidth() / 2, 
 									GameMain.GetInstance().GetStageHeight() / 2)
+
+		this.debugDraw = new p2DebugDraw(this.world);
+		this.createDebug();
 	}
+
+	private createDebug(): void {
+        //创建调试试图
+        this.debugDraw = new p2DebugDraw(this.world);
+        var sprite: egret.Sprite = new egret.Sprite();
+		GameMain.GetInstance().GetGameStage().addChild(sprite);
+        this.debugDraw.setSprite(sprite);
+
+        this.debugDraw.setLineWidth(0.02);
+        // sprite.x = GameMain.GetInstance().GetStageWidth()/2;
+        // sprite.y = GameMain.GetInstance().GetStageHeight()/2;
+        sprite.scaleX = 1;
+        sprite.scaleY = 1;
+    }
 
 	public Update(deltaTime: number)
 	{
 		this.world.step(deltaTime * 0.001);
 		this.SyncDisplayObj();
+		
+		if(this.debugDraw != null)
+		{
+			this.debugDraw.drawDebug();
+		}
 	}
 
 	public SyncDisplayObj()

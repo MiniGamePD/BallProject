@@ -1,3 +1,11 @@
+enum BoxType
+{
+	None,		//空
+	Square,		//正方形
+	Triangle,	//三角形
+	Circle		//圆形
+}
+
 class BoxEmitter
 {
 	private resModule: IResModule;    
@@ -57,8 +65,9 @@ class BoxEmitter
 	{	
 		++this.instanceId;
 		var id = this.instanceId;
-		var box = new Box();
-		box.Init(id, new egret.Point(birthPos.x, birthPos.y), this.center, health);
+		// var box = new SquareBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health);
+		// var box = new CircleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
+		var box = new TriangleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
 		GameMain.GetInstance().GetGameStage().addChild(box.boxDisplayObj);
 		GameMain.GetInstance().GetGameStage().addChild(box.healthDisplayObj);
 		this.ballGameWorld.world.addBody(box.phyBody);
@@ -118,13 +127,15 @@ class BoxEmitter
 			{
 				var boxA = this.boxList[i];
 				var boxB = this.boxList[j];
-				// if (boxA.phyBody.overlaps(boxB.phyBody))
-				var deltaX = Math.abs(boxA.boxDisplayObj.x - boxB.boxDisplayObj.x);
-				var deltaY = Math.abs(boxA.boxDisplayObj.y - boxB.boxDisplayObj.y);
-				if ( (deltaX < boxA.boxSize.x || deltaX < boxB.boxSize.x)
-					&& (deltaY < boxA.boxSize.y || deltaY < boxB.boxSize.y))
+				if (boxA.canMerge && boxB.canMerge)
 				{
-					this.MergeBox(boxA, boxB);
+					var deltaX = Math.abs(boxA.boxDisplayObj.x - boxB.boxDisplayObj.x);
+					var deltaY = Math.abs(boxA.boxDisplayObj.y - boxB.boxDisplayObj.y);
+					if ( (deltaX < boxA.boxSize.x || deltaX < boxB.boxSize.x)
+						&& (deltaY < boxA.boxSize.y || deltaY < boxB.boxSize.y))
+					{
+						this.MergeBox(boxA, boxB);
+					}
 				}
 			}
 		}

@@ -102,10 +102,17 @@ class BallEmitter
 
 	private ClearBall()
 	{
-		// for (var i = 0; i <this.ballList.length; ++i)
-		// {
-
-		// }
+		for (var i = 0; i < this.ballList.length; ++i)
+		{
+			if (this.ballList[i].displays[0].x < 0
+				|| this.ballList[i].displays[0].x > GameMain.GetInstance().GetStageWidth()
+				|| this.ballList[i].displays[0].y < 0
+				|| this.ballList[i].displays[0].y > GameMain.GetInstance().GetStageHeight())
+			{
+				Tools.DetachDisplayObjFromParent(this.ballList[i].displays[0]);
+				this.ballGameWorld.world.removeBody(this.ballList[i]);
+			}
+		}
 	}
 
 	public Release()
