@@ -2,6 +2,7 @@ class BallMatchView extends GameView
 {
     private hud:MatchHUD;
     private ballEmitterSprite:egret.Bitmap;
+    private battleGround:egret.DisplayObjectContainer;
 
     public CreateView(): void
     {
@@ -9,8 +10,8 @@ class BallMatchView extends GameView
         bg.touchEnabled = true;
         this.addChild(bg);
 
+        this.CreateBattleGround();
         this.CreateBallEmitterSprite();
-
         this.CreateHUD();
     }
 
@@ -29,10 +30,23 @@ class BallMatchView extends GameView
         this.ballEmitterSprite.y = GameMain.GetInstance().GetStageHeight() / 2;
         this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
         this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
-        this.addChild(this.ballEmitterSprite);
+        this.battleGround.addChild(this.ballEmitterSprite);
 
         this.ballEmitterSprite.touchEnabled = true;
         this.ballEmitterSprite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
+    }
+
+    private CreateBattleGround()
+    {
+        this.battleGround = new egret.DisplayObjectContainer();
+        this.battleGround.width = this.width;
+        this.battleGround.height = this.height;
+        this.addChild(this.battleGround);
+    }
+
+    public GetBattleGround():egret.DisplayObjectContainer
+    {
+        return this.battleGround;
     }
 
     private GameOver()

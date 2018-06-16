@@ -12,6 +12,8 @@ class BallEmitter
 	public ballRadius: number = 15;
 
 	public ballList: p2.Body[] = [];
+
+	public battleGround:egret.DisplayObjectContainer;
 	
 	public constructor()
 	{
@@ -40,9 +42,11 @@ class BallEmitter
 	}
 	// 输入相关 end
 
-	public Init(ballGameWorld: BallGameWorld)
+	public Init(ballGameWorld: BallGameWorld, battleGround:egret.DisplayObjectContainer)
 	{
 		this.ballGameWorld = ballGameWorld;
+
+		this.battleGround = battleGround;
 
 		this.resModule = <IResModule> GameMain.GetInstance().GetModule(ModuleType.RES);
 
@@ -92,7 +96,7 @@ class BallEmitter
 		display.anchorOffsetX = display.width / 2;
 		display.anchorOffsetY = display.height / 2;
 		ballBody.displays = [display];
-		GameMain.GetInstance().GetGameStage().addChild(display);
+		this.battleGround.addChild(display);
 		this.ballList.push(ballBody);
 	}
 
