@@ -62,12 +62,12 @@ class GameOverItem extends egret.DisplayObjectContainer
         title.y = -160; 
         this.reviveMenu.addChild(title);
 
-        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 16, "pd_res_json.ShareRevive", 570, 140, 
+        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 20, "pd_res_json.ShareRevive", 570, 140, 
             137, 100, this.OnClickRevive, this);
         reviveButton.y = -20;
         this.reviveMenu.addChild(reviveButton);
 
-        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 16, "pd_res_json.GameOver", 570, 140, 
+        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 20, "pd_res_json.GameOver", 570, 140, 
             137, 100, this.OnClickGiveup, this);
         giveUpButton.y = 140;
         this.reviveMenu.addChild(giveUpButton);
@@ -153,13 +153,13 @@ class GameOverItem extends egret.DisplayObjectContainer
         moreCoinText.size = 30;
         moreCoinText.textAlign = "left";
         moreCoinText.verticalAlign = "center";
-        moreCoinText.text = "可以，这很好玩";
+        moreCoinText.text = "这很好玩，分享一波";
         this.moreCoin.addChild(moreCoinText);
 
-        var moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.shangxiaxiao");
+        var moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
         moreCoinIcon.x = 206;
-        moreCoinIcon.width = 80;
-        moreCoinIcon.width = 80;
+        moreCoinIcon.width = 60;
+        moreCoinIcon.width = 49;
         moreCoinIcon.anchorOffsetX = moreCoinIcon.width / 2;
         moreCoinIcon.anchorOffsetY = moreCoinIcon.height / 2;
         this.moreCoin.addChild(moreCoinIcon);
@@ -184,10 +184,10 @@ class GameOverItem extends egret.DisplayObjectContainer
         lotteryText.text = "抽弹珠";
         this.lottery.addChild(lotteryText);
 
-        var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.shangxiaxiao");
+        var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.cash");
         lotteryIcon.x = 206;
-        lotteryIcon.width = 80;
-        lotteryIcon.width = 80;
+        lotteryIcon.width = 108;
+        lotteryIcon.height = 53;
         lotteryIcon.anchorOffsetX = lotteryIcon.width / 2;
         lotteryIcon.anchorOffsetY = lotteryIcon.height / 2;
         this.lottery.addChild(lotteryIcon);
