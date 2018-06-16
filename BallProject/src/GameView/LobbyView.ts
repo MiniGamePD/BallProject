@@ -11,6 +11,7 @@ class LobbyView extends GameView
     private ballAnimAccDir:number;
     private ballAnimSpeed:number;
     private ballAnimAcc:number;
+    private shop:ShopView;
 
     public CreateView(): void
     {
@@ -22,6 +23,7 @@ class LobbyView extends GameView
         this.CreateTitle();
         this.CreateLogo();
         this.CreateBall();
+        this.CreateShopView();
         this.PlayBgm();
         this.StartBallAnim();
     }
@@ -66,7 +68,7 @@ class LobbyView extends GameView
         this.addChild(button);
 
         var shop = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_ChangBall", 193, 82, 193, 82,
-            this.OnClickStartGame, this);
+            this.OnClickShop, this);
         shop.x = this.mStageWidth / 2 - 100;
         shop.y = 950;
         this.addChild(shop);
@@ -127,12 +129,28 @@ class LobbyView extends GameView
         this.ballAnimSpeed = 0;
         this.ballAnimAcc = 100;
     }
+
+    private CreateShopView()
+    {
+        this.shop = new ShopView();
+        this.shop.Init(this.OnCloseShop, this);
+    }
     
     private OnClickStartGame(): void
     {
         egret.log("OnClickStartGame");
 
         GameMain.GetInstance().SwitchGameState(GameStateType.Match);
+    }
+
+    private OnClickShop(callbackObj:any)
+    {
+        callbackObj.addChild(callbackObj.shop);
+    }
+
+    private OnCloseShop(callbackobj:any)
+    {
+        callbackobj.removeChild(callbackobj.shop);
     }
 
     private PlayParticle()

@@ -96,7 +96,7 @@ class PauseItem extends egret.DisplayObjectContainer
     private CreateHelpDetail()
     {
         var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
-        this.helpDetail = res.CreateBitmapByName("pd_res_json.NewBackGround");
+        this.helpDetail = res.CreateBitmapByName("pd_res_json.Help");
         this.helpDetail.width = GameMain.GetInstance().GetStageWidth() * 0.8;
         this.helpDetail.height = GameMain.GetInstance().GetStageHeight() * 0.8;
         this.helpDetail.anchorOffsetX = this.helpDetail.width / 2;
