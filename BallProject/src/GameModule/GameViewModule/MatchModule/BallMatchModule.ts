@@ -36,7 +36,7 @@ class BallMatchModule extends GameViewModule
         this.ballGameWorld.Init();
 
         this.ballEmitter = new BallEmitter();
-        this.ballEmitter.Init(this.ballGameWorld);
+        this.ballEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround());
 
         this.boxEmitter = new BoxEmitter();
         this.boxEmitter.Init(this.ballGameWorld);
