@@ -1,11 +1,16 @@
 class PauseItem extends egret.DisplayObjectContainer
 {
-    private pauseIcon:egret.Bitmap;
-
+    //暂停界面
     private bgCover:FullScreenCover;
+    private pauseIcon:egret.Bitmap;
     private pauseTitle:egret.DisplayObjectContainer;
     private continueButton:egret.DisplayObjectContainer;
     private gotoLobbyButton:egret.DisplayObjectContainer;
+
+    //帮助界面
+    private bgCoverHelp:FullScreenCover;
+    private helpDetail:egret.Bitmap;
+    private helpIcon:egret.TextField;
 
     public constructor(x:number, y:number, width:number, height:number)
     {
@@ -16,17 +21,47 @@ class PauseItem extends egret.DisplayObjectContainer
         this.width = width;
         this.height = height;
 
-        var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+        this.CreatePauseIcon();
+        this.CreateHelpIcon();
+        this.CreatePauseMenu(width, height);
+        this.CreateHelpDetail();
+    }
 
+    private CreatePauseIcon()
+    {
+        var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
         this.pauseIcon = res.CreateBitmapByName("pd_res_json.pause");
         this.pauseIcon.anchorOffsetX = this.pauseIcon.width / 2;
         this.pauseIcon.anchorOffsetY = this.pauseIcon.height / 2;
         this.pauseIcon.x = 50;
         this.pauseIcon.y = 50;
         GameMain.GetInstance().AdapteDisplayObject(this.pauseIcon);
+        //设置显示对象可以相应触摸事件
+        this.pauseIcon.touchEnabled = true;
+        //注册事件
+        this.pauseIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickPauseButton, this);
 
         this.addChild(this.pauseIcon);
+    }
 
+    private CreateHelpIcon()
+    {
+        this.helpIcon = new egret.TextField();
+        this.helpIcon.x = 100;
+        this.helpIcon.y = 25;
+        this.helpIcon.width = 50;
+        this.helpIcon.height = 50;
+        this.helpIcon.textAlign = "center";
+        this.helpIcon.text = "?";
+        this.helpIcon.size = 60;
+        this.addChild(this.helpIcon);
+
+        this.helpIcon.touchEnabled = true;
+        this.helpIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickHelp, this);
+    }
+
+    private CreatePauseMenu(width:number, height:number)
+    {
         this.bgCover = new FullScreenCover(0x000000, 0.8);
 
         this.pauseTitle = new egret.DisplayObjectContainer();
@@ -89,35 +124,71 @@ class PauseItem extends egret.DisplayObjectContainer
         this.continueButton.addChild(text);
     }
 
+    private CreateHelpDetail()
+    {
+        var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+        this.helpDetail = res.CreateBitmapByName("pd_res_json.NewBackGround");
+        this.helpDetail.width = GameMain.GetInstance().GetStageWidth() * 0.8;
+        this.helpDetail.height = GameMain.GetInstance().GetStageHeight() * 0.8;
+        this.helpDetail.anchorOffsetX = this.helpDetail.width / 2;
+        this.helpDetail.anchorOffsetY = this.helpDetail.height / 2;
+        this.helpDetail.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.helpDetail.y = GameMain.GetInstance().GetStageHeight() / 2;
+
+        this.bgCoverHelp = new FullScreenCover(0x000000, 0.8);
+        this.bgCoverHelp.touchEnabled = true;
+        this.bgCoverHelp.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnCloseHelp, this);
+    }
+
     public Init()
     {
-        GameMain.GetInstance().RegisterInGameTouchableUI(this.pauseIcon);
-
-        //设置显示对象可以相应触摸事件
-        this.pauseIcon.touchEnabled = true;
-        //注册事件
-        this.pauseIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnPauseTrue, this);
+        GameMain.GetInstance().AddEventListener(HUDEvent.EventName, this.OnHudEvent, this);
     }
 
     public Release()
     {
-        GameMain.GetInstance().UnregisterInGameTouchableUI(this.pauseIcon);
-
-        this.pauseIcon.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.OnPauseTrue, this);
+        GameMain.GetInstance().RemoveEventListener(HUDEvent.EventName, this.OnHudEvent, this);
     }
 
-    private OnPauseTrue()
+    private OnHudEvent(event:HUDEvent)
+    {
+        switch(event.eventType)
+        {
+            case HUDEventType.ShowPauseMenu:
+                this.ShowPauseMenu();
+                break;
+            case HUDEventType.HidePauseMenu:
+                this.HidePauseMenu();
+                break;
+            case HUDEventType.ShowHelpDetail:
+                this.ShowHelpDetail();
+                break;
+            case HUDEventType.HideHelpDetail:
+                this.HideHelpDetail();
+                break;
+            //Add More..
+        }
+    }
+
+    private OnPauseTrue(help:boolean)
     {
         var event = new PauseEvent();
         event.pause = true;
+        event.help = help;
         GameMain.GetInstance().DispatchEvent(event);
     }
 
-    private OnPauseFalse()
+    private OnPauseFalse(help:boolean)
     {
         var event = new PauseEvent();
         event.pause = false;
+        event.help = help;
         GameMain.GetInstance().DispatchEvent(event);
+    }
+
+    private OnClickPauseButton()
+    {
+        this.OnPauseTrue(false);
     }
 
     private OnClickBackToLobby(): void
@@ -136,7 +207,29 @@ class PauseItem extends egret.DisplayObjectContainer
             egret.log("OnClickContinue");
         }
        
-        this.OnPauseFalse();
+        this.OnPauseFalse(false);
+    }
+
+    private OnClickHelp()
+    {
+        this.OnPauseTrue(true);
+    }
+
+    private OnCloseHelp()
+    {
+        this.OnPauseFalse(true);
+    }
+
+    private ShowHelpDetail()
+    {
+        this.addChild(this.bgCoverHelp);
+        this.addChild(this.helpDetail);
+    }
+
+    private HideHelpDetail()
+    {
+        this.removeChild(this.bgCoverHelp);
+        this.removeChild(this.helpDetail);
     }
 
     public ShowPauseMenu()

@@ -5,21 +5,30 @@ class BallMatchModule extends GameViewModule
     private ballGameWorld: BallGameWorld;
     private ballEmitter: BallEmitter;
     private boxEmitter: BoxEmitter;
-
-    private pause:boolean;
+    private matchState: BallMatchState;
 
     protected CreateView(): boolean
     {
+        GameMain.GetInstance().AddEventListener(PauseEvent.EventName, this.OnPause, this);
+
         this.matchView = new BallMatchView();
         this.matchView.CreateView();
         this.gameViewList.push(this.matchView);
 
-        this.pause = false;
+        this.matchState = BallMatchState.playing;
 
         this.InitComponents();
 
         return true;
     }
+
+    public ReleaseView(): void
+	{
+		super.ReleaseView();
+		this.DeInitComponents();
+
+        GameMain.GetInstance().RemoveEventListener(PauseEvent.EventName, this.OnPause, this);
+	}
 
     private InitComponents()
     { 
@@ -41,18 +50,12 @@ class BallMatchModule extends GameViewModule
     public Update(deltaTime: number): void
 	{
 		super.Update(deltaTime);
-		if(!this.pause)
+		if(this.matchState == BallMatchState.playing)
 		{
 			this.ballGameWorld.Update(deltaTime);
 			this.ballEmitter.Update(deltaTime);
 			this.boxEmitter.Update(deltaTime);
 		}
-	}
-
-    public ReleaseView(): void
-	{
-		super.ReleaseView();
-		this.DeInitComponents();
 	}
 
     private DeInitComponents()
@@ -64,4 +67,34 @@ class BallMatchModule extends GameViewModule
         this.boxEmitter.Release();
         this.boxEmitter = null;
 	}
+
+    private OnPause(event:PauseEvent)
+	{
+		if(this.matchState == BallMatchState.gameover)
+			return;
+
+        var pause = this.matchState == BallMatchState.pause;
+
+		if(pause == event.pause)
+			return;
+
+        pause = event.pause;
+        this.matchState = pause ? BallMatchState.pause : BallMatchState.playing;
+
+		GameMain.GetInstance().SetPause(pause);
+
+		var hudEvent = new HUDEvent();
+        if(!event.help)
+		    hudEvent.eventType = pause ? HUDEventType.ShowPauseMenu : HUDEventType.HidePauseMenu;
+        else
+            hudEvent.eventType = pause ? HUDEventType.ShowHelpDetail : HUDEventType.HideHelpDetail;
+		GameMain.GetInstance().DispatchEvent(hudEvent);
+	}
+}
+
+enum BallMatchState
+{
+    playing,
+    pause,
+    gameover,
 }

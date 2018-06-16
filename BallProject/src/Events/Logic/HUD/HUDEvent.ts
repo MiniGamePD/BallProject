@@ -22,4 +22,6 @@ enum HUDEventType
     ShowComboEvaluation,
     ShowPauseMenu,
     HidePauseMenu,
+    ShowHelpDetail,
+    HideHelpDetail,
 }
