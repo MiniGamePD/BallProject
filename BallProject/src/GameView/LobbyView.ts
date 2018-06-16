@@ -47,11 +47,19 @@ class LobbyView extends GameView
         shape.graphics.endFill();
         //this.addChild(shape);
 
-        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B00, 6, 25, "pd_res_json.play", 250, 80, 50, 50,
+        
+
+        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_Play", 193, 82, 193, 82,
             this.OnClickStartGame, this);
-        button.x = this.mStageWidth / 2;
-        button.y = 1000;
+        button.x = this.mStageWidth / 2 + 100;
+        button.y = 950;
         this.addChild(button);
+
+        var shop = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_ChangBall", 193, 82, 193, 82,
+            this.OnClickStartGame, this);
+        shop.x = this.mStageWidth / 2 - 100;
+        shop.y = 950;
+        this.addChild(shop);
 
         //设置显示对象可以相应触摸事件
         shape.touchEnabled = true;
