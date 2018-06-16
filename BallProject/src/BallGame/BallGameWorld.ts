@@ -67,7 +67,7 @@ class BallGameWorld
 					displayObj.y = boxBody.position[1] * this.factor;
 					displayObj.rotation = 360 - (boxBody.angle + boxBody.shapes[0].angle) * 180 / Math.PI;
 					
-					if (DEBUG)
+					if (this.enableDebugDraw)
 					{
 						// 如果是sleep状态，改变一下Alpha
 						if (boxBody.sleepState == p2.Body.SLEEPING)

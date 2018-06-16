@@ -89,3 +89,6 @@ const BoxMoveSpeed = 20;
 
 const GameOverCenterSize = new egret.Point(70, 70);
 
+const SpecialBoxRandomBirthPos_Stage_Range = 0.5
+const SpecialBoxRandomBirthPos_Center_Offset = 300
+

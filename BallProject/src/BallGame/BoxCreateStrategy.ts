@@ -11,7 +11,11 @@ class BoxCreateStrategy
 	private extraHeight = 0;
 
 	public birthPoint: egret.Point[] = [];
-	
+	public specialBoxRandomBirthPosTemp = new egret.Point(0, 0);
+
+	public specialBoxInterval = 5000;
+	public specialBoxLeftTime = 0;
+
 	public constructor()
 	{
 	}
@@ -43,6 +47,8 @@ class BoxCreateStrategy
 			this.birthPoint.push(leftPoint);
 			this.birthPoint.push(rightPoint);
 		}
+
+		this.specialBoxLeftTime = Math.random() * this.specialBoxInterval; 
 	}
 
 	public Update(deltaTime: number)
@@ -55,6 +61,15 @@ class BoxCreateStrategy
 			var randomBoxType = this.GetRandomBoxType();
 			this.boxEmitter.EmitBox(randomBoxType, randomBirthPos, 12);
 		}
+
+		this.specialBoxLeftTime -= deltaTime;
+		if (this.specialBoxLeftTime < 0)
+		{
+			this.specialBoxLeftTime = this.specialBoxInterval;
+			var randomBirthPos = this.GetSpecialBoxRandomBirthPos();
+			var randomBoxType = this.GetSpecialBoxRandomType();
+			this.boxEmitter.EmitBox(randomBoxType, randomBirthPos, 10);
+		}
 	}
 
 	public GetRandomBirthPos(): egret.Point
@@ -66,5 +81,37 @@ class BoxCreateStrategy
 	public GetRandomBoxType(): BoxType
 	{
 		return Math.random() > 0.7 ? BoxType.Triangle : BoxType.Square;
+	}
+
+	public GetSpecialBoxRandomBirthPos()
+	{
+		this.specialBoxRandomBirthPosTemp.x = (Math.random() - 0.5) * GameMain.GetInstance().GetStageWidth() * SpecialBoxRandomBirthPos_Stage_Range;
+		this.specialBoxRandomBirthPosTemp.y = (Math.random() - 0.5) * GameMain.GetInstance().GetStageWidth() * SpecialBoxRandomBirthPos_Stage_Range;
+		this.specialBoxRandomBirthPosTemp.x += SpecialBoxRandomBirthPos_Center_Offset;
+		this.specialBoxRandomBirthPosTemp.y += SpecialBoxRandomBirthPos_Center_Offset;
+		return this.specialBoxRandomBirthPosTemp;
+	}
+
+	public GetSpecialBoxRandomType(): BoxType
+	{
+		var boxType;
+		var ran = Math.random();
+		if (ran < 0.25)
+		{
+			 boxType = BoxType.SixMulDir;
+		}
+		else if (ran < 0.5)
+		{
+			 boxType = BoxType.FireUp;
+		}
+		else if (ran < 0.75)
+		{
+			 boxType = BoxType.LevelUp;
+		}
+		else
+		{
+			 boxType = BoxType.GoldCoin;
+		}
+		return boxType;
 	}
 }
