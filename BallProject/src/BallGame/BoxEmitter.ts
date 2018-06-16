@@ -125,12 +125,12 @@ class BoxEmitter
 			if (box.health <= 0)
 			{
 				box.OnEliminate();
-				this.DeleteBox(box);
+				this.DeleteBox(box, true);
 			}
 		}
 	}
 
-	private DeleteBox(box: Box)
+	private DeleteBox(box: Box, detachDisplay: boolean)
 	{
 		if (box != null
 			&& box != undefined)
@@ -138,8 +138,12 @@ class BoxEmitter
 			var idx = this.boxList.indexOf(box);
 			if (idx >= 0)
 			{
-				Tools.DetachDisplayObjFromParent(box.boxDisplayObj);
-				Tools.DetachDisplayObjFromParent(box.healthDisplayObj);
+				if (detachDisplay)
+				{
+					Tools.DetachDisplayObjFromParent(box.boxDisplayObj);
+					Tools.DetachDisplayObjFromParent(box.healthDisplayObj);
+				}
+				
 				if (box.phyBody != null)
 				{
 					this.ballGameWorld.world.removeBody(box.phyBody);
@@ -198,7 +202,30 @@ class BoxEmitter
 			var nearBox = disA < disB ? boxA : boxB;
 			var farBox = disA < disB ? boxB : boxA;
 			farBox.changeHealth(nearBox.health);
-			this.DeleteBox(nearBox);
+
+			
+			var moveParam = new PaAccMovingParam()
+			moveParam.displayObj = nearBox.boxDisplayObj;
+			moveParam.attachDisplayObj =[nearBox.healthDisplayObj];
+			moveParam.startSpeed = 500;
+			moveParam.accelerate = 500;
+			moveParam.targetPos = new egret.Point(farBox.boxDisplayObj.x, farBox.boxDisplayObj.y);
+			moveParam.needRemoveOnFinish = true;
+			var moveEvent = new PlayProgramAnimationEvent();
+			moveEvent.param = moveParam;
+			GameMain.GetInstance().DispatchEvent(moveEvent);
+
+			var scaleParam = new PaScalingParam()
+			scaleParam.displayObj = nearBox.boxDisplayObj;
+			scaleParam.targetScaleX = 0;
+			scaleParam.targetScaleY = 0;
+			scaleParam.duration = 200;
+			scaleParam.interval = 200;
+			var scaleEvent = new PlayProgramAnimationEvent()
+			scaleEvent.param = scaleParam;
+			GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+			this.DeleteBox(nearBox, false);
 		}
 	}
 

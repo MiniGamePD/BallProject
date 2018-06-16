@@ -45,10 +45,13 @@ class PaAccMoving extends ProgramAnimationBase<PaAccMovingParam>
 			this.param.displayObj.y = this.param.startPos.y;
 			if (this.param.attachDisplayObj != null)
 			{
-				if (this.param.attachDisplayObj[i] != undefined && this.param.attachDisplayObj[i] != null)
+				for (var i = 0; i < this.param.attachDisplayObj.length; ++i)
 				{
-					this.param.attachDisplayObj[i].x = this.param.displayObj.x;
-					this.param.attachDisplayObj[i].y = this.param.displayObj.y;
+					if (this.param.attachDisplayObj[i] != undefined && this.param.attachDisplayObj[i] != null)
+					{
+						this.param.attachDisplayObj[i].x = this.param.displayObj.x;
+						this.param.attachDisplayObj[i].y = this.param.displayObj.y;
+					}
 				}
 			}
 		}
@@ -114,10 +117,13 @@ class PaAccMoving extends ProgramAnimationBase<PaAccMovingParam>
 	{
 		if (this.param.needRemoveOnFinish)
 		{
-			if (this.param.displayObj.parent != undefined
-				&& this.param.displayObj.parent != null)
+			Tools.DetachDisplayObjFromParent(this.param.displayObj);
+			if (this.param.attachDisplayObj != null)
 			{
-				this.param.displayObj.parent.removeChild(this.param.displayObj);
+				for (var i = 0; i < this.param.attachDisplayObj.length; ++i)
+				{
+					Tools.DetachDisplayObjFromParent(this.param.attachDisplayObj[i]);
+				}
 			}
 		}
 	}
