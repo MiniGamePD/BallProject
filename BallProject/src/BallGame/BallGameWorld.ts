@@ -38,7 +38,7 @@ class BallGameWorld
 				if (displayObj)
 				{
 					displayObj.x = boxBody.position[0] * this.factor;
-					displayObj.y = stageHeight - boxBody.position[1] * this.factor;
+					displayObj.y = boxBody.position[1] * this.factor;
 					displayObj.rotation = 360 - (boxBody.angle + boxBody.shapes[0].angle) * 180 / Math.PI;
 					
 					if (DEBUG)
