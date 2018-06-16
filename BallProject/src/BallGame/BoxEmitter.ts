@@ -17,14 +17,18 @@ class BoxEmitter
 	public boxList: Box[] = [];
 	public instanceId = 0;
 	public boxCreateStrategy: BoxCreateStrategy;
+
+	private battleGround:egret.DisplayObjectContainer;
 	
 	public constructor()
 	{
 	}
 
-	public Init(ballGameWorld: BallGameWorld)
+	public Init(ballGameWorld: BallGameWorld, battleGround:egret.DisplayObjectContainer)
 	{
 		this.ballGameWorld = ballGameWorld;
+
+		this.battleGround = battleGround;
 
 		this.resModule = <IResModule> GameMain.GetInstance().GetModule(ModuleType.RES);
 
@@ -68,8 +72,8 @@ class BoxEmitter
 		// var box = new SquareBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health);
 		// var box = new CircleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
 		var box = new TriangleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
-		GameMain.GetInstance().GetGameStage().addChild(box.boxDisplayObj);
-		GameMain.GetInstance().GetGameStage().addChild(box.healthDisplayObj);
+		this.battleGround.addChild(box.boxDisplayObj);
+		this.battleGround.addChild(box.healthDisplayObj);
 		this.ballGameWorld.world.addBody(box.phyBody);
 		this.boxList.push(box);
 	}

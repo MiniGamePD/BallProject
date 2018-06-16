@@ -39,7 +39,7 @@ class BallMatchModule extends GameViewModule
         this.ballEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround());
 
         this.boxEmitter = new BoxEmitter();
-        this.boxEmitter.Init(this.ballGameWorld);
+        this.boxEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround());
     }
 
     public SwitchForeOrBack(from: GameStateType, to: GameStateType): void
