@@ -17,9 +17,8 @@ class BoxEmitter
 	public boxList: Box[] = [];
 	public instanceId = 0;
 	public boxCreateStrategy: BoxCreateStrategy;
+	public battleGround:egret.DisplayObjectContainer;
 
-	private battleGround:egret.DisplayObjectContainer;
-	
 	public constructor()
 	{
 	}
@@ -51,7 +50,8 @@ class BoxEmitter
 		{
 			this.emitLeftTime = this.emitInterval;
 			var randomBirthPos = this.boxCreateStrategy.GetRandomBirthPos();
-			this.EmitBox(randomBirthPos, 12);
+			var randomBoxType = this.boxCreateStrategy.GetRandomBoxType();
+			this.EmitBox(randomBoxType, randomBirthPos, 12);
 		}
 
 		for (var i = 0; i < this.boxList.length; ++i)
@@ -65,13 +65,23 @@ class BoxEmitter
 		this.CheckBoxOverlay();
 	}
 
-	public EmitBox(birthPos: egret.Point, health: number)
+	public EmitBox(randomBoxType: BoxType, birthPos: egret.Point, health: number)
 	{	
 		++this.instanceId;
 		var id = this.instanceId;
-		// var box = new SquareBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health);
-		// var box = new CircleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
-		var box = new TriangleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
+		var box;
+		if (randomBoxType == BoxType.Square)
+		{
+			box = new SquareBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
+		}
+		else if (randomBoxType == BoxType.Circle)
+		{
+			box = new CircleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
+		}
+		else if (randomBoxType == BoxType.Triangle)
+		{
+			box = new TriangleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
+		}
 		this.battleGround.addChild(box.boxDisplayObj);
 		this.battleGround.addChild(box.healthDisplayObj);
 		this.ballGameWorld.world.addBody(box.phyBody);

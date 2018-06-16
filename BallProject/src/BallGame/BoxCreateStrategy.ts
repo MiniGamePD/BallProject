@@ -44,4 +44,9 @@ class BoxCreateStrategy
 		var ranIdx = Math.floor(Math.random() * this.birthPoint.length);
 		return this.birthPoint[ranIdx];
 	}
+
+	public GetRandomBoxType(): BoxType
+	{
+		return Math.random() > 0.7 ? BoxType.Triangle : BoxType.Square;
+	}
 }
