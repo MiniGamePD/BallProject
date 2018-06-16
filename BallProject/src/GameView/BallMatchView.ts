@@ -25,12 +25,12 @@ class BallMatchView extends GameView
     {
         var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 
-        this.ballEmitterSprite = res.CreateBitmapByName("pd_res_json.Virus_Blue_Idle1");
+        this.ballEmitterSprite = res.CreateBitmapByName("pd_res_json.zhangyue");
         this.ballEmitterSprite.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.ballEmitterSprite.y = GameMain.GetInstance().GetStageHeight() / 2;
         this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
         this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
-        this.battleGround.addChild(this.ballEmitterSprite);
+        this.addChild(this.ballEmitterSprite);
 
         this.ballEmitterSprite.touchEnabled = true;
         this.ballEmitterSprite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);

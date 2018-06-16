@@ -1,0 +1,38 @@
+{
+    "version": 5,
+    "files": [
+        "./Ball_White.png",
+        "./play.png",
+        "./Skill_FireUp.png",
+        "./Coin.png",
+        "./Skill_GoldCoin.png",
+        "./Skill_Pause.png",
+        "./Lobby_Play.png",
+        "./GameOver.png",
+        "./newball.png",
+        "./Lobby_Light_Red.png",
+        "./Skill_LvUp.png",
+        "./Skill_shandan.png",
+        "./Logo.png",
+        "./pause.png",
+        "./zhangyue.png",
+        "./Lobby_ChangBall.png",
+        "./Lobby_Light_Green.png",
+        "./Lobby_platfrom.png",
+        "./Home.png",
+        "./AdRevive.png",
+        "./ShareRevive.png",
+        "./Skill_zhanyu.png",
+        "./return.png",
+        "./Lobby_Light_Blue.png",
+        "./SelectBall_OK.png"
+    ],
+    "projectName": "pd_res",
+    "options": {
+        "layoutMath": "3",
+        "sizeMode": "2n",
+        "useExtension": 0,
+        "layoutGap": 1,
+        "extend": 0
+    }
+}

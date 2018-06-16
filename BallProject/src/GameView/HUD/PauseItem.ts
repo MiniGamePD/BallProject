@@ -77,7 +77,7 @@ class PauseItem extends egret.DisplayObjectContainer
         this.pauseTitle.addChild(textField);
 
         //回到大厅
-        var gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0x3F3F3FFF, 0, 16, "pd_res_json.xingxing1", 560, 130, 100, 100, 
+        var gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0x3F3F3FFF, 0, 16, "pd_res_json.Home", 560, 130, 70, 62, 
             this.OnClickBackToLobby, this);
         this.gotoLobbyButton = new egret.DisplayObjectContainer();
         this.gotoLobbyButton.x = GameMain.GetInstance().GetStageWidth() / 2;
@@ -85,7 +85,7 @@ class PauseItem extends egret.DisplayObjectContainer
         this.gotoLobbyButton.addChild(gotoLobby);
 
          //继续游戏
-        var con = new ShapeBgButton(ShapeBgType.RoundRect, 0x3F3F3FFF, 0, 16, "pd_res_json.xingxing1", 560, 130, 100, 100, 
+        var con = new ShapeBgButton(ShapeBgType.RoundRect, 0x3F3F3FFF, 0, 16, "pd_res_json.play", 560, 130, 56, 56, 
             this.OnClickContinue, this);
         this.continueButton = new egret.DisplayObjectContainer();
         this.continueButton.x = GameMain.GetInstance().GetStageWidth() / 2;

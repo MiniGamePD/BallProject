@@ -62,13 +62,13 @@ class GameOverItem extends egret.DisplayObjectContainer
         title.y = -160; 
         this.reviveMenu.addChild(title);
 
-        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 16, "pd_res_json.xingxing1", 570, 140, 
-            100, 100, this.OnClickRevive, this);
+        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 16, "pd_res_json.ShareRevive", 570, 140, 
+            137, 100, this.OnClickRevive, this);
         reviveButton.y = -20;
         this.reviveMenu.addChild(reviveButton);
 
-        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 16, "pd_res_json.xingxing1", 570, 140, 
-            100, 100, this.OnClickGiveup, this);
+        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 16, "pd_res_json.GameOver", 570, 140, 
+            137, 100, this.OnClickGiveup, this);
         giveUpButton.y = 140;
         this.reviveMenu.addChild(giveUpButton);
     }
@@ -124,7 +124,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     private CreateCoin()
     {
         this.coin = new egret.DisplayObjectContainer();
-        var coinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.FeverTime_xingxing");
+        var coinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
         coinIcon.width = 40;
         coinIcon.height = 40;
         this.coin.addChild(coinIcon);
@@ -198,7 +198,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private CreateGotoLobby()
     {
-        this.gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xEF0048FF, 0, 16, "pd_res_json.xingxing1", 560, 130, 100, 100,
+        this.gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xEF0048FF, 0, 16, "pd_res_json.Home", 560, 130, 70, 62,
             this.OnClickBackToLobby, this);
 
         this.gotoLobby.x = GameMain.GetInstance().GetStageWidth() / 2;

@@ -43,7 +43,7 @@ class LobbyView extends GameView
         shape.graphics.endFill();
         //this.addChild(shape);
 
-        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B00, 6, 25, "pd_res_json.Boom2", 250, 120, 50, 50,
+        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B00, 6, 25, "pd_res_json.play", 250, 120, 50, 50,
             this.OnClickStartGame, this);
         button.x = this.mStageWidth / 2;
         button.y = this.mStageHeight / 5 * 3.05;
@@ -54,22 +54,11 @@ class LobbyView extends GameView
         //注册事件
         shape.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickStartGame, this);
 
-        var text: egret.TextField = new egret.TextField();
-        text.text = "start game";
-        text.x = 0;
-        text.y = this.mStageHeight / 5 * 3;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.verticalAlign = egret.VerticalAlign.MIDDLE;
-        text.width = this.mStageWidth;
-        text.height = 100;
-        this.addChild(text);
-        
-
         // this.PlayParticle();
         // this.PlayParticleAnim();
         // this.AddMovePartical();
 
-        this.PlayLightningAnim(text);
+        this.PlayLightningAnim(shape);
         // this.PlayMoving(text);
         // this.PlayDynamicMoving();
 
