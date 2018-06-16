@@ -43,7 +43,7 @@ class LobbyView extends GameView
         shape.graphics.endFill();
         //this.addChild(shape);
 
-        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B, 6, 25, "pd_res_json.Boom2", 250, 120, 50, 50,
+        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0xAB0A0B00, 6, 25, "pd_res_json.Boom2", 250, 120, 50, 50,
             this.OnClickStartGame, this);
         button.x = this.mStageWidth / 2;
         button.y = this.mStageHeight / 5 * 3.05;

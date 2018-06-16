@@ -9,8 +9,13 @@ class ShapeBgButton extends ButtonBase
         super();
         this.bg = new egret.Shape();
         var temp = <egret.Shape>this.bg;
-        temp.graphics.lineStyle( bgThickness, bgColor );
-        temp.graphics.beginFill(0x000000, 0);
+        var bgColorRGB = bgColor / 256;
+        var bgColorAlpha = bgColor & 0x000000FF;
+        if(bgThickness > 0)
+        {
+            temp.graphics.lineStyle( bgThickness, bgColorRGB );
+        }
+        temp.graphics.beginFill(bgColorRGB, bgColorAlpha);
         if(shapeBgType == ShapeBgType.Rect)
             temp.graphics.drawRect(0,0,bgWidth,bgHeight);
         else if(shapeBgType == ShapeBgType.RoundRect)
@@ -22,15 +27,18 @@ class ShapeBgButton extends ButtonBase
         this.callbackObj = callbackObj;
         this.clickCallback = clickCallback;
 
-        var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
-        this.fg = res.CreateBitmapByName(fgPath);
-        this.fg.width = fgWidth;
-        this.fg.height = fgHeight;
-        this.fg.anchorOffsetX = fgWidth / 2;
-        this.fg.anchorOffsetY = fgHeight / 2;
-        this.fg.x = (bgWidth) / 2;
-        this.fg.y = (bgHeight) / 2;
-        this.addChild(this.fg);
+        if(fgPath != null)
+        {
+            var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+            this.fg = res.CreateBitmapByName(fgPath);
+            this.fg.width = fgWidth;
+            this.fg.height = fgHeight;
+            this.fg.anchorOffsetX = fgWidth / 2;
+            this.fg.anchorOffsetY = fgHeight / 2;
+            this.fg.x = (bgWidth) / 2;
+            this.fg.y = (bgHeight) / 2;
+            this.addChild(this.fg);
+        }
 
         this.width = bgWidth;
         this.height = bgHeight;

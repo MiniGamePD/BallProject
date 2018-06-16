@@ -30,6 +30,15 @@ class BallMatchView extends GameView
         this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
         this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
         this.addChild(this.ballEmitterSprite);
+
+        this.ballEmitterSprite.touchEnabled = true;
+        this.ballEmitterSprite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
+    }
+
+    private GameOver()
+    {
+        let event = new GameOverEvent();            
+        GameMain.GetInstance().DispatchEvent(event);
     }
 
     private DeleteBallEmitterSprite()
