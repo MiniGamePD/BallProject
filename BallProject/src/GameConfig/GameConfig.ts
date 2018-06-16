@@ -86,6 +86,7 @@ const BallEmitCountPerLevelUp = 0.5;    // 每升一级增加的发射频率（�
 const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
 
 const BoxMoveSpeed = 20;
+const BoxHitHideCDTime = 30;
 
 const GameOverCenterSize = new egret.Point(70, 70);
 

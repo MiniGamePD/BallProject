@@ -117,6 +117,7 @@ class BallEmitter
 			this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
 			this.battleGround.addChild(this.ballEmitterSprite);
 		}
+		this.ballEmitterSprite.rotation = -90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y);
 	}
 
 	public SetLevel(level: number)

@@ -15,7 +15,7 @@ abstract class Box
 	public color: number;
 
 	public isHide = false;
-	public hideTime = 0.1;
+	public hideCDTime = 0;
 
 	public canMerge: boolean = false;
 
@@ -47,9 +47,15 @@ abstract class Box
 
 	public Update(deltaTime: number)
 	{
-		if (this.isHide)
+
+		if (this.hideCDTime > 0)
 		{
-			this.SetHide(false);
+			this.hideCDTime -= deltaTime;
+			if (this.hideCDTime <= 0
+				&& this.isHide)
+			{
+				this.SetHide(false);
+			}
 		}
 	}
 
@@ -77,19 +83,23 @@ abstract class Box
 
 	public SetHide(hide: boolean)
 	{
-		this.isHide = hide;
-		var alpha = this.isHide ? 0 : 1;
-
-		if (this.boxDisplayObj != undefined
-			&& this.boxDisplayObj != null)
+		if (this.hideCDTime <= 0)
 		{
-			this.boxDisplayObj.alpha = alpha;
-		}
+			this.hideCDTime = BoxHitHideCDTime;
+			this.isHide = hide;
+			var alpha = this.isHide ? 0 : 1;
 
-		if (this.healthDisplayObj != undefined
-			&& this.healthDisplayObj != null)
-		{
-			this.healthDisplayObj.alpha = alpha;
+			if (this.boxDisplayObj != undefined
+				&& this.boxDisplayObj != null)
+			{
+				this.boxDisplayObj.alpha = alpha;
+			}
+
+			if (this.healthDisplayObj != undefined
+				&& this.healthDisplayObj != null)
+			{
+				this.healthDisplayObj.alpha = alpha;
+			}
 		}
 	}
 }
