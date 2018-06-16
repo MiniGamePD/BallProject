@@ -70,58 +70,27 @@ class PauseItem extends egret.DisplayObjectContainer
         textField.y = height / 4;
         textField.width = width;
         textField.height = 100;
-        textField.rotation = -5;
         textField.fontFamily = "Impact";
-        textField.size *= 2;
+        textField.size = 60;
         textField.textAlign = "center";
         textField.text = "暂停";
         this.pauseTitle.addChild(textField);
 
         //回到大厅
+        var gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0x3F3F3FFF, 0, 16, "pd_res_json.xingxing1", 560, 130, 100, 100, 
+            this.OnClickBackToLobby, this);
         this.gotoLobbyButton = new egret.DisplayObjectContainer();
-        var shape: egret.Shape = new egret.Shape();
-        shape.graphics.beginFill(0x00A2E8);
-        shape.graphics.drawRect(width / 2 - 100, height / 5 * 3, 200, 100);
-        shape.graphics.endFill();
-        this.gotoLobbyButton.addChild(shape);
+        this.gotoLobbyButton.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.gotoLobbyButton.y = 600;
+        this.gotoLobbyButton.addChild(gotoLobby);
 
-        //设置显示对象可以相应触摸事件
-        shape.touchEnabled = true;
-        //注册事件
-        shape.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickBackToLobby, this);
-
-        var text: egret.TextField = new egret.TextField();
-        text.text = "回到大厅";
-        text.x = 0;
-        text.y = height / 5 * 3;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.verticalAlign = egret.VerticalAlign.MIDDLE;
-        text.width = width;
-        text.height = 100;
-        this.gotoLobbyButton.addChild(text);
-
-        //继续游戏
+         //继续游戏
+        var con = new ShapeBgButton(ShapeBgType.RoundRect, 0x3F3F3FFF, 0, 16, "pd_res_json.xingxing1", 560, 130, 100, 100, 
+            this.OnClickContinue, this);
         this.continueButton = new egret.DisplayObjectContainer();
-        var shape: egret.Shape = new egret.Shape();
-        shape.graphics.beginFill(0x00A2E8);
-        shape.graphics.drawRect(width / 2 - 100, height / 5 * 2, 200, 100);
-        shape.graphics.endFill();
-        this.continueButton.addChild(shape);
-
-        //设置显示对象可以相应触摸事件
-        shape.touchEnabled = true;
-        //注册事件
-        shape.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickContinue, this);
-
-        var text: egret.TextField = new egret.TextField();
-        text.text = "继续游戏";
-        text.x = 0;
-        text.y = height / 5 * 2;
-        text.textAlign = egret.HorizontalAlign.CENTER;
-        text.verticalAlign = egret.VerticalAlign.MIDDLE;
-        text.width = width;
-        text.height = 100;
-        this.continueButton.addChild(text);
+        this.continueButton.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.continueButton.y = 750;
+        this.continueButton.addChild(con);
     }
 
     private CreateHelpDetail()
@@ -191,23 +160,14 @@ class PauseItem extends egret.DisplayObjectContainer
         this.OnPauseTrue(false);
     }
 
-    private OnClickBackToLobby(): void
+    private OnClickBackToLobby()
     {
-        if(DEBUG)
-        {
-            egret.log("OnClickBackToLobby");
-        }
         GameMain.GetInstance().SwitchGameState(GameStateType.Lobby);
     }
 
-    private OnClickContinue(): void
+    private OnClickContinue(callbackObj:any)
     {
-        if(DEBUG)
-        {
-            egret.log("OnClickContinue");
-        }
-       
-        this.OnPauseFalse(false);
+        callbackObj.OnPauseFalse(false);
     }
 
     private OnClickHelp()
