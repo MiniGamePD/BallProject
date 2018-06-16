@@ -7,6 +7,10 @@ class LobbyView extends GameView
     private particleSys: particle.GravityParticleSystem;
     private title:egret.Bitmap;
     private logo:egret.Bitmap;
+    private ball:egret.Bitmap;
+    private ballAnimAccDir:number;
+    private ballAnimSpeed:number;
+    private ballAnimAcc:number;
 
     public CreateView(): void
     {
@@ -17,7 +21,13 @@ class LobbyView extends GameView
         this.LoadBackGround();
         this.CreateTitle();
         this.CreateLogo();
+        this.CreateBall();
         this.PlayBgm();
+        this.StartBallAnim();
+    }
+
+    public ReleaseView(): void 
+    { 
     }
 
     private LoadBackGround()
@@ -98,6 +108,26 @@ class LobbyView extends GameView
         this.addChild(this.logo);
     }
 
+    private CreateBall()
+    {
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+        this.ball = res.CreateBitmapByName("pd_res_json." + playerData.GetBall());
+        this.ball.x = 430;
+        this.ball.y = 450;
+        this.ball.width = 50;
+        this.ball.height = 50;
+
+        this.addChild(this.ball);
+    }
+
+    private StartBallAnim()
+    {
+        this.ballAnimAccDir = -1;
+        this.ballAnimSpeed = 0;
+        this.ballAnimAcc = 100;
+    }
+    
     private OnClickStartGame(): void
     {
         egret.log("OnClickStartGame");
@@ -120,9 +150,11 @@ class LobbyView extends GameView
 
     public UpdateView(deltaTime: number): void
     { 
-        if (this.particleSys != null)
+        this.ballAnimSpeed += this.ballAnimAcc * this.ballAnimAccDir * 16 / 1000;
+        this.ball.y += this.ballAnimSpeed  * 16 / 1000;
+        if(Math.abs(this.ballAnimSpeed) >= 50 || Math.abs(this.ballAnimSpeed) <= 0)
         {
-            // this.particleSys.emitterX += deltaTime * 0.1;
+            this.ballAnimAccDir *= -1;
         }
     }
 
