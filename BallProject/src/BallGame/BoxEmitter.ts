@@ -50,7 +50,7 @@ class BoxEmitter
 			}
 		} 
 
-		// this.CheckBoxOverlay();
+		this.CheckBoxOverlay();
 	}
 
 	public EmitBox(birthPos: egret.Point, health: number)
@@ -118,7 +118,11 @@ class BoxEmitter
 			{
 				var boxA = this.boxList[i];
 				var boxB = this.boxList[j];
-				if (boxA.phyBody.overlaps(boxB.phyBody))
+				// if (boxA.phyBody.overlaps(boxB.phyBody))
+				var deltaX = Math.abs(boxA.boxDisplayObj.x - boxB.boxDisplayObj.x);
+				var deltaY = Math.abs(boxA.boxDisplayObj.y - boxB.boxDisplayObj.y);
+				if ( (deltaX < boxA.boxSize.x || deltaX < boxB.boxSize.x)
+					&& (deltaY < boxA.boxSize.y || deltaY < boxB.boxSize.y))
 				{
 					this.MergeBox(boxA, boxB);
 				}
@@ -164,13 +168,13 @@ class BoxEmitter
 				this.OnHitBox(box);
             }
 
-			if (shapeA.collisionGroup == Collision_Layer_Box
-				&& shapeB.collisionGroup == Collision_Layer_Box)
-            {
-				var boxA = this.GetBoxById(shapeA.id);
-				var boxB = this.GetBoxById(shapeB.id);
-				this.MergeBox(boxA, boxB);
-			}
+			// if (shapeA.collisionGroup == Collision_Layer_Box
+			// 	&& shapeB.collisionGroup == Collision_Layer_Box)
+            // {
+			// 	var boxA = this.GetBoxById(shapeA.id);
+			// 	var boxB = this.GetBoxById(shapeB.id);
+			// 	this.MergeBox(boxA, boxB);
+			// }
         }
     }
 

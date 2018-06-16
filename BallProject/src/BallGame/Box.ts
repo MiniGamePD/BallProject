@@ -62,7 +62,7 @@ class Box
 		this.phyShape = new p2.Box({ width: this.boxSize.x, height: this.boxSize.y });
 		this.phyShape.id = this.id;
 		this.phyShape.collisionGroup = Collision_Layer_Box;
-		this.phyShape.collisionMask = Collision_Layer_Ball | Collision_Layer_Box;
+		this.phyShape.collisionMask = Collision_Layer_Ball;
 		this.phyBody = new p2.Body({id: this.id,
 			mass: this.boxMass, position: [this.initPos.x, this.initPos.y],
 			velocity: [moveDir.x, moveDir.y], type: p2.Body.KINEMATIC
