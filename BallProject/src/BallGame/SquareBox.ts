@@ -1,9 +1,10 @@
 class SquareBox extends Box
 {
-	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number)
+	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number, width: number)
 	{
 		super(id, initPos, targetPos, health);
 		this.canMerge = true;
+		this.boxSize = new egret.Point(width, width);
 		this.CreateBox();
 		this.SetColor(0x00ff00);
 	}

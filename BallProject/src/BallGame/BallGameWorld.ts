@@ -5,6 +5,7 @@ class BallGameWorld
 	public center: egret.Point;
 
 	private debugDraw: p2DebugDraw;
+	private enableDebugDraw = false;
 
 	public constructor()
 	{
@@ -20,8 +21,11 @@ class BallGameWorld
 		this.center = new egret.Point(GameMain.GetInstance().GetStageWidth() / 2, 
 									GameMain.GetInstance().GetStageHeight() / 2)
 
-		this.debugDraw = new p2DebugDraw(this.world);
-		this.createDebug();
+		if (this.enableDebugDraw)
+		{
+			this.debugDraw = new p2DebugDraw(this.world);
+			this.createDebug();
+		}
 	}
 
 	private createDebug(): void {
@@ -32,8 +36,6 @@ class BallGameWorld
         this.debugDraw.setSprite(sprite);
 
         this.debugDraw.setLineWidth(0.02);
-        // sprite.x = GameMain.GetInstance().GetStageWidth()/2;
-        // sprite.y = GameMain.GetInstance().GetStageHeight()/2;
         sprite.scaleX = 1;
         sprite.scaleY = 1;
     }
@@ -43,7 +45,7 @@ class BallGameWorld
 		this.world.step(deltaTime * 0.001);
 		this.SyncDisplayObj();
 		
-		if(this.debugDraw != null)
+		if(this.enableDebugDraw && this.debugDraw != null)
 		{
 			this.debugDraw.drawDebug();
 		}
@@ -85,5 +87,6 @@ class BallGameWorld
 
 	public Release()
 	{
+		this.world.clear();
 	}
 }

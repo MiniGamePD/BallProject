@@ -11,7 +11,8 @@ class TriangleBox extends Box
 	public triangleBoxType: TriangleBoxType;
 	public width: number;
 	public pointList: egret.Point[];
-	public centerOffset: egret.Point; 
+	public healthOffset: egret.Point; 
+	private healthOffsetRate = 0.2;
 
 	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number, width: number)
 	{
@@ -58,38 +59,29 @@ class TriangleBox extends Box
 			this.pointList.push(leftBottom);
 			this.pointList.push(leftTop);
 			this.pointList.push(rightTop);
-			this.centerOffset = new egret.Point(-this.width / 4, -this.width / 4);
+			this.healthOffset = new egret.Point(-this.width * this.healthOffsetRate, -this.width * this.healthOffsetRate);
 		}
 		else if (this.triangleBoxType == TriangleBoxType.LeftBottom)
 		{
 			this.pointList.push(rightBottom);
 			this.pointList.push(leftBottom);
 			this.pointList.push(leftTop);
-			this.centerOffset = new egret.Point(-this.width / 4, this.width / 4);
+			this.healthOffset = new egret.Point(-this.width * this.healthOffsetRate, this.width * this.healthOffsetRate);
 		}
 		else if (this.triangleBoxType == TriangleBoxType.RightBottom)
 		{
 			this.pointList.push(rightTop);
 			this.pointList.push(rightBottom);
 			this.pointList.push(leftBottom);
-			this.centerOffset = new egret.Point(this.width / 4, this.width / 4);
+			this.healthOffset = new egret.Point(this.width * this.healthOffsetRate, this.width * this.healthOffsetRate);
 		}
 		else if (this.triangleBoxType == TriangleBoxType.RightTop)
 		{
 			this.pointList.push(leftTop);
 			this.pointList.push(rightTop);
 			this.pointList.push(rightBottom);
-			this.centerOffset = new egret.Point(this.width / 4, -this.width / 4);
+			this.healthOffset = new egret.Point(this.width * this.healthOffsetRate, -this.width * this.healthOffsetRate);
 		}
-
-		// this.centerOffset = new egret.Point(0,0);
-		// for (var i = 0; i < this.pointList.length; ++i)
-		// {
-		// 	this.centerOffset.x += this.pointList[i].x;
-		// 	this.centerOffset.y += this.pointList[i].y;
-		// }
-		// this.centerOffset.x /= this.pointList.length;
-		// this.centerOffset.y /= this.pointList.length;
 	}
 
 	public GetBoxType(): BoxType
@@ -117,12 +109,12 @@ class TriangleBox extends Box
 
 		this.healthDisplayObj = new egret.TextField();
 		this.healthDisplayObj.text = this.health.toString();
-		this.healthDisplayObj.x = this.initPos.x + this.centerOffset.x;
-		this.healthDisplayObj.y = this.initPos.y+ this.centerOffset.y;
-		this.healthDisplayObj.width = this.boxSize.x;
-		this.healthDisplayObj.height = this.boxSize.y;
-		this.healthDisplayObj.anchorOffsetX = this.healthDisplayObj.width / 2;
-		this.healthDisplayObj.anchorOffsetY = this.healthDisplayObj.height / 2;
+		this.healthDisplayObj.x = this.initPos.x;
+		this.healthDisplayObj.y = this.initPos.y;
+		this.healthDisplayObj.width = this.width;
+		this.healthDisplayObj.height = this.width;
+		this.healthDisplayObj.anchorOffsetX = this.width / 2 - this.healthOffset.x;
+		this.healthDisplayObj.anchorOffsetY = this.width / 2 - this.healthOffset.y;
 		this.healthDisplayObj.textAlign = egret.HorizontalAlign.CENTER;
 		this.healthDisplayObj.verticalAlign = egret.VerticalAlign.MIDDLE;
 
