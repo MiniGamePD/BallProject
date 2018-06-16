@@ -8,7 +8,7 @@ enum BoxType
 
 class BoxEmitter
 {
-	private resModule: IResModule;    
+	private resModule: IResModule;
 
 	public ballGameWorld: BallGameWorld;
 	public emitInterval = 1000;
@@ -17,19 +17,19 @@ class BoxEmitter
 	public boxList: Box[] = [];
 	public instanceId = 0;
 	public boxCreateStrategy: BoxCreateStrategy;
-	public battleGround:egret.DisplayObjectContainer;
+	public battleGround: egret.DisplayObjectContainer;
 
 	public constructor()
 	{
 	}
 
-	public Init(ballGameWorld: BallGameWorld, battleGround:egret.DisplayObjectContainer)
+	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer)
 	{
 		this.ballGameWorld = ballGameWorld;
 
 		this.battleGround = battleGround;
 
-		this.resModule = <IResModule> GameMain.GetInstance().GetModule(ModuleType.RES);
+		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 
 		this.center = this.ballGameWorld.center;
 
@@ -60,13 +60,14 @@ class BoxEmitter
 			{
 				this.boxList[i].Update(deltaTime);
 			}
-		} 
+		}
 
 		this.CheckBoxOverlay();
+		this.CheckGameOver();
 	}
 
 	public EmitBox(randomBoxType: BoxType, birthPos: egret.Point, health: number)
-	{	
+	{
 		++this.instanceId;
 		var id = this.instanceId;
 		var box;
@@ -93,7 +94,7 @@ class BoxEmitter
 		for (var i = 0; i < this.boxList.length; ++i)
 		{
 			if (this.boxList[i] != null
-			&& this.boxList[i].id == id)
+				&& this.boxList[i].id == id)
 			{
 				return this.boxList[i];
 			}
@@ -103,7 +104,7 @@ class BoxEmitter
 
 	private OnHitBox(box: Box)
 	{
-		if (box != null 
+		if (box != null
 			&& box != undefined)
 		{
 			box.changeHealth(-1);
@@ -116,7 +117,7 @@ class BoxEmitter
 
 	private DeleteBox(box: Box)
 	{
-		if (box != null 
+		if (box != null
 			&& box != undefined)
 		{
 			var idx = this.boxList.indexOf(box);
@@ -133,6 +134,22 @@ class BoxEmitter
 		}
 	}
 
+	private CheckGameOver()
+	{
+		for (var i = 0; i < this.boxList.length; ++i)
+		{
+			var boxA = this.boxList[i];
+			var centerSizeScale = (boxA.GetBoxType() == BoxType.Triangle) ? 0.5 : 1;
+			var deltaX = Math.abs(boxA.boxDisplayObj.x - this.center.x);
+			var deltaY = Math.abs(boxA.boxDisplayObj.y - this.center.y);
+			if (deltaX < GameOverCenterSize.x * centerSizeScale && deltaY < GameOverCenterSize.y * centerSizeScale)
+			{
+				let event = new GameOverEvent();
+				GameMain.GetInstance().DispatchEvent(event);
+			}
+		}
+	}
+
 	private CheckBoxOverlay()
 	{
 		for (var i = 0; i < this.boxList.length; ++i)
@@ -145,7 +162,7 @@ class BoxEmitter
 				{
 					var deltaX = Math.abs(boxA.boxDisplayObj.x - boxB.boxDisplayObj.x);
 					var deltaY = Math.abs(boxA.boxDisplayObj.y - boxB.boxDisplayObj.y);
-					if ( (deltaX < boxA.boxSize.x || deltaX < boxB.boxSize.x)
+					if ((deltaX < boxA.boxSize.x || deltaX < boxB.boxSize.x)
 						&& (deltaY < boxA.boxSize.y || deltaY < boxB.boxSize.y))
 					{
 						this.MergeBox(boxA, boxB);
@@ -171,37 +188,37 @@ class BoxEmitter
 	}
 
 	private OnBeginContact(event)
-    {
-        var shapeA: p2.Shape = event.shapeA;
-        var shapeB: p2.Shape = event.shapeB;
-        var bodyA: p2.Body = event.bodyA;
-        var bodyB: p2.Body = event.bodyB;
+	{
+		var shapeA: p2.Shape = event.shapeA;
+		var shapeB: p2.Shape = event.shapeB;
+		var bodyA: p2.Body = event.bodyA;
+		var bodyB: p2.Body = event.bodyB;
 
-        if (shapeA != null
-            && shapeB != null)
-        {
-            if (shapeA.collisionGroup == Collision_Layer_Box
+		if (shapeA != null
+			&& shapeB != null)
+		{
+			if (shapeA.collisionGroup == Collision_Layer_Box
 				&& shapeB.collisionGroup == Collision_Layer_Ball)
-            {
-                var box = this.GetBoxById(shapeA.id);
+			{
+				var box = this.GetBoxById(shapeA.id);
 				this.OnHitBox(box);
-            }
+			}
 			if (shapeA.collisionGroup == Collision_Layer_Ball
 				&& shapeB.collisionGroup == Collision_Layer_Box)
-            {
-                var box = this.GetBoxById(shapeB.id);
+			{
+				var box = this.GetBoxById(shapeB.id);
 				this.OnHitBox(box);
-            }
+			}
 
 			// if (shapeA.collisionGroup == Collision_Layer_Box
 			// 	&& shapeB.collisionGroup == Collision_Layer_Box)
-            // {
+			// {
 			// 	var boxA = this.GetBoxById(shapeA.id);
 			// 	var boxB = this.GetBoxById(shapeB.id);
 			// 	this.MergeBox(boxA, boxB);
 			// }
-        }
-    }
+		}
+	}
 
 	public Release()
 	{
