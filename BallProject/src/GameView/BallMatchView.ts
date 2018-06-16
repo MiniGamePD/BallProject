@@ -13,12 +13,24 @@ class BallMatchView extends GameView
         this.CreateBattleGround();
         this.CreatePlayerLv();
         this.CreateHUD();
+        this.RegisterEvent();
     }
+
+    private RegisterEvent(): void
+	{
+		GameMain.GetInstance().AddEventListener(BallEmitterLevelUpEvent.EventName, this.OnBallEmitterLevelUpEvent, this);
+	}
+
+	private UnRegisterEvent(): void
+	{
+		GameMain.GetInstance().RemoveEventListener(BallEmitterLevelUpEvent.EventName, this.OnBallEmitterLevelUpEvent, this);
+	}
 
     public ReleaseView(): void 
     {
         this.DeletePlayerLv();
         this.DeleteHUD();
+        this.UnRegisterEvent();
     }
 
     private CreatePlayerLv()
@@ -37,6 +49,11 @@ class BallMatchView extends GameView
 
         this.playerLv.touchEnabled = true;
         this.playerLv.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
+    }
+    
+    private OnBallEmitterLevelUpEvent(event: BallEmitterLevelUpEvent)
+    {
+        this.playerLv.text = "Lv. " + event.curLevel;
     }
 
     private CreateBattleGround()

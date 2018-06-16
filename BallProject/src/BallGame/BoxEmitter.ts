@@ -3,7 +3,11 @@ enum BoxType
 	None,		//空
 	Square,		//正方形
 	Triangle,	//三角形
-	Circle		//圆形
+	Circle,		//圆形
+	SixMulDir,  //6方向攻击道具
+	FireUp,		//全力开火道具
+	LevelUp,    //升级道具
+	GoldCoin,	//获取金币道具
 }
 
 class BoxEmitter
@@ -11,8 +15,7 @@ class BoxEmitter
 	private resModule: IResModule;
 
 	public ballGameWorld: BallGameWorld;
-	public emitInterval = 1000;
-	public emitLeftTime = 0;
+
 	public center: egret.Point;
 	public boxList: Box[] = [];
 	public instanceId = 0;
@@ -40,19 +43,12 @@ class BoxEmitter
 		this.ballGameWorld.world.on("beginContact", this.OnBeginContact, this);
 
 		this.boxCreateStrategy = new BoxCreateStrategy();
-		this.boxCreateStrategy.Init();
+		this.boxCreateStrategy.Init(this);
 	}
 
 	public Update(deltaTime: number)
 	{
-		this.emitLeftTime -= deltaTime;
-		if (this.emitLeftTime < 0)
-		{
-			this.emitLeftTime = this.emitInterval;
-			var randomBirthPos = this.boxCreateStrategy.GetRandomBirthPos();
-			var randomBoxType = this.boxCreateStrategy.GetRandomBoxType();
-			this.EmitBox(randomBoxType, randomBirthPos, 12);
-		}
+		this.boxCreateStrategy.Update(deltaTime);
 
 		for (var i = 0; i < this.boxList.length; ++i)
 		{
@@ -71,6 +67,7 @@ class BoxEmitter
 		++this.instanceId;
 		var id = this.instanceId;
 		var box;
+		
 		if (randomBoxType == BoxType.Square)
 		{
 			box = new SquareBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
@@ -83,6 +80,23 @@ class BoxEmitter
 		{
 			box = new TriangleBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
 		}
+		else if (randomBoxType == BoxType.SixMulDir)
+		{
+			box = new SixMulDirBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
+		}
+		else if (randomBoxType == BoxType.FireUp)
+		{
+			box = new FireUpBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
+		}
+		else if (randomBoxType == BoxType.LevelUp)
+		{
+			box = new LevelUpBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
+		}
+		else if (randomBoxType == BoxType.GoldCoin)
+		{
+			box = new GoldCoinBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
+		}
+
 		this.battleGround.addChild(box.boxDisplayObj);
 		this.battleGround.addChild(box.healthDisplayObj);
 		this.ballGameWorld.world.addBody(box.phyBody);
@@ -110,6 +124,7 @@ class BoxEmitter
 			box.changeHealth(-1);
 			if (box.health <= 0)
 			{
+				box.OnEliminate();
 				this.DeleteBox(box);
 			}
 		}

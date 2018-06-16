@@ -1,38 +1,47 @@
-class CircleBox extends Box
+class SkillCricleBoxBase extends Box
 {
 	public radius: number;
 	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number, radius: number)
 	{
 		super(id, initPos, targetPos, health)
-
+		this.canMerge = false;
 		this.radius = radius;
-		this.canMerge = true;
 
 		this.CreateBox();
-		this.SetColor(0x00ff00);
+		this.SetColor(0xffffff);
 	}
 
 	public GetBoxType(): BoxType
 	{
-		return BoxType.Circle;
+		return BoxType.None;
+	}
+
+	public GetSkillBitmapName(): string
+	{
+		if (DEBUG)
+		{
+			console.assert(false, "Can not instance SkillCricleBox!");
+		}
+		return "";
 	}
 
 	public CreateDisplay(): egret.DisplayObject
 	{
-		var shape = new egret.Shape();
-		shape.graphics.lineStyle(2, 0x00ff00);
-		shape.graphics.beginFill(0xFF0000, 0);
-		shape.graphics.drawCircle(0, 0, this.radius);
-		shape.graphics.endFill();
+		var resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+		var shape = resModule.CreateBitmapByName(this.GetSkillBitmapName());
+		shape.width = this.radius * 2;
+		shape.height = this.radius * 2;
 		shape.x = this.initPos.x;
 		shape.y = this.initPos.y;
+		shape.anchorOffsetX = this.radius;
+		shape.anchorOffsetY = this.radius;
 		return shape;
 	}
 
 	public CreateBox()
 	{
-		var moveDir = new egret.Point(this.targetPos.x - this.initPos.x, this.targetPos.y - this.initPos.y);
-		moveDir.normalize(this.moveSpeed);
+		// var moveDir = new egret.Point(this.targetPos.x - this.initPos.x, this.targetPos.y - this.initPos.y);
+		// moveDir.normalize(this.moveSpeed);
 
 		this.boxDisplayObj = this.CreateDisplay();
 
@@ -43,7 +52,7 @@ class CircleBox extends Box
 		this.healthDisplayObj.width = this.radius * 2;
 		this.healthDisplayObj.height = this.radius * 2;
 		this.healthDisplayObj.anchorOffsetX = this.healthDisplayObj.width / 2;
-		this.healthDisplayObj.anchorOffsetY = this.healthDisplayObj.height / 2;
+		this.healthDisplayObj.anchorOffsetY = this.healthDisplayObj.height / 2 - 18;
 		this.healthDisplayObj.textAlign = egret.HorizontalAlign.CENTER;
 		this.healthDisplayObj.verticalAlign = egret.VerticalAlign.MIDDLE;
 
@@ -54,10 +63,17 @@ class CircleBox extends Box
 		this.phyBody = new p2.Body({
 			id: this.id,
 			mass: this.boxMass, position: [this.initPos.x, this.initPos.y],
-			velocity: [moveDir.x, moveDir.y], type: p2.Body.KINEMATIC
+			/*velocity: [moveDir.x, moveDir.y],*/ type: p2.Body.KINEMATIC
 		});
 		this.phyBody.collisionResponse = true;
 		this.phyBody.addShape(this.phyShape);
 		this.phyBody.displays = [this.boxDisplayObj, this.healthDisplayObj];
+	}
+
+	public OnEliminate()
+	{
+		var event = new SpecialBoxEliminateEvent()
+		event.boxType = this.GetBoxType();
+		GameMain.GetInstance().DispatchEvent(event);
 	}
 }
