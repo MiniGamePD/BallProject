@@ -10,6 +10,7 @@ class BallMatchModule extends GameViewModule
     protected CreateView(): boolean
     {
         GameMain.GetInstance().AddEventListener(PauseEvent.EventName, this.OnPause, this);
+        GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOver, this);
 
         this.matchView = new BallMatchView();
         this.matchView.CreateView();
@@ -28,6 +29,7 @@ class BallMatchModule extends GameViewModule
 		this.DeInitComponents();
 
         GameMain.GetInstance().RemoveEventListener(PauseEvent.EventName, this.OnPause, this);
+        GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOver, this);
 	}
 
     private InitComponents()
@@ -90,6 +92,11 @@ class BallMatchModule extends GameViewModule
             hudEvent.eventType = pause ? HUDEventType.ShowHelpDetail : HUDEventType.HideHelpDetail;
 		GameMain.GetInstance().DispatchEvent(hudEvent);
 	}
+
+    private OnGameOver()
+    {
+        this.matchState = BallMatchState.gameover;
+    }
 }
 
 enum BallMatchState
