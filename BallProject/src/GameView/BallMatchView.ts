@@ -1,7 +1,7 @@
 class BallMatchView extends GameView
 {
     private hud:MatchHUD;
-    private ballEmitterSprite:egret.Bitmap;
+    private playerLv:egret.TextField;
     private battleGround:egret.DisplayObjectContainer;
 
     public CreateView(): void
@@ -11,29 +11,32 @@ class BallMatchView extends GameView
         this.addChild(bg);
 
         this.CreateBattleGround();
-        // this.CreateBallEmitterSprite();
+        this.CreatePlayerLv();
         this.CreateHUD();
     }
 
     public ReleaseView(): void 
     {
-        this.DeleteBallEmitterSprite();
+        this.DeletePlayerLv();
         this.DeleteHUD();
     }
 
-    private CreateBallEmitterSprite()
+    private CreatePlayerLv()
     {
-        var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+        this.playerLv = new egret.TextField();
+        this.playerLv.text = "Lv. 1";
+        this.playerLv.size = 30;
+        this.playerLv.width = 200;
+        this.playerLv.height = 60;
+        this.playerLv.anchorOffsetX = this.playerLv.width / 2;
+        this.playerLv.anchorOffsetY = this.playerLv.height / 2;
+        this.playerLv.textAlign = "center";
+        this.playerLv.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.playerLv.y = GameMain.GetInstance().GetStageHeight() / 2 + 100;
+        this.addChild(this.playerLv);
 
-        this.ballEmitterSprite = res.CreateBitmapByName("pd_res_json.zhangyue");
-        this.ballEmitterSprite.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.ballEmitterSprite.y = GameMain.GetInstance().GetStageHeight() / 2;
-        this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
-        this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
-        this.addChild(this.ballEmitterSprite);
-
-        this.ballEmitterSprite.touchEnabled = true;
-        this.ballEmitterSprite.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
+        this.playerLv.touchEnabled = true;
+        this.playerLv.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
     }
 
     private CreateBattleGround()
@@ -55,10 +58,10 @@ class BallMatchView extends GameView
         GameMain.GetInstance().DispatchEvent(event);
     }
 
-    private DeleteBallEmitterSprite()
+    private DeletePlayerLv()
     {
-        this.removeChild(this.ballEmitterSprite);
-        this.ballEmitterSprite = null;
+        this.removeChild(this.playerLv);
+        this.playerLv = null;
     }
 
     private CreateHUD()
@@ -75,5 +78,10 @@ class BallMatchView extends GameView
     {
         this.hud.Release();
         this.hud = null;
+    }
+
+    public SetLevel(level:number)
+    {
+        this.playerLv.text = "Lv. " + level;
     }
 } 

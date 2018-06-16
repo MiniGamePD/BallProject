@@ -33,5 +33,6 @@ enum ModuleType{
 	PROGRAM_ANIMATION,
 	LOBBY,
 	MATCH,
+	PLAYER_DATA,
 	MAX
 }
