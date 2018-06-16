@@ -87,7 +87,7 @@ class BallEmitter
 		ballBody.addShape(ballShape);
 		this.ballGameWorld.world.addBody(ballBody);
 
-		var display = this.resModule.CreateBitmapByName("Pill_Single_Yellow");
+		var display = this.resModule.CreateBitmapByName("Ball_White");
 		display.width = (<p2.Circle>ballShape).radius * 1.5 * this.ballGameWorld.factor;
 		display.height = (<p2.Circle>ballShape).radius * 1.5 * this.ballGameWorld.factor;
 		display.x = this.emitPos.x;
