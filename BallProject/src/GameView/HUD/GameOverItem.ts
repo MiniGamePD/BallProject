@@ -153,7 +153,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         moreCoinText.size = 30;
         moreCoinText.textAlign = "left";
         moreCoinText.verticalAlign = "center";
-        moreCoinText.text = "这很好玩，分享一波";
+        moreCoinText.text = "挺好玩的，分享一波";
         this.moreCoin.addChild(moreCoinText);
 
         var moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
@@ -184,13 +184,23 @@ class GameOverItem extends egret.DisplayObjectContainer
         lotteryText.text = "抽弹珠";
         this.lottery.addChild(lotteryText);
 
-        var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.cash");
-        lotteryIcon.x = 206;
-        lotteryIcon.width = 108;
-        lotteryIcon.height = 53;
+        var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
+        lotteryIcon.x = 166;
+        lotteryIcon.y = 5;
+        lotteryIcon.width = 40;
+        lotteryIcon.height = 40;
         lotteryIcon.anchorOffsetX = lotteryIcon.width / 2;
         lotteryIcon.anchorOffsetY = lotteryIcon.height / 2;
         this.lottery.addChild(lotteryIcon);
+
+        var costText = new egret.TextField();
+        costText.x = 195;
+        costText.y = -10;
+        costText.size = 30;
+        costText.textAlign = "left";
+        costText.verticalAlign = "center";
+        costText.text = "100";
+        this.lottery.addChild(costText);
 
         this.lottery.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.lottery.y = 610;
