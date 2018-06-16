@@ -6,7 +6,7 @@ abstract class Box
 	public boxSize: egret.Point;
 	public targetPos: egret.Point;
 	public boxMass = 20000;
-	public moveSpeed: number = 20;
+	public moveSpeed: number = BoxMoveSpeed;
 
 	public boxDisplayObj: egret.Shape;
 	public healthDisplayObj: egret.TextField;
@@ -27,6 +27,7 @@ abstract class Box
 		this.initPos = initPos;
 		this.boxSize = new egret.Point(80, 80);
 		this.targetPos = targetPos;
+		this.moveSpeed = BoxMoveSpeed;
 	}
 
 	public abstract GetBoxType(): BoxType;
@@ -64,6 +65,11 @@ abstract class Box
 		this.health = this.health < 0 ? 0 : this.health;
 		this.SetHide(true);
 		this.RefreshDisplay();
+	}
+
+	public OnEliminate()
+	{
+
 	}
 
 	public RefreshDisplay()

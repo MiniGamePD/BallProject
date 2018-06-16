@@ -84,3 +84,8 @@ const Collision_Layer_Box =  Math.pow(2,1);
 const BallEmitCountPerSecondBase = 5;   // 基础发射频率（个/秒）
 const BallEmitCountPerLevelUp = 0.5;    // 每升一级增加的发射频率（个/秒）
 const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
+
+const BoxMoveSpeed = 20;
+
+const GameOverCenterSize = new egret.Point(70, 70);
+
