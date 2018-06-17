@@ -31,6 +31,7 @@ class MatchHUD extends egret.DisplayObjectContainer
 
         this.pause.Release();
         this.gameover.Release();
+        this.score.Release();
 
         GameMain.GetInstance().RemoveEventListener(HUDEvent.EventName, this.OnHUDEvent, this);
     }

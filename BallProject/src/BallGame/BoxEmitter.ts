@@ -27,6 +27,8 @@ class BoxEmitter
 	public hitSoundCdTime = 0;
 	public boxPauseLeftTime = 0;
 
+	public boxEliminateEvent: BoxEliminateEvent;
+
 	public constructor()
 	{
 	}
@@ -51,6 +53,8 @@ class BoxEmitter
 
 		this.boxCreateStrategy = new BoxCreateStrategy();
 		this.boxCreateStrategy.Init(this);
+
+		this.boxEliminateEvent = new BoxEliminateEvent(); 
 
 		this.RegisterEvent();
 	}
@@ -227,6 +231,10 @@ class BoxEmitter
 			if (box.health <= 0)
 			{
 				box.OnEliminate();
+				
+				this.boxEliminateEvent.boxType = box.GetBoxType();
+				GameMain.GetInstance().DispatchEvent(this.boxEliminateEvent);
+
 				this.DeleteBox(box, true);
 			}
 		}
