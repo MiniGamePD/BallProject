@@ -299,11 +299,6 @@ class GameOverItem extends egret.DisplayObjectContainer
             egret.log("OnClickRevive");
         }
 
-        var canclePauseEvent = new PauseEvent();
-        canclePauseEvent.pause = false;
-        canclePauseEvent.help = false;
-        GameMain.GetInstance().DispatchEvent(canclePauseEvent);
-
         var event = new ReviveEvent();
         GameMain.GetInstance().DispatchEvent(event);
     }
