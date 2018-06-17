@@ -411,4 +411,8 @@ class Tools
 		return BoxColorPool[randomIdx];
 	}
 
+	public static RandomInterval(minInterval: number, maxInterval: number)
+	{
+		return Math.floor(Math.random() * (maxInterval - minInterval) + minInterval);
+	}
 }

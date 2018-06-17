@@ -1,7 +1,9 @@
 class BoxCreateStrategy
 {
 	private boxEmitter: BoxEmitter;
-	public emitInterval = 1000;
+
+	public runTime = 0;
+	public emitInterval = 1500;
 	public emitLeftTime = 0;
 
 	private widthCount = 5;
@@ -13,8 +15,7 @@ class BoxCreateStrategy
 	public birthPoint: egret.Point[] = [];
 	public specialBoxRandomBirthPosTemp = new egret.Point(0, 0);
 
-	public specialBoxInterval = 5000;
-	public specialBoxLeftTime = 0;
+	public specialBoxStrategy: SpecialBoxStrategy[];
 
 	public constructor()
 	{
@@ -23,6 +24,8 @@ class BoxCreateStrategy
 	public Init(boxEmitter: BoxEmitter)
 	{
 		this.boxEmitter = boxEmitter;
+
+		this.runTime = 0;
 
 		var minWidth = -this.extraWidth;
 		var maxWidth = GameMain.GetInstance().GetStageWidth() + this.extraWidth;
@@ -48,28 +51,27 @@ class BoxCreateStrategy
 			this.birthPoint.push(rightPoint);
 		}
 
-		this.specialBoxLeftTime = Math.random() * this.specialBoxInterval; 
+		this.CreateSpecialBoxStrategy(); 
 	}
 
 	public Update(deltaTime: number)
 	{
+		this.runTime += deltaTime;
 		this.emitLeftTime -= deltaTime;
 		if (this.emitLeftTime < 0)
 		{
 			this.emitLeftTime = this.emitInterval;
 			var randomBirthPos = this.GetRandomBirthPos();
 			var randomBoxType = this.GetRandomBoxType();
-			this.boxEmitter.EmitBox(randomBoxType, randomBirthPos, 12);
+			this.boxEmitter.EmitBox(randomBoxType, randomBirthPos, this.GetRandomBoxHealth());
 		}
 
-		this.specialBoxLeftTime -= deltaTime;
-		if (this.specialBoxLeftTime < 0)
-		{
-			this.specialBoxLeftTime = this.specialBoxInterval;
-			var randomBirthPos = this.GetSpecialBoxRandomBirthPos();
-			var randomBoxType = this.GetSpecialBoxRandomType();
-			this.boxEmitter.EmitBox(randomBoxType, randomBirthPos, 10);
-		}
+		this.UpdateSpecialBoxStrategy(deltaTime);
+	}
+
+	public GetRandomBoxHealth(): number
+	{
+		return Math.floor(this.runTime * 0.001 * 0.5)  + 1;
 	}
 
 	public GetRandomBirthPos(): egret.Point
@@ -92,26 +94,48 @@ class BoxCreateStrategy
 		return this.specialBoxRandomBirthPosTemp;
 	}
 
-	public GetSpecialBoxRandomType(): BoxType
+	public CreateSpecialBoxStrategy()
 	{
-		var boxType;
-		var ran = Math.random();
-		if (ran < 0.25)
+		this.specialBoxStrategy = [];
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.SixMulDir, 28000, 32000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.FireUp, 38000, 42000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.LevelUp, 14000, 16000, 10));
+	}
+
+	private UpdateSpecialBoxStrategy(deltaTime: number)
+	{
+		for (var i = 0; i < this.specialBoxStrategy.length; ++i)
 		{
-			 boxType = BoxType.SixMulDir;
+			this.specialBoxStrategy[i].createLeftTime -= deltaTime;
+			if (this.specialBoxStrategy[i].createLeftTime <= 0)
+			{
+				this.specialBoxStrategy[i].ResetLeftTime();
+				var randomBirthPos = this.GetSpecialBoxRandomBirthPos();
+				this.boxEmitter.EmitBox(this.specialBoxStrategy[i].boxType, randomBirthPos, this.specialBoxStrategy[i].health);
+			}
 		}
-		else if (ran < 0.5)
-		{
-			 boxType = BoxType.FireUp;
-		}
-		else if (ran < 0.75)
-		{
-			 boxType = BoxType.LevelUp;
-		}
-		else
-		{
-			 boxType = BoxType.GoldCoin;
-		}
-		return boxType;
+	}
+}
+
+class SpecialBoxStrategy
+{
+	public boxType: BoxType;
+	public minInterval: number;
+	public maxInterval: number;
+	public createLeftTime: number; 
+	public health: number;
+
+	public constructor(boxType: BoxType, minInterval: number, maxInterval: number, health: number)
+	{
+		this.boxType = boxType;
+		this.minInterval = minInterval;
+		this.maxInterval = maxInterval;
+		this.health = health;
+		this.ResetLeftTime();
+	}
+
+	public ResetLeftTime()
+	{
+		this.createLeftTime = Tools.RandomInterval(this.minInterval, this.maxInterval);
 	}
 }

@@ -91,7 +91,7 @@ class TriangleBox extends Box
 	public CreateDisplay(): egret.DisplayObject
 	{
 		var shape = new egret.Shape();
-		shape.graphics.lineStyle(2, this.color);
+		shape.graphics.lineStyle(BoxLineWidth, this.color);
 		shape.graphics.beginFill(this.color, 0);
 		shape.graphics.moveTo(this.pointList[this.pointList.length - 1].x, 
 										   this.pointList[this.pointList.length - 1].y);

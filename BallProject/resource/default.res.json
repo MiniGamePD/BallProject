@@ -198,14 +198,14 @@
 			"name": "AddFeverPower_mp3"
 		},
 		{
-			"name": "ballEmit_mp3",
+			"url": "assets/Sound/ballEmit.mp3",
 			"type": "sound",
-			"url": "assets/Sound/ballEmit.mp3"
+			"name": "ballEmit_mp3"
 		},
 		{
-			"name": "hitBox_mp3",
+			"url": "assets/Sound/hitBox.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox.mp3"
+			"name": "hitBox_mp3"
 		}
 	]
 }
