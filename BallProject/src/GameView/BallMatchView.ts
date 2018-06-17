@@ -26,6 +26,11 @@ class BallMatchView extends GameView
 		GameMain.GetInstance().RemoveEventListener(BallEmitterLevelUpEvent.EventName, this.OnBallEmitterLevelUpEvent, this);
 	}
 
+    public UpdateView(deltaTime: number): void 
+    {
+        this.hud.Update(deltaTime);
+    }
+
     public ReleaseView(): void 
     {
         this.DeletePlayerLv();

@@ -42,6 +42,8 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 		this.addChild(this.historyHighScoreText);
 
 		this.Reset();
+
+		GameMain.GetInstance().AddEventListener(BoxEliminateEvent.EventName, this.OnBoxEliminateEvent, this);
 	}
 
 	public Update(deltaTime: number)
@@ -91,5 +93,23 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 	{
 		this.SetScore(0);
 		this.SetHistoryHighScore(0);
+	}
+
+	private AddScore(score: number)
+	{
+		this.SetScore(this.targetScore + score);	
+	}
+
+	private OnBoxEliminateEvent(evt: BoxEliminateEvent): void
+	{
+		if (evt != null)
+		{
+			this.AddScore(ScorePerBox);
+		}
+	}
+
+	public Release()
+	{
+		GameMain.GetInstance().RemoveEventListener(BoxEliminateEvent.EventName, this.OnBoxEliminateEvent, this);
 	}
 }
