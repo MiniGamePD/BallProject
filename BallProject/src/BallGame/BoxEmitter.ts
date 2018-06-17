@@ -58,11 +58,13 @@ class BoxEmitter
 	private RegisterEvent(): void
 	{
 		GameMain.GetInstance().AddEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
+		GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
 	}
 
 	private UnRegisterEvent(): void
 	{
 		GameMain.GetInstance().RemoveEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
+		GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
 	}
 
 	private OnSpecialBoxEliminateEvent(evt: SpecialBoxEliminateEvent): void
@@ -78,6 +80,14 @@ class BoxEmitter
 		}
 	}
 
+	private OnReviveEvent(evt: ReviveEvent): void
+	{
+		if (evt != null)
+		{
+			this.ClearAllBox();
+		}
+	}
+
 	private SetBoxPause(pause: boolean)
 	{
 		for (var i = 0; i < this.boxList.length; ++i)
@@ -85,6 +95,21 @@ class BoxEmitter
 			if (this.boxList[i] != null)
 			{
 				this.boxList[i].Pause(pause);
+			}
+		}
+	}
+
+	public ClearAllBox()
+	{
+		for (var i = 0; i < this.boxList.length; ++i)
+		{
+			if (this.boxList[i] != null)
+			{
+				var deleteResult = this.DeleteBox(this.boxList[i], true);
+				if (deleteResult)
+				{
+					--i;
+				}
 			}
 		}
 	}
@@ -207,7 +232,7 @@ class BoxEmitter
 		}
 	}
 
-	private DeleteBox(box: Box, detachDisplay: boolean)
+	private DeleteBox(box: Box, detachDisplay: boolean): boolean
 	{
 		if (box != null
 			&& box != undefined)
@@ -226,8 +251,10 @@ class BoxEmitter
 					this.ballGameWorld.world.removeBody(box.phyBody);
 				}
 				this.boxList.splice(idx, 1);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private CheckGameOver()
