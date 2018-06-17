@@ -117,6 +117,13 @@ class Main extends egret.DisplayObjectContainer
         }
     }
 
+    public async PlayerLogin()
+    {
+        await platform.login();
+        //const userInfo = await platform.getUserInfo();
+        //console.log(userInfo);
+    } 
+
     private async runGame() {
         await this.loadResource()
         this.createGameScene();

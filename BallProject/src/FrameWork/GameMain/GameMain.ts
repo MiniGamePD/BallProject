@@ -331,4 +331,13 @@ class GameMain implements IGameMain {
 	{
 		return this.pause;
 	}
+
+	public PlayerLogin()
+	{
+		console.log("GameMain.PlayerLogin");
+
+		this.mEgretMain.PlayerLogin().catch(e => {
+            console.log(e);
+        })
+	}
 }

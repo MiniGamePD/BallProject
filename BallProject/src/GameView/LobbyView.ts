@@ -26,6 +26,8 @@ class LobbyView extends GameView
         this.CreateShopView();
         this.PlayBgm();
         this.StartBallAnim();
+
+        GameMain.GetInstance().PlayerLogin();
     }
 
     public ReleaseView(): void 
