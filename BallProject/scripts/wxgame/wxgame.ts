@@ -29,9 +29,24 @@ export class WxgamePlugin implements plugins.Command {
                 if (filename == "libs/modules/eui/eui.js" || filename == 'libs/modules/eui/eui.min.js') {
                     content += ";window.eui = eui;"
                 }
+
+                console.log(filename);
+
+                if (filename == "libs/modules/Particle/Particle.js" || filename == 'libs/modules/Particle/Particle.min.js') {
+                    content += ";window.particle = particle;"
+                }
+
                 if (filename == 'libs/modules/dragonBones/dragonBones.js' || filename == 'libs/modules/dragonBones/dragonBones.min.js') {
                     content += ';window.dragonBones = dragonBones';
                 }
+
+                if (filename == 'libs/modules/physics/physics.js' || filename == 'libs/modules/pyhsics/physics.min.js') {
+                    content = content.replace("!function (a) { if (\"object\" == typeof exports)", 
+                        "!function (a) { if (\"object\" == typeof exports){");
+                    content = content.replace("module.exports = a();",
+                        "var temp = a();\nmodule.exports = temp;\nwindow.p2 = temp;\n}");
+                }
+
                 content = "var egret = window.egret;" + content;
                 if (filename == 'main.js') {
                     content += ";window.Main = Main;"

@@ -176,16 +176,22 @@ class LobbyView extends GameView
         }
     }
 
+    private static hasPlayedBgm:boolean = false;
+
     private PlayBgm()
     {
-        // var event: PlaySoundEvent = new PlaySoundEvent("bgm_mp3", -1);
-        // event.SoundType = egret.Sound.MUSIC;
-        // GameMain.GetInstance().DispatchEvent(event);
+        if(LobbyView.hasPlayedBgm)
+            return;
 
-        var event = new BgmControlEvent();
-        event.bgmStage = BgmStage.Global;
-        event.controlType = BgmControlType.Play;
+        LobbyView.hasPlayedBgm = true;
+
+        var event: PlaySoundEvent = new PlaySoundEvent("bgm_mp3", -1);
         GameMain.GetInstance().DispatchEvent(event);
+
+        // var event = new BgmControlEvent();
+        // event.bgmStage = BgmStage.Global;
+        // event.controlType = BgmControlType.Play;
+        // GameMain.GetInstance().DispatchEvent(event);
     }
 
     private PlayLightningAnim(displayObj: egret.DisplayObject)
