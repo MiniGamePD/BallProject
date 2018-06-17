@@ -70,7 +70,11 @@ class ShapeBgButton extends ButtonBase
     protected OnButtonResponseAnimFinish()
     {
         this.clickResponseAnimTimer = null;
-        this.clickCallback(this.callbackObj);
+        if (this.clickCallback != null
+            && this.clickCallback != undefined)
+        {
+            this.clickCallback(this.callbackObj);
+        }
     }
 }
 
