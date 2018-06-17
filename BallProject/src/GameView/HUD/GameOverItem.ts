@@ -148,7 +148,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     {
         this.moreCoin = new egret.DisplayObjectContainer();
 
-        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x212121FF, 0, 16, null, 560, 130, 0, 0, this.OnClickMoreCoin, this);
+        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 560, 130, 0, 0, this.OnClickMoreCoin, this);
         this.moreCoin.addChild(bgButton);
 
         var moreCoinText = new egret.TextField();
@@ -176,7 +176,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     {
         this.lottery = new egret.DisplayObjectContainer();
 
-        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x212121FF, 0, 16, null, 560, 130, 0, 0, this.OnClickLottery, this);
+        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 560, 130, 0, 0, this.OnClickLottery, this);
         this.lottery.addChild(bgButton);
 
         var lotteryText = new egret.TextField();
@@ -212,7 +212,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private CreateGotoLobby()
     {
-        this.gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xEF0048FF, 0, 16, "pd_res_json.Home", 560, 130, 70, 62,
+        this.gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xEF004800, 6, 16, "pd_res_json.Home", 560, 130, 70, 62,
             this.OnClickBackToLobby, this);
 
         this.gotoLobby.x = GameMain.GetInstance().GetStageWidth() / 2;

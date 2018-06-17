@@ -22,22 +22,22 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 		//得分数字
 		this.scoreText = new egret.TextField();
 		this.scoreText.x = 220;
-		this.scoreText.y = 30;
+		this.scoreText.y = 70;
 		this.scoreText.width = 200;
 		this.scoreText.height = 100;
 		this.scoreText.size = 30;
-		this.scoreText.text = "得分:0";
+		this.scoreText.text = "得分：0";
 		this.scoreText.textAlign = "center";
 		this.addChild(this.scoreText);
 
 		//历史最高分数字
 		this.historyHighScoreText = new egret.TextField();
-		this.historyHighScoreText.x = 440;
+		this.historyHighScoreText.x = 220;
 		this.historyHighScoreText.y = 30;
 		this.historyHighScoreText.width = 200;
 		this.historyHighScoreText.height = 100;
 		this.historyHighScoreText.size = 30;
-		this.historyHighScoreText.text = "纪录:0";
+		this.historyHighScoreText.text = "纪录：0";
 		this.historyHighScoreText.textAlign = "center";
 		this.addChild(this.historyHighScoreText);
 
@@ -53,7 +53,7 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 			{
 				this.curShowScore = this.targetScore;
 			}
-			this.scoreText.text = Math.floor(this.curShowScore).toString();
+			this.scoreText.text = "得分：" + Math.floor(this.curShowScore).toString();
 		}
 		
 		if (this.curShowHistoryHighScore < this.targetHistoryHighScore)
@@ -63,7 +63,7 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 			{
 				this.curShowHistoryHighScore = this.targetHistoryHighScore;
 			}
-			this.historyHighScoreText.text = Math.floor(this.curShowHistoryHighScore).toString();
+			this.historyHighScoreText.text = "纪录：" + Math.floor(this.curShowHistoryHighScore).toString();
 		}
 	}
 
