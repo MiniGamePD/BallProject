@@ -51,7 +51,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.reviveMenu.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.reviveMenu.y = GameMain.GetInstance().GetStageHeight() / 2;
 
-        var bg = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 600, 460, 0, 0, null, null);
+        var bg = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 22, null, 600, 460, 0, 0, null, null);
         this.reviveMenu.addChild(bg);
         
         var title = new egret.TextField();
@@ -66,12 +66,12 @@ class GameOverItem extends egret.DisplayObjectContainer
         title.y = -160; 
         this.reviveMenu.addChild(title);
 
-        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 20, "pd_res_json.ShareRevive", 570, 140, 
+        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.ShareRevive", 570, 140, 
             137, 100, this.OnClickRevive, this);
         reviveButton.y = -20;
         this.reviveMenu.addChild(reviveButton);
 
-        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 20, "pd_res_json.GameOver", 570, 140, 
+        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 22, "pd_res_json.GameOver", 570, 140, 
             137, 100, this.OnClickGiveup, this);
         giveUpButton.y = 140;
         this.reviveMenu.addChild(giveUpButton);
