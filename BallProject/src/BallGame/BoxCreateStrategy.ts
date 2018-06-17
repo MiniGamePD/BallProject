@@ -82,7 +82,7 @@ class BoxCreateStrategy
 
 	public GetRandomBoxType(): BoxType
 	{
-		return Math.random() > 0.7 ? BoxType.Triangle : BoxType.Square;
+		return Math.random() > BoxSquareAndTriangleRate ? BoxType.Triangle : BoxType.Square;
 	}
 
 	public GetSpecialBoxRandomBirthPos()
@@ -109,6 +109,7 @@ class BoxCreateStrategy
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.SixMulDir, 28000, 32000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.FireUp, 38000, 42000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.LevelUp, 14000, 16000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.Pause, 10000, 15000, 10));
 	}
 
 	private UpdateSpecialBoxStrategy(deltaTime: number)

@@ -19,6 +19,8 @@ abstract class Box
 
 	public canMerge: boolean = false;
 
+	public pause = false;
+
 	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number)
 	{
 		this.id = id;
@@ -122,6 +124,25 @@ abstract class Box
 				&& this.healthDisplayObj != null)
 			{
 				this.healthDisplayObj.alpha = alpha;
+			}
+		}
+	}
+
+	public Pause(pause: boolean)
+	{
+		this.pause = pause;
+		if (this.moveSpeed > 0
+			&& this.phyBody != null)
+		{
+			if (pause)
+			{
+				this.phyBody.velocity = [0, 0]
+			}
+			else
+			{
+				var moveDir = new egret.Point(this.targetPos.x - this.initPos.x, this.targetPos.y - this.initPos.y);
+				moveDir.normalize(this.moveSpeed);
+				this.phyBody.velocity = [moveDir.x, moveDir.y]
 			}
 		}
 	}
