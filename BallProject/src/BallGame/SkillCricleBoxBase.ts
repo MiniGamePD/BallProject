@@ -6,7 +6,8 @@ class SkillCricleBoxBase extends Box
 		super(id, initPos, targetPos, health)
 		this.canMerge = false;
 		this.radius = radius;
-
+		this.moveSpeed = 0;
+		
 		this.CreateBox();
 		this.SetColor(0xffffff);
 	}

@@ -8,6 +8,7 @@ enum BoxType
 	FireUp,		//全力开火道具
 	LevelUp,    //升级道具
 	GoldCoin,	//获取金币道具
+	Pause,      //定时道具
 }
 
 class BoxEmitter
@@ -24,6 +25,7 @@ class BoxEmitter
 	public battleGround: egret.DisplayObjectContainer;
 
 	public hitSoundCdTime = 0;
+	public boxPauseLeftTime = 0;
 
 	public constructor()
 	{
@@ -49,10 +51,80 @@ class BoxEmitter
 
 		this.boxCreateStrategy = new BoxCreateStrategy();
 		this.boxCreateStrategy.Init(this);
+
+		this.RegisterEvent();
+	}
+
+	private RegisterEvent(): void
+	{
+		GameMain.GetInstance().AddEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
+		GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
+	}
+
+	private UnRegisterEvent(): void
+	{
+		GameMain.GetInstance().RemoveEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
+		GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
+	}
+
+	private OnSpecialBoxEliminateEvent(evt: SpecialBoxEliminateEvent): void
+	{
+		if (evt != null)
+		{
+			if (evt.boxType == BoxType.Pause
+				&& this.boxPauseLeftTime <= 0)
+			{
+				this.SetBoxPause(true);
+				this.boxPauseLeftTime = 5000;
+			}
+		}
+	}
+
+	private OnReviveEvent(evt: ReviveEvent): void
+	{
+		if (evt != null)
+		{
+			this.ClearAllBox();
+		}
+	}
+
+	private SetBoxPause(pause: boolean)
+	{
+		for (var i = 0; i < this.boxList.length; ++i)
+		{
+			if (this.boxList[i] != null)
+			{
+				this.boxList[i].Pause(pause);
+			}
+		}
+	}
+
+	public ClearAllBox()
+	{
+		for (var i = 0; i < this.boxList.length; ++i)
+		{
+			if (this.boxList[i] != null)
+			{
+				var deleteResult = this.DeleteBox(this.boxList[i], true);
+				if (deleteResult)
+				{
+					--i;
+				}
+			}
+		}
 	}
 
 	public Update(deltaTime: number)
 	{
+		if (this.boxPauseLeftTime > 0)
+		{
+			this.boxPauseLeftTime -= deltaTime;
+			if (this.boxPauseLeftTime <= 0)
+			{
+				this.SetBoxPause(false)
+			}
+		}
+
 		if (this.hitSoundCdTime > 0)
 		{
 			this.hitSoundCdTime -= deltaTime;
@@ -106,6 +178,15 @@ class BoxEmitter
 		{
 			box = new GoldCoinBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
 		}
+		else if (randomBoxType == BoxType.Pause)
+		{
+			box = new PauseBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 40);
+		}
+
+		if (this.boxPauseLeftTime > 0)
+		{
+			box.Pause(true);
+		}
 
 		this.battleGround.addChild(box.boxDisplayObj);
 		this.battleGround.addChild(box.healthDisplayObj);
@@ -151,7 +232,7 @@ class BoxEmitter
 		}
 	}
 
-	private DeleteBox(box: Box, detachDisplay: boolean)
+	private DeleteBox(box: Box, detachDisplay: boolean): boolean
 	{
 		if (box != null
 			&& box != undefined)
@@ -170,8 +251,10 @@ class BoxEmitter
 					this.ballGameWorld.world.removeBody(box.phyBody);
 				}
 				this.boxList.splice(idx, 1);
+				return true;
 			}
 		}
+		return false;
 	}
 
 	private CheckGameOver()
@@ -291,5 +374,6 @@ class BoxEmitter
 
 	public Release()
 	{
+		this.UnRegisterEvent();
 	}
 }
