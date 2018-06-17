@@ -88,9 +88,18 @@ class BoxCreateStrategy
 	public GetSpecialBoxRandomBirthPos()
 	{
 		this.specialBoxRandomBirthPosTemp.x = (Math.random() - 0.5) * GameMain.GetInstance().GetStageWidth() * SpecialBoxRandomBirthPos_Stage_Range;
-		this.specialBoxRandomBirthPosTemp.y = (Math.random() - 0.5) * GameMain.GetInstance().GetStageWidth() * SpecialBoxRandomBirthPos_Stage_Range;
-		this.specialBoxRandomBirthPosTemp.x += SpecialBoxRandomBirthPos_Center_Offset;
-		this.specialBoxRandomBirthPosTemp.y += SpecialBoxRandomBirthPos_Center_Offset;
+		this.specialBoxRandomBirthPosTemp.y = (Math.random() - 0.5) * GameMain.GetInstance().GetStageHeight() * SpecialBoxRandomBirthPos_Stage_Range;
+		if (Math.abs(this.specialBoxRandomBirthPosTemp.x) < SpecialBoxRandomBirthPos_Center_Offset
+			 && Math.abs(this.specialBoxRandomBirthPosTemp.y) < SpecialBoxRandomBirthPos_Center_Offset)
+		{
+			var widthMax = GameMain.GetInstance().GetStageWidth() * SpecialBoxRandomBirthPos_Stage_Range * 0.5;
+			var min = Math.min(SpecialBoxRandomBirthPos_Center_Offset, widthMax);
+			var max = Math.min(SpecialBoxRandomBirthPos_Center_Offset, widthMax);
+			var ranDis = Tools.RandomInterval(min, max);
+			this.specialBoxRandomBirthPosTemp.normalize(ranDis);
+		}
+		this.specialBoxRandomBirthPosTemp.x +=  GameMain.GetInstance().GetStageWidth() * 0.5;
+		this.specialBoxRandomBirthPosTemp.y += GameMain.GetInstance().GetStageHeight() * 0.5;
 		return this.specialBoxRandomBirthPosTemp;
 	}
 
