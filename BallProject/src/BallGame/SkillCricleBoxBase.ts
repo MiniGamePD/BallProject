@@ -72,6 +72,7 @@ class SkillCricleBoxBase extends Box
 
 	public OnEliminate()
 	{
+		super.OnEliminate();
 		var event = new SpecialBoxEliminateEvent()
 		event.boxType = this.GetBoxType();
 		GameMain.GetInstance().DispatchEvent(event);

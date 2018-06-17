@@ -71,7 +71,7 @@ class BoxCreateStrategy
 
 	public GetRandomBoxHealth(): number
 	{
-		return Math.floor(this.runTime * 0.001 * 0.5)  + 1;
+		return Math.floor(this.runTime * 0.001 * BoxHealthIncreasePerSecond)  + 1;
 	}
 
 	public GetRandomBirthPos(): egret.Point

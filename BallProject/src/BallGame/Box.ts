@@ -38,13 +38,13 @@ abstract class Box
 	public SetColor(color: number)
 	{
 		this.color = color;
-		
+
 		if (this.healthDisplayObj != undefined
 			&& this.healthDisplayObj != null)
 		{
 			this.healthDisplayObj.textColor = color;
 		}
-	}	
+	}
 
 	public Update(deltaTime: number)
 	{
@@ -70,7 +70,29 @@ abstract class Box
 
 	public OnEliminate()
 	{
+		this.PlayBoxBoomEffect();
+	}
 
+	public PlayBoxBoomEffect()
+	{
+		for (var i = 0; i < 3; ++i )
+		{
+			this.BoxBoomPartical("BoxBoom" + Tools.RandomInterval(1, 7));
+		}
+	}
+
+	public BoxBoomPartical(textureName: string)
+	{
+		var param = new PaPlayParticalParam;
+		param.textureName = textureName;
+		param.jsonName = "BoxBoom";
+		param.duration = 3000;
+		param.emitDuration = 100;
+		param.posX = this.boxDisplayObj.x;
+		param.posY = this.boxDisplayObj.y;
+		var event = new PlayProgramAnimationEvent();
+		event.param = param;
+		GameMain.GetInstance().DispatchEvent(event);
 	}
 
 	public RefreshDisplay()

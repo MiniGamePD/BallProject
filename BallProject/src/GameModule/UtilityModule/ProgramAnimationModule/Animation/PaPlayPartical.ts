@@ -31,7 +31,7 @@ class PaPlayPartical extends ProgramAnimationBase<PaPlayParticalParam>
 		this.particleSys = this.resModule.CreateParticle(this.param.textureName, this.param.jsonName);
 		this.particleSys.x = this.param.posX;
 		this.particleSys.y = this.param.posY;
-		GameMain.GetInstance().GetAdaptedStageContainer().addChild(this.particleSys);
+		GameMain.GetInstance().GetGameStage().addChild(this.particleSys);
 		this.particleSys.start();
 	}
 

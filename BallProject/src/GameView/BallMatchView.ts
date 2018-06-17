@@ -47,8 +47,8 @@ class BallMatchView extends GameView
         this.playerLv.y = GameMain.GetInstance().GetStageHeight() / 2 + 100;
         this.addChild(this.playerLv);
 
-        this.playerLv.touchEnabled = true;
-        this.playerLv.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
+        // this.playerLv.touchEnabled = true;
+        // this.playerLv.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
     }
     
     private OnBallEmitterLevelUpEvent(event: BallEmitterLevelUpEvent)
