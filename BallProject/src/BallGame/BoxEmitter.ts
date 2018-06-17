@@ -31,8 +31,8 @@ class BoxEmitter
 
 	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer)
 	{
-		this.resModule = <IResModule> GameMain.GetInstance().GetModule(ModuleType.RES);
-		this.soundModule = <ISoundModule> GameMain.GetInstance().GetModule(ModuleType.SOUND);	
+		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
 
 		this.ballGameWorld = ballGameWorld;
 
@@ -57,7 +57,7 @@ class BoxEmitter
 		{
 			this.hitSoundCdTime -= deltaTime;
 		}
-		
+
 		this.boxCreateStrategy.Update(deltaTime);
 
 		for (var i = 0; i < this.boxList.length; ++i)
@@ -77,7 +77,7 @@ class BoxEmitter
 		++this.instanceId;
 		var id = this.instanceId;
 		var box;
-		
+
 		if (randomBoxType == BoxType.Square)
 		{
 			box = new SquareBox(id, new egret.Point(birthPos.x, birthPos.y), this.center, health, 80);
@@ -164,7 +164,7 @@ class BoxEmitter
 					Tools.DetachDisplayObjFromParent(box.boxDisplayObj);
 					Tools.DetachDisplayObjFromParent(box.healthDisplayObj);
 				}
-				
+
 				if (box.phyBody != null)
 				{
 					this.ballGameWorld.world.removeBody(box.phyBody);
@@ -179,14 +179,20 @@ class BoxEmitter
 		for (var i = 0; i < this.boxList.length; ++i)
 		{
 			var boxA = this.boxList[i];
-			var centerSizeScale = (boxA.GetBoxType() == BoxType.Triangle) ? 0.5 : 1;
-			var deltaX = Math.abs(boxA.boxDisplayObj.x - this.center.x);
-			var deltaY = Math.abs(boxA.boxDisplayObj.y - this.center.y);
-			if (deltaX < GameOverCenterSize.x * centerSizeScale && deltaY < GameOverCenterSize.y * centerSizeScale)
+			if (boxA.GetBoxType() == BoxType.Square
+				|| boxA.GetBoxType() == BoxType.Triangle
+				|| boxA.GetBoxType() == BoxType.Circle)
 			{
-				let event = new GameOverEvent();
-				GameMain.GetInstance().DispatchEvent(event);
+				var centerSizeScale = (boxA.GetBoxType() == BoxType.Triangle) ? 0.5 : 1;
+				var deltaX = Math.abs(boxA.boxDisplayObj.x - this.center.x);
+				var deltaY = Math.abs(boxA.boxDisplayObj.y - this.center.y);
+				if (deltaX < GameOverCenterSize.x * centerSizeScale && deltaY < GameOverCenterSize.y * centerSizeScale)
+				{
+					let event = new GameOverEvent();
+					GameMain.GetInstance().DispatchEvent(event);
+				}
 			}
+
 		}
 	}
 
@@ -224,10 +230,10 @@ class BoxEmitter
 			var farBox = disA < disB ? boxB : boxA;
 			farBox.changeHealth(nearBox.health);
 
-			
+
 			var moveParam = new PaAccMovingParam()
 			moveParam.displayObj = nearBox.boxDisplayObj;
-			moveParam.attachDisplayObj =[nearBox.healthDisplayObj];
+			moveParam.attachDisplayObj = [nearBox.healthDisplayObj];
 			moveParam.startSpeed = 500;
 			moveParam.accelerate = 500;
 			moveParam.targetPos = new egret.Point(farBox.boxDisplayObj.x, farBox.boxDisplayObj.y);

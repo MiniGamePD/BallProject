@@ -220,7 +220,7 @@ class BallEmitter
 
 	public EmitBall(emitDir: egret.Point, speed: number)
 	{
-		this.PlayBallEmitSound();
+		// this.PlayBallEmitSound();
 		++this.emitBallCount;
 		emitDir.normalize(this.emitPosOffsetDis);
 		var emitPos = new egret.Point(this.emitPos.x + emitDir.x, this.emitPos.y + emitDir.y);
