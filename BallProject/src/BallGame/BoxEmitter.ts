@@ -29,6 +29,8 @@ class BoxEmitter
 
 	public boxEliminateEvent: BoxEliminateEvent;
 
+	public gameOverBox: Box;
+
 	public constructor()
 	{
 	}
@@ -54,7 +56,7 @@ class BoxEmitter
 		this.boxCreateStrategy = new BoxCreateStrategy();
 		this.boxCreateStrategy.Init(this);
 
-		this.boxEliminateEvent = new BoxEliminateEvent(); 
+		this.boxEliminateEvent = new BoxEliminateEvent();
 
 		this.RegisterEvent();
 	}
@@ -88,6 +90,13 @@ class BoxEmitter
 	{
 		if (evt != null)
 		{
+			if (this.gameOverBox != undefined
+				&& this.gameOverBox != null)
+			{
+				Tools.DetachDisplayObjFromParent(this.gameOverBox.boxDisplayObj);
+				Tools.DetachDisplayObjFromParent(this.gameOverBox.healthDisplayObj);
+				this.gameOverBox = null;
+			}
 			this.ClearAllBox();
 		}
 	}
@@ -231,7 +240,7 @@ class BoxEmitter
 			if (box.health <= 0)
 			{
 				box.OnEliminate();
-				
+
 				this.boxEliminateEvent.boxType = box.GetBoxType();
 				GameMain.GetInstance().DispatchEvent(this.boxEliminateEvent);
 
@@ -279,6 +288,31 @@ class BoxEmitter
 				var deltaY = Math.abs(boxA.boxDisplayObj.y - this.center.y);
 				if (deltaX < GameOverCenterSize.x * centerSizeScale && deltaY < GameOverCenterSize.y * centerSizeScale)
 				{
+
+					var moveParam = new PaAccMovingParam()
+					moveParam.displayObj = boxA.boxDisplayObj;
+					moveParam.attachDisplayObj = [boxA.healthDisplayObj];
+					moveParam.startSpeed = 500;
+					moveParam.accelerate = 500;
+					moveParam.targetPos = new egret.Point(this.center.x, this.center.y);
+					// moveParam.needRemoveOnFinish = true;
+					var moveEvent = new PlayProgramAnimationEvent();
+					moveEvent.param = moveParam;
+					GameMain.GetInstance().DispatchEvent(moveEvent);
+
+					var scaleParam = new PaScalingParam()
+					scaleParam.displayObj = boxA.boxDisplayObj;
+					scaleParam.targetScaleX = 1.2;
+					scaleParam.targetScaleY = 1.2;
+					scaleParam.duration = 2000;
+					scaleParam.interval = 200;
+					var scaleEvent = new PlayProgramAnimationEvent()
+					scaleEvent.param = scaleParam;
+					GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+					this.gameOverBox = boxA;
+					this.DeleteBox(boxA, false);
+
 					let event = new GameOverEvent();
 					GameMain.GetInstance().DispatchEvent(event);
 				}
