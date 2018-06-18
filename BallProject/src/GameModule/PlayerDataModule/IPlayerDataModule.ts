@@ -5,6 +5,8 @@ interface IPlayerDataModule extends IModule
     GetHistoryHighScore():number;
     SetCoin(coin:number);
     GetCoin():number;
+    SetCurMatchScore(score:number);
+    GetCurMatchScore();
     Save();
     Load();
     InitUserData();

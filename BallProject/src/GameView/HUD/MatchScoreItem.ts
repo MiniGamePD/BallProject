@@ -22,7 +22,8 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 		this.targetScore = 0;
 
 		this.playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
-
+		this.playerData.SetCurMatchScore(this.targetScore);
+		
 		//得分数字
 		this.scoreText = new egret.TextField();
 		this.scoreText.x = 320 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
@@ -80,6 +81,14 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 	public SetScore(score: number)
 	{
 		this.targetScore = score;
+		this.playerData.SetCurMatchScore(this.targetScore);
+
+		if(this.targetScore > this.playerData.GetHistoryHighScore())
+		{
+			this.playerData.SetHistoryHighScore(this.targetScore);
+			this.SetHistoryHighScore(this.targetScore);
+		}	
+
 		this.deltaScore = (this.targetScore - this.curShowScore) / (this.lerpTime / 1000);
 		if (this.deltaScore < this.minDeltaScorePreSecond)
 		{
@@ -108,12 +117,6 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 	private AddScore(score: number)
 	{
 		var newScore = this.targetScore + score;
-		if(newScore > this.playerData.GetHistoryHighScore())
-		{
-			this.playerData.SetHistoryHighScore(newScore);
-			this.SetHistoryHighScore(newScore);
-		}	
-
 		this.SetScore(newScore);	
 	}
 

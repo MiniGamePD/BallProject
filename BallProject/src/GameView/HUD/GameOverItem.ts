@@ -24,9 +24,9 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         this.CreateReviveMenu();
 
-        this.CreateScore();
-        this.CreateHistoryHighScore();
-        this.CreateCoin();
+        // this.CreateScore();
+        // this.CreateHistoryHighScore();
+        // this.CreateCoin();
         this.CreateMoreCoin();
         this.CreateLottery();
         this.CreateGotoLobby();
@@ -34,7 +34,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     }
 
     public Init()
-    {
+    {        
         GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
         GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.Hide, this);
     }
@@ -82,6 +82,10 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private CreateScore()
     {
+        Tools.DetachDisplayObjFromParent(this.score);
+
+        var playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        
         this.score = new egret.DisplayObjectContainer();
         var scoreTitle = new egret.TextField();
         scoreTitle.size = 60;
@@ -97,7 +101,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         scoreNum.size = 100;
         scoreNum.textAlign = "left";
         scoreNum.fontFamily = "Impact";
-        scoreNum.text = "70";
+        scoreNum.text = playerDataModule.GetCurMatchScore();
         this.score.addChild(scoreNum);
 
         this.score.x = 100 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
@@ -107,6 +111,9 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private CreateHistoryHighScore()
     {
+        Tools.DetachDisplayObjFromParent(this.historyHighScore);
+        
+        var playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         this.historyHighScore = new egret.DisplayObjectContainer();
         var scoreTitle = new egret.TextField();
         scoreTitle.size = 40;
@@ -121,7 +128,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         scoreNum.x = 100;
         scoreNum.size = 40;
         scoreNum.textAlign = "left";
-        scoreNum.text = "100";
+        scoreNum.text = playerDataModule.GetHistoryHighScore().toString();
         this.historyHighScore.addChild(scoreNum);
 
         this.historyHighScore.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
@@ -130,6 +137,9 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private CreateCoin()
     {
+        Tools.DetachDisplayObjFromParent(this.coin);
+        var playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+
         this.coin = new egret.DisplayObjectContainer();
         var coinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
         coinIcon.width = 40;
@@ -140,7 +150,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         coinNum.x = 60;
         coinNum.size = 40;
         coinNum.textAlign = "left";
-        coinNum.text = "36";
+        coinNum.text = playerDataModule.GetCoin().toString();
         this.coin.addChild(coinNum);
 
         this.coin.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
@@ -239,6 +249,10 @@ class GameOverItem extends egret.DisplayObjectContainer
     public ShowGameOverMenu()
     {
         this.Hide();
+
+        this.CreateScore();
+        this.CreateHistoryHighScore();
+        this.CreateCoin();
 
         this.addChild(this.bgCover);
         this.addChild(this.score);

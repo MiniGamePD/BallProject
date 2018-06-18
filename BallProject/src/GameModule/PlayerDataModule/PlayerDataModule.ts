@@ -2,6 +2,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 {
     private historyHighScore:number;
     private coin:number;
+    private curMatchScore:number = 0; //当前比赛分数
 
 	public GetBall(): string
     {
@@ -27,6 +28,16 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     public GetCoin():number
     {
         return this.coin;
+    }
+
+    public SetCurMatchScore(score:number)
+    {
+        this.curMatchScore = score;
+    }
+
+    public GetCurMatchScore()
+    {
+        return this.curMatchScore;
     }
 
     public SwitchForeOrBack(from: GameStateType, to: GameStateType): void
