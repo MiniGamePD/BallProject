@@ -51,7 +51,8 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.reviveMenu.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.reviveMenu.y = GameMain.GetInstance().GetStageHeight() / 2;
 
-        var bg = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 22, null, 600, 460, 0, 0, null, null);
+        var bg = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 22, null, 
+            600 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth, 460, 0, 0, null, null);
         this.reviveMenu.addChild(bg);
 
         var title = new egret.TextField();
@@ -66,12 +67,14 @@ class GameOverItem extends egret.DisplayObjectContainer
         title.y = -160;
         this.reviveMenu.addChild(title);
 
-        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.ShareRevive", 570, 140,
+        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.ShareRevive", 
+            570 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth, 140,
             137, 100, this.OnClickShapeRevive, this);
         reviveButton.y = -20;
         this.reviveMenu.addChild(reviveButton);
 
-        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 22, "pd_res_json.GameOver", 570, 140,
+        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 22, "pd_res_json.GameOver", 
+            570 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth, 140,
             137, 100, this.OnClickGiveup, this);
         giveUpButton.y = 140;
         this.reviveMenu.addChild(giveUpButton);
@@ -97,7 +100,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         scoreNum.text = "70";
         this.score.addChild(scoreNum);
 
-        this.score.x = 100;
+        this.score.x = GameMain.GetInstance().GetStageWidth() / 5 * 1;
         this.score.y = 150;
     }
 
@@ -121,7 +124,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         scoreNum.text = "100";
         this.historyHighScore.addChild(scoreNum);
 
-        this.historyHighScore.x = 350;
+        this.historyHighScore.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.historyHighScore.y = 155;
     }
 
@@ -140,7 +143,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         coinNum.text = "36";
         this.coin.addChild(coinNum);
 
-        this.coin.x = 350;
+        this.coin.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.coin.y = 270;
     }
 
@@ -148,11 +151,12 @@ class GameOverItem extends egret.DisplayObjectContainer
     {
         this.moreCoin = new egret.DisplayObjectContainer();
 
-        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 560, 130, 0, 0, this.OnClickMoreCoin, this);
+        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 
+            GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, this.OnClickMoreCoin, this);
         this.moreCoin.addChild(bgButton);
 
         var moreCoinText = new egret.TextField();
-        moreCoinText.x = -246;
+        moreCoinText.x = -246 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         moreCoinText.y = -10;
         moreCoinText.size = 30;
         moreCoinText.textAlign = "left";
@@ -161,7 +165,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.moreCoin.addChild(moreCoinText);
 
         var moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
-        moreCoinIcon.x = 206;
+        moreCoinIcon.x = 206 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         moreCoinIcon.width = 60;
         moreCoinIcon.width = 49;
         moreCoinIcon.anchorOffsetX = moreCoinIcon.width / 2;
@@ -176,11 +180,12 @@ class GameOverItem extends egret.DisplayObjectContainer
     {
         this.lottery = new egret.DisplayObjectContainer();
 
-        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 560, 130, 0, 0, this.OnClickLottery, this);
+        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 
+            GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, this.OnClickLottery, this);
         this.lottery.addChild(bgButton);
 
         var lotteryText = new egret.TextField();
-        lotteryText.x = -246;
+        lotteryText.x = -246 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         lotteryText.y = -10;
         lotteryText.size = 30;
         lotteryText.textAlign = "left";
@@ -189,7 +194,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.lottery.addChild(lotteryText);
 
         var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
-        lotteryIcon.x = 166;
+        lotteryIcon.x = 163 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         lotteryIcon.y = 5;
         lotteryIcon.width = 40;
         lotteryIcon.height = 40;
@@ -198,7 +203,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.lottery.addChild(lotteryIcon);
 
         var costText = new egret.TextField();
-        costText.x = 195;
+        costText.x = 192 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         costText.y = -10;
         costText.size = 30;
         costText.textAlign = "left";
@@ -212,7 +217,8 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private CreateGotoLobby()
     {
-        this.gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xEF004800, 6, 16, "pd_res_json.Home", 560, 130, 70, 62,
+        this.gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xEF004800, 6, 16, "pd_res_json.Home", 
+        GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 70, 62,
             this.OnClickBackToLobby, this);
 
         this.gotoLobby.x = GameMain.GetInstance().GetStageWidth() / 2;
@@ -320,7 +326,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnReallyGameOverEvent()
     {
-        var result = Tools.IsTimeExpired(2018, 6, 22, 18, 0); // 是否超过了指定的时间
+        var result = Tools.IsTimeExpired(2017, 6, 22, 18, 0); // 是否超过了指定的时间
         if (result && GameMain.GetInstance().hasRevive == false)
         {
             this.ShowReviveMenu();

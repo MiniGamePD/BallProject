@@ -25,24 +25,24 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 
 		//得分数字
 		this.scoreText = new egret.TextField();
-		this.scoreText.x = 220;
-		this.scoreText.y = 70;
+		this.scoreText.x = 500 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+		this.scoreText.y = 135;
 		this.scoreText.width = 200;
 		this.scoreText.height = 100;
 		this.scoreText.size = 30;
 		this.scoreText.text = "得分：0";
-		this.scoreText.textAlign = "center";
+		this.scoreText.textAlign = "left";
 		this.addChild(this.scoreText);
 
 		//历史最高分数字
 		this.historyHighScoreText = new egret.TextField();
-		this.historyHighScoreText.x = 220;
-		this.historyHighScoreText.y = 30;
+		this.historyHighScoreText.x = 500 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+		this.historyHighScoreText.y = 100;
 		this.historyHighScoreText.width = 200;
 		this.historyHighScoreText.height = 100;
 		this.historyHighScoreText.size = 30;
 		this.historyHighScoreText.text = "纪录：0";
-		this.historyHighScoreText.textAlign = "center";
+		this.historyHighScoreText.textAlign = "left";
 		this.addChild(this.historyHighScoreText);
 
 		this.Reset();

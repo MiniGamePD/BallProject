@@ -86,7 +86,7 @@ class ShopView extends egret.DisplayObjectContainer
     {
         this.back = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.return", 39, 64, 39, 64, this.OnClickBack, this);
         this.back.x = 50;
-        this.back.y = 50;
+        this.back.y = 80;
         this.addChild(this.back);
     }
 

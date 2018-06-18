@@ -13,8 +13,8 @@ class LoadingView extends GameView
 		let stageWidth = GameMain.GetInstance().GetStageWidth();
         let stageHeight = GameMain.GetInstance().GetStageHeight();
 
-        var bg = new FullScreenCover(0x000000, 1);
-        this.addChild(bg);
+        // var bg = new FullScreenCover(0x000000, 1);
+        // this.addChild(bg);
 
         // this.textField = new egret.TextField();
         // this.textField.x = 0;

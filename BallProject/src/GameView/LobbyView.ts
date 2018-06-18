@@ -38,8 +38,8 @@ class LobbyView extends GameView
 
     private LoadBackGround()
     {
-        var bg = new FullScreenCover(0x000000, 1);
-        this.addChild(bg);
+        // var bg = new FullScreenCover(0x000000, 1);
+        // this.addChild(bg);
         // bg.width = this.mStageWidth;
         // bg.height = this.mStageHeight;
 
@@ -57,10 +57,10 @@ class LobbyView extends GameView
 
         this.mAdaptedStage = GameMain.GetInstance().GetAdaptedStageContainer();;
 
-        var shape: egret.Shape = new egret.Shape();
-        shape.graphics.beginFill(0x00A2E8);
-        shape.graphics.drawRect(this.mStageWidth / 2 - 100, this.mStageHeight / 5 * 3, 200, 100);
-        shape.graphics.endFill();
+        // var shape: egret.Shape = new egret.Shape();
+        // shape.graphics.beginFill(0x00A2E8);
+        // shape.graphics.drawRect(this.mStageWidth / 2 - 100, this.mStageHeight / 5 * 3, 200, 100);
+        // shape.graphics.endFill();
         //this.addChild(shape);
 
 
@@ -77,16 +77,16 @@ class LobbyView extends GameView
         shop.y = 950;
         this.addChild(shop);
 
-        //设置显示对象可以相应触摸事件
-        shape.touchEnabled = true;
-        //注册事件
-        shape.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickStartGame, this);
+        // //设置显示对象可以相应触摸事件
+        // shape.touchEnabled = true;
+        // //注册事件
+        // shape.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickStartGame, this);
 
         // this.PlayParticle();
         // this.PlayParticleAnim();
         // this.AddMovePartical();
 
-        this.PlayLightningAnim(shape);
+        //this.PlayLightningAnim(shape);
         // this.PlayMoving(text);
         // this.PlayDynamicMoving();
 
@@ -119,7 +119,7 @@ class LobbyView extends GameView
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
         this.ball = res.CreateBitmapByName("pd_res_json." + playerData.GetBall());
-        this.ball.x = 430;
+        this.ball.x = this.mStageWidth / 2 + 100;
         this.ball.y = 450;
         this.ball.width = 50;
         this.ball.height = 50;

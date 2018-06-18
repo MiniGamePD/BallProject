@@ -34,7 +34,7 @@ class PauseItem extends egret.DisplayObjectContainer
         this.pauseIcon.anchorOffsetX = this.pauseIcon.width / 2;
         this.pauseIcon.anchorOffsetY = this.pauseIcon.height / 2;
         this.pauseIcon.x = 50;
-        this.pauseIcon.y = 50;
+        this.pauseIcon.y = 80;
         GameMain.GetInstance().AdapteDisplayObject(this.pauseIcon);
         //设置显示对象可以相应触摸事件
         this.pauseIcon.touchEnabled = true;
@@ -48,12 +48,13 @@ class PauseItem extends egret.DisplayObjectContainer
     {
         this.helpIcon = new egret.TextField();
         this.helpIcon.x = 100;
-        this.helpIcon.y = 23;
-        this.helpIcon.width = 50;
-        this.helpIcon.height = 50;
+        this.helpIcon.y = 40;
+        this.helpIcon.width = 80;
+        this.helpIcon.height = 80;
         this.helpIcon.textAlign = "center";
+        this.helpIcon.verticalAlign = egret.VerticalAlign.MIDDLE;
         this.helpIcon.text = "?";
-        this.helpIcon.size = 60;
+        this.helpIcon.size = 68;
         this.addChild(this.helpIcon);
 
         this.helpIcon.touchEnabled = true;
@@ -77,7 +78,8 @@ class PauseItem extends egret.DisplayObjectContainer
         this.pauseTitle.addChild(textField);
 
         //回到大厅
-        var gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, "pd_res_json.Home", 560, 130, 70, 62, 
+        var gotoLobby = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, "pd_res_json.Home", 
+            width / 5 * 3, 130, 70, 62, 
             this.OnClickBackToLobby, this);
         this.gotoLobbyButton = new egret.DisplayObjectContainer();
         this.gotoLobbyButton.x = GameMain.GetInstance().GetStageWidth() / 2;
@@ -85,7 +87,8 @@ class PauseItem extends egret.DisplayObjectContainer
         this.gotoLobbyButton.addChild(gotoLobby);
 
          //继续游戏
-        var con = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, "pd_res_json.play", 560, 130, 56, 56, 
+        var con = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, "pd_res_json.play",
+            width / 5 * 3, 130, 56, 56, 
             this.OnClickContinue, this);
         this.continueButton = new egret.DisplayObjectContainer();
         this.continueButton.x = GameMain.GetInstance().GetStageWidth() / 2;
