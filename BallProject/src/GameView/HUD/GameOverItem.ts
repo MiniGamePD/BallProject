@@ -259,7 +259,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnClickMoreCoin()
     {
-
+        GameMain.GetInstance().ShareAppMsg();
     }
 
     private OnClickLottery(callbackobj:any)
@@ -298,6 +298,8 @@ class GameOverItem extends egret.DisplayObjectContainer
         {
             egret.log("OnClickRevive");
         }
+
+        GameMain.GetInstance().ShareAppMsgRevive();
 
         var event = new ReviveEvent();
         GameMain.GetInstance().DispatchEvent(event);

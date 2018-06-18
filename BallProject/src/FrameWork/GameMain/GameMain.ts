@@ -340,4 +340,14 @@ class GameMain implements IGameMain {
             console.log(e);
         })
 	}
+
+	public ShareAppMsg()
+	{
+		this.mEgretMain.ShareAppMsg();
+	}
+
+	public ShareAppMsgRevive()
+	{
+		this.mEgretMain.ShareAppMsgRevive();
+	}
 }

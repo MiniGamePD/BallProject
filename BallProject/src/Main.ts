@@ -124,6 +124,16 @@ class Main extends egret.DisplayObjectContainer
         //console.log(userInfo);
     } 
 
+    public ShareAppMsg()
+    {
+        platform.shareAppMsg();
+    }
+
+    public ShareAppMsgRevive()
+    {
+        platform.shareAppMsgRevive();
+    }
+
     private async runGame() {
         await this.loadResource()
         this.createGameScene();
