@@ -28,6 +28,8 @@ class LobbyView extends GameView
         this.StartBallAnim();
 
         GameMain.GetInstance().PlayerLogin();
+
+        GameMain.GetInstance().hasRevive = false;
     }
 
     public ReleaseView(): void 

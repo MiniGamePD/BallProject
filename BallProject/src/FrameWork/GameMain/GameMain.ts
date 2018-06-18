@@ -368,4 +368,6 @@ class GameMain implements IGameMain {
 	{
 		return this.mEgretMain.hasUserData();
 	}
+
+	public hasRevive:boolean;
 }

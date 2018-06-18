@@ -305,14 +305,16 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         GameMain.GetInstance().ShareAppMsgRevive();
 
+        GameMain.GetInstance().hasRevive = true;
+
         var event = new ReviveEvent();
         GameMain.GetInstance().DispatchEvent(event);
     }
 
     public OnGameOverEvent()
     {
-        var result = Tools.IsTimeExpired(2018, 6, 22, 18, 0); // 是否超过了指定的时间
-        if (result)
+        var result = Tools.IsTimeExpired(2017, 6, 22, 18, 0); // 是否超过了指定的时间
+        if (result && GameMain.GetInstance().hasRevive == false)
         {
             this.ShowReviveMenu();
         }
