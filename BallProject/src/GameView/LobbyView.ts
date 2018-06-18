@@ -5,13 +5,13 @@ class LobbyView extends GameView
     private mStageHeight: number;
     private textField: egret.TextField;
     private particleSys: particle.GravityParticleSystem;
-    private title:egret.Bitmap;
-    private logo:egret.Bitmap;
-    private ball:egret.Bitmap;
-    private ballAnimAccDir:number;
-    private ballAnimSpeed:number;
-    private ballAnimAcc:number;
-    private shop:ShopView;
+    private title: egret.Bitmap;
+    private logo: egret.Bitmap;
+    private ball: egret.Bitmap;
+    private ballAnimAccDir: number;
+    private ballAnimSpeed: number;
+    private ballAnimAcc: number;
+    private shop: ShopView;
 
     public CreateView(): void
     {
@@ -31,7 +31,7 @@ class LobbyView extends GameView
     }
 
     public ReleaseView(): void 
-    { 
+    {
     }
 
     private LoadBackGround()
@@ -61,7 +61,7 @@ class LobbyView extends GameView
         shape.graphics.endFill();
         //this.addChild(shape);
 
-        
+
 
         var button = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_Play", 193, 82, 193, 82,
             this.OnClickStartGame, this);
@@ -137,7 +137,7 @@ class LobbyView extends GameView
         this.shop = new ShopView();
         this.shop.Init(this.OnCloseShop, this);
     }
-    
+
     private OnClickStartGame(): void
     {
         egret.log("OnClickStartGame");
@@ -145,12 +145,12 @@ class LobbyView extends GameView
         GameMain.GetInstance().SwitchGameState(GameStateType.Match);
     }
 
-    private OnClickShop(callbackObj:any)
+    private OnClickShop(callbackObj: any)
     {
         callbackObj.addChild(callbackObj.shop);
     }
 
-    private OnCloseShop(callbackobj:any)
+    private OnCloseShop(callbackobj: any)
     {
         callbackobj.removeChild(callbackobj.shop);
     }
@@ -169,16 +169,16 @@ class LobbyView extends GameView
     }
 
     public UpdateView(deltaTime: number): void
-    { 
+    {
         this.ballAnimSpeed += this.ballAnimAcc * this.ballAnimAccDir * 16 / 1000;
-        this.ball.y += this.ballAnimSpeed  * 16 / 1000;
-        if(Math.abs(this.ballAnimSpeed) >= 50 || Math.abs(this.ballAnimSpeed) <= 0)
+        this.ball.y += this.ballAnimSpeed * 16 / 1000;
+        if (Math.abs(this.ballAnimSpeed) >= 50 || Math.abs(this.ballAnimSpeed) <= 0)
         {
             this.ballAnimAccDir *= -1;
         }
     }
 
-    private static hasPlayedBgm:boolean = false;
+    private static hasPlayedBgm: boolean = false;
 
     private PlayBgm()
     {
@@ -223,23 +223,23 @@ class LobbyView extends GameView
     }
 
     private AddMovePartical()
-	{
-		var param = new PaMoveParticalParam;
-	    param.textureName = "huojian";
+    {
+        var param = new PaMoveParticalParam;
+        param.textureName = "huojian";
         param.jsonName = "huojian";
-		param.duration = 3000;
-		param.flyDuration = 2000;
-		param.stayDuration = 0;
-		param.stratPosX = 0;
-		param.stratPosY = 0;
-		param.endPosX = this.mStageWidth / 2;
-		param.endPosY = this.mStageHeight / 2;
-		param.isMoveEmitter = true;
+        param.duration = 3000;
+        param.flyDuration = 2000;
+        param.stayDuration = 0;
+        param.stratPosX = 0;
+        param.stratPosY = 0;
+        param.endPosX = this.mStageWidth / 2;
+        param.endPosY = this.mStageHeight / 2;
+        param.isMoveEmitter = true;
         param.callBack = this.MoveParticalCallBack;
-		var event = new PlayProgramAnimationEvent();
+        var event = new PlayProgramAnimationEvent();
         event.param = param;
         GameMain.GetInstance().DispatchEvent(event);
-	}
+    }
 
     private PlayMoving(displayObj: egret.DisplayObject)
     {

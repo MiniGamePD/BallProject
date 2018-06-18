@@ -415,4 +415,14 @@ class Tools
 	{
 		return Math.floor(Math.random() * (maxInterval - minInterval) + minInterval);
 	}
+
+	// 判断当前时间是否超过指定日期
+	public static IsTimeExpired(year: number, month: number, date: number, hours: number, minutes: number)
+    {
+        var targetDate = new Date(year, month-1, date, hours, minutes);
+        var curDate = new Date();
+        var delta = targetDate.getTime() - curDate.getTime();
+        console.log("targetDate="+ targetDate.toString() +  ", curDate=" + curDate.toString() + ", delta=" + delta);
+		return delta < 0;
+    }
 }
