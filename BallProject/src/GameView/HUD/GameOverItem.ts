@@ -1,22 +1,22 @@
 class GameOverItem extends egret.DisplayObjectContainer
 {
-    private bgCover:FullScreenCover;
+    private bgCover: FullScreenCover;
 
     //复活界面
-    private reviveMenu:egret.DisplayObjectContainer;
+    private reviveMenu: egret.DisplayObjectContainer;
 
     //结算界面
-    private score:egret.DisplayObjectContainer;
-    private historyHighScore:egret.DisplayObjectContainer;
-    private coin:egret.DisplayObjectContainer;
-    private moreCoin:egret.DisplayObjectContainer;
-    private lottery:egret.DisplayObjectContainer;
-    private gotoLobby:ShapeBgButton;
+    private score: egret.DisplayObjectContainer;
+    private historyHighScore: egret.DisplayObjectContainer;
+    private coin: egret.DisplayObjectContainer;
+    private moreCoin: egret.DisplayObjectContainer;
+    private lottery: egret.DisplayObjectContainer;
+    private gotoLobby: ShapeBgButton;
 
     //商店
-    private shop:ShopView;
+    private shop: ShopView;
 
-    public constructor(width:number, height:number)
+    public constructor(width: number, height: number)
     {
         super();
         this.bgCover = new FullScreenCover(0x000000, 0.8);
@@ -35,13 +35,13 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     public Init()
     {
-        GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.ShowReviveMenu, this);
+        GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
         GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.Hide, this);
     }
 
     public Release()
     {
-        GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.ShowReviveMenu, this);
+        GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
         GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.Hide, this);
     }
 
@@ -53,7 +53,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         var bg = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 22, null, 600, 460, 0, 0, null, null);
         this.reviveMenu.addChild(bg);
-        
+
         var title = new egret.TextField();
         title.text = "复活吗？";
         title.size = 60;
@@ -63,15 +63,15 @@ class GameOverItem extends egret.DisplayObjectContainer
         title.anchorOffsetX = title.width / 2;
         title.anchorOffsetY = title.height / 2;
         title.x = 0;
-        title.y = -160; 
+        title.y = -160;
         this.reviveMenu.addChild(title);
 
-        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.ShareRevive", 570, 140, 
-            137, 100, this.OnClickRevive, this);
+        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.ShareRevive", 570, 140,
+            137, 100, this.OnClickShapeRevive, this);
         reviveButton.y = -20;
         this.reviveMenu.addChild(reviveButton);
 
-        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 22, "pd_res_json.GameOver", 570, 140, 
+        var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 22, "pd_res_json.GameOver", 570, 140,
             137, 100, this.OnClickGiveup, this);
         giveUpButton.y = 140;
         this.reviveMenu.addChild(giveUpButton);
@@ -225,7 +225,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.shop.Init(this.OnCloseShop, this);
     }
 
-    private OnCloseShop(callbackobj:any)
+    private OnCloseShop(callbackobj: any)
     {
         callbackobj.removeChild(callbackobj.shop);
     }
@@ -262,14 +262,14 @@ class GameOverItem extends egret.DisplayObjectContainer
         GameMain.GetInstance().ShareAppMsg();
     }
 
-    private OnClickLottery(callbackobj:any)
+    private OnClickLottery(callbackobj: any)
     {
         callbackobj.addChild(callbackobj.shop);
     }
 
     private OnClickBackToLobby(): void
     {
-        if(DEBUG)
+        if (DEBUG)
         {
             egret.log("OnClickBackToLobby");
         }
@@ -278,30 +278,43 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnClickPlayAgain(): void
     {
-        if(DEBUG)
+        if (DEBUG)
         {
             egret.log("OnClickPlayAgain");
         }
-       
+
         let event = new ReplayGameEvent();
         GameMain.GetInstance().DispatchEvent(event);
     }
 
-    private OnClickGiveup(callbackObj:any)
+    private OnClickGiveup(callbackObj: any)
     {
         callbackObj.ShowGameOverMenu();
     }
 
-    private OnClickRevive(): void
+    private OnClickShapeRevive(): void
     {
-        if(DEBUG)
+        if (DEBUG)
         {
-            egret.log("OnClickRevive");
+            egret.log("OnClickShapeRevive");
         }
 
         GameMain.GetInstance().ShareAppMsgRevive();
 
         var event = new ReviveEvent();
         GameMain.GetInstance().DispatchEvent(event);
+    }
+
+    public OnGameOverEvent()
+    {
+        var result = Tools.IsTimeExpired(2018, 6, 22, 18, 0); // 是否超过了指定的时间
+        if (result)
+        {
+            this.ShowReviveMenu();
+        }
+        else
+        {
+            this.ShowGameOverMenu()
+        }
     }
 }
