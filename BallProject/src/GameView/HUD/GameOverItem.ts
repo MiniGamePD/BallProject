@@ -313,7 +313,14 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     public OnGameOverEvent()
     {
-        var result = Tools.IsTimeExpired(2017, 6, 22, 18, 0); // 是否超过了指定的时间
+        var timer = new egret.Timer(1000, 1);
+        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.OnReallyGameOverEvent, this);
+        timer.start();
+    }
+
+    private OnReallyGameOverEvent()
+    {
+        var result = Tools.IsTimeExpired(2018, 6, 22, 18, 0); // 是否超过了指定的时间
         if (result && GameMain.GetInstance().hasRevive == false)
         {
             this.ShowReviveMenu();
