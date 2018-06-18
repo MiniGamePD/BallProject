@@ -105,7 +105,7 @@ class BallEmitter
 		Tools.DetachDisplayObjFromParent(this.ballEmitterSprite);
 		if (this.multipleDirectionsCount > 0)
 		{
-			this.ballEmitterSprite = this.resModule.CreateBitmapByName("pd_res_json.Skill_zhanyu");
+			this.ballEmitterSprite = this.resModule.CreateBitmapByName("pd_res_json.Skill_zhangyu");
 			this.ballEmitterSprite.x = GameMain.GetInstance().GetStageWidth() / 2;
 			this.ballEmitterSprite.y = GameMain.GetInstance().GetStageHeight() / 2;
 			this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
@@ -114,7 +114,7 @@ class BallEmitter
 		}
 		else
 		{
-			this.ballEmitterSprite = this.resModule.CreateBitmapByName("pd_res_json.zhangyue");
+			this.ballEmitterSprite = this.resModule.CreateBitmapByName("pd_res_json.zhangyu");
 			this.ballEmitterSprite.x = GameMain.GetInstance().GetStageWidth() / 2;
 			this.ballEmitterSprite.y = GameMain.GetInstance().GetStageHeight() / 2;
 			this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
