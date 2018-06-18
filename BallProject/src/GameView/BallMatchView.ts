@@ -138,7 +138,7 @@ class BallMatchView extends GameView
         var tips: egret.TextField;
         tips = new egret.TextField();
         tips.text = tipString;
-        tips.size = 30;
+        tips.size = 20;
         tips.width = 200;
         tips.height = 60;
         tips.anchorOffsetX = tips.width / 2;
