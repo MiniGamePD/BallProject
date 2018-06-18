@@ -15,7 +15,7 @@
 			"url": "assets/pd_res.json",
 			"type": "sheet",
 			"name": "pd_res_json",
-			"subkeys": "AdRevive,Ball_White,Ball_logo,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,cash,newball,pause,play,return,shop,start,zhangyu"
+			"subkeys": "AdRevive,Ball_White,Ball_logo,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,cash,newball,pause,play,return,shop,start,zhangyu"
 		},
 		{
 			"url": "assets/Sound/bgm.mp3",

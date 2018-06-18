@@ -100,7 +100,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         scoreNum.text = "70";
         this.score.addChild(scoreNum);
 
-        this.score.x = GameMain.GetInstance().GetStageWidth() / 5 * 1;
+        this.score.x = 100 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.score.y = 150;
     }
 

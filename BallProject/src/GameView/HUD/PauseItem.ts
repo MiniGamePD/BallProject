@@ -10,7 +10,7 @@ class PauseItem extends egret.DisplayObjectContainer
     //帮助界面
     private bgCoverHelp:FullScreenCover;
     private helpDetail:egret.Bitmap;
-    private helpIcon:egret.TextField;
+    private helpIcon:egret.Bitmap;
 
     public constructor(x:number, y:number, width:number, height:number)
     {
@@ -33,9 +33,8 @@ class PauseItem extends egret.DisplayObjectContainer
         this.pauseIcon = res.CreateBitmapByName("pd_res_json.pause");
         this.pauseIcon.anchorOffsetX = this.pauseIcon.width / 2;
         this.pauseIcon.anchorOffsetY = this.pauseIcon.height / 2;
-        this.pauseIcon.x = 50;
+        this.pauseIcon.x = 50 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.pauseIcon.y = 80;
-        GameMain.GetInstance().AdapteDisplayObject(this.pauseIcon);
         //设置显示对象可以相应触摸事件
         this.pauseIcon.touchEnabled = true;
         //注册事件
@@ -46,19 +45,17 @@ class PauseItem extends egret.DisplayObjectContainer
 
     private CreateHelpIcon()
     {
-        this.helpIcon = new egret.TextField();
-        this.helpIcon.x = 100;
-        this.helpIcon.y = 40;
-        this.helpIcon.width = 80;
-        this.helpIcon.height = 80;
-        this.helpIcon.textAlign = "center";
-        this.helpIcon.verticalAlign = egret.VerticalAlign.MIDDLE;
-        this.helpIcon.text = "?";
-        this.helpIcon.size = 68;
-        this.addChild(this.helpIcon);
+        var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+        this.helpIcon = res.CreateBitmapByName("pd_res_json.HelpIcon");
+        this.helpIcon.anchorOffsetX = this.helpIcon.width / 2;
+        this.helpIcon.anchorOffsetY = this.helpIcon.height / 2;
+        this.helpIcon.x = 120 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.helpIcon.y = 80;
 
         this.helpIcon.touchEnabled = true;
         this.helpIcon.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickHelp, this);
+
+        this.addChild(this.helpIcon);
     }
 
     private CreatePauseMenu(width:number, height:number)

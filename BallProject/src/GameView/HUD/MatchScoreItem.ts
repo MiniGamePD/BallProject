@@ -25,24 +25,28 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 
 		//得分数字
 		this.scoreText = new egret.TextField();
-		this.scoreText.x = 500 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-		this.scoreText.y = 135;
+		this.scoreText.x = 320 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+		this.scoreText.y = 142;
 		this.scoreText.width = 200;
 		this.scoreText.height = 100;
 		this.scoreText.size = 30;
 		this.scoreText.text = "得分：0";
-		this.scoreText.textAlign = "left";
+		this.scoreText.textAlign = "center";
+		this.scoreText.anchorOffsetX = this.scoreText.width / 2;
+		this.scoreText.anchorOffsetY = this.scoreText.height / 2;
 		this.addChild(this.scoreText);
 
 		//历史最高分数字
 		this.historyHighScoreText = new egret.TextField();
-		this.historyHighScoreText.x = 500 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-		this.historyHighScoreText.y = 100;
+		this.historyHighScoreText.x = 320 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+		this.historyHighScoreText.y = 107;
 		this.historyHighScoreText.width = 200;
 		this.historyHighScoreText.height = 100;
 		this.historyHighScoreText.size = 30;
 		this.historyHighScoreText.text = "纪录：0";
-		this.historyHighScoreText.textAlign = "left";
+		this.historyHighScoreText.textAlign = "center";
+		this.historyHighScoreText.anchorOffsetX = this.historyHighScoreText.width / 2;
+		this.historyHighScoreText.anchorOffsetY = this.historyHighScoreText.height / 2;
 		this.addChild(this.historyHighScoreText);
 
 		this.Reset();
