@@ -241,6 +241,10 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.addChild(this.moreCoin);
         this.addChild(this.lottery);
         this.addChild(this.gotoLobby);
+
+        //保存一下
+        var playerdata = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        playerdata.Save();
     }
 
     public ShowReviveMenu()

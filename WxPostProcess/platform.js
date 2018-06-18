@@ -2,11 +2,12 @@
  * 请在白鹭引擎的Main.ts中调用 platform.login() 方法调用至此处。
  */
 
-class WxgamePlatform {
-
+class WxgamePlatform 
+{
     name = 'wxgame'
 
-     login() {
+     login() 
+     {
       wx.showShareMenu({
         withShareTicket: 'false',
         success() {
@@ -88,6 +89,25 @@ class WxgamePlatform {
                 console.log("share success");
             }
         })
+    }
+
+    saveUserData(userData)
+    {
+        const fs = wx.getFileSystemManager();
+        fs.writeFileSync(`${wx.env.USER_DATA_PATH}/UserData.txt`, userData, 'ascii');
+    }
+
+    loadUserData()
+    {
+        const fs = wx.getFileSystemManager();
+        var userData = fs.readFileSync(`${wx.env.USER_DATA_PATH}/UserData.txt`, 'ascii');
+        return userData;
+    }
+
+    hasUserData()
+    {
+        const fs = wx.getFileSystemManager();
+        return fs.accessSync(`${wx.env.USER_DATA_PATH}/UserData.txt`);
     }
 
     openDataContext = new WxgameOpenDataContext();

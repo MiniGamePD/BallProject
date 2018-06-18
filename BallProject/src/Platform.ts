@@ -13,6 +13,12 @@ declare interface Platform
     shareAppMsg();
 
     shareAppMsgRevive();
+
+    saveUserData(userData:string);
+
+    loadUserData():string;
+
+    hasUserData():boolean;
 }
 
 class DebugPlatform implements Platform 
@@ -35,6 +41,21 @@ class DebugPlatform implements Platform
     public shareAppMsg()
     {
         console.log("Share App Msg");
+    }
+
+    public saveUserData(userData:string)
+    {
+
+    }
+
+    public loadUserData():string
+    {
+        return "35,100";
+    }
+
+    public hasUserData():boolean
+    {
+        return true;
     }
 }
 

@@ -134,6 +134,46 @@ class Main extends egret.DisplayObjectContainer
         platform.shareAppMsgRevive();
     }
 
+    public SaveUserData(userData:string)
+    {
+        if(DEBUG)
+            console.log("SaveUserData:" + userData);
+        platform.saveUserData(userData);
+        var result = platform.loadUserData();
+        if(DEBUG)
+            console.log("Check Save Result " + result);
+    }
+
+    public loadUserData():string
+    {
+        if(this.hasUserData())
+        {
+            var result = platform.loadUserData();
+            if(DEBUG)
+                console.log(result);
+            return result;
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public hasUserData():boolean
+    {
+        try
+        {
+            platform.hasUserData();
+            return true;
+        }
+        catch(e)
+        {
+            if(DEBUG)
+                console.log(e);
+            return false;
+        }
+    }
+
     private async runGame() {
         await this.loadResource()
         this.createGameScene();

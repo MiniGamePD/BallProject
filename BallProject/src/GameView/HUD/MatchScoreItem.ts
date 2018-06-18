@@ -14,10 +14,14 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 	private deltaHistoryHighScore = 0;
 	private minDeltaHistoryHighScorePreSecond = 30;
 
+	private playerData:IPlayerDataModule;
+
 	public Init()
 	{
 		this.curShowScore = 0;
 		this.targetScore = 0;
+
+		this.playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
 
 		//得分数字
 		this.scoreText = new egret.TextField();
@@ -91,13 +95,22 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 
 	public Reset()
 	{
+		this.curShowScore = 0;
 		this.SetScore(0);
-		this.SetHistoryHighScore(0);
+		this.curShowHistoryHighScore = this.playerData.GetHistoryHighScore() - 1;
+		this.SetHistoryHighScore(this.playerData.GetHistoryHighScore());
 	}
 
 	private AddScore(score: number)
 	{
-		this.SetScore(this.targetScore + score);	
+		var newScore = this.targetScore + score;
+		if(newScore > this.playerData.GetHistoryHighScore())
+		{
+			this.playerData.SetHistoryHighScore(newScore);
+			this.SetHistoryHighScore(newScore);
+		}	
+
+		this.SetScore(newScore);	
 	}
 
 	private OnBoxEliminateEvent(evt: BoxEliminateEvent): void

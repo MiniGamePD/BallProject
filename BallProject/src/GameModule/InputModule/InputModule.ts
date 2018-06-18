@@ -160,7 +160,7 @@ class InputModule extends ModuleBase implements IInputModule {
 	}
 
 	public SwitchForeOrBack(from: GameStateType, to: GameStateType): void {
-		this.isForeground = true;
+		this.isForeground = false;
 	}
 
 	public GetKey(key: InputKey): boolean {

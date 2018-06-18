@@ -13,6 +13,10 @@ class LoadingModule extends GameViewModule
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.resModule.StartLoadResource(this.OnFinishCallBack);
 
+		//Load User Data
+		var playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+		playerDataModule.InitUserData();
+
 		super.Init();
 		return true;
 	}

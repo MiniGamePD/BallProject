@@ -350,4 +350,22 @@ class GameMain implements IGameMain {
 	{
 		this.mEgretMain.ShareAppMsgRevive();
 	}
+
+	public SaveUserData(userData:string)
+	{
+		this.mEgretMain.SaveUserData(userData);
+	}
+
+	public LoadUserData():string
+	{
+		if(this.mEgretMain.hasUserData())
+			return this.mEgretMain.loadUserData();
+		else
+			return null;
+	}
+
+	public HasUserData():boolean
+	{
+		return this.mEgretMain.hasUserData();
+	}
 }
