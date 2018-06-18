@@ -119,7 +119,7 @@ class BallMatchView extends GameView
 			}
 			else if (evt.boxType == BoxType.FireUp)
 			{
-				this.ShowTips("全力开火 5秒", 0xd6340a);
+				this.ShowTips("射速翻倍 5秒", 0xd6340a);
 			}
 			else if (evt.boxType == BoxType.LevelUp)
 			{
