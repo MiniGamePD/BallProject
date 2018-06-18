@@ -306,6 +306,7 @@ class BoxEmitter
 					scaleParam.targetScaleY = 1.2;
 					scaleParam.duration = 2000;
 					scaleParam.interval = 200;
+					scaleParam.reverse = true;
 					var scaleEvent = new PlayProgramAnimationEvent()
 					scaleEvent.param = scaleParam;
 					GameMain.GetInstance().DispatchEvent(scaleEvent);

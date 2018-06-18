@@ -20,7 +20,7 @@ class CircleBox extends Box
 	{
 		var shape = new egret.Shape();
 		shape.graphics.lineStyle(BoxLineWidth, this.color);
-		shape.graphics.beginFill(this.color, 0);
+		shape.graphics.beginFill(this.color, BoxBackGroundAlpha);
 		shape.graphics.drawCircle(0, 0, this.radius);
 		shape.graphics.endFill();
 		shape.x = this.initPos.x;

@@ -88,6 +88,7 @@ const BoxHealthIncreasePerSecond = 0.4; //Box每秒增加的血量
 
 
 const BoxLineWidth = 4;
+const BoxBackGroundAlpha = 0.2;
 const BoxMoveSpeed = 20;
 const BoxSquareAndTriangleRate = 0.7;  // 四边形和三角形的生成比例
 const BoxHitHideCDTime = 30;
