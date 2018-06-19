@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "pd_res_json,bgm_mp3,Boom_mp3,Eliminate_mp3,EliminateRow_mp3,EnemySinisterSmile1_mp3,fever_bgm_mp3,GameOver_mp3,Go_mp3,OnDown_mp3,Ready_mp3,VirusBorn_mp3,VirusEliminate_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,Pause_mp3,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillMove_mp3,PillMove2_mp3,PillRotation2_mp3,ice_Boom_json,AddFeverPower_mp3,ballEmit_mp3,hitBox_mp3,BoxBoom_json,Share_png",
+			"keys": "pd_res_json,Boom_mp3,Eliminate_mp3,EliminateRow_mp3,EnemySinisterSmile1_mp3,GameOver_mp3,Go_mp3,OnDown_mp3,Ready_mp3,VirusBorn_mp3,VirusEliminate_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,Pause_mp3,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillMove_mp3,PillMove2_mp3,PillRotation2_mp3,ice_Boom_json,AddFeverPower_mp3,ballEmit_mp3,hitBox_mp3,BoxBoom_json,Share_png,Title_mp3",
 			"name": "preload"
 		}
 	],
@@ -16,11 +16,6 @@
 			"type": "sheet",
 			"name": "pd_res_json",
 			"subkeys": "AdRevive,Ball_White,Ball_logo,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,cash,newball,pause,play,return,shop,start,zhangyu"
-		},
-		{
-			"url": "assets/Sound/bgm.mp3",
-			"type": "sound",
-			"name": "bgm_mp3"
 		},
 		{
 			"url": "assets/Sound/Boom.mp3",
@@ -41,11 +36,6 @@
 			"url": "assets/Sound/EnemySinisterSmile1.mp3",
 			"type": "sound",
 			"name": "EnemySinisterSmile1_mp3"
-		},
-		{
-			"url": "assets/Sound/fever_bgm.mp3",
-			"type": "sound",
-			"name": "fever_bgm_mp3"
 		},
 		{
 			"url": "assets/Sound/GameOver.mp3",
@@ -216,6 +206,11 @@
 			"name": "Share_png",
 			"type": "image",
 			"url": "assets/Share.png"
+		},
+		{
+			"name": "Title_mp3",
+			"type": "sound",
+			"url": "assets/Sound/Title.mp3"
 		}
 	]
 }

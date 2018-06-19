@@ -184,13 +184,13 @@ class LobbyView extends GameView
 
     private PlayBgm()
     {
-        // if(LobbyView.hasPlayedBgm)
-        //     return;
+        if(LobbyView.hasPlayedBgm)
+            return;
 
-        // LobbyView.hasPlayedBgm = true;
+        LobbyView.hasPlayedBgm = true;
 
-        // var event: PlaySoundEvent = new PlaySoundEvent("bgm_mp3", -1);
-        // GameMain.GetInstance().DispatchEvent(event);
+        var event: PlaySoundEvent = new PlaySoundEvent("Title_mp3", 1);
+        GameMain.GetInstance().DispatchEvent(event);
 
         // var event = new BgmControlEvent();
         // event.bgmStage = BgmStage.Global;
