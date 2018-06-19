@@ -225,8 +225,12 @@ class BoxEmitter
 		if (this.hitSoundCdTime <= 0)
 		{
 			this.hitSoundCdTime = BoxHitSoundCDTime;
-			// this.soundModule.PlaySound("hitBox_mp3", 1);
-			this.soundModule.PlaySound("PillRotation_mp3", 1);
+			var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
+			// var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
+			if (soundChannel != null)
+			{
+				soundChannel.volume = 0.5;
+			}
 		}
 	}
 
