@@ -106,9 +106,9 @@ abstract class Box
 		}
 	}
 
-	public SetHide(hide: boolean)
+	public SetHide(hide: boolean, froce?:boolean)
 	{
-		if (this.hideCDTime <= 0)
+		if (this.hideCDTime <= 0 || froce == true)
 		{
 			this.hideCDTime = BoxHitHideCDTime;
 			this.isHide = hide;

@@ -292,7 +292,8 @@ class BoxEmitter
 				var deltaY = Math.abs(boxA.boxDisplayObj.y - this.center.y);
 				if (deltaX < GameOverCenterSize.x * centerSizeScale && deltaY < GameOverCenterSize.y * centerSizeScale)
 				{
-
+					boxA.SetHide(false, true);
+					
 					var moveParam = new PaAccMovingParam()
 					moveParam.displayObj = boxA.boxDisplayObj;
 					moveParam.attachDisplayObj = [boxA.healthDisplayObj];
