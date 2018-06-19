@@ -152,7 +152,7 @@ class BallMatchView extends GameView
 
         var moveParam = new PaMovingParam()
         moveParam.displayObj = tips;
-        moveParam.duration = 1000;
+        moveParam.duration = 1600;
         moveParam.targetPosX = tips.x;
         moveParam.targetPosY = tips.y - 40;
         moveParam.needRemoveOnFinish = true;
@@ -163,8 +163,8 @@ class BallMatchView extends GameView
 
         var alphaParam = new PaAlphaLoopParam();
         alphaParam.displayObj = tips;
-        alphaParam.duration = 1000;
-        alphaParam.interval = 500;
+        alphaParam.duration = 1600;
+        alphaParam.interval = alphaParam.duration / 2;
         alphaParam.startAlpha = 0.5
         alphaParam.endAlpha = 1
         alphaParam.reverse = true;
