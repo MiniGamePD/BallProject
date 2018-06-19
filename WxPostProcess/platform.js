@@ -16,7 +16,7 @@ class WxgamePlatform
             // 用户点击了“转发”按钮
             return {
               title: '快来和小章鱼一起玩弹球吧~',
-              imageUrl: 'resource/assets/pd_res.png',
+              imageUrl: 'resource/assets/Share.png',
               success()
               {
                 console.log("share success");
@@ -71,7 +71,7 @@ class WxgamePlatform
     {
         wx.shareAppMessage({
             title: '快来和小章鱼一起玩弹球吧~',
-            imageUrl: 'resource/assets/pd_res.png',
+            imageUrl: 'resource/assets/Share.png',
             success()
             {
                 console.log("share success");
@@ -83,7 +83,7 @@ class WxgamePlatform
     {
         wx.shareAppMessage({
             title: '我的小章鱼被围攻啦，快来救我！',
-            imageUrl: 'resource/assets/pd_res.png',
+            imageUrl: 'resource/assets/Share.png',
             success()
             {
                 console.log("share success");
