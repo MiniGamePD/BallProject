@@ -50,7 +50,7 @@ class ShopView extends egret.DisplayObjectContainer
             { text:"的弹球\n\n但是店里没有存货了\n", style:{"textColor":0xFFFFFF, "size":30} },
             { text:"兔女郎", style:{"textColor":0xB90086, "size":30}},
             { text:"已经出门进货了\n", style:{"textColor":0xFFFFFF, "size":30}},
-            { text:"所以尽请期待吧~", style:{"textColor":0xFFFFFF, "size":30}},
+            { text:"所以敬请期待吧~", style:{"textColor":0xFFFFFF, "size":30}},
         ]
 
         this.noGoodsDetail.textAlign = "center";
@@ -68,7 +68,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.noGoodsTitle = new egret.TextField();
         this.noGoodsTitle.size = 80;
         this.noGoodsTitle.textColor = 0xB90086;
-        this.noGoodsTitle.text = "尽请期待";
+        this.noGoodsTitle.text = "敬请期待";
         this.noGoodsTitle.textAlign = "center";
         this.noGoodsTitle.width = 400;
         this.noGoodsTitle.height = 100;
