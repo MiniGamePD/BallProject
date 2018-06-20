@@ -67,14 +67,14 @@ class LobbyView extends GameView
 
         var button = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_Play", 193, 82, 193, 82,
             this.OnClickStartGame, this);
-        button.x = this.mStageWidth / 2 + 100;
-        button.y = 950;
+        button.x = this.mStageWidth / 2 + 120;
+        button.y = 1000;
         this.addChild(button);
 
         var shop = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_ChangBall", 193, 82, 193, 82,
             this.OnClickShop, this);
-        shop.x = this.mStageWidth / 2 - 100;
-        shop.y = 950;
+        shop.x = this.mStageWidth / 2 - 120;
+        shop.y = 1000;
         this.addChild(shop);
 
         // //设置显示对象可以相应触摸事件
@@ -97,6 +97,8 @@ class LobbyView extends GameView
     private CreateTitle()
     {
         this.title = this.mResModule.CreateBitmapByName("pd_res_json.Logo");
+        this.title.width = this.title.width * 0.88;
+        this.title.height = this.title.height * 0.88;
         this.title.anchorOffsetX = this.title.width / 2;
         this.title.anchorOffsetY = this.title.height / 2;
         this.title.x = GameMain.GetInstance().GetStageWidth() / 2;
@@ -110,7 +112,7 @@ class LobbyView extends GameView
         this.logo.anchorOffsetX = this.logo.width / 2;
         this.logo.anchorOffsetY = this.logo.height / 2;
         this.logo.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.logo.y = 600;
+        this.logo.y = 650;
         this.addChild(this.logo);
     }
 
@@ -120,7 +122,7 @@ class LobbyView extends GameView
         var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
         this.ball = res.CreateBitmapByName("pd_res_json." + playerData.GetBall());
         this.ball.x = this.mStageWidth / 2 + 100;
-        this.ball.y = 450;
+        this.ball.y = 500;
         this.ball.width = 50;
         this.ball.height = 50;
 

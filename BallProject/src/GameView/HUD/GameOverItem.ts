@@ -69,13 +69,13 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.ShareRevive", 
             570 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth, 140,
-            137, 100, this.OnClickShapeRevive, this);
+            296, 52, this.OnClickShapeRevive, this);
         reviveButton.y = -20;
         this.reviveMenu.addChild(reviveButton);
 
         var giveUpButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFF930000, 6, 22, "pd_res_json.GameOver", 
             570 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth, 140,
-            137, 100, this.OnClickGiveup, this);
+            298, 84, this.OnClickGiveup, this);
         giveUpButton.y = 140;
         this.reviveMenu.addChild(giveUpButton);
     }
