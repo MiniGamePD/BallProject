@@ -38,7 +38,10 @@ class BallEmitter
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
 		GameMain.GetInstance().AddEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
+		GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
+		GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
 	}
+
 
 	private UnRegisterTouchEvent(): void
 	{
@@ -46,6 +49,8 @@ class BallEmitter
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
 		GameMain.GetInstance().RemoveEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
+		GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
+		GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
 	}
 
 	private OnTouchEvent(evt: egret.TouchEvent): void
@@ -82,7 +87,7 @@ class BallEmitter
 	{
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
-		
+
 		this.ballGameWorld = ballGameWorld;
 
 		this.battleGround = battleGround;
@@ -98,6 +103,26 @@ class BallEmitter
 		this.SetLevel(1);
 
 		this.RefreshBallEmitterSprite();
+	}
+
+	private OnReviveEvent(evt: ReviveEvent): void
+	{
+		if (evt != null)
+		{
+			this.RefreshBallEmitterSprite();
+		}
+	}
+
+	private OnGameOverEvent()
+	{
+		Tools.DetachDisplayObjFromParent(this.ballEmitterSprite);
+		this.ballEmitterSprite = this.resModule.CreateBitmapByName("pd_res_json.zhangyu_dead");
+		this.ballEmitterSprite.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.ballEmitterSprite.y = GameMain.GetInstance().GetStageHeight() / 2;
+		this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
+		this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
+		this.battleGround.addChild(this.ballEmitterSprite);
+		this.ballEmitterSprite.rotation = 0;
 	}
 
 	private RefreshBallEmitterSprite()
