@@ -74,6 +74,10 @@ class SkillCricleBoxBase extends Box
 	public OnEliminate()
 	{
 		super.OnEliminate();
+
+		var soundEvent = new PlaySoundEvent("SkillBox_mp3", 1)
+		GameMain.GetInstance().DispatchEvent(soundEvent);
+		
 		var event = new SpecialBoxEliminateEvent()
 		event.boxType = this.GetBoxType();
 		GameMain.GetInstance().DispatchEvent(event);
