@@ -19,6 +19,10 @@ declare interface Platform
     loadUserData():string;
 
     hasUserData():boolean;
+
+    createOpenDataBitmap():egret.Bitmap;
+
+    setUserCloudStorage(key:string, value:string);
 }
 
 class DebugPlatform implements Platform 
@@ -50,12 +54,22 @@ class DebugPlatform implements Platform
 
     public loadUserData():string
     {
-        return "35,100";
+        return "10,100";
     }
 
     public hasUserData():boolean
     {
         return true;
+    }
+
+    public createOpenDataBitmap():egret.Bitmap
+    {
+        return null;
+    }
+
+    public setUserCloudStorage(key:string, value:string)
+    {
+        console.log("保存云端数据:" + key + "-" + value);
     }
 }
 

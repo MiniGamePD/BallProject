@@ -4,6 +4,17 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     private coin:number;
     private curMatchScore:number = 0; //当前比赛分数
 
+    private breakRecordHistoryHighScore:boolean;
+
+    public Init():boolean
+    {
+        super.Init();
+
+        this.breakRecordHistoryHighScore = false;
+
+        return true;
+    }
+
 	public GetBall(): string
     {
         return "Ball_White";
@@ -12,12 +23,24 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     public SetHistoryHighScore(score:number)
     {
         if(this.historyHighScore < score)
+        {
             this.historyHighScore = score;
+            this.breakRecordHistoryHighScore = true;
+        }    
     }
 
     public GetHistoryHighScore():number
     {
         return this.historyHighScore;
+    }
+
+    public UploadHistoryHighScore()
+    {
+        if(this.breakRecordHistoryHighScore)
+        {
+            this.breakRecordHistoryHighScore = false;
+            platform.setUserCloudStorage("HighScore", this.historyHighScore.toString());
+        }
     }
 
     public SetCoin(coin:number)

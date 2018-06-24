@@ -3,6 +3,7 @@ interface IPlayerDataModule extends IModule
 	GetBall(): string;
     SetHistoryHighScore(score:number);
     GetHistoryHighScore():number;
+    UploadHistoryHighScore();
     SetCoin(coin:number);
     GetCoin():number;
     SetCurMatchScore(score:number);

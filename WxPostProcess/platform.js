@@ -111,6 +111,46 @@ class WxgamePlatform
     }
 
     openDataContext = new WxgameOpenDataContext();
+
+    createOpenDataBitmap()
+    {
+        return this.openDataContext.createDisplayObject();
+    }
+
+    setUserCloudStorage(storageKey, storageValue)
+    {
+        let gameScoreData = 
+        { 
+            wxgame: 
+            { 
+                score:  storageValue , 
+                update_time:  new   Date ().getTime(), 
+            }
+        } 
+
+        let userKVData = 
+        { 
+            key:   storageKey, 
+            value: JSON.stringify(gameScoreData), 
+        } 
+
+        wx.setUserCloudStorage({ 
+            KVDataList: [userKVData], 
+            success:  function   (res) 
+            { 
+                console.log("--success res:", res); 
+                console.log('设置CloudStorage:' + storageKey + '-' + storageValue + "成功");
+            }, 
+            fail:  function   (res) 
+            { 
+                console.log( '--fail res:' , res); 
+            }, 
+            complete:  function   (res) 
+            { 
+                console.log( '--complete res:' , res); 
+            }, 
+        }); 
+    }
 }
 
 class WxgameOpenDataContext {

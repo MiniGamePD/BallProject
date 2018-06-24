@@ -12,6 +12,7 @@ class LobbyView extends GameView
     private ballAnimSpeed: number;
     private ballAnimAcc: number;
     private shop: ShopView;
+    private rank:egret.Bitmap;
 
     public CreateView(): void
     {
@@ -24,6 +25,7 @@ class LobbyView extends GameView
         this.CreateLogo();
         this.CreateBall();
         this.CreateShopView();
+        //this.CreateRank();
         this.PlayBgm();
         this.StartBallAnim();
 
@@ -97,8 +99,9 @@ class LobbyView extends GameView
     private CreateTitle()
     {
         this.title = this.mResModule.CreateBitmapByName("pd_res_json.Logo");
-        this.title.width = this.title.width * 0.88;
-        this.title.height = this.title.height * 0.88;
+        var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.title.width = this.title.width * 0.88 * adaptFactor
+        this.title.height = this.title.height * 0.88 * adaptFactor;
         this.title.anchorOffsetX = this.title.width / 2;
         this.title.anchorOffsetY = this.title.height / 2;
         this.title.x = GameMain.GetInstance().GetStageWidth() / 2;
@@ -140,6 +143,19 @@ class LobbyView extends GameView
     {
         this.shop = new ShopView();
         this.shop.Init(this.OnCloseShop, this);
+    }
+
+    private CreateRank()
+    {
+        this.rank = platform.createOpenDataBitmap();
+        if(this.rank != null)
+        {
+            this.rank.anchorOffsetX = this.rank.width / 2;
+            this.rank.anchorOffsetY = this.rank.height / 2;
+            this.rank.x = GameMain.GetInstance().GetStageWidth() / 2;
+            this.rank.y = GameMain.GetInstance().GetStageHeight() / 2;
+            this.addChild(this.rank);
+        }
     }
 
     private OnClickStartGame(): void

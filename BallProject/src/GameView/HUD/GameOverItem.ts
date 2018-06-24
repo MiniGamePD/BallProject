@@ -347,7 +347,9 @@ class GameOverItem extends egret.DisplayObjectContainer
         }
         else
         {
-            this.ShowGameOverMenu()
+            this.ShowGameOverMenu();
+            var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+            playerData.UploadHistoryHighScore();
         }
     }
 }
