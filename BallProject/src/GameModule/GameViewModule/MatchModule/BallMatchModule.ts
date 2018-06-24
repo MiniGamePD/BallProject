@@ -2,6 +2,7 @@ class BallMatchModule extends GameViewModule
 {
     private matchView: BallMatchView;
 
+    private ballDataMgr: BallDataMgr;
     private ballGameWorld: BallGameWorld;
     private ballEmitter: BallEmitter;
     private boxEmitter: BoxEmitter;
@@ -36,14 +37,17 @@ class BallMatchModule extends GameViewModule
 
     private InitComponents()
     { 
+        this.ballDataMgr = new BallDataMgr()
+        this.ballDataMgr.Init();
+
         this.ballGameWorld = new BallGameWorld(); 
         this.ballGameWorld.Init();
 
         this.ballEmitter = new BallEmitter();
-        this.ballEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround());
+        this.ballEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround(), this.ballDataMgr);
 
         this.boxEmitter = new BoxEmitter();
-        this.boxEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround());
+        this.boxEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround(), this.ballDataMgr);
     }
 
     public SwitchForeOrBack(from: GameStateType, to: GameStateType): void

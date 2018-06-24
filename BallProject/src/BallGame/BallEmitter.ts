@@ -3,17 +3,15 @@ class BallEmitter
 	private resModule: IResModule;
 	private soundModule: ISoundModule;
 
+	private ballDataMgr: BallDataMgr;
 	public ballGameWorld: BallGameWorld;
 	public emitLeftTime = 0;
 	public emitPos: egret.Point;
 	public emitDir: egret.Point;
-	public emitSpeed: number = 1000;
-	public ballMass: number = 1;
-	public ballRadius: number = 15;
 	public emitPosOffsetDis = 30;
 	public emitBallCount = 0;
 
-	public ballList: p2.Body[] = [];
+	public ballList: Ball[] = [];
 
 	public battleGround: egret.DisplayObjectContainer;
 
@@ -26,6 +24,10 @@ class BallEmitter
 	private levelUpEvent: BallEmitterLevelUpEvent;
 
 	private emitSoundCdTime = 0;
+
+	public emitSpeed: number = 1000;
+	public ballMass: number = 1;
+	public ballRadius: number = 15;
 
 	public constructor()
 	{
@@ -40,6 +42,7 @@ class BallEmitter
 		GameMain.GetInstance().AddEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 		GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
+		GameMain.GetInstance().AddEventListener(HitBoxEvent.EventName, this.OnHitBoxEvent, this);
 	}
 
 
@@ -51,6 +54,7 @@ class BallEmitter
 		GameMain.GetInstance().RemoveEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 		GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
+		GameMain.GetInstance().RemoveEventListener(HitBoxEvent.EventName, this.OnHitBoxEvent, this);
 	}
 
 	private OnTouchEvent(evt: egret.TouchEvent): void
@@ -83,11 +87,28 @@ class BallEmitter
 		}
 	}
 
-	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer)
+	private OnHitBoxEvent(evt: HitBoxEvent)
+	{
+		if (evt != null)
+		{
+			if (this.ballDataMgr.IsTriggerSkill_ScaleOnHit())
+			{
+
+			}
+		}
+	}
+
+	public ScaleBall(ball: p2.Body)
+	{
+
+	}
+
+	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer, ballDataMgr: BallDataMgr)
 	{
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
 
+		this.ballDataMgr = ballDataMgr;
 		this.ballGameWorld = ballGameWorld;
 
 		this.battleGround = battleGround;
@@ -249,44 +270,61 @@ class BallEmitter
 		++this.emitBallCount;
 		emitDir.normalize(this.emitPosOffsetDis);
 		var emitPos = new egret.Point(this.emitPos.x + emitDir.x, this.emitPos.y + emitDir.y);
-		emitDir.normalize(speed)
-		var ballShape: p2.Shape = new p2.Circle({ radius: this.ballRadius });
-		ballShape.collisionGroup = Collision_Layer_Ball;
-		ballShape.collisionMask = Collision_Layer_Box;
-		var ballBody: p2.Body = new p2.Body({
-			mass: this.ballMass,
-			position: [emitPos.x, emitPos.y],
-			velocity: [emitDir.x, emitDir.y]
-		});
-		ballBody.addShape(ballShape);
-		this.ballGameWorld.world.addBody(ballBody);
-
-		var display = this.resModule.CreateBitmapByName("Ball_White");
-		display.width = (<p2.Circle>ballShape).radius * 1.5 * this.ballGameWorld.factor;
-		display.height = (<p2.Circle>ballShape).radius * 1.5 * this.ballGameWorld.factor;
-		display.x = emitPos.x;
-		display.y = emitPos.y;
-
-		display.anchorOffsetX = display.width / 2;
-		display.anchorOffsetY = display.height / 2;
-		ballBody.displays = [display];
-		this.battleGround.addChild(display);
-		this.ballList.push(ballBody);
+		var ball = new Ball(this.resModule);
+		ball.Init(this.emitBallCount, emitPos, emitDir, this.ballDataMgr.emitSpeed, 
+				this.ballDataMgr.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballTextureName);
+				
+		this.ballGameWorld.world.addBody(ball.phyBody);
+		this.battleGround.addChild(ball.ballDisplay);
+		this.ballList.push(ball);
 	}
 
 	private ClearBall()
 	{
 		for (var i = 0; i < this.ballList.length; ++i)
 		{
-			if (this.ballList[i].displays[0].x < 0
-				|| this.ballList[i].displays[0].x > GameMain.GetInstance().GetStageWidth()
-				|| this.ballList[i].displays[0].y < 0
-				|| this.ballList[i].displays[0].y > GameMain.GetInstance().GetStageHeight())
+			if (this.ballList[i].ballDisplay.x < 0
+				|| this.ballList[i].ballDisplay.x > GameMain.GetInstance().GetStageWidth()
+				|| this.ballList[i].ballDisplay.y < 0
+				|| this.ballList[i].ballDisplay.y > GameMain.GetInstance().GetStageHeight())
 			{
-				Tools.DetachDisplayObjFromParent(this.ballList[i].displays[0]);
-				this.ballGameWorld.world.removeBody(this.ballList[i]);
+				this.DeleteBall(this.ballList[i]);
+				--i;
 			}
 		}
+	}
+
+	public GetBallById(id: number): Ball
+	{
+		for (var i = 0; i < this.ballList.length; ++i)
+		{
+			if (this.ballList[i] != null
+				&& this.ballList[i].id == id)
+			{
+				return this.ballList[i];
+			}
+		}
+		return null;
+	}
+
+	private DeleteBall(ball: Ball): boolean
+	{
+		if (ball != null
+			&& ball != undefined)
+		{
+			var idx = this.ballList.indexOf(ball);
+			if (idx >= 0)
+			{
+				Tools.DetachDisplayObjFromParent(ball.ballDisplay);
+				if (ball.phyBody != null)
+				{
+					this.ballGameWorld.world.removeBody(ball.phyBody);
+				}
+				this.ballList.splice(idx, 1);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private PlayBallEmitSound()

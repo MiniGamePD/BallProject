@@ -16,6 +16,7 @@ class BoxEmitter
 	private resModule: IResModule;
 	private soundModule: ISoundModule;
 
+	private ballDataMgr: BallDataMgr;
 	public ballGameWorld: BallGameWorld;
 
 	public center: egret.Point;
@@ -27,6 +28,7 @@ class BoxEmitter
 	public hitSoundCdTime = 0;
 	public boxPauseLeftTime = 0;
 
+	public hitBoxEvent: HitBoxEvent;
 	public boxEliminateEvent: BoxEliminateEvent;
 
 	public gameOverBox: Box;
@@ -35,11 +37,12 @@ class BoxEmitter
 	{
 	}
 
-	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer)
+	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer, ballDataMgr: BallDataMgr)
 	{
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
 
+		this.ballDataMgr = ballDataMgr;
 		this.ballGameWorld = ballGameWorld;
 
 		this.battleGround = battleGround;
@@ -56,6 +59,7 @@ class BoxEmitter
 		this.boxCreateStrategy = new BoxCreateStrategy();
 		this.boxCreateStrategy.Init(this);
 
+		this.hitBoxEvent = new HitBoxEvent();
 		this.boxEliminateEvent = new BoxEliminateEvent();
 
 		this.RegisterEvent();
@@ -234,20 +238,26 @@ class BoxEmitter
 		}
 	}
 
-	private OnHitBox(box: Box)
+	private OnHitBox(box: Box, ball: p2.Body)
 	{
 		if (box != null
 			&& box != undefined)
 		{
+			this.hitBoxEvent.box = box;
+			this.hitBoxEvent.ball = ball;
+			GameMain.GetInstance().DispatchEvent(this.hitBoxEvent);
+
 			box.changeHealth(-1);
 			this.PlayHitSound();
+			
 			if (box.health <= 0)
 			{
-				box.OnEliminate();
-
 				this.boxEliminateEvent.boxType = box.GetBoxType();
+				this.boxEliminateEvent.box = box;
+				this.boxEliminateEvent.ball = ball;
 				GameMain.GetInstance().DispatchEvent(this.boxEliminateEvent);
 
+				box.OnEliminate();
 				this.DeleteBox(box, true);
 			}
 		}
@@ -293,7 +303,7 @@ class BoxEmitter
 				if (deltaX < GameOverCenterSize.x * centerSizeScale && deltaY < GameOverCenterSize.y * centerSizeScale)
 				{
 					boxA.SetHide(false, true);
-					
+
 					var moveParam = new PaAccMovingParam()
 					moveParam.displayObj = boxA.boxDisplayObj;
 					moveParam.attachDisplayObj = [boxA.healthDisplayObj];
@@ -401,13 +411,13 @@ class BoxEmitter
 				&& shapeB.collisionGroup == Collision_Layer_Ball)
 			{
 				var box = this.GetBoxById(shapeA.id);
-				this.OnHitBox(box);
+				this.OnHitBox(box, bodyB);
 			}
 			if (shapeA.collisionGroup == Collision_Layer_Ball
 				&& shapeB.collisionGroup == Collision_Layer_Box)
 			{
 				var box = this.GetBoxById(shapeB.id);
-				this.OnHitBox(box);
+				this.OnHitBox(box, bodyA);
 			}
 
 			// if (shapeA.collisionGroup == Collision_Layer_Box
