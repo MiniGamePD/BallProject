@@ -20,6 +20,7 @@ abstract class Box
 	public canMerge: boolean = false;
 
 	public pause = false;
+	public pauseLeftTime = 0;
 
 	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number)
 	{
@@ -50,6 +51,14 @@ abstract class Box
 
 	public Update(deltaTime: number)
 	{
+		if (this.pauseLeftTime > 0)
+		{
+			this.pauseLeftTime -= deltaTime;
+			if (this.pauseLeftTime <= 0)
+			{
+				this.SetPause(false);
+			}
+		}
 
 		if (this.hideCDTime > 0)
 		{
@@ -77,7 +86,7 @@ abstract class Box
 
 	public PlayBoxBoomEffect()
 	{
-		for (var i = 1; i <= 7; ++i )
+		for (var i = 1; i <= 7; ++i)
 		{
 			this.BoxBoomPartical("BoxBoom" + i);
 		}
@@ -106,7 +115,7 @@ abstract class Box
 		}
 	}
 
-	public SetHide(hide: boolean, froce?:boolean)
+	public SetHide(hide: boolean, froce?: boolean)
 	{
 		if (this.hideCDTime <= 0 || froce == true)
 		{
@@ -128,7 +137,13 @@ abstract class Box
 		}
 	}
 
-	public Pause(pause: boolean)
+	public Pause(pauseTime: number)
+	{
+		this.SetPause(true);
+		this.pauseLeftTime = pauseTime;
+	}
+
+	private SetPause(pause: boolean)
 	{
 		this.pause = pause;
 		if (this.moveSpeed > 0

@@ -9,6 +9,7 @@ class Ball
 	public ballMass: number;
 	public ballRadius: number;
 	public ballTextureName: string;
+	public canSplitOnHit: boolean;
 
 	public ballDisplay: egret.Bitmap;
 	public phyShape: p2.Shape;
@@ -20,7 +21,7 @@ class Ball
 	}
 
 	public Init(id: number, emitPos: egret.Point, emitDir: egret.Point,
-		emitSpeed: number, ballMass: number, ballRadius: number, ballTextureName: string)
+		emitSpeed: number, ballMass: number, ballRadius: number, ballTextureName: string, canSplit: boolean)
 	{
 		this.id = id;
 		this.emitPos = emitPos;
@@ -29,6 +30,7 @@ class Ball
 		this.ballMass = ballMass;
 		this.ballRadius = ballRadius;
 		this.ballTextureName = ballTextureName;
+		this.canSplitOnHit = canSplit;
 
 		emitDir.normalize(emitSpeed);
 		this.phyShape = new p2.Circle({ radius: this.ballRadius });
@@ -52,5 +54,20 @@ class Ball
 		});
 		this.phyBody.addShape(this.phyShape);
 		this.phyBody.displays = [this.ballDisplay];
+	}
+
+	public ScaleBallRadius(scale: number, maxRadius: number)
+	{
+		var radius = this.ballRadius * scale;
+		if (radius > this.ballRadius && radius <= maxRadius)
+		{
+			this.ballRadius = radius;
+			(<p2.Circle>this.phyShape).radius = this.ballRadius;
+
+			this.ballDisplay.width = this.ballRadius * 1.5;
+			this.ballDisplay.height = this.ballRadius * 1.5;
+			this.ballDisplay.anchorOffsetX = this.ballDisplay.width / 2;
+			this.ballDisplay.anchorOffsetY = this.ballDisplay.height / 2;
+		}
 	}
 }
