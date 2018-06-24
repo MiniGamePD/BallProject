@@ -12,7 +12,11 @@ class LobbyView extends GameView
     private ballAnimSpeed: number;
     private ballAnimAcc: number;
     private shop: ShopView;
-    private rank:egret.Bitmap;
+    //===排行榜===
+    private rankMenu:egret.Bitmap;
+    private rankButton:egret.TextField;
+    private rankBg:FullScreenCover;
+    private rankBackButton:ShapeBgButton;
 
     public CreateView(): void
     {
@@ -25,7 +29,7 @@ class LobbyView extends GameView
         this.CreateLogo();
         this.CreateBall();
         this.CreateShopView();
-        //this.CreateRank();
+        this.CreateRank();
         this.PlayBgm();
         this.StartBallAnim();
 
@@ -147,14 +151,54 @@ class LobbyView extends GameView
 
     private CreateRank()
     {
-        this.rank = platform.createOpenDataBitmap();
-        if(this.rank != null)
+        this.rankButton = new egret.TextField();
+        this.rankButton.text = "排行榜";
+        this.rankButton.width = 200;
+        this.rankButton.height = 100;
+        this.rankButton.anchorOffsetX = 100;
+        this.rankButton.anchorOffsetY = 50;
+        this.rankButton.size = 50;
+        this.rankButton.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.rankButton.y = 900;
+        this.rankButton.touchEnabled = true;
+        this.rankButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickRank, this);
+        this.addChild(this.rankButton);
+
+        this.rankBg = new FullScreenCover(0x000000, 0.8);
+
+        this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
+            "pd_res_json.return", 39, 64, 39, 64, this.OnCloseRank, this);
+        this.rankBackButton.x = 50;
+        this.rankBackButton.y = 80;
+
+        this.rankMenu = platform.createOpenDataBitmap();
+        if(this.rankMenu != null)
         {
-            this.rank.anchorOffsetX = this.rank.width / 2;
-            this.rank.anchorOffsetY = this.rank.height / 2;
-            this.rank.x = GameMain.GetInstance().GetStageWidth() / 2;
-            this.rank.y = GameMain.GetInstance().GetStageHeight() / 2;
-            this.addChild(this.rank);
+            this.rankMenu.touchEnabled = true;
+            this.rankMenu.anchorOffsetX = this.rankMenu.width / 2;
+            this.rankMenu.anchorOffsetY = this.rankMenu.height / 2;
+            this.rankMenu.x = GameMain.GetInstance().GetStageWidth() / 2;
+            this.rankMenu.y = GameMain.GetInstance().GetStageHeight() / 2;
+        }
+    }
+
+    private OnClickRank()
+    {
+        if(this.rankMenu != null && this.rankMenu != undefined)
+        {
+            this.addChild(this.rankBg);
+            this.addChild(this.rankMenu);
+            this.addChild(this.rankBackButton);
+        }
+    }
+
+    private OnCloseRank(callbackObj:any)
+    {
+        if(callbackObj.rankMenu != null && callbackObj.rankMenu != undefined)
+        {
+            callbackObj.removeChild(callbackObj.rankBg);
+            callbackObj.removeChild(callbackObj.rankMenu);
+            callbackObj.removeChild(callbackObj.rankBackButton);
         }
     }
 
