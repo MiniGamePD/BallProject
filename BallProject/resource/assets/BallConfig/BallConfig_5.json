@@ -1,0 +1,13 @@
+{
+	"id" : 5,
+	"name" : "盒子分裂球",
+	"textureName": "Skill_shandan",
+	"maxLevel" : 3,
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [15, 16, 17],
+
+	"skill_CreateBallOnBoxEliminate_Rate" : [0.6, 0.8, 1],
+	"skill_CreateBallOnBoxEliminate_Count" : [6, 8, 10],
+
+	"Describe" : ["第1级", "第2级", "第3级"]	
+}

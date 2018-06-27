@@ -1,0 +1,14 @@
+{
+	"id" : 4,
+	"name" : "碰撞分裂球",
+	"textureName": "Share",
+	"maxLevel" : 3,
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [15, 16, 17],
+
+	"skill_SplitBallOnHit_Rate" : [0.4, 0.5, 0.6],
+	"skill_SplitBallOnHit_Count" : [2, 3, 4],
+	"skill_SplitBallOnHit_Angle" : [30],
+
+	"Describe" : ["第1级", "第2级", "第3级"]	
+}

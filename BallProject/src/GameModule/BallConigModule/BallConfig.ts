@@ -5,6 +5,7 @@ class BallConfig
 	}
 
 	public id : number = 0;
+	public name : string;
 	public textureName: string = "Ball_White";
 	public level: number = 0;
 	public maxLevel: number = 0;
@@ -38,6 +39,7 @@ class BallConfig
 	public InitByConfig(config, level)
 	{
 		this.id = config.id;
+		this.name = config.name;
 		this.textureName = config.textureName;
 		this.level = level;
 		this.maxLevel = config.maxLevel;

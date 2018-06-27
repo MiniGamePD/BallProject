@@ -1,5 +1,6 @@
 {
 	"id" : 2,
+	"name" : "发射放大球",
 	"textureName": "Coin",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],

@@ -51,8 +51,8 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 
 	public LoadCurBallConfig()
 	{
-		this.curBallId = 2;
-		this.curBallLevel = 1;
+		this.curBallId = 5;
+		this.curBallLevel = 2;
 
 		this.curBallConfig = new BallConfig();
 		this.curBallConfig.InitByConfig(this.GetBallJsonConfig(this.curBallId), this.curBallLevel);
