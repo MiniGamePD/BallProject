@@ -127,9 +127,9 @@ class LobbyView extends GameView
 
     private CreateBall()
     {
-        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        var ballConfigMdl = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
         var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
-        this.ball = res.CreateBitmapByName("pd_res_json." + playerData.GetBall());
+        this.ball = res.CreateBitmapByName("pd_res_json." + ballConfigMdl.GetCurBallConfig().textureName);
         this.ball.x = this.mStageWidth / 2 + 100;
         this.ball.y = 500;
         this.ball.width = 50;

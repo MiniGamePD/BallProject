@@ -6,6 +6,9 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	private ballConfigList: any[];
 	private totalBallCount: number;
 
+	private myBallString: string;
+	private myBallList: MyBallInfo[];
+
 	private curBallId: number;
 	private curBallLevel: number;
 	private curBallConfig: BallConfig;
@@ -27,6 +30,13 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
 
+		this.LoadBallJsonConfig();
+		this.LoadMyBall();
+		this.LoadCurBallConfig();
+	}
+
+	private LoadBallJsonConfig()
+	{
 		this.ballConfigList = [];
 		var id = 1;
 		while (true)
@@ -45,14 +55,46 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		}
 
 		this.totalBallCount = this.ballConfigList.length;
-
-		this.LoadCurBallConfig();
 	}
 
-	public LoadCurBallConfig()
+	private LoadMyBall()
 	{
-		this.curBallId = 5;
-		this.curBallLevel = 2;
+		this.myBallList = [];
+		this.myBallString = this.playerDataModule.GetMyBall();
+		if (this.myBallString == undefined
+			|| this.myBallString == null
+			|| this.myBallString == "")
+		{
+			this.myBallString = "1-1"; // 初始球
+		}
+
+		var ballList:string[] = this.myBallString.split('|');
+		for (var i = 0; i < ballList.length; ++i)
+		{
+			var temp:string[] = ballList[i].split('-');
+			if (temp.length == 2)
+			{
+				var id = Number(temp[0]);
+				var level = Number(temp[1]);
+				var config = this.GetBallJsonConfig(id)
+				if (id > 0 && level > 0 && config != null)
+				{
+					var myBall = new MyBallInfo();
+					myBall.id = id;
+					myBall.level = level;
+					myBall.maxLevel = config;
+					this.myBallList.push(myBall)
+				}
+			}
+		}
+
+		egret.log("<Ball> myBallCount= " + this.myBallList.length);
+	}
+
+	private LoadCurBallConfig()
+	{
+		this.curBallId = this.myBallList[0].id;
+		this.curBallLevel = this.myBallList[0].level;
 
 		this.curBallConfig = new BallConfig();
 		this.curBallConfig.InitByConfig(this.GetBallJsonConfig(this.curBallId), this.curBallLevel);
@@ -62,6 +104,11 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		+ ", maxLevel = " + this.curBallConfig.maxLevel
 		+ ", textureName = " + this.curBallConfig.textureName
 		+ ", ballRadius = " + this.curBallConfig.ballRadius);
+	}
+
+	public GetMyBallList()
+	{
+		return this.myBallList;
 	}
 
 	public GetTotalBallCount()
@@ -85,4 +132,11 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	{
 		return this.curBallConfig;
 	}
+}
+
+class MyBallInfo
+{
+	public id: number;
+	public level: number;
+	public maxLevel: number;
 }
