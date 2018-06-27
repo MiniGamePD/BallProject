@@ -22,6 +22,11 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         return this.myBallList;
     }
 
+    public SaveMyBall(ballListString: string)
+    {
+        this.myBallList = ballListString;
+    }
+
     public SetHistoryHighScore(score:number)
     {
         if(this.historyHighScore < score)

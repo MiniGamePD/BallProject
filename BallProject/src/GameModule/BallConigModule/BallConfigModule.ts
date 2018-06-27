@@ -88,14 +88,14 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 			}
 		}
 
+		this.curBallId = this.myBallList[0].id;
+		this.curBallLevel = this.myBallList[0].level;
+
 		egret.log("<Ball> myBallCount= " + this.myBallList.length);
 	}
 
 	private LoadCurBallConfig()
 	{
-		this.curBallId = this.myBallList[0].id;
-		this.curBallLevel = this.myBallList[0].level;
-
 		this.curBallConfig = new BallConfig();
 		this.curBallConfig.InitByConfig(this.GetBallJsonConfig(this.curBallId), this.curBallLevel);
 
@@ -109,6 +109,21 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	public GetMyBallList()
 	{
 		return this.myBallList;
+	}
+
+	public SaveMyBall()
+	{
+		var ballListStr = this.curBallId + "-" + this.curBallLevel;
+		for (var i = 0; i < this.myBallList.length; ++i)
+		{
+			if (this.myBallList[i].id != this.curBallId)
+			{
+				ballListStr += "|" + this.myBallList[i].id + "-" + this.myBallList[i].level;
+			}
+		}
+		egret.log("<SaveBall> oldStr= " + this.myBallString + ", newStr= " + ballListStr);
+		this.myBallString = ballListStr;
+		this.playerDataModule.SaveMyBall(this.myBallString);
 	}
 
 	public GetTotalBallCount()
