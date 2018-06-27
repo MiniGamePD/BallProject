@@ -96,8 +96,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 
 	private LoadCurBallConfig()
 	{
-		this.curBallConfig = new BallConfig();
-		this.curBallConfig.InitByConfig(this.GetBallJsonConfig(this.curBallId), this.curBallLevel);
+		this.curBallConfig = this.GetBallConfig(this.curBallId, this.curBallLevel);
 
 		egret.log("<Ball> id = " + this.curBallConfig.id 
 		+ ", level = " + this.curBallConfig.level 
@@ -109,6 +108,32 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	public GetMyBallList()
 	{
 		return this.myBallList;
+	}
+
+	// 拥有的球的数量
+    public GetMyBallCount(): number
+	{
+		return this.myBallList.length;
+	}
+
+	// 是否拥有这个球, 返回null，代码没有这个球。
+    public GetMyBallInfo(id: number): MyBallInfo
+	{
+		for (var i = 0; i < this.myBallList.length; ++i)
+		{
+			if (id == this.myBallList[i].id)
+			{
+				return this.myBallList[i];
+			}
+		}
+		return null;
+	}
+
+	// 获取我的球的等级, 返回0，代码没有这个球。
+    public GetMyBallLevel(id: number): number
+	{
+		var ballInfo = this.GetMyBallInfo(id);
+		return ballInfo != null ? ballInfo.level : 0;
 	}
 
 	public SaveMyBall()
@@ -126,7 +151,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		this.playerDataModule.SaveMyBall(this.myBallString);
 	}
 
-	public GetTotalBallCount()
+	public GetTotalBallCount(): number
 	{
 		return this.ballConfigList.length;
 	}
@@ -143,9 +168,38 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		}
 	}
 
+	// 根据球的ID，返回配置
+    public GetBallConfig(id: number, level: number): BallConfig
+	{
+		var jsonConfig = this.GetBallJsonConfig(id);
+		if (jsonConfig != null && level > 0 && level <= jsonConfig.maxLevel)
+		{
+			var ballConfig = new BallConfig();
+			ballConfig.InitByConfig(jsonConfig, level);
+			return ballConfig;
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	public GetCurBallConfig(): BallConfig
 	{
 		return this.curBallConfig;
+	}
+
+	// 换球
+    public ChangeSelectBall(id: number)
+	{
+		var level = this.GetMyBallLevel(id);
+		if (level > 0)
+		{
+			this.curBallId = id;
+			this.curBallLevel = level;
+			this.LoadCurBallConfig();
+			this.SaveMyBall();
+		}
 	}
 }
 

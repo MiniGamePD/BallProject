@@ -127,6 +127,7 @@ class LobbyView extends GameView
 
     private CreateBall()
     {
+        Tools.DetachDisplayObjFromParent(this.ball);
         var ballConfigMdl = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
         var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
         this.ball = res.CreateBitmapByName("pd_res_json." + ballConfigMdl.GetCurBallConfig().textureName);
@@ -219,6 +220,7 @@ class LobbyView extends GameView
     private OnCloseShop(callbackobj: any)
     {
         callbackobj.removeChild(callbackobj.shop);
+        callbackobj.CreateBall();
     }
 
     private PlayParticle()

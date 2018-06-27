@@ -157,6 +157,8 @@ class BallEmitter
 
 		this.ballList = [];
 
+		this.emitBallCount = 0;
+
 		this.RegisterTouchEvent();
 
 		this.SetLevel(1);
