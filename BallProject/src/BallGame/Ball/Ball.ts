@@ -33,7 +33,7 @@ class Ball
 		this.canSplitOnHit = canSplit;
 
 		emitDir.normalize(emitSpeed);
-		this.phyShape = new p2.Circle({ radius: this.ballRadius });
+		this.phyShape = new p2.Circle({id: id, radius: this.ballRadius });
 		this.phyShape.collisionGroup = Collision_Layer_Ball;
 		this.phyShape.collisionMask = Collision_Layer_Box;
 
@@ -48,6 +48,7 @@ class Ball
 		this.ballDisplay.anchorOffsetY = this.ballDisplay.height / 2;
 
 		this.phyBody = new p2.Body({
+			id: id,
 			mass: this.ballMass,
 			position: [emitPos.x, emitPos.y],
 			velocity: [emitDir.x, emitDir.y]
