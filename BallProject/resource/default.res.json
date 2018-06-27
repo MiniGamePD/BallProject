@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "pd_res_json,Boom_mp3,Eliminate_mp3,EliminateRow_mp3,EnemySinisterSmile1_mp3,GameOver_mp3,Go_mp3,OnDown_mp3,Ready_mp3,VirusBorn_mp3,VirusEliminate_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,Pause_mp3,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillMove_mp3,PillMove2_mp3,PillRotation2_mp3,ice_Boom_json,AddFeverPower_mp3,ballEmit_mp3,hitBox_mp3,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,Share2_png,SkillBox_mp3,LevelUp_mp3",
+			"keys": "pd_res_json,Boom_mp3,Eliminate_mp3,EliminateRow_mp3,EnemySinisterSmile1_mp3,GameOver_mp3,Go_mp3,OnDown_mp3,Ready_mp3,VirusBorn_mp3,VirusEliminate_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,Pause_mp3,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillMove_mp3,PillMove2_mp3,PillRotation2_mp3,ice_Boom_json,AddFeverPower_mp3,ballEmit_mp3,hitBox_mp3,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,Share2_png,SkillBox_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json",
 			"name": "preload"
 		}
 	],
@@ -231,6 +231,16 @@
 			"url": "assets/Sound/LevelUp.mp3",
 			"type": "sound",
 			"name": "LevelUp_mp3"
+		},
+		{
+			"name": "BallConfig_1_json",
+			"type": "json",
+			"url": "assets/BallConfig/BallConfig_1.json"
+		},
+		{
+			"name": "BallConfig_2_json",
+			"type": "json",
+			"url": "assets/BallConfig/BallConfig_2.json"
 		}
 	]
 }

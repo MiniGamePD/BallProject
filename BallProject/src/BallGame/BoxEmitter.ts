@@ -84,7 +84,7 @@ class BoxEmitter
 			if (evt.boxType == BoxType.Pause
 				&& this.boxPauseLeftTime <= 0)
 			{
-				this.boxPauseLeftTime = this.ballDataMgr.Box_Effect_Pause_Time;
+				this.boxPauseLeftTime = this.ballDataMgr.ballConfig.Box_Effect_Pause_Time;
 				for (var i = 0; i < this.boxList.length; ++i)
 				{
 					if (this.boxList[i] != null)
@@ -253,7 +253,7 @@ class BoxEmitter
 			}
 			else if (!box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
 			{
-				box.Pause(this.ballDataMgr.skill_PauseBoxOnHit_Time);
+				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time);
 			}
 		}
 	}

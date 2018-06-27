@@ -121,11 +121,11 @@ class BallMatchView extends GameView
 		{
 			if (evt.boxType == BoxType.SixMulDir)
 			{
-				this.ShowTips("变身 " + this.ballDataMgr.Box_Effect_MultipleDirections_Time / 1000 + "秒", 0x3562ec);
+				this.ShowTips("变身 " + this.ballDataMgr.ballConfig.Box_Effect_MultipleDirections_Time / 1000 + "秒", 0x3562ec);
 			}
 			else if (evt.boxType == BoxType.FireUp)
 			{
-				this.ShowTips("射速翻倍 " + this.ballDataMgr.Box_Effect_FireUp_Time / 1000 + "秒", 0xd6340a);
+				this.ShowTips("射速翻倍 " + this.ballDataMgr.ballConfig.Box_Effect_FireUp_Time / 1000 + "秒", 0xd6340a);
 			}
 			else if (evt.boxType == BoxType.LevelUp)
 			{
@@ -135,7 +135,7 @@ class BallMatchView extends GameView
 			}
             else if (evt.boxType == BoxType.Pause)
 			{
-				this.ShowTips("定时 " + this.ballDataMgr.Box_Effect_Pause_Time / 1000 + "秒", 0x6726a5);
+				this.ShowTips("定时 " + this.ballDataMgr.ballConfig.Box_Effect_Pause_Time / 1000 + "秒", 0x6726a5);
 			}
 		}
 	}

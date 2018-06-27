@@ -36,6 +36,8 @@ class LobbyView extends GameView
         GameMain.GetInstance().PlayerLogin();
 
         GameMain.GetInstance().hasRevive = false;
+
+        this.LoadConfig();
     }
 
     public ReleaseView(): void 
@@ -339,5 +341,20 @@ class LobbyView extends GameView
         var event = new PlayProgramAnimationEvent();
         event.param = param;
         GameMain.GetInstance().DispatchEvent(event);
+    }
+
+    public LoadConfig()
+    {
+        var jsonFile = this.mResModule.GetRes("BallConfig_json");
+        if (jsonFile != null)
+        {
+            var ballCount = jsonFile.BallCount;
+            if (jsonFile.BallName != undefined)
+            {
+                 egret.log("ballCount=" + ballCount);
+            }
+            var list = jsonFile.ConfigList;
+            egret.log("ballCount=" + ballCount);
+        }
     }
 }

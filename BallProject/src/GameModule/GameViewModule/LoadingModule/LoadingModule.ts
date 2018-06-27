@@ -80,7 +80,12 @@ class LoadingModule extends GameViewModule
 	private OnFinishCallBack()
 	{
 		egret.log("OnFinishCallBack");
+				
+		var ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+		ballConfigModule.LoadBallConfig();
+
 		GameMain.GetInstance().SwitchGameState(GameStateType.Lobby);
+		
 	}
 
 	public Release():void

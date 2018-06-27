@@ -72,11 +72,11 @@ class BallEmitter
 		{
 			if (evt.boxType == BoxType.SixMulDir)
 			{
-				this.SetMultipleDirections(this.ballDataMgr.Box_Effect_MultipleDirections_Time, 6);
+				this.SetMultipleDirections(this.ballDataMgr.ballConfig.Box_Effect_MultipleDirections_Time, 6);
 			}
 			else if (evt.boxType == BoxType.FireUp)
 			{
-				this.EnterFireUp(this.ballDataMgr.Box_Effect_FireUp_Time);
+				this.EnterFireUp(this.ballDataMgr.ballConfig.Box_Effect_FireUp_Time);
 			}
 			else if (evt.boxType == BoxType.LevelUp)
 			{
@@ -94,7 +94,7 @@ class BallEmitter
 			{
 				if (this.ballDataMgr.IsTriggerSkill_ScaleOnHit())
 				{
-					ball.ScaleBallRadius(this.ballDataMgr.skill_ScaleOnHit_Scale, this.ballDataMgr.skill_ScaleOnHit_BallRadius);
+					ball.ScaleBallRadius(this.ballDataMgr.ballConfig.skill_ScaleOnHit_Scale, this.ballDataMgr.ballConfig.skill_ScaleOnHit_BallRadius);
 				}
 
 				if (ball.canSplitOnHit && this.ballDataMgr.IsTriggerSkill_SplitBallOnHit())
@@ -104,7 +104,7 @@ class BallEmitter
 					// var ballVel = new egret.Point(ball.phyBody.velocity[0], ball.phyBody.velocity[1]);
 					offset.normalize(this.emitPosOffsetDis)
 					var emitPos = new egret.Point(ball.ballDisplay.x + offset.x, ball.ballDisplay.y + offset.y);
-					this.CreateBallOnHit(emitPos, offset, this.ballDataMgr.skill_SplitBallOnHit_Count, this.ballDataMgr.skill_SplitBallOnHit_Angle);
+					this.CreateBallOnHit(emitPos, offset, this.ballDataMgr.ballConfig.skill_SplitBallOnHit_Count, this.ballDataMgr.ballConfig.skill_SplitBallOnHit_Angle);
 				}
 			}
 		}
@@ -129,7 +129,7 @@ class BallEmitter
 
 			if (ball != null && this.ballDataMgr.IsTriggerSkill_CreateBallOnBoxEliminate())
 			{
-				var count = this.ballDataMgr.skill_CreateBallOnBoxEliminate_Count;
+				var count = this.ballDataMgr.ballConfig.skill_CreateBallOnBoxEliminate_Count;
 				var ballVel = new egret.Point(ball.phyBody.velocity[0], ball.phyBody.velocity[1]);
 				var emitPos = new egret.Point(evt.box.boxDisplayObj.x, evt.box.boxDisplayObj.y);
 				var deltaAngle = 360 / count;
@@ -313,8 +313,8 @@ class BallEmitter
 	{
 		++this.emitBallCount;
 		var ball = new Ball(this.resModule);
-		ball.Init(this.emitBallCount, emitPos, emitDir, this.ballDataMgr.emitSpeed,
-			this.ballDataMgr.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballTextureName, canSplit);
+		ball.Init(this.emitBallCount, emitPos, emitDir, this.ballDataMgr.ballConfig.emitSpeed,
+			this.ballDataMgr.ballConfig.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballConfig.textureName, canSplit);
 
 		this.ballGameWorld.world.addBody(ball.phyBody);
 		this.battleGround.addChild(ball.ballDisplay);

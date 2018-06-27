@@ -34,5 +34,6 @@ enum ModuleType{
 	LOBBY,
 	MATCH,
 	PLAYER_DATA,
+	BALL_CONFIG,
 	MAX
 }
