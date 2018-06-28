@@ -39,6 +39,7 @@ class BallMatchModule extends GameViewModule
     { 
         this.ballDataMgr = new BallDataMgr()
         this.ballDataMgr.Init();
+        this.matchView.SetBallDataMgr(this.ballDataMgr);
 
         this.ballGameWorld = new BallGameWorld(); 
         this.ballGameWorld.Init();

@@ -1,6 +1,7 @@
 interface IPlayerDataModule extends IModule 
 {
-	GetBall(): string;
+	GetMyBall(): string;
+    SaveMyBall(ballListString: string);
     SetHistoryHighScore(score:number);
     GetHistoryHighScore():number;
     UploadHistoryHighScore();

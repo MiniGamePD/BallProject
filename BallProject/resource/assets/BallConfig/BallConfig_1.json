@@ -1,0 +1,10 @@
+{
+	"id" : 1,
+	"name" : "白球",
+	"textureName": "Ball_White",
+	"maxLevel" : 1,
+	"emitSpeed" : [1000],
+	"ballRadius" : [15],
+
+	"Describe" : ["送的球"]	
+}

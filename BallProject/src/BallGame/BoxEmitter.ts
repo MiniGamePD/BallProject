@@ -84,8 +84,14 @@ class BoxEmitter
 			if (evt.boxType == BoxType.Pause
 				&& this.boxPauseLeftTime <= 0)
 			{
-				this.SetBoxPause(true);
-				this.boxPauseLeftTime = 5000;
+				this.boxPauseLeftTime = this.ballDataMgr.ballConfig.Box_Effect_Pause_Time;
+				for (var i = 0; i < this.boxList.length; ++i)
+				{
+					if (this.boxList[i] != null)
+					{
+						this.boxList[i].Pause(this.boxPauseLeftTime);
+					}
+				}
 			}
 		}
 	}
@@ -102,17 +108,6 @@ class BoxEmitter
 				this.gameOverBox = null;
 			}
 			this.ClearAllBox();
-		}
-	}
-
-	private SetBoxPause(pause: boolean)
-	{
-		for (var i = 0; i < this.boxList.length; ++i)
-		{
-			if (this.boxList[i] != null)
-			{
-				this.boxList[i].Pause(pause);
-			}
 		}
 	}
 
@@ -136,10 +131,6 @@ class BoxEmitter
 		if (this.boxPauseLeftTime > 0)
 		{
 			this.boxPauseLeftTime -= deltaTime;
-			if (this.boxPauseLeftTime <= 0)
-			{
-				this.SetBoxPause(false)
-			}
 		}
 
 		if (this.hitSoundCdTime > 0)
@@ -202,7 +193,7 @@ class BoxEmitter
 
 		if (this.boxPauseLeftTime > 0)
 		{
-			box.Pause(true);
+			box.Pause(this.boxPauseLeftTime);
 		}
 
 		this.battleGround.addChild(box.boxDisplayObj);
@@ -238,27 +229,31 @@ class BoxEmitter
 		}
 	}
 
-	private OnHitBox(box: Box, ball: p2.Body)
+	private OnHitBox(box: Box, ballPhyBody: p2.Body)
 	{
 		if (box != null
 			&& box != undefined)
 		{
 			this.hitBoxEvent.box = box;
-			this.hitBoxEvent.ball = ball;
+			this.hitBoxEvent.ballPhyBody = ballPhyBody;
 			GameMain.GetInstance().DispatchEvent(this.hitBoxEvent);
 
 			box.changeHealth(-1);
 			this.PlayHitSound();
-			
+
 			if (box.health <= 0)
 			{
 				this.boxEliminateEvent.boxType = box.GetBoxType();
 				this.boxEliminateEvent.box = box;
-				this.boxEliminateEvent.ball = ball;
+				this.boxEliminateEvent.ballPhyBody = ballPhyBody;
 				GameMain.GetInstance().DispatchEvent(this.boxEliminateEvent);
 
 				box.OnEliminate();
 				this.DeleteBox(box, true);
+			}
+			else if (!box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
+			{
+				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time);
 			}
 		}
 	}
@@ -403,7 +398,7 @@ class BoxEmitter
 		var shapeB: p2.Shape = event.shapeB;
 		var bodyA: p2.Body = event.bodyA;
 		var bodyB: p2.Body = event.bodyB;
-
+		
 		if (shapeA != null
 			&& shapeB != null)
 		{

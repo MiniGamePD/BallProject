@@ -25,10 +25,6 @@ class BallEmitter
 
 	private emitSoundCdTime = 0;
 
-	public emitSpeed: number = 1000;
-	public ballMass: number = 1;
-	public ballRadius: number = 15;
-
 	public constructor()
 	{
 	}
@@ -43,6 +39,7 @@ class BallEmitter
 		GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
 		GameMain.GetInstance().AddEventListener(HitBoxEvent.EventName, this.OnHitBoxEvent, this);
+		GameMain.GetInstance().AddEventListener(BoxEliminateEvent.EventName, this.OnBoxEliminateEvent, this);
 	}
 
 
@@ -55,6 +52,7 @@ class BallEmitter
 		GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
 		GameMain.GetInstance().RemoveEventListener(HitBoxEvent.EventName, this.OnHitBoxEvent, this);
+		GameMain.GetInstance().RemoveEventListener(BoxEliminateEvent.EventName, this.OnBoxEliminateEvent, this);
 	}
 
 	private OnTouchEvent(evt: egret.TouchEvent): void
@@ -74,11 +72,11 @@ class BallEmitter
 		{
 			if (evt.boxType == BoxType.SixMulDir)
 			{
-				this.SetMultipleDirections(5000, 6);
+				this.SetMultipleDirections(this.ballDataMgr.ballConfig.Box_Effect_MultipleDirections_Time, 6);
 			}
 			else if (evt.boxType == BoxType.FireUp)
 			{
-				this.EnterFireUp(5000);
+				this.EnterFireUp(this.ballDataMgr.ballConfig.Box_Effect_FireUp_Time);
 			}
 			else if (evt.boxType == BoxType.LevelUp)
 			{
@@ -91,16 +89,56 @@ class BallEmitter
 	{
 		if (evt != null)
 		{
-			if (this.ballDataMgr.IsTriggerSkill_ScaleOnHit())
+			var ball = this.GetBallById(evt.ballPhyBody.id);
+			if (ball != null)
 			{
+				if (this.ballDataMgr.IsTriggerSkill_ScaleOnHit())
+				{
+					ball.ScaleBallRadius(this.ballDataMgr.ballConfig.skill_ScaleOnHit_Scale, this.ballDataMgr.ballConfig.skill_ScaleOnHit_BallRadius);
+				}
 
+				if (ball.canSplitOnHit && this.ballDataMgr.IsTriggerSkill_SplitBallOnHit())
+				{
+					ball.canSplitOnHit = false;
+					var offset = new egret.Point(ball.ballDisplay.x - evt.box.boxDisplayObj.x, ball.ballDisplay.y - evt.box.boxDisplayObj.y);
+					// var ballVel = new egret.Point(ball.phyBody.velocity[0], ball.phyBody.velocity[1]);
+					offset.normalize(this.emitPosOffsetDis)
+					var emitPos = new egret.Point(ball.ballDisplay.x + offset.x, ball.ballDisplay.y + offset.y);
+					this.CreateBallOnHit(emitPos, offset, this.ballDataMgr.ballConfig.skill_SplitBallOnHit_Count, this.ballDataMgr.ballConfig.skill_SplitBallOnHit_Angle);
+				}
 			}
 		}
 	}
 
-	public ScaleBall(ball: p2.Body)
+	public CreateBallOnHit(pos: egret.Point, dir: egret.Point, count: number, angle: number)
 	{
+		for (var i = 0; i < count; ++i)
+		{
+			var ran = (Math.random() - 0.5) * 2;
+			var dir = Tools.RotateDirection(dir, Tools.Angle2Radians(ran * angle));
+			var canSplit = false;
+			this.EmitBall(pos, dir, canSplit);
+		}
+	}
 
+	private OnBoxEliminateEvent(evt: BoxEliminateEvent)
+	{
+		if (evt != null && evt.box != null)
+		{
+			var ball = this.GetBallById(evt.ballPhyBody.id);
+
+			if (ball != null && this.ballDataMgr.IsTriggerSkill_CreateBallOnBoxEliminate())
+			{
+				var count = this.ballDataMgr.ballConfig.skill_CreateBallOnBoxEliminate_Count;
+				var ballVel = new egret.Point(ball.phyBody.velocity[0], ball.phyBody.velocity[1]);
+				var emitPos = new egret.Point(evt.box.boxDisplayObj.x, evt.box.boxDisplayObj.y);
+				var deltaAngle = 360 / count;
+				for (var i = 0; i < count; ++i)
+				{
+					this.EmitBall(emitPos, Tools.RotateDirection(ballVel, Tools.Angle2Radians(i * deltaAngle)), true);
+				}
+			}
+		}
 	}
 
 	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer, ballDataMgr: BallDataMgr)
@@ -115,9 +153,11 @@ class BallEmitter
 
 		this.emitPos = ballGameWorld.center;
 
-		this.emitDir = new egret.Point(0, this.emitSpeed);
+		this.emitDir = new egret.Point(0, 1);
 
 		this.ballList = [];
+
+		this.emitBallCount = 0;
 
 		this.RegisterTouchEvent();
 
@@ -255,25 +295,29 @@ class BallEmitter
 			var deltaAngle = 360 / this.multipleDirectionsCount;
 			for (var i = 0; i < this.multipleDirectionsCount; ++i)
 			{
-				this.EmitBall(Tools.RotateDirection(this.emitDir, Tools.Angle2Radians(i * deltaAngle)), this.emitSpeed);
+				this.EmitBallOnCenter(Tools.RotateDirection(this.emitDir, Tools.Angle2Radians(i * deltaAngle)));
 			}
 		}
 		else 
 		{
-			this.EmitBall(this.emitDir, this.emitSpeed);
+			this.EmitBallOnCenter(this.emitDir);
 		}
 	}
 
-	public EmitBall(emitDir: egret.Point, speed: number)
+	public EmitBallOnCenter(emitDir: egret.Point)
 	{
-		// this.PlayBallEmitSound();
-		++this.emitBallCount;
 		emitDir.normalize(this.emitPosOffsetDis);
 		var emitPos = new egret.Point(this.emitPos.x + emitDir.x, this.emitPos.y + emitDir.y);
+		this.EmitBall(emitPos, emitDir, true);
+	}
+
+	public EmitBall(emitPos: egret.Point, emitDir: egret.Point, canSplit: boolean)
+	{
+		++this.emitBallCount;
 		var ball = new Ball(this.resModule);
-		ball.Init(this.emitBallCount, emitPos, emitDir, this.ballDataMgr.emitSpeed, 
-				this.ballDataMgr.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballTextureName);
-				
+		ball.Init(this.emitBallCount, emitPos, emitDir, this.ballDataMgr.ballConfig.emitSpeed,
+			this.ballDataMgr.ballConfig.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballConfig.textureName, canSplit);
+
 		this.ballGameWorld.world.addBody(ball.phyBody);
 		this.battleGround.addChild(ball.ballDisplay);
 		this.ballList.push(ball);

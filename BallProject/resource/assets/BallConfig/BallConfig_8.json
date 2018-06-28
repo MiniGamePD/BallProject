@@ -1,0 +1,12 @@
+{
+	"id" : 8,
+	"name" : "变身延长球",
+	"textureName": "Skill_shandan",
+	"maxLevel" : 3,
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [15, 16, 17],
+
+	"Box_Effect_MultipleDirections_Time" : [6000, 7000, 8000],
+
+	"Describe" : ["第1级", "第2级", "第3级"]	
+}

@@ -3,6 +3,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     private historyHighScore:number;
     private coin:number;
     private curMatchScore:number = 0; //当前比赛分数
+    private myBallList: string;
 
     private breakRecordHistoryHighScore:boolean;
 
@@ -15,9 +16,15 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         return true;
     }
 
-	public GetBall(): string
+	public GetMyBall(): string
     {
-        return "Ball_White";
+        this.myBallList = "5-3|1-1|2-1|3-2"
+        return this.myBallList;
+    }
+
+    public SaveMyBall(ballListString: string)
+    {
+        this.myBallList = ballListString;
     }
 
     public SetHistoryHighScore(score:number)

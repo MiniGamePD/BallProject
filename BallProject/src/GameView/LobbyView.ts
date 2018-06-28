@@ -36,6 +36,8 @@ class LobbyView extends GameView
         GameMain.GetInstance().PlayerLogin();
 
         GameMain.GetInstance().hasRevive = false;
+
+        this.LoadConfig();
     }
 
     public ReleaseView(): void 
@@ -125,9 +127,10 @@ class LobbyView extends GameView
 
     private CreateBall()
     {
-        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        Tools.DetachDisplayObjFromParent(this.ball);
+        var ballConfigMdl = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
         var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
-        this.ball = res.CreateBitmapByName("pd_res_json." + playerData.GetBall());
+        this.ball = res.CreateBitmapByName("pd_res_json." + ballConfigMdl.GetCurBallConfig().textureName);
         this.ball.x = this.mStageWidth / 2 + 100;
         this.ball.y = 500;
         this.ball.width = 50;
@@ -220,6 +223,7 @@ class LobbyView extends GameView
     private OnCloseShop(callbackobj: any)
     {
         callbackobj.removeChild(callbackobj.shop);
+        callbackobj.CreateBall();
     }
 
     private PlayParticle()
@@ -342,5 +346,20 @@ class LobbyView extends GameView
         var event = new PlayProgramAnimationEvent();
         event.param = param;
         GameMain.GetInstance().DispatchEvent(event);
+    }
+
+    public LoadConfig()
+    {
+        var jsonFile = this.mResModule.GetRes("BallConfig_json");
+        if (jsonFile != null)
+        {
+            var ballCount = jsonFile.BallCount;
+            if (jsonFile.BallName != undefined)
+            {
+                 egret.log("ballCount=" + ballCount);
+            }
+            var list = jsonFile.ConfigList;
+            egret.log("ballCount=" + ballCount);
+        }
     }
 }
