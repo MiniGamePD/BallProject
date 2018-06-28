@@ -25,4 +25,7 @@ interface IBallConfigModule extends IModule
 
     // 根据球的ID，返回配置
     GetBallConfig(id: number, level: number): BallConfig;
+
+    // 抽取一个球
+    RandomBall(): RandomBallInfo;
 }
