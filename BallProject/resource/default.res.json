@@ -15,7 +15,7 @@
 			"url": "assets/pd_res.json",
 			"type": "sheet",
 			"name": "pd_res_json",
-			"subkeys": "AdRevive,Ball_White,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,cash,newball,pause,play,return,zhangyu,zhangyu_dead"
+			"subkeys": "AdRevive,Ball_White,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,bgCover,cash,newball,pause,play,return,zhangyu,zhangyu_dead"
 		},
 		{
 			"url": "assets/Sound/Boom.mp3",
@@ -233,54 +233,54 @@
 			"name": "LevelUp_mp3"
 		},
 		{
-			"name": "BallConfig_1_json",
+			"url": "assets/BallConfig/BallConfig_1.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_1.json"
+			"name": "BallConfig_1_json"
 		},
 		{
-			"name": "BallConfig_2_json",
+			"url": "assets/BallConfig/BallConfig_2.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_2.json"
+			"name": "BallConfig_2_json"
 		},
 		{
-			"name": "BallConfig_3_json",
+			"url": "assets/BallConfig/BallConfig_3.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_3.json"
+			"name": "BallConfig_3_json"
 		},
 		{
-			"name": "BallConfig_4_json",
+			"url": "assets/BallConfig/BallConfig_4.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_4.json"
+			"name": "BallConfig_4_json"
 		},
 		{
-			"name": "BallConfig_5_json",
+			"url": "assets/BallConfig/BallConfig_5.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_5.json"
+			"name": "BallConfig_5_json"
 		},
 		{
-			"name": "BallConfig_6_json",
+			"url": "assets/BallConfig/BallConfig_6.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_6.json"
+			"name": "BallConfig_6_json"
 		},
 		{
-			"name": "BallConfig_7_json",
+			"url": "assets/BallConfig/BallConfig_7.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_7.json"
+			"name": "BallConfig_7_json"
 		},
 		{
-			"name": "BallConfig_8_json",
+			"url": "assets/BallConfig/BallConfig_8.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_8.json"
+			"name": "BallConfig_8_json"
 		},
 		{
-			"name": "BallConfig_9_json",
+			"url": "assets/BallConfig/BallConfig_9.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_9.json"
+			"name": "BallConfig_9_json"
 		},
 		{
-			"name": "BallConfig_10_json",
+			"url": "assets/BallConfig/BallConfig_10.json",
 			"type": "json",
-			"url": "assets/BallConfig/BallConfig_10.json"
+			"name": "BallConfig_10_json"
 		}
 	]
 }

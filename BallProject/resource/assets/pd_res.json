@@ -7,6 +7,7 @@
 "AdRevive":{"x":515,"y":482,"w":295,"h":78,"offX":0,"offY":0,"sourceW":295,"sourceH":78},
 "Home":{"x":942,"y":729,"w":58,"h":51,"offX":0,"offY":0,"sourceW":58,"sourceH":51},
 "Lobby_platfrom":{"x":637,"y":1,"w":259,"h":393,"offX":0,"offY":0,"sourceW":259,"sourceH":393},
+"bgCover":{"x":1019,"y":1,"w":2,"h":2,"offX":0,"offY":0,"sourceW":2,"sourceH":2},
 "HelpIcon":{"x":982,"y":233,"w":35,"h":52,"offX":0,"offY":0,"sourceW":35,"sourceH":52},
 "Lobby_Light_Green":{"x":786,"y":786,"w":50,"h":49,"offX":0,"offY":0,"sourceW":50,"sourceH":49},
 "zhangyu_dead":{"x":898,"y":115,"w":82,"h":100,"offX":15,"offY":3,"sourceW":112,"sourceH":112},
