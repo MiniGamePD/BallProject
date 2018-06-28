@@ -56,9 +56,9 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.reviveMenu.addChild(bg);
 
         var title = new egret.TextField();
-        title.text = "复活吗？";
-        title.size = 60;
-        title.width = 300;
+        title.text = "小章鱼被抓走啦";
+        title.size = 50;
+        title.width = GameMain.GetInstance().GetStageWidth();
         title.height = 60;
         title.textAlign = "center";
         title.anchorOffsetX = title.width / 2;

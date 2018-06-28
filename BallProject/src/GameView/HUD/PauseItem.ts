@@ -60,7 +60,7 @@ class PauseItem extends egret.DisplayObjectContainer
 
     private CreatePauseMenu(width:number, height:number)
     {
-        this.bgCover = new FullScreenCover(0x000000, 0.3);
+        this.bgCover = new FullScreenCover(0x000000, 0.8);
 
         this.pauseTitle = new egret.DisplayObjectContainer();
         let textField = new egret.TextField();
@@ -97,8 +97,9 @@ class PauseItem extends egret.DisplayObjectContainer
     {
         var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
         this.helpDetail = res.CreateBitmapByName("pd_res_json.Help");
-        this.helpDetail.width = GameMain.GetInstance().GetStageWidth() * 0.8;
-        this.helpDetail.height = GameMain.GetInstance().GetStageHeight() * 0.8;
+        var helpDetailFactor = GameMain.GetInstance().GetStageWidth() * 0.8 / this.helpDetail.width;
+        this.helpDetail.width *= helpDetailFactor;
+        this.helpDetail.height *= helpDetailFactor;
         this.helpDetail.anchorOffsetX = this.helpDetail.width / 2;
         this.helpDetail.anchorOffsetY = this.helpDetail.height / 2;
         this.helpDetail.x = GameMain.GetInstance().GetStageWidth() / 2;
