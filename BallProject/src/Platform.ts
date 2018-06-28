@@ -20,9 +20,11 @@ declare interface Platform
 
     hasUserData():boolean;
 
-    createOpenDataBitmap():egret.Bitmap;
+    createOpenDataBitmap(width:number, height:number):egret.Bitmap;
 
     setUserCloudStorage(key:string, value:string);
+
+    getFriendCloudStorage(key:string);
 }
 
 class DebugPlatform implements Platform 
@@ -62,7 +64,7 @@ class DebugPlatform implements Platform
         return true;
     }
 
-    public createOpenDataBitmap():egret.Bitmap
+    public createOpenDataBitmap(width:number, height:number):egret.Bitmap
     {
         return null;
     }
@@ -70,6 +72,11 @@ class DebugPlatform implements Platform
     public setUserCloudStorage(key:string, value:string)
     {
         console.log("保存云端数据:" + key + "-" + value);
+    }
+
+    public getFriendCloudStorage(key:string)
+    {
+        console.log("获取云端数据:" + key);
     }
 }
 

@@ -171,7 +171,8 @@ class LobbyView extends GameView
         this.rankBackButton.x = 50;
         this.rankBackButton.y = 80;
 
-        this.rankMenu = platform.createOpenDataBitmap();
+        this.rankMenu = platform.createOpenDataBitmap(GameMain.GetInstance().GetStageWidth(),
+            GameMain.GetInstance().GetStageHeight());
         if(this.rankMenu != null)
         {
             this.rankMenu.touchEnabled = true;
@@ -186,6 +187,8 @@ class LobbyView extends GameView
     {
         if(this.rankMenu != null && this.rankMenu != undefined)
         {
+            platform.getFriendCloudStorage("HighScore");
+
             this.addChild(this.rankBg);
             this.addChild(this.rankMenu);
             this.addChild(this.rankBackButton);

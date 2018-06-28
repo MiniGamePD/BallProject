@@ -112,9 +112,9 @@ class WxgamePlatform
 
     openDataContext = new WxgameOpenDataContext();
 
-    createOpenDataBitmap()
+    createOpenDataBitmap(width, height)
     {
-        return this.openDataContext.createDisplayObject();
+        return this.openDataContext.createDisplayObject(width, height);
     }
 
     setUserCloudStorage(storageKey, storageValue)
@@ -151,11 +151,20 @@ class WxgamePlatform
             }, 
         }); 
     }
+
+    getFriendCloudStorage(storageKey)
+    {
+        this.openDataContext.postMessage("getFriendCloudStorage", storageKey);
+    }
 }
 
 class WxgameOpenDataContext {
 
-    createDisplayObject(type,width,height){
+    createDisplayObject(width,height)
+    {
+        console.log("createDisplayObject:" + width + "," + height);
+        sharedCanvas.width = width;
+        sharedCanvas.height = height;
         const bitmapdata = new egret.BitmapData(sharedCanvas);
         bitmapdata.$deleteSource = false;
         const texture = new egret.Texture();
@@ -173,9 +182,9 @@ class WxgameOpenDataContext {
     }
 
 
-    postMessage(data){
+    postMessage(userCommand, userData){
         const openDataContext = wx.getOpenDataContext();
-        openDataContext.postMessage(data);
+        openDataContext.postMessage({command:userCommand, data:userData});
     }
 }
 
