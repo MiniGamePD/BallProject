@@ -2,9 +2,10 @@
 	"id" : 1,
 	"name" : "白球",
 	"textureName": "Ball_White",
-	"maxLevel" : 1,
-	"emitSpeed" : [1000],
-	"ballRadius" : [15],
+	"maxLevel" : 3,
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [15, 16, 17],
+	"probability": 10,
 
-	"Describe" : ["送的球"]	
+	"Describe" : ["想要技能就来抽球吧！"]	
 }

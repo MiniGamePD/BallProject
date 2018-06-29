@@ -202,12 +202,33 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		}
 	}
 
+	// 根据配置概率随机一个球的ID
+	private RandomBallIdByProbability(): number
+	{
+		var ranBallId = 0;
+		var totalProbability = 0;
+		for (var i = 0; i < this.ballConfigList.length; ++i)
+		{
+			totalProbability += this.ballConfigList[i].probability;
+		}
+		var ranProbability = Math.random() * totalProbability;
+		for (var i = 0; i < this.ballConfigList.length; ++i)
+		{
+			ranProbability -= this.ballConfigList[i].probability;
+			if (ranProbability <= 0)
+			{
+				ranBallId = this.ballConfigList[i].id;
+				break;
+			}
+		}
+		return ranBallId;
+	}
+
 	// 抽取一个球
     public RandomBall(): RandomBallInfo
 	{
 		var newBall = new RandomBallInfo();
-		
-		newBall.id = Math.ceil(Math.random() * this.totalBallCount);
+		newBall.id = this.RandomBallIdByProbability();
 		var myBallInfo = this.GetMyBallInfo(newBall.id);
 		if (myBallInfo != null)
 		{

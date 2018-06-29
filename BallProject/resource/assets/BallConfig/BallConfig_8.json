@@ -5,6 +5,7 @@
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [15, 16, 17],
+	"probability": 10,
 
 	"Box_Effect_MultipleDirections_Time" : [6000, 7000, 8000],
 

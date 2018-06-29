@@ -5,6 +5,7 @@
 	"maxLevel" : 3,
 	"emitSpeed" : [1500, 1600, 1700],
 	"ballRadius" : [20, 24, 26],
+	"probability": 10,
 
 	"Describe" : ["第1级", "第2级", "第3级"]	
 }
