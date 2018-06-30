@@ -91,6 +91,18 @@ class WxgamePlatform
         })
     }
 
+    shareAppMsgRank(score) 
+    {
+        wx.shareAppMessage({
+            title: '我的纪录是'+score+'分，你能打破吗？',
+            imageUrl: 'resource/assets/Share.png',
+            success()
+            {
+                console.log("share success");
+            }
+        })
+    }
+
     saveUserData(userData)
     {
         const fs = wx.getFileSystemManager();
@@ -155,6 +167,11 @@ class WxgamePlatform
     getFriendCloudStorage(storageKey)
     {
         this.openDataContext.postMessage("getFriendCloudStorage", storageKey);
+    }
+
+    rankTurnPage(dir)
+    {
+        this.openDataContext.postMessage("rankTurnPage", dir);
     }
 }
 

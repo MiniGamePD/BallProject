@@ -13,10 +13,17 @@ class LobbyView extends GameView
     private ballAnimAcc: number;
     private shop: ShopView;
     //===排行榜===
-    private rankMenu:egret.Bitmap;
     private rankButton:egret.TextField;
+
+    private rankMenu:egret.Bitmap;
     private rankBg:FullScreenCover;
     private rankBackButton:ShapeBgButton;
+    private rankInviteA:ShapeBgButton;
+    private rankInviteB:egret.Bitmap;
+    private rankTitle:egret.Bitmap;
+    private rankFrame:egret.Shape;
+    private rankLastButton:ShapeBgButton;
+    private rankNextButton:ShapeBgButton;
 
     public CreateView(): void
     {
@@ -154,6 +161,9 @@ class LobbyView extends GameView
 
     private CreateRank()
     {
+        var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+
+        //入口
         this.rankButton = new egret.TextField();
         this.rankButton.text = "排行榜";
         this.rankButton.width = 200;
@@ -167,12 +177,62 @@ class LobbyView extends GameView
         this.rankButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickRank, this);
         this.addChild(this.rankButton);
 
+        //背景
         this.rankBg = new FullScreenCover(0x000000, 0.8);
 
+        //返回
         this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
             "pd_res_json.return", 39, 64, 39, 64, this.OnCloseRank, this);
         this.rankBackButton.x = 50;
         this.rankBackButton.y = 80;
+
+        //标题
+        this.rankTitle = this.mResModule.CreateBitmapByName("pd_res_json.rankTitle");
+        this.rankTitle.width *= adaptFactor;
+        this.rankTitle.height *= adaptFactor;
+        this.rankTitle.anchorOffsetX = this.rankTitle.width / 2;
+        this.rankTitle.anchorOffsetY = this.rankTitle.height / 2;
+        this.rankTitle.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.rankTitle.y = 100;
+
+        //边框
+        this.rankFrame = new egret.Shape();
+        var rankFrameWidth = 540 * adaptFactor;
+        var rankFrameHeight = 760;
+        this.rankFrame.anchorOffsetX = rankFrameWidth / 2;
+        this.rankFrame.anchorOffsetY = rankFrameHeight / 2;
+        this.rankFrame.graphics.lineStyle(10, 0xFFFFFF);
+        this.rankFrame.graphics.beginFill(0x000000, 0);
+        this.rankFrame.graphics.drawRoundRect(GameMain.GetInstance().GetStageWidth()/2, GameMain.GetInstance().GetStageHeight()/2-60, 
+            rankFrameWidth, rankFrameHeight, 60);
+        this.rankFrame.graphics.endFill();
+
+        //翻页按钮
+        this.rankLastButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
+            "pd_res_json.rankLastPage", 105*adaptFactor, 105*adaptFactor,
+            105*adaptFactor, 105*adaptFactor, this.OnRankLastPage, this);
+        this.rankLastButton.x = 80 * adaptFactor;
+        this.rankLastButton.y = 900;
+        this.rankNextButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
+            "pd_res_json.rankNextPage", 105*adaptFactor, 105*adaptFactor,
+            105*adaptFactor, 105*adaptFactor, this.OnRankNextPage, this);
+        this.rankNextButton.x = 560 * adaptFactor;
+        this.rankNextButton.y = 900;
+
+        //分享
+        this.rankInviteA = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
+            "pd_res_json.rankInviteA", 250*adaptFactor, 84*adaptFactor,
+            250*adaptFactor, 84*adaptFactor, this.OnRankShare, this);
+        this.rankInviteA.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.rankInviteA.y = 900;
+
+        this.rankInviteB = this.mResModule.CreateBitmapByName("pd_res_json.rankInviteB");
+        this.rankInviteB.width *= adaptFactor;
+        this.rankInviteB.height *= adaptFactor;
+        this.rankInviteB.anchorOffsetX = this.rankInviteB.width / 2;
+        this.rankInviteB.anchorOffsetY = this.rankInviteB.height / 2;
+        this.rankInviteB.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.rankInviteB.y = 1050;
 
         this.rankMenu = platform.createOpenDataBitmap(GameMain.GetInstance().GetStageWidth(),
             GameMain.GetInstance().GetStageHeight());
@@ -193,8 +253,14 @@ class LobbyView extends GameView
             platform.getFriendCloudStorage("HighScore");
 
             this.addChild(this.rankBg);
+            this.addChild(this.rankFrame);
+            this.addChild(this.rankTitle);
             this.addChild(this.rankMenu);
             this.addChild(this.rankBackButton);
+            this.addChild(this.rankLastButton);
+            this.addChild(this.rankNextButton);
+            this.addChild(this.rankInviteA);
+            this.addChild(this.rankInviteB);
         }
     }
 
@@ -203,9 +269,34 @@ class LobbyView extends GameView
         if(callbackObj.rankMenu != null && callbackObj.rankMenu != undefined)
         {
             callbackObj.removeChild(callbackObj.rankBg);
+            callbackObj.removeChild(callbackObj.rankFrame);
+            callbackObj.removeChild(callbackObj.rankTitle);
             callbackObj.removeChild(callbackObj.rankMenu);
             callbackObj.removeChild(callbackObj.rankBackButton);
+            callbackObj.removeChild(callbackObj.rankLastButton);
+            callbackObj.removeChild(callbackObj.rankNextButton);
+            callbackObj.removeChild(callbackObj.rankInviteA);
+            callbackObj.removeChild(callbackObj.rankInviteB);
         }
+    }
+
+    private OnRankLastPage()
+    {
+        platform.rankTurnPage(-1);
+    }
+
+    private OnRankNextPage()
+    {
+        platform.rankTurnPage(1);
+    }
+
+    private OnRankShare()
+    {
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        if(playerData.GetHistoryHighScore() > 0)
+            platform.shareAppMsgRank(playerData.GetHistoryHighScore());
+        else
+            platform.shareAppMsg();
     }
 
     private OnClickStartGame(): void

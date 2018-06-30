@@ -14,6 +14,8 @@ declare interface Platform
 
     shareAppMsgRevive();
 
+    shareAppMsgRank(score:number);
+
     saveUserData(userData:string);
 
     loadUserData():string;
@@ -25,6 +27,8 @@ declare interface Platform
     setUserCloudStorage(key:string, value:string);
 
     getFriendCloudStorage(key:string);
+
+    rankTurnPage(dir:number);
 }
 
 class DebugPlatform implements Platform 
@@ -47,6 +51,11 @@ class DebugPlatform implements Platform
     public shareAppMsg()
     {
         console.log("Share App Msg");
+    }
+
+    public shareAppMsgRank(score:number)
+    {
+        console.log("Share App Msg Rank");
     }
 
     public saveUserData(userData:string)
@@ -77,6 +86,11 @@ class DebugPlatform implements Platform
     public getFriendCloudStorage(key:string)
     {
         console.log("获取云端数据:" + key);
+    }
+
+    public rankTurnPage(dir:number)
+    {
+        console.log("排行榜翻页" + dir);
     }
 }
 

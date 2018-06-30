@@ -15,12 +15,15 @@
  * 之后可通过assets.引用名方式进行获取
  */
 var assets = {
-  icon: "openDataContext/assets/icon.png",
-  box: "openDataContext/assets/box.png",
-  panel: "openDataContext/assets/panel.png",
-  buttonNext: "openDataContext/assets/nextPage.png",
-  buttonLast: "openDataContext/assets/lastPage.png",
-  title: "openDataContext/assets/rankingtitle.png"
+  //icon: "openDataContext/assets/icon.png",
+  box: "openDataContext/assets/panel.png",
+  //panel: "openDataContext/assets/panel.png",
+  //buttonNext: "openDataContext/assets/nextPage.png",
+  //buttonLast: "openDataContext/assets/lastPage.png",
+  //title: "openDataContext/assets/rankingtitle.png",
+  gold: "openDataContext/assets/gold.png",
+  silver: "openDataContext/assets/silver.png",
+  brozen: "openDataContext/assets/brozen.png",
 };
 /**
  * canvas 大小
@@ -71,23 +74,23 @@ let totalGroup = [
  */
 function drawRankPanel() {
   //绘制背景
-  context.drawImage(assets.panel, offsetX_rankToBorder, offsetY_rankToBorder, RankWidth, RankHeight);
+  //context.drawImage(assets.panel, offsetX_rankToBorder, offsetY_rankToBorder, RankWidth, RankHeight);
   //绘制标题
-  let title = assets.title;
+  //let title = assets.title;
   //根据title的宽高计算一下位置;
 
-  let titleHeight = barHeight * 3 / 5;
-  let titleWidth = title.width * titleHeight / title.height;
-  let titleX = offsetX_rankToBorder + (RankWidth - titleWidth) / 2;
-  let titleY = offsetY_rankToBorder + barHeight * 1 / 5;
-  context.drawImage(title, titleX, titleY, titleWidth, titleHeight);
+  //let titleHeight = barHeight * 3 / 5;
+  //let titleWidth = title.width * titleHeight / title.height;
+  //let titleX = offsetX_rankToBorder + (RankWidth - titleWidth) / 2;
+  //let titleY = offsetY_rankToBorder + barHeight * 1 / 5;
+  //context.drawImage(title, titleX, titleY, titleWidth, titleHeight);
   //获取当前要渲染的数据组
   let start = perPageMaxNum * page;
   currentGroup = totalGroup.slice(start, start + perPageMaxNum);
   //创建头像Bar
   drawRankByGroup(currentGroup);
   //创建按钮
-  drawButton()
+  //drawButton()
 }
 /**
  * 根据屏幕大小初始化所有绘制数据
@@ -97,41 +100,45 @@ function init() {
   RankWidth = stageWidth * 9 / 10;
   RankHeight = stageHeight * 9 / 10;
   barWidth = RankWidth * 9 / 10;
-  barHeight = RankHeight / (perPageMaxNum + 2);
+  barHeight = 660 / (perPageMaxNum);
   offsetX_rankToBorder = (stageWidth - RankWidth) / 2;
   offsetY_rankToBorder = (stageHeight - RankHeight) / 2;
   preOffsetY = barHeight;//(RankHeight - barHeight) / (perPageMaxNum + 1);
 
-  barRenderHeight = barHeight * 19 / 20;
+  barRenderHeight = barHeight * 9 / 10;
   startX = offsetX_rankToBorder + RankWidth * 1 / 20;
-  startY = offsetY_rankToBorder + preOffsetY;
+  startY = offsetY_rankToBorder + preOffsetY + 20;
   avatarSize = barRenderHeight * 19 / 20;
+  crownSize = avatarSize * 3 / 4 - 3;
   intervalX = (20 * stageWidth / 640);
   
   //设置字体
-  context.font = fontSize + "px Arial";
+  context.font = "bold " + fontSize + "px Arial";
+  context.fillStyle = "#FFFFFF";
+  context.lineWidth = 4;
+  context.strokeStyle = 'black';
   
   textOffsetY = (barHeight + fontSize) / 2;
   
   indexWidth = context.measureText("999").width;
   scoreWidth = context.measureText("9999").width;
 
-  textMaxSize = barWidth - indexWidth - scoreWidth - avatarSize - 5 * intervalX;
+  textMaxSize = barWidth - indexWidth - avatarSize - 5 * intervalX;
 
   //按钮绘制数据初始化
-  buttonHeight = barHeight / 2;
-  buttonWidth = assets.buttonNext.width * buttonHeight / assets.buttonNext.height;
-  buttonOffset = RankWidth / 3;
+  //buttonHeight = barHeight / 2;
+  //buttonWidth = assets.buttonNext.width * buttonHeight / assets.buttonNext.height;
+  //buttonOffset = RankWidth / 3;
 
-  if(buttonWidth >= buttonOffset)
-  {
-      buttonWidth = barWidth / 3;
-      buttonHeight = assets.buttonNext.height * buttonWidth / assets.buttonNext.width;
-  }
+  // if(buttonWidth >= buttonOffset)
+  // {
+  //     buttonWidth = barWidth / 3;
+  //     buttonHeight = assets.buttonNext.height * buttonWidth / assets.buttonNext.width;
+  // }
 
-  lastButtonX = offsetX_rankToBorder + buttonOffset - buttonWidth;
-  nextButtonX = offsetX_rankToBorder + 2 * buttonOffset;
-  nextButtonY = lastButtonY = offsetY_rankToBorder + RankHeight - 20 - buttonHeight;
+  // lastButtonX = offsetX_rankToBorder + buttonOffset - buttonWidth;
+  // nextButtonX = offsetX_rankToBorder + 2 * buttonOffset;
+  // nextButtonY = lastButtonY = offsetY_rankToBorder + RankHeight - 20 - buttonHeight;
   let data = wx.getSystemInfoSync();
   canvasWidth = data.windowWidth;
   canvasHeight = data.windowHeight;
@@ -160,13 +167,33 @@ function drawRankByGroup(currentGroup) {
 /**
  * 根据绘制信息以及当前i绘制元素
  */
-function drawByData(data, i) {
+function drawByData(data, i) 
+{
   let x = startX;
   //绘制底框
   context.drawImage(assets.box, startX, startY + i * preOffsetY, barWidth, barRenderHeight);
   x += intervalX;
+
+  //绘制王冠
+  var crownX = x;// + (indexWidth) - crownSize / 2;
+  if(data.key == 0)
+  {
+    context.drawImage(assets.gold, crownX, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
+  }
+  else if(data.key == 1)
+  {
+    context.drawImage(assets.silver, x, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
+  }
+  else if(data.key == 2)
+  {
+    context.drawImage(assets.brozen, x, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
+  }
+
   //绘制序号
   context.textAlign = "center";
+  context.lineWidth = 6;
+  context.strokeText((data.key+1) + "", x + indexWidth / 2, startY + i * preOffsetY + textOffsetY, indexWidth);
+  context.lineWidth = 4;
   context.fillText((data.key+1) + "", x + indexWidth / 2, startY + i * preOffsetY + textOffsetY, indexWidth);
   context.textAlign = "left";
   x += indexWidth + intervalX;
@@ -189,12 +216,16 @@ function drawByData(data, i) {
   x += avatarSize + intervalX;
   //绘制名称
 
-  var nameFontSize = fontSize;
+  var oldFont = context.font;
+  var nameFontSize = 25;
+  context.font = nameFontSize + "px Arial";
   var minNameFontSize = 10;
-  var nameOffsetY = textOffsetY
+  var nameOffsetY = 10
+  var nameWidth = 0;
   while(nameFontSize > minNameFontSize)
   {
-      var nameWidth = context.measureText(data.name).width;
+      var measureText = context.measureText(data.name);
+      nameWidth = measureText.width;
       if(nameWidth > textMaxSize)
       {
           nameFontSize -= 1;
@@ -206,39 +237,40 @@ function drawByData(data, i) {
           break;
       }
   }
-
-  context.fillText(data.name + "", x, startY + i * preOffsetY + nameOffsetY, textMaxSize);
-  context.font = fontSize + "px Arial";
-  x += textMaxSize + intervalX;
+  context.lineWidth = 2;
+  context.strokeText(data.name + "", x, startY + i * preOffsetY + 20 + nameFontSize / 2, textMaxSize);
+  context.lineWidth = 4;
+  context.fillText(data.name + "", x, startY + i * preOffsetY + 20 + nameFontSize / 2, textMaxSize);
+  context.font = oldFont;
+  //x += textMaxSize + intervalX;
   //绘制分数
-  context.textAlign = "right";
-  context.fillText(data.scroes + "", x+scoreWidth, startY + i * preOffsetY + textOffsetY, scoreWidth);
-  context.textAlign = "left";
+  context.strokeText(data.scroes + "", x, startY + i * preOffsetY + textOffsetY + nameFontSize / 2, textMaxSize);
+  context.fillText(data.scroes + "", x, startY + i * preOffsetY + textOffsetY + nameFontSize / 2, textMaxSize);
 }
 
 /**
  * 点击处理
  */
-function onTouchEnd(event) {
-  let x = event.clientX * sharedCanvas.width / canvasWidth;
-  let y = event.clientY * sharedCanvas.height / canvasHeight;
-  if (x > lastButtonX && x < lastButtonX + buttonWidth
-    && y > lastButtonY && y < lastButtonY + buttonHeight) {
-    //在last按钮的范围内
-    if (page > 0) {
-      buttonClick(0);
+// function onTouchEnd(event) {
+//   let x = event.clientX * sharedCanvas.width / canvasWidth;
+//   let y = event.clientY * sharedCanvas.height / canvasHeight;
+//   if (x > lastButtonX && x < lastButtonX + buttonWidth
+//     && y > lastButtonY && y < lastButtonY + buttonHeight) {
+//     //在last按钮的范围内
+//     if (page > 0) {
+//       buttonClick(0);
 
-    }
-  }
-  if (x > nextButtonX && x < nextButtonX + buttonWidth
-    && y > nextButtonY && y < nextButtonY + buttonHeight) {
-    //在next按钮的范围内
-    if ((page + 1) * perPageMaxNum < totalGroup.length) {
-      buttonClick(1);
-    }
-  }
+//     }
+//   }
+//   if (x > nextButtonX && x < nextButtonX + buttonWidth
+//     && y > nextButtonY && y < nextButtonY + buttonHeight) {
+//     //在next按钮的范围内
+//     if ((page + 1) * perPageMaxNum < totalGroup.length) {
+//       buttonClick(1);
+//     }
+//   }
 
-}
+// }
 /**
  * 根据传入的buttonKey 执行点击处理
  * 0 为上一页按钮
@@ -292,7 +324,7 @@ let currentGroup = [];
  * 每页最多显示个数
  * 建议大于等于4个
  */
-let perPageMaxNum = 8;
+let perPageMaxNum = 6;
 /**
  * 当前页数,默认0为第一页
  */
@@ -360,7 +392,7 @@ let buttonOffset;
 /**
  * 字体大小
  */
-let fontSize = 30;
+let fontSize = 40;
 /**
  * 文本文字Y轴偏移量
  * 可以使文本相对于图片大小居中
@@ -370,6 +402,10 @@ let textOffsetY;
  * 头像大小
  */
 let avatarSize;
+/**
+ * 皇冠大小
+ */
+let crownSize;
 /**
  * 名字文本最大宽度，名称会根据
  */
@@ -399,12 +435,12 @@ let scoreWidth;
 /**
  * 监听点击
  */
-wx.onTouchEnd((event) => {
-  var l = event.changedTouches.length;
-  for (var i = 0; i < l; i++) {
-    onTouchEnd(event.changedTouches[i]);
-  }
-});
+// wx.onTouchEnd((event) => {
+//   var l = event.changedTouches.length;
+//   for (var i = 0; i < l; i++) {
+//     onTouchEnd(event.changedTouches[i]);
+//   }
+// });
 
 
 /**
@@ -472,6 +508,10 @@ wx.onMessage(data => {
   {
       onGetFriendCloudStorage(data.data);
   }
+  else if(data.command == 'rankTurnPage')
+  {
+      onRankTurnPage(data.data);
+  }
 });
 
 function onGetFriendCloudStorage(storageKey)
@@ -498,11 +538,11 @@ function onGetFriendCloudStorage(storageKey)
                     }
                 }
                 totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
+                totalGroup.push({ key: i+1, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
+                totalGroup.push({ key: i+2, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
+                totalGroup.push({ key: i+3, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
+                totalGroup.push({ key: i+4, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
+                totalGroup.push({ key: i+5, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
             }
 
             renderDirty = true;
@@ -516,4 +556,24 @@ function onGetFriendCloudStorage(storageKey)
             console.log( '--complete res:' , res); 
         }, 
     }); 
+}
+
+function onRankTurnPage(dir)
+{
+  if (dir == -1)
+  {
+    //在last按钮的范围内
+    if (page > 0) 
+    {
+      buttonClick(0);
+    }
+  }
+  else if (dir == 1) 
+  {
+    //在next按钮的范围内
+    if ((page + 1) * perPageMaxNum < totalGroup.length) 
+    {
+      buttonClick(1);
+    }
+  }
 }
