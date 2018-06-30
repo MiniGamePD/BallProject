@@ -4,6 +4,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     private coin:number;
     private curMatchScore:number = 0; //当前比赛分数
     private myBallList: string;
+    private coinCurGame:number;
 
     private breakRecordHistoryHighScore:boolean;
 
@@ -50,14 +51,39 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         }
     }
 
-    public SetCoin(coin:number)
+    public AddCoin(coin:number)
     {
-        this.coin = coin;
+        if(coin > 300)
+        {
+            if(DEBUG)
+                console.log("一次性添加" + coin + "金币，作弊了吗？限制在最大金币范围内");
+            coin = 300;
+        }
+
+        this.coin += coin;
+        this.coinCurGame += coin;
+    }
+
+    public CostCoin(coin:number):boolean
+    {
+        if(this.coin >= coin)
+        {
+            this.coin -= coin;
+            if(DEBUG)
+                console.log("消耗了" + coin + "金币");
+            return true;
+        }
+        return false;
     }
 
     public GetCoin():number
     {
         return this.coin;
+    }
+
+    public GetCoinCurGame():number
+    {
+        return this.coinCurGame;
     }
 
     public SetCurMatchScore(score:number)
@@ -132,5 +158,10 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.historyHighScore = 0;
             this.coin = 0;
         }
+    }
+
+    public OnMatchBegin()
+    {
+        this.coinCurGame = 0;
     }
 }

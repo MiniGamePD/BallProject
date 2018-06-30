@@ -2,6 +2,7 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 {
 	private scoreText: egret.TextField;
 	private historyHighScoreText: egret.TextField;
+	private earnCoin:egret.TextField;
 
 	private curShowScore: number;
 	private targetScore: number;
@@ -49,6 +50,19 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 		this.historyHighScoreText.anchorOffsetX = this.historyHighScoreText.width / 2;
 		this.historyHighScoreText.anchorOffsetY = this.historyHighScoreText.height / 2;
 		this.addChild(this.historyHighScoreText);
+
+		//本局获得的分数
+		this.earnCoin = new egret.TextField();
+		this.earnCoin.x = 590 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+		this.earnCoin.y = 142;
+		this.earnCoin.width = 200;
+		this.earnCoin.height = 100;
+		this.earnCoin.size = 30;
+		this.earnCoin.text = "金币：0";
+		this.earnCoin.textAlign = "right";
+		this.earnCoin.anchorOffsetX = this.earnCoin.width;
+		this.earnCoin.anchorOffsetY = this.earnCoin.height / 2;
+		this.addChild(this.earnCoin);
 
 		this.Reset();
 
@@ -118,6 +132,12 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 	{
 		var newScore = this.targetScore + score;
 		this.SetScore(newScore);	
+	}
+
+	public RefreshCoin()
+	{
+		var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+		this.earnCoin.text = "金币：" + playerData.GetCoinCurGame();
 	}
 
 	private OnBoxEliminateEvent(evt: BoxEliminateEvent): void

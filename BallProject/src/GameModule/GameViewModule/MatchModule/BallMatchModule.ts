@@ -49,6 +49,9 @@ class BallMatchModule extends GameViewModule
 
         this.boxEmitter = new BoxEmitter();
         this.boxEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround(), this.ballDataMgr);
+
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        playerData.OnMatchBegin();
     }
 
     public SwitchForeOrBack(from: GameStateType, to: GameStateType): void

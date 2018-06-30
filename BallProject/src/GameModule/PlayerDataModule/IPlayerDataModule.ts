@@ -5,11 +5,14 @@ interface IPlayerDataModule extends IModule
     SetHistoryHighScore(score:number);
     GetHistoryHighScore():number;
     UploadHistoryHighScore();
-    SetCoin(coin:number);
+    AddCoin(coin:number);
+    CostCoin(coin:number):boolean;
     GetCoin():number;
+    GetCoinCurGame():number;
     SetCurMatchScore(score:number);
     GetCurMatchScore();
     Save();
     Load();
     InitUserData();
+    OnMatchBegin();
 }

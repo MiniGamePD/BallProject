@@ -140,6 +140,9 @@ class BallMatchView extends GameView
             else if (evt.boxType == BoxType.GoldCoin)
 			{
 				this.ShowTips("金币 +" + this.ballDataMgr.ballConfig.Box_Effect_Gold_Coin, 0xf1be22);
+                var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+                playerData.AddCoin(this.ballDataMgr.ballConfig.Box_Effect_Gold_Coin);
+                this.hud.RefreshCoin();
 			}
 		}
 	}

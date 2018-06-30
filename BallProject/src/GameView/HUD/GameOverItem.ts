@@ -150,7 +150,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         coinNum.x = 60;
         coinNum.size = 40;
         coinNum.textAlign = "left";
-        coinNum.text = playerDataModule.GetCoin().toString();
+        coinNum.text = playerDataModule.GetCoinCurGame().toString();
         this.coin.addChild(coinNum);
 
         this.coin.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;

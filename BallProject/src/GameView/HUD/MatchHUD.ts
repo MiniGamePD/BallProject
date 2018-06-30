@@ -71,4 +71,9 @@ class MatchHUD extends egret.DisplayObjectContainer
         let score:number = <number>param;
         this.score.SetScore(score);
     }
+
+    public RefreshCoin()
+    {
+        this.score.RefreshCoin();
+    }
 }
