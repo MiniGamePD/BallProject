@@ -1,6 +1,6 @@
 {
 	"id" : 7,
-	"name" : "暂停延长球",
+	"name" : "定时延长球",
 	"textureName": "Skill_Pause",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
@@ -8,6 +8,10 @@
 	"probability": 10,
 
 	"Box_Effect_Pause_Time" : [6000, 7000, 8000],
+
+	"skillDes" : "延长定时道具时间",
+	"skillHead" : "延长",
+	"skillLevellDes" : ["1秒", "2秒", "3秒"],
 
 	"Describe" : ["<暂停道具>时间额外增加1秒", "<暂停道具>时间额外增加2秒", "<暂停道具>时间额外增加3秒"]	
 }

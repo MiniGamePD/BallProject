@@ -4,8 +4,8 @@ class BallConfig
 	{
 	}
 
-	public id : number = 0;
-	public name : string;
+	public id: number = 0;
+	public name: string;
 	public textureName: string = "Ball_White";
 	public level: number = 0;
 	public maxLevel: number = 0;
@@ -15,7 +15,7 @@ class BallConfig
 
 	public skill_ScaleOnEmitter_Rate = 0; 		// 技能1：发射放大概率
 	public skill_ScaleOnEmitter_Scale = 0; 		// 技能1：发射放大倍数
-	
+
 	public skill_ScaleOnHit_Rate = 0;			// 技能2：碰撞放大概率
 	public skill_ScaleOnHit_Scale = 0;			// 技能2：碰撞放大倍数
 	public skill_ScaleOnHit_BallRadius = 0;		// 技能2：碰撞放大最大半径
@@ -35,6 +35,10 @@ class BallConfig
 	public Box_Effect_FireUp_Time = Box_Effect_FireUp_Time_Default;		// 全力开火的持续时间
 	public Box_Effect_Gold_Coin = Box_Effect_Gold_Coin_Default;         // 金币增加数量
 
+
+	public skillDes: string;  // 技能描述
+	public skillHead: string;  // 技能描述
+	public skillLevellDes: string;  // 技能等级描述
 	public Describe: string;  // 描述
 
 	public InitByConfig(config, level)
@@ -71,6 +75,10 @@ class BallConfig
 		this.Box_Effect_FireUp_Time = this.GetConfigInList(config.Box_Effect_FireUp_Time, level, Box_Effect_FireUp_Time_Default);
 		this.Box_Effect_Gold_Coin = this.GetConfigInList(config.Box_Effect_Gold_Coin, level, Box_Effect_Gold_Coin_Default);
 
+
+		this.skillDes = config.skillDes;
+		this.skillHead= config.skillHead;
+		this.skillLevellDes= this.GetConfigInList(config.skillLevellDes, level, "无");
 		this.Describe = this.GetConfigInList(config.Describe, level, "默认");
 	}
 

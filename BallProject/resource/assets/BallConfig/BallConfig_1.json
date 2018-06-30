@@ -7,5 +7,8 @@
 	"ballRadius" : [15, 16, 17],
 	"probability": 10,
 
-	"Describe" : ["想要技能就来抽球吧！"]	
+	"skillDes" : "想要技能就来抽球吧！",
+
+	"Describe" : ["想要技能就来抽球吧！"]
+
 }

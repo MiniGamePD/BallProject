@@ -10,5 +10,9 @@
 	"skill_CreateBallOnBoxEliminate_Rate" : [1, 1, 1],
 	"skill_CreateBallOnBoxEliminate_Count" : [10, 15, 20],
 
+	"skillDes" : "消灭盒子，分裂出好多弹球",
+	"skillHead" : "分裂",
+	"skillLevellDes" : ["10个", "15个", "20个"],
+
 	"Describe" : ["消灭盒子时分裂10个球", "消灭盒子时分裂15个球", "消灭盒子时分裂20个球"]	
 }
