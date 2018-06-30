@@ -544,6 +544,11 @@ function onGetFriendCloudStorage(storageKey)
                 totalGroup.push({ key: i+4, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
                 totalGroup.push({ key: i+5, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
             }
+            totalGroup.sort(sortScore);
+            for(var i = 0; i < totalGroup.length; ++i)
+            {
+                totalGroup[i].key = i;
+            }
 
             renderDirty = true;
         }, 
@@ -556,6 +561,11 @@ function onGetFriendCloudStorage(storageKey)
             console.log( '--complete res:' , res); 
         }, 
     }); 
+}
+
+function sortScore(a,b)
+{
+  return b.scroes - a.scroes;
 }
 
 function onRankTurnPage(dir)
