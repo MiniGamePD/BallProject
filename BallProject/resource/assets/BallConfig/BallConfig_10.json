@@ -9,5 +9,9 @@
 
 	"Box_Effect_MultipleDirections_Time" : [2, 4, 6],
 
+	"skillDes" : "增加金币道具获得",
+	"skillHead" : "增加",
+	"skillLevellDes" : ["2金币", "4金币", "6金币"],
+
 	"Describe" : ["<金币道具>额外加2金币", "<金币道具>额外加4金币", "<金币道具>额外加6金币"]	
 }

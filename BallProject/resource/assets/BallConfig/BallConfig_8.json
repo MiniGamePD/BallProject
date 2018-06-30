@@ -9,5 +9,9 @@
 
 	"Box_Effect_MultipleDirections_Time" : [6000, 7000, 8000],
 
+	"skillDes" : "延长变身道具时间",
+	"skillHead" : "延长",
+	"skillLevellDes" : ["1秒", "2秒", "3秒"],
+
 	"Describe" : ["<变身道具>时间额外增加1秒", "<变身道具>时间额外增加2秒", "<变身道具>时间额外增加3秒"]	
 }
