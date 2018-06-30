@@ -82,7 +82,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 					var myBall = new MyBallInfo();
 					myBall.id = id;
 					myBall.level = level;
-					myBall.maxLevel = config;
+					myBall.maxLevel = config.maxLevel;
 					this.myBallList.push(myBall)
 				}
 			}
@@ -201,6 +201,55 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 			this.SaveMyBall();
 		}
 	}
+
+	// 根据配置概率随机一个球的ID
+	private RandomBallIdByProbability(): number
+	{
+		var ranBallId = 0;
+		var totalProbability = 0;
+		for (var i = 0; i < this.ballConfigList.length; ++i)
+		{
+			totalProbability += this.ballConfigList[i].probability;
+		}
+		var ranProbability = Math.random() * totalProbability;
+		for (var i = 0; i < this.ballConfigList.length; ++i)
+		{
+			ranProbability -= this.ballConfigList[i].probability;
+			if (ranProbability <= 0)
+			{
+				ranBallId = this.ballConfigList[i].id;
+				break;
+			}
+		}
+		return ranBallId;
+	}
+
+	// 抽取一个球
+    public RandomBall(): RandomBallInfo
+	{
+		var newBall = new RandomBallInfo();
+		newBall.id = this.RandomBallIdByProbability();
+		var myBallInfo = this.GetMyBallInfo(newBall.id);
+		if (myBallInfo != null)
+		{
+			if (myBallInfo.level < myBallInfo.maxLevel)
+			{
+				newBall.level = myBallInfo.level + 1;
+				newBall.randomBallType = RandomBallType.NewLevel;
+			}
+			else
+			{
+				newBall.level = myBallInfo.maxLevel;
+				newBall.randomBallType = RandomBallType.OldMaxLevelBall;
+			}
+		}
+		else
+		{
+			newBall.level = 1;
+			newBall.randomBallType = RandomBallType.NewBall;
+		}
+		return newBall;
+	}
 }
 
 class MyBallInfo
@@ -208,4 +257,19 @@ class MyBallInfo
 	public id: number;
 	public level: number;
 	public maxLevel: number;
+}
+
+
+class RandomBallInfo
+{
+    public id: number;
+    public level: number;
+    public randomBallType: RandomBallType; // 全新的球
+}
+
+enum RandomBallType
+{
+	NewBall,
+	NewLevel,
+	OldMaxLevelBall,
 }

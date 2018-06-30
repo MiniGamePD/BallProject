@@ -3,7 +3,7 @@ class BoxCreateStrategy
 	private boxEmitter: BoxEmitter;
 
 	public runTime = 0;
-	public emitInterval = 1500;
+	public emitInterval = 0;
 	public emitLeftTime = 0;
 
 	private widthCount = 5;
@@ -24,7 +24,7 @@ class BoxCreateStrategy
 	public Init(boxEmitter: BoxEmitter)
 	{
 		this.boxEmitter = boxEmitter;
-
+		this.emitInterval = 1000 / BoxCreateCountPerSecond;
 		this.runTime = 0;
 
 		var minWidth = -this.extraWidth;
@@ -110,6 +110,7 @@ class BoxCreateStrategy
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.FireUp, 38000, 42000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.LevelUp, 14000, 16000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.Pause, 25000, 35000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.GoldCoin, 50000, 70000, 10));
 	}
 
 	private UpdateSpecialBoxStrategy(deltaTime: number)

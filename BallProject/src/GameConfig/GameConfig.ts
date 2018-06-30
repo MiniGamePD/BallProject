@@ -81,21 +81,21 @@ const Frame_Anim_Pill_Boom_Effect = ["Pill_Boom_01", "Pill_Boom_02", "Pill_Boom_
 const Collision_Layer_Ball = Math.pow(2,0);
 const Collision_Layer_Box =  Math.pow(2,1);
 
-const BallEmitCountPerSecondBase = 6;   // 基础发射频率（个/秒）
+const BallEmitCountPerSecondBase = 4;   // 基础发射频率（个/秒）
 const BallEmitCountPerLevelUp = 1;    // 每升一级增加的发射频率（个/秒）
 const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
 const BoxHealthIncreasePerSecond = 0.4; //Box每秒增加的血量
-
+const BoxMoveSpeed = 8;    // 方块移动速度
+const BoxCreateCountPerSecond = 0.8; //方块生成速度（个/秒）
 
 const BoxLineWidth = 4;
 const BoxBackGroundAlpha = 0.2;
-const BoxMoveSpeed = 20;
 const BoxSquareAndTriangleRate = 0.7;  // 四边形和三角形的生成比例
 const BoxHitHideCDTime = 30;
 const BoxHitSoundCDTime = 30;
 const BallEmitSoundCDTime = 30;
 
-const GameOverCenterSize = new egret.Point(70, 70);
+const GameOverCenterSize = new egret.Point(50, 50);   // 中心的死亡区域判定范围
 
 const SpecialBoxRandomBirthPos_Stage_Range = 0.6
 const SpecialBoxRandomBirthPos_Center_Offset = 150
@@ -103,3 +103,8 @@ const SpecialBoxRandomBirthPos_Center_Offset = 150
 const BoxColorPool = [0x6726a5, 0xd6340a, 0xf1be22, 0x11fdff, 0x3562ec, 0xff8526, 0x59d61b];
 
 const ScorePerBox = 1;
+
+const Box_Effect_Pause_Time_Default = 5000;		// 定时道具的持续时间
+const Box_Effect_MultipleDirections_Time_Default = 5000; // 变身道具的持续时间
+const Box_Effect_FireUp_Time_Default = 5000;		// 全力开火的持续时间
+const Box_Effect_Gold_Coin_Default = 50;         // 金币增加数量

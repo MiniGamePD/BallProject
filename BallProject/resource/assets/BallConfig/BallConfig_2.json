@@ -5,8 +5,10 @@
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [15, 16, 17],
+	"probability": 10,
+	
 	"skill_ScaleOnEmitter_Rate" : [0.4, 0.5, 0.6] ,
 	"skill_ScaleOnEmitter_Scale" : [1.5, 1.6, 1.7],
-	
+
 	"Describe" : ["第1级", "第2级", "第3级"]	
 }

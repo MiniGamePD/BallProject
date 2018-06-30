@@ -10,7 +10,7 @@ class ShopView extends egret.DisplayObjectContainer
     private previousBtn: ShapeBgButton;
     private nextBtn: ShapeBgButton;
     private selectBtn: ShapeBgButton;
-    
+    private lotteryBtn: ShapeBgButton;
     
     private resModule: IResModule;
     private ballConfigModule: IBallConfigModule;
@@ -18,11 +18,14 @@ class ShopView extends egret.DisplayObjectContainer
     private curShowBallId: number;
     private totalBallCount: number;
 
+    private selectBallRoot: egret.DisplayObjectContainer;
     private ballBitmap: egret.Bitmap;
     private ballIndexText: egret.TextField;
     private ballNameText: egret.TextField;
     private curLevelText: egret.TextField;
     private nextLevelText: egret.TextField;
+
+    private lottyView: LotteryView;
 
     public constructor()
     {
@@ -37,9 +40,19 @@ class ShopView extends egret.DisplayObjectContainer
 
         this.curShowBallPosIndex = 1;
         this.totalBallCount = this.ballConfigModule.GetTotalBallCount();
-        
-        this.CreateButton();
 
+        this.CreateSelectBallView();
+    }
+
+    private CreateSelectBallView()
+    {
+        this.selectBallRoot = new egret.DisplayObjectContainer();
+        this.selectBallRoot.x = 0;
+        this.selectBallRoot.y = 0;
+        this.addChild(this.selectBallRoot);
+
+        this.CreateSelectViewButton();
+        
         this.RefreshBallInfo();
     }
 
@@ -79,7 +92,7 @@ class ShopView extends egret.DisplayObjectContainer
         Tools.SetAnchor(this.ballIndexText, AnchorType.Center);
         this.ballIndexText.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.ballIndexText.y = 300;
-        this.addChild(this.ballIndexText);
+        this.selectBallRoot.addChild(this.ballIndexText);
 
         this.curShowBallId = this.GetShopViewBallIdByIndex(this.curShowBallPosIndex);
         var ballLevel = this.ballConfigModule.GetMyBallLevel(this.curShowBallId);
@@ -93,7 +106,7 @@ class ShopView extends egret.DisplayObjectContainer
         Tools.SetAnchor(this.ballBitmap, AnchorType.Center);
         this.ballBitmap.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.ballBitmap.y = 400;
-        this.addChild(this.ballBitmap);
+        this.selectBallRoot.addChild(this.ballBitmap);
 
         this.ballNameText = new egret.TextField();
         this.ballNameText.size = 40;
@@ -105,7 +118,7 @@ class ShopView extends egret.DisplayObjectContainer
         Tools.SetAnchor(this.ballNameText, AnchorType.Center);
         this.ballNameText.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.ballNameText.y = 600;
-        this.addChild(this.ballNameText);
+        this.selectBallRoot.addChild(this.ballNameText);
 
         this.curLevelText = new egret.TextField();
         this.curLevelText.size = 40;
@@ -115,7 +128,8 @@ class ShopView extends egret.DisplayObjectContainer
             { text:"等级" + curLevel + "\n", style:{"textColor":0xFFC900, "size":40} },
             { text:"半径: " + curLevelBallConfig.ballRadius + "\n", style:{"textColor":0xFFFFFF, "size":30} },
             { text:"速度: " + curLevelBallConfig.emitSpeed + "\n", style:{"textColor":0xFFFFFF, "size":30} },
-            { text:"技能: " + curLevelBallConfig.Describe , style:{"textColor":0xFFC900, "size":30} },
+            { text:"技能: "  , style:{"textColor":0xFFFFFF, "size":30} },
+            { text:curLevelBallConfig.Describe , style:{"textColor":0x00EC00, "size":30} },
         ]
         this.curLevelText.textAlign = "left";
         this.curLevelText.width = GameMain.GetInstance().GetStageWidth() / 3;
@@ -123,7 +137,7 @@ class ShopView extends egret.DisplayObjectContainer
         Tools.SetAnchor(this.curLevelText, AnchorType.Center);
         this.curLevelText.x = hasThisBall ? GameMain.GetInstance().GetStageWidth() / 4 : GameMain.GetInstance().GetStageWidth() / 2;
         this.curLevelText.y = 1000;
-        this.addChild(this.curLevelText);
+        this.selectBallRoot.addChild(this.curLevelText);
 
         if (hasThisBall)
         {
@@ -140,7 +154,8 @@ class ShopView extends egret.DisplayObjectContainer
                     { text:"等级" + nextLevel + "\n", style:{"textColor":0xFFC900, "size":40} },
                     { text:"半径: " + nextLevelBallConfig.ballRadius + "\n", style:{"textColor":0xFFFFFF, "size":30} },
                     { text:"速度: " + nextLevelBallConfig.emitSpeed + "\n", style:{"textColor":0xFFFFFF, "size":30} },
-                    { text:"技能: " + nextLevelBallConfig.Describe , style:{"textColor":0xFFC900, "size":30} },
+                    { text:"技能: "  , style:{"textColor":0xFFFFFF, "size":30} },
+                    { text:curLevelBallConfig.Describe , style:{"textColor":0x00EC00, "size":30} },
                 ]
             }
             else
@@ -157,7 +172,7 @@ class ShopView extends egret.DisplayObjectContainer
             Tools.SetAnchor(this.nextLevelText, AnchorType.Center);
             this.nextLevelText.x = GameMain.GetInstance().GetStageWidth() / 4 * 3;
             this.nextLevelText.y = 1000;
-            this.addChild(this.nextLevelText);
+            this.selectBallRoot.addChild(this.nextLevelText);
         }
     }
 
@@ -248,23 +263,32 @@ class ShopView extends egret.DisplayObjectContainer
         callbackObj.callbackFun(callbackObj.callbackObj);
     }
 
-    private CreateButton()
+    private CreateSelectViewButton()
     {
+        Tools.DetachDisplayObjFromParent(this.previousBtn);
         this.previousBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.return", 39, 64, 39, 64, this.OnClickPreviousBtn, this);
         this.previousBtn.x = 50 + this.previousBtn.width / 2;
         this.previousBtn.y = 500;
         this.addChild(this.previousBtn);
 
+        Tools.DetachDisplayObjFromParent(this.nextBtn);
         this.nextBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.return", 39, 64, 39, 64, this.OnClickNextBtn, this);
         this.nextBtn.x = GameMain.GetInstance().GetStageWidth() - 50 - this.nextBtn.width / 2;
         this.nextBtn.rotation = 180;
         this.nextBtn.y = 500;
         this.addChild(this.nextBtn);
 
+        Tools.DetachDisplayObjFromParent(this.selectBtn);
         this.selectBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.SelectBall_OK", 143, 91, 143, 91, this.OnClickSelectBtn, this);
         this.selectBtn.x = GameMain.GetInstance().GetStageWidth()/ 2;
         this.selectBtn.y = GameMain.GetInstance().GetStageHeight() - 150;
         this.addChild(this.selectBtn);
+
+        Tools.DetachDisplayObjFromParent(this.lotteryBtn);
+        this.lotteryBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.cash", 143, 91, 143, 91, this.OnClickLotteryBtn, this);
+        this.lotteryBtn.x = GameMain.GetInstance().GetStageWidth() - this.lotteryBtn.width - 100;
+        this.lotteryBtn.y = 150;
+        this.addChild(this.lotteryBtn);
     }
 
     private OnClickPreviousBtn(callbackObj:any)
@@ -291,5 +315,17 @@ class ShopView extends egret.DisplayObjectContainer
         ballConfigModule.ChangeSelectBall(callbackObj.curShowBallId);
         // callbackObj.curShowBallPosIndex = 1;
         callbackObj.RefreshBallInfo();
+    }
+
+    private OnClickLotteryBtn(callbackObj:any)
+    {
+        callbackObj.lottyView = new LotteryView();
+        callbackObj.lottyView.Init(callbackObj.OnCloseLotteryView, callbackObj);
+        callbackObj.addChild(callbackObj.lottyView);
+    }
+
+    private OnCloseLotteryView(callbackObj:any)
+    {
+        egret.log("OnCloseLotteryView");
     }
 }
