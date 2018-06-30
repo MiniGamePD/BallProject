@@ -94,7 +94,7 @@ class WxgamePlatform
     shareAppMsgRank(score) 
     {
         wx.shareAppMessage({
-            title: '我的纪录是'+score+'分，你能打破吗？',
+            title: '我的纪录是'+score+'分，不服来战！',
             imageUrl: 'resource/assets/Share.png',
             success()
             {
