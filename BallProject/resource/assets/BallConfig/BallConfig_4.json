@@ -11,5 +11,5 @@
 	"skill_SplitBallOnHit_Count" : [2, 3, 4],
 	"skill_SplitBallOnHit_Angle" : [30],
 
-	"Describe" : ["第1级", "第2级", "第3级"]	
+	"Describe" : ["40%概率碰撞分裂出2个球", "50%概率碰撞分裂出3个球", "60%概率碰撞分裂出4个球"]		
 }

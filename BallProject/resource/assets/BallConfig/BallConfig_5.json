@@ -7,8 +7,8 @@
 	"ballRadius" : [15, 16, 17],
 	"probability": 5,
 
-	"skill_CreateBallOnBoxEliminate_Rate" : [0.6, 0.8, 1],
-	"skill_CreateBallOnBoxEliminate_Count" : [6, 8, 10],
+	"skill_CreateBallOnBoxEliminate_Rate" : [1, 1, 1],
+	"skill_CreateBallOnBoxEliminate_Count" : [10, 15, 20],
 
-	"Describe" : ["第1级", "第2级", "第3级"]	
+	"Describe" : ["消灭盒子时分裂10个球", "消灭盒子时分裂15个球", "消灭盒子时分裂20个球"]	
 }

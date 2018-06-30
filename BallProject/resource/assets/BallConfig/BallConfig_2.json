@@ -8,7 +8,7 @@
 	"probability": 10,
 	
 	"skill_ScaleOnEmitter_Rate" : [0.4, 0.5, 0.6] ,
-	"skill_ScaleOnEmitter_Scale" : [1.5, 1.6, 1.7],
+	"skill_ScaleOnEmitter_Scale" : [1.6, 1.8, 2],
 
-	"Describe" : ["第1级", "第2级", "第3级"]	
+	"Describe" : ["40%概率变大0.6倍", "50%概率变大0.8倍", "60%概率变大1倍"]	
 }

@@ -107,4 +107,4 @@ const ScorePerBox = 1;
 const Box_Effect_Pause_Time_Default = 5000;		// 定时道具的持续时间
 const Box_Effect_MultipleDirections_Time_Default = 5000; // 变身道具的持续时间
 const Box_Effect_FireUp_Time_Default = 5000;		// 全力开火的持续时间
-const Box_Effect_Gold_Coin_Default = 50;         // 金币增加数量
+const Box_Effect_Gold_Coin_Default = 8;         // 金币增加数量
