@@ -10,5 +10,5 @@
 	"skill_PauseBoxOnHit_Rate" : [0.1, 0.2, 0.3],
 	"skill_PauseBoxOnHit_Time" : [0.5, 0.6, 0.7],
 
-	"Describe" : ["第1级", "第2级", "第3级"]	
+	"Describe" : ["10%概率把盒子打停0.5秒", "20%概率把盒子打停0.6秒", "30%概率把盒子打停0.7秒"]	
 }
