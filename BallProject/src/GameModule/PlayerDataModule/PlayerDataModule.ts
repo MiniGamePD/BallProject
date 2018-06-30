@@ -93,8 +93,14 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 
     public Save()
     {
-        var userData:string = this.historyHighScore + "," + this.coin;
-        GameMain.GetInstance().SaveUserData(userData);
+        let jsonData = 
+        {  
+            version:1,
+            historyHighScore:this.historyHighScore , 
+            coin:this.coin,
+        } 
+        var jsonDataStr:string = JSON.stringify(jsonData);
+        GameMain.GetInstance().SaveUserData(jsonDataStr);
     }
 
     public Load()
@@ -102,12 +108,27 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         var userData = GameMain.GetInstance().LoadUserData();
         if(userData != null && userData != undefined)
         {
-            var temp:string[] = userData.split(',');
-            this.historyHighScore = Number(temp[0]);
-            this.coin = Number(temp[1]);
+            try
+            {
+                //蛋总，如果新增需要保存的内容，一定要注意兼容老版本的saveData
+                var jsonObj = JSON.parse(userData);
+                this.historyHighScore = jsonObj.historyHighScore;
+                this.coin = jsonObj.coin;
+            }
+            catch(e)
+            {
+                //兼容老版本的saveData
+                if(DEBUG)
+                    console.log(e);
+                var temp:string[] = userData.split(',');
+                this.historyHighScore = Number(temp[0]);
+                this.coin = Number(temp[1]);
+                this.Save();//存成新版本的数据格式
+            }
         }
         else
         {
+            //蛋总，这里要注意初始化玩家的数据
             this.historyHighScore = 0;
             this.coin = 0;
         }

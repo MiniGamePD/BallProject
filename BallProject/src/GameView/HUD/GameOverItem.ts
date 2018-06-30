@@ -265,6 +265,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         //保存一下
         var playerdata = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerdata.Save();
+        playerdata.UploadHistoryHighScore();
     }
 
     public ShowReviveMenu()
@@ -348,8 +349,6 @@ class GameOverItem extends egret.DisplayObjectContainer
         else
         {
             this.ShowGameOverMenu();
-            var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
-            playerData.UploadHistoryHighScore();
         }
     }
 }
