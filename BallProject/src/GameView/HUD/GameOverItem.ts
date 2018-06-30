@@ -9,7 +9,11 @@ class GameOverItem extends egret.DisplayObjectContainer
     private score: egret.DisplayObjectContainer;
     private historyHighScore: egret.DisplayObjectContainer;
     private coin: egret.DisplayObjectContainer;
+    private addtionalCoin:egret.TextField;
     private moreCoin: egret.DisplayObjectContainer;
+    private moreCoinText: egret.TextField;
+    private moreCoinButton: ShapeBgButton;
+    private moreCoinIcon:egret.Bitmap;
     private lottery: egret.DisplayObjectContainer;
     private gotoLobby: ShapeBgButton;
 
@@ -19,7 +23,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     public constructor(width: number, height: number)
     {
         super();
-        this.bgCover = new FullScreenCover(0x000000, 0.8);
+        this.bgCover = new FullScreenCover(0x000000, 0.9);
         this.bgCover.touchEnabled = true;
 
         this.CreateReviveMenu();
@@ -56,8 +60,8 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.reviveMenu.addChild(bg);
 
         var title = new egret.TextField();
-        title.text = "小章鱼被抓走啦";
-        title.size = 50;
+        title.text = "失败了";
+        title.size = 60;
         title.width = GameMain.GetInstance().GetStageWidth();
         title.height = 60;
         title.textAlign = "center";
@@ -155,32 +159,47 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         this.coin.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.coin.y = 270;
+
+        this.addtionalCoin = new egret.TextField();
+        this.addtionalCoin.x = coinNum.textWidth + coinNum.x + 20;
+        this.addtionalCoin.size = 40;
+        this.addtionalCoin.textAlign = "left";
+        this.addtionalCoin.textColor = 0xF3C300;
+        this.addtionalCoin.text = "+ " + playerDataModule.GetCoinCurGame().toString();
     }
 
     private CreateMoreCoin()
     {
         this.moreCoin = new egret.DisplayObjectContainer();
 
-        var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 
+        this.moreCoinButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 
             GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, this.OnClickMoreCoin, this);
-        this.moreCoin.addChild(bgButton);
+        this.moreCoin.addChild(this.moreCoinButton);
 
-        var moreCoinText = new egret.TextField();
-        moreCoinText.x = -246 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-        moreCoinText.y = -10;
-        moreCoinText.size = 30;
-        moreCoinText.textAlign = "left";
-        moreCoinText.verticalAlign = "center";
-        moreCoinText.text = "挺好玩的，分享一波";
-        this.moreCoin.addChild(moreCoinText);
+        this.moreCoinText = new egret.TextField();
+        this.moreCoinText.x = -246 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.moreCoinText.y = -10;
+        this.moreCoinText.size = 30;
+        this.moreCoinText.textAlign = "left";
+        this.moreCoinText.verticalAlign = "center";
+        if(Tools.IsWxReviewTimeExpired())
+        {
+            this.moreCoinText.text = "分享一波，金币翻倍$$$";
+        }
+        else
+        {
+            this.moreCoinText.text = "挺好玩的，分享一波";
+        }
+        
+        this.moreCoin.addChild(this.moreCoinText);
 
-        var moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
-        moreCoinIcon.x = 206 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-        moreCoinIcon.width = 60;
-        moreCoinIcon.width = 49;
-        moreCoinIcon.anchorOffsetX = moreCoinIcon.width / 2;
-        moreCoinIcon.anchorOffsetY = moreCoinIcon.height / 2;
-        this.moreCoin.addChild(moreCoinIcon);
+        this.moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
+        this.moreCoinIcon.x = 206 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.moreCoinIcon.width = 60;
+        this.moreCoinIcon.width = 49;
+        this.moreCoinIcon.anchorOffsetX = this.moreCoinIcon.width / 2;
+        this.moreCoinIcon.anchorOffsetY = this.moreCoinIcon.height / 2;
+        this.moreCoin.addChild(this.moreCoinIcon);
 
         this.moreCoin.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.moreCoin.y = 460;
@@ -282,9 +301,25 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.removeChildren();
     }
 
-    private OnClickMoreCoin()
+    private OnClickMoreCoin(callbackObj:any)
     {
         GameMain.GetInstance().ShareAppMsg();
+        if(Tools.IsWxReviewTimeExpired())
+        {
+            callbackObj.coin.addChild(callbackObj.addtionalCoin);
+            callbackObj.moreCoinText.text = "感谢支持，您的额外收益已到账";
+            callbackObj.moreCoinText.textColor = 0x888888;
+
+            callbackObj.moreCoin.removeChild(callbackObj.moreCoinButton);
+            callbackObj.moreCoinButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x88888800, 6, 16, null, 
+                GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, null, null);
+            callbackObj.moreCoin.addChild(callbackObj.moreCoinButton);
+
+            callbackObj.moreCoin.removeChild(callbackObj.moreCoinIcon);
+
+            var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+            playerData.AddCoin(playerData.GetCoinCurGame());
+        }
     }
 
     private OnClickLottery(callbackobj: any)
@@ -341,7 +376,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnReallyGameOverEvent()
     {
-        var result = Tools.IsTimeExpired(2017, 6, 22, 18, 0); // 是否超过了指定的时间
+        var result = Tools.IsWxReviewTimeExpired(); // 是否超过了指定的时间
         if (result && GameMain.GetInstance().hasRevive == false)
         {
             this.ShowReviveMenu();

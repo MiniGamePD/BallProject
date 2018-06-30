@@ -60,7 +60,7 @@ class PauseItem extends egret.DisplayObjectContainer
 
     private CreatePauseMenu(width:number, height:number)
     {
-        this.bgCover = new FullScreenCover(0x000000, 0.8);
+        this.bgCover = new FullScreenCover(0x000000, 0.9);
 
         this.pauseTitle = new egret.DisplayObjectContainer();
         let textField = new egret.TextField();
@@ -105,7 +105,7 @@ class PauseItem extends egret.DisplayObjectContainer
         this.helpDetail.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.helpDetail.y = GameMain.GetInstance().GetStageHeight() / 2;
 
-        this.bgCoverHelp = new FullScreenCover(0x000000, 0.8);
+        this.bgCoverHelp = new FullScreenCover(0x000000, 0.9);
         this.bgCoverHelp.touchEnabled = true;
         this.bgCoverHelp.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnCloseHelp, this);
     }

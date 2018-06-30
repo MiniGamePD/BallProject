@@ -178,7 +178,7 @@ class LobbyView extends GameView
         this.addChild(this.rankButton);
 
         //背景
-        this.rankBg = new FullScreenCover(0x000000, 0.8);
+        this.rankBg = new FullScreenCover(0x000000, 0.9);
 
         //返回
         this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 

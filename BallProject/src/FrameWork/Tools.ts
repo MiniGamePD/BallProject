@@ -425,4 +425,10 @@ class Tools
         console.log("targetDate="+ targetDate.toString() +  ", curDate=" + curDate.toString() + ", delta=" + delta);
 		return delta < 0;
     }
+
+	//判断是否超过了审核时间
+	public static IsWxReviewTimeExpired()
+	{
+		return Tools.IsTimeExpired(2017, 6, 22, 18, 0);
+	}
 }
