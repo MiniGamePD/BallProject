@@ -137,6 +137,10 @@ class BallMatchView extends GameView
 			{
 				this.ShowTips("定时 " + this.ballDataMgr.ballConfig.Box_Effect_Pause_Time / 1000 + "秒", 0x6726a5);
 			}
+            else if (evt.boxType == BoxType.GoldCoin)
+			{
+				this.ShowTips("金币 +" + this.ballDataMgr.ballConfig.Box_Effect_Gold_Coin, 0xf1be22);
+			}
 		}
 	}
 

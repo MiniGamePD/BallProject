@@ -128,7 +128,8 @@ class ShopView extends egret.DisplayObjectContainer
             { text:"等级" + curLevel + "\n", style:{"textColor":0xFFC900, "size":40} },
             { text:"半径: " + curLevelBallConfig.ballRadius + "\n", style:{"textColor":0xFFFFFF, "size":30} },
             { text:"速度: " + curLevelBallConfig.emitSpeed + "\n", style:{"textColor":0xFFFFFF, "size":30} },
-            { text:"技能: " + curLevelBallConfig.Describe , style:{"textColor":0xFFC900, "size":30} },
+            { text:"技能: "  , style:{"textColor":0xFFFFFF, "size":30} },
+            { text:curLevelBallConfig.Describe , style:{"textColor":0x00EC00, "size":30} },
         ]
         this.curLevelText.textAlign = "left";
         this.curLevelText.width = GameMain.GetInstance().GetStageWidth() / 3;
@@ -153,7 +154,8 @@ class ShopView extends egret.DisplayObjectContainer
                     { text:"等级" + nextLevel + "\n", style:{"textColor":0xFFC900, "size":40} },
                     { text:"半径: " + nextLevelBallConfig.ballRadius + "\n", style:{"textColor":0xFFFFFF, "size":30} },
                     { text:"速度: " + nextLevelBallConfig.emitSpeed + "\n", style:{"textColor":0xFFFFFF, "size":30} },
-                    { text:"技能: " + nextLevelBallConfig.Describe , style:{"textColor":0xFFC900, "size":30} },
+                    { text:"技能: "  , style:{"textColor":0xFFFFFF, "size":30} },
+                    { text:curLevelBallConfig.Describe , style:{"textColor":0x00EC00, "size":30} },
                 ]
             }
             else
