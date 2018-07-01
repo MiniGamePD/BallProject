@@ -165,8 +165,8 @@ class LobbyView extends GameView
 
         //入口
         this.rankButton = this.mResModule.CreateBitmapByName("pd_res_json.rankEntry");
-        this.rankButton.width *= adaptFactor;
-        this.rankButton.height *= adaptFactor;
+        this.rankButton.width *= 0.8 * adaptFactor;
+        this.rankButton.height *= 0.8 * adaptFactor;
         this.rankButton.anchorOffsetX = this.rankButton.width / 2;
         this.rankButton.anchorOffsetY = this.rankButton.height / 2;
         this.rankButton.x = 430 * adaptFactor;
