@@ -13,7 +13,7 @@ class LobbyView extends GameView
     private ballAnimAcc: number;
     private shop: ShopView;
     //===排行榜===
-    private rankButton:egret.Bitmap;
+    private rankButton:ShapeBgButton;
 
     private rankMenu:egret.Bitmap;
     private rankBg:FullScreenCover;
@@ -164,15 +164,11 @@ class LobbyView extends GameView
         var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
 
         //入口
-        this.rankButton = this.mResModule.CreateBitmapByName("pd_res_json.rankEntry");
-        this.rankButton.width *= 0.8 * adaptFactor;
-        this.rankButton.height *= 0.8 * adaptFactor;
-        this.rankButton.anchorOffsetX = this.rankButton.width / 2;
-        this.rankButton.anchorOffsetY = this.rankButton.height / 2;
-        this.rankButton.x = 430 * adaptFactor;
+        this.rankButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
+            "pd_res_json.rankEntry", 117*0.8*adaptFactor, 118*0.8*adaptFactor,
+            117*0.8*adaptFactor, 118*0.8*adaptFactor, this.OnClickRank, this);
+        this.rankButton.x = 430*adaptFactor;
         this.rankButton.y = 830;
-        this.rankButton.touchEnabled = true;
-        this.rankButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickRank, this);
         this.addChild(this.rankButton);
 
         //背景
@@ -219,10 +215,10 @@ class LobbyView extends GameView
 
         //分享
         this.rankInviteA = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
-            "pd_res_json.rankInviteA", 250*adaptFactor, 84*adaptFactor,
-            250*adaptFactor, 84*adaptFactor, this.OnRankShare, this);
-        this.rankInviteA.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.rankInviteA.y = 900;
+            "pd_res_json.rankInviteA", 198*adaptFactor, 66*adaptFactor,
+            198*adaptFactor, 66*adaptFactor, this.OnRankShare, this);
+        this.rankInviteA.x = GameMain.GetInstance().GetStageWidth() / 2 + 190 * adaptFactor;
+        this.rankInviteA.y = 1050;
 
         this.rankInviteB = this.mResModule.CreateBitmapByName("pd_res_json.rankInviteB");
         this.rankInviteB.width *= adaptFactor;
@@ -244,21 +240,21 @@ class LobbyView extends GameView
         }
     }
 
-    private OnClickRank()
+    private OnClickRank(callbackobj:any)
     {
-        if(this.rankMenu != null && this.rankMenu != undefined)
+        if(callbackobj.rankMenu != null && callbackobj.rankMenu != undefined)
         {
             platform.getFriendCloudStorage("HighScore");
 
-            this.addChild(this.rankBg);
-            this.addChild(this.rankFrame);
-            this.addChild(this.rankTitle);
-            this.addChild(this.rankMenu);
-            this.addChild(this.rankBackButton);
-            this.addChild(this.rankLastButton);
-            this.addChild(this.rankNextButton);
-            this.addChild(this.rankInviteA);
-            this.addChild(this.rankInviteB);
+            callbackobj.addChild(callbackobj.rankBg);
+            callbackobj.addChild(callbackobj.rankFrame);
+            callbackobj.addChild(callbackobj.rankTitle);
+            callbackobj.addChild(callbackobj.rankMenu);
+            callbackobj.addChild(callbackobj.rankBackButton);
+            callbackobj.addChild(callbackobj.rankLastButton);
+            callbackobj.addChild(callbackobj.rankNextButton);
+            callbackobj.addChild(callbackobj.rankInviteA);
+            callbackobj.addChild(callbackobj.rankInviteB);
         }
     }
 
