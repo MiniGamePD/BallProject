@@ -87,6 +87,26 @@ class ResModule extends ModuleBase implements IResModule
 		return result;
 	}
 
+	public CreateBitmap(key: string, posx: number, posy: number, parent?: egret.DisplayObjectContainer, anchor?: AnchorType): egret.Bitmap
+	{
+		var bitmap = this.CreateBitmapByName(key);
+		if (bitmap != null || bitmap != undefined)
+		{
+			bitmap.x = posx;
+			bitmap.y = posy;
+			if (anchor != undefined)
+			{
+				Tools.SetAnchor(bitmap, anchor);
+			}
+			
+			if (parent != null && parent != undefined)
+			{
+				parent.addChild(bitmap);
+			}
+		}
+		return bitmap;
+	}
+
 	public CreateParticleByKey(key: string): particle.GravityParticleSystem
 	{
 		var textureName = key + "_png";

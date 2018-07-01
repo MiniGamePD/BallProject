@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "pd_res_json,Boom_mp3,Eliminate_mp3,EliminateRow_mp3,EnemySinisterSmile1_mp3,GameOver_mp3,Go_mp3,OnDown_mp3,Ready_mp3,VirusBorn_mp3,VirusEliminate_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,Pause_mp3,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillMove_mp3,PillMove2_mp3,PillRotation2_mp3,ice_Boom_json,AddFeverPower_mp3,ballEmit_mp3,hitBox_mp3,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,SkillBox_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json,BallConfig_10_json",
+			"keys": "pd_res_json,Boom_mp3,Eliminate_mp3,EliminateRow_mp3,EnemySinisterSmile1_mp3,GameOver_mp3,Go_mp3,OnDown_mp3,Ready_mp3,VirusBorn_mp3,VirusEliminate_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,Pause_mp3,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillMove_mp3,PillMove2_mp3,PillRotation2_mp3,ice_Boom_json,AddFeverPower_mp3,ballEmit_mp3,hitBox_mp3,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,SkillBox_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json,BallConfig_10_json,xingxing_json",
 			"name": "preload"
 		}
 	],
@@ -15,7 +15,7 @@
 			"url": "assets/pd_res.json",
 			"type": "sheet",
 			"name": "pd_res_json",
-			"subkeys": "AdRevive,Ball_White,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,attributeBg,ballLeft,bgCover,cash,level1,level2,level3,levelMax,lottyBackCoin,lottyBg,lottyBtn,lottyEff,lottyLevel1,lottyLevel2,lottyLevel3,lottyLvUpDes,lottyNewBall,lottyTitle,maxLevelDes,newball,nextLevelDes,pause,play,point,rankEntry,rankInviteA,rankInviteB,rankLastPage,rankNextPage,rankTitle,return,selected,shopCoin,shopDes,shopReturn,skillArrow,zhangyu,zhangyu_dead"
+			"subkeys": "AdRevive,Ball_White,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,attributeBg,ballLeft,bgCover,cash,level1,level2,level3,levelMax,lockBg,lockText,lottyBackCoin,lottyBg,lottyBtn,lottyEff,lottyLevel1,lottyLevel2,lottyLevel3,lottyLvUpDes,lottyNewBall,lottyTitle,lottyXingxing,maxLevelDes,newball,nextLevelDes,pause,play,point,rankEntry,rankInviteA,rankInviteB,rankLastPage,rankNextPage,rankTitle,return,selected,shopCoin,shopDes,shopReturn,skillArrow,zhangyu,zhangyu_dead"
 		},
 		{
 			"url": "assets/Sound/Boom.mp3",
@@ -276,6 +276,11 @@
 			"url": "assets/BallConfig/BallConfig_10.json",
 			"type": "json",
 			"name": "BallConfig_10_json"
+		},
+		{
+			"url": "assets/Particle/xingxing.json",
+			"type": "json",
+			"name": "xingxing_json"
 		}
 	]
 }

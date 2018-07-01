@@ -66,14 +66,15 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 
     public CostCoin(coin:number):boolean
     {
-        if(this.coin >= coin)
-        {
-            this.coin -= coin;
-            if(DEBUG)
-                console.log("消耗了" + coin + "金币");
-            return true;
-        }
-        return false;
+        // if(this.coin >= coin)
+        // {
+        //     this.coin -= coin;
+        //     if(DEBUG)
+        //         console.log("消耗了" + coin + "金币");
+        //     return true;
+        // }
+        // return false;
+        return true;
     }
 
     public GetCoin():number

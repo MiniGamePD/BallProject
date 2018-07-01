@@ -8,9 +8,14 @@ class LotteryView extends egret.DisplayObjectContainer
 	private callbackObj: any;
 	private callbackFun: Function;
 
+	private lottyTitleBitmap: egret.Bitmap;
+	private ballBgBitmap: egret.Bitmap;
+	private ballEffectBitmap: egret.Bitmap;
+
 	private ballBitmap: egret.Bitmap;
-    private ballNameText: egret.TextField;
-    private curLevelText: egret.TextField;
+	private ballNameText: egret.TextField;
+	private ballSkillText: egret.TextField;
+	private particleSys: particle.GravityParticleSystem;
 
 	private ballId: number;
 	private ballLevel: number;
@@ -42,37 +47,55 @@ class LotteryView extends egret.DisplayObjectContainer
 
 	private CreateBack()
 	{
-		this.back = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.return", 39, 64, 39, 64, this.OnClickBack, this);
+		this.back = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.shopReturn", 82, 82, 82, 82, this.OnClickBack, this);
 		this.back.x = 50;
 		this.back.y = 80;
 		this.addChild(this.back);
 	}
 
-	private OnClickBack(callbackObj:any)
-    {
+	private OnClickBack(callbackObj: any)
+	{
 		Tools.DetachDisplayObjFromParent(callbackObj);
 		callbackObj.callbackFun(callbackObj.callbackObj);
-    }
+	}
 
 	private RefreshBallInfo()
-    {
-        Tools.DetachDisplayObjFromParent(this.ballBitmap);
-        Tools.DetachDisplayObjFromParent(this.ballNameText);
-        Tools.DetachDisplayObjFromParent(this.curLevelText);
+	{
+		Tools.DetachDisplayObjFromParent(this.ballBitmap);
+		Tools.DetachDisplayObjFromParent(this.ballNameText);
+		Tools.DetachDisplayObjFromParent(this.ballSkillText);
+
+		var stageWidth = GameMain.GetInstance().GetStageWidth();
+		var stageHeight = GameMain.GetInstance().GetStageHeight();
 
 		var randomBall = this.ballConfigModule.RandomBall();
-        this.ballId = randomBall.id;
-        this.ballLevel = randomBall.level;
-		
-        var curLevelBallConfig = this.ballConfigModule.GetBallConfig(this.ballId, this.ballLevel);
+		this.ballId = randomBall.id;
+		this.ballLevel = randomBall.level;
 
-        this.ballBitmap = this.resModule.CreateBitmapByName(curLevelBallConfig.textureName);
-        this.ballBitmap.width = curLevelBallConfig.ballRadius * 10;
-        this.ballBitmap.height = curLevelBallConfig.ballRadius * 10;
-        Tools.SetAnchor(this.ballBitmap, AnchorType.Center);
-        this.ballBitmap.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.ballBitmap.y = 400;
-        this.addChild(this.ballBitmap);
+		var curLevelBallConfig = this.ballConfigModule.GetBallConfig(this.ballId, this.ballLevel);
+
+		Tools.DetachDisplayObjFromParent(this.lottyTitleBitmap);
+		this.lottyTitleBitmap = this.resModule.CreateBitmap("lottyTitle", stageWidth / 2, 200, this, AnchorType.Center);
+
+		Tools.DetachDisplayObjFromParent(this.ballBgBitmap);
+		this.ballBgBitmap = this.resModule.CreateBitmap("lottyBg", stageWidth / 2, 480, this, AnchorType.Center);
+
+		Tools.DetachDisplayObjFromParent(this.ballEffectBitmap);
+		this.ballEffectBitmap = this.resModule.CreateBitmap("lottyEff", stageWidth / 2, 500, this, AnchorType.Center);
+
+		var rotationParam = new PaRotationParam();
+		rotationParam.displayObj = this.ballEffectBitmap;
+		rotationParam.targetRot = 360;
+		rotationParam.duration = 5000;
+		rotationParam.loop = true;
+		var rotationEvent = new PlayProgramAnimationEvent()
+		rotationEvent.param = rotationParam;
+		GameMain.GetInstance().DispatchEvent(rotationEvent);
+
+		this.ballBitmap = this.resModule.CreateBitmap(curLevelBallConfig.textureName, stageWidth / 2, 500, this);
+		this.ballBitmap.width = curLevelBallConfig.ballRadius * 10;
+		this.ballBitmap.height = curLevelBallConfig.ballRadius * 10;
+		Tools.SetAnchor(this.ballBitmap, AnchorType.Center);
 
 		// 缩放动画
 		this.ballBitmap.scaleX = 0;
@@ -87,34 +110,51 @@ class LotteryView extends egret.DisplayObjectContainer
 		scaleEvent.param = scaleParam;
 		GameMain.GetInstance().DispatchEvent(scaleEvent);
 
-        this.ballNameText = new egret.TextField();
-        this.ballNameText.size = 40;
-        this.ballNameText.textColor = 0xFFFFFF;
-        this.ballNameText.text = curLevelBallConfig.name;
-        this.ballNameText.textAlign = "center";
-        this.ballNameText.width = 400;
-        this.ballNameText.height = 100;
-        Tools.SetAnchor(this.ballNameText, AnchorType.Center);
-        this.ballNameText.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.ballNameText.y = 600;
-        this.addChild(this.ballNameText);
+		// 粒子特效
+		Tools.DetachDisplayObjFromParent(this.particleSys);
+		this.particleSys = this.resModule.CreateParticle("lottyXingxing", "xingxing");
+		this.particleSys.x = stageWidth / 2; 	
+		this.particleSys.y = 500;
+		this.addChild(this.particleSys);
+		this.particleSys.start();
 
-        this.curLevelText = new egret.TextField();
-        this.curLevelText.size = 40;
-        this.curLevelText.textColor = 0xFFFFFF;
-        this.curLevelText.textFlow = <Array<egret.ITextElement>>
-        [
-            { text:"等级" + this.ballLevel + "\n", style:{"textColor":0xFFC900, "size":40} },
-            { text:"半径: " + curLevelBallConfig.ballRadius + "\n", style:{"textColor":0xFFFFFF, "size":30} },
-            { text:"速度: " + curLevelBallConfig.emitSpeed + "\n", style:{"textColor":0xFFFFFF, "size":30} },
-            { text:"技能: " + curLevelBallConfig.Describe , style:{"textColor":0xFFC900, "size":30} },
-        ]
-        this.curLevelText.textAlign = "left";
-        this.curLevelText.width = GameMain.GetInstance().GetStageWidth() / 3;
-        this.curLevelText.height = 600;
-        Tools.SetAnchor(this.curLevelText, AnchorType.Center);
-        this.curLevelText.x =  GameMain.GetInstance().GetStageWidth() / 2;
-        this.curLevelText.y = 1000;
-        this.addChild(this.curLevelText);
-    }
+		this.ballNameText = new egret.TextField();
+		this.ballNameText.size = 60;
+		this.ballNameText.textColor = 0xFFFFFF;
+		this.ballNameText.bold = true;
+		this.ballNameText.text = curLevelBallConfig.name;
+		this.ballNameText.textAlign = "center";
+		Tools.SetAnchor(this.ballNameText, AnchorType.Center);
+		this.ballNameText.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.ballNameText.y = 800;
+		this.ballNameText.strokeColor = 0x000000;
+		this.ballNameText.stroke = 2;
+		this.addChild(this.ballNameText);
+
+		this.ballSkillText = new egret.TextField();
+		this.ballSkillText.size = 35;
+		this.ballSkillText.textColor = 0xFFFFFF;
+		this.ballSkillText.text = "- " + curLevelBallConfig.skillDes + " -";
+		this.ballSkillText.textAlign = "center";
+		this.ballSkillText.width = GameMain.GetInstance().GetStageWidth();
+		Tools.SetAnchor(this.ballSkillText, AnchorType.Center);
+		this.ballSkillText.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.ballSkillText.y = 880;
+		this.addChild(this.ballSkillText);
+
+		if (randomBall.randomBallType == RandomBallType.NewBall)
+		{
+			this.resModule.CreateBitmap("lottyNewBall", stageWidth / 2, 950, this, AnchorType.Center);
+		}
+		else if (randomBall.randomBallType == RandomBallType.OldMaxLevelBall)
+		{
+			this.resModule.CreateBitmap("lottyBackCoin", stageWidth / 2, 950, this, AnchorType.Center);
+		}
+		else
+		{
+			this.resModule.CreateBitmap("lottyLvUpDes", stageWidth / 2 - 50, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLevel" + (randomBall.level - 1), stageWidth / 2- 50 - 39, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLevel" + randomBall.level, stageWidth / 2 - 50 + 195, 950, this, AnchorType.Center);
+		}
+	}
 }
