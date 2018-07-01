@@ -116,7 +116,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		return this.myBallList.length;
 	}
 
-	// 是否拥有这个球, 返回null，代码没有这个球。
+	// 是否拥有这个球, 返回null，代表没有这个球。
     public GetMyBallInfo(id: number): MyBallInfo
 	{
 		for (var i = 0; i < this.myBallList.length; ++i)
@@ -234,7 +234,13 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		{
 			if (myBallInfo.level < myBallInfo.maxLevel)
 			{
-				newBall.level = myBallInfo.level + 1;
+				myBallInfo.level += 1;
+				if (myBallInfo.id == this.curBallId)
+				{
+					this.curBallLevel += 1;
+					this.curBallConfig = this.GetBallConfig(this.curBallId, this.curBallLevel)
+				}
+				newBall.level = myBallInfo.level;
 				newBall.randomBallType = RandomBallType.NewLevel;
 			}
 			else
@@ -247,7 +253,18 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		{
 			newBall.level = 1;
 			newBall.randomBallType = RandomBallType.NewBall;
+
+			var config = this.GetBallConfig(newBall.id, 1)
+			if (config != null)
+			{
+				var myBall = new MyBallInfo();
+				myBall.id = config.id;
+				myBall.level = 1;
+				myBall.maxLevel = config.maxLevel;
+				this.myBallList.push(myBall)
+			}
 		}
+		this.SaveMyBall();
 		return newBall;
 	}
 }

@@ -19,13 +19,14 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 
 	public GetMyBall(): string
     {
-        this.myBallList = "5-3|1-1|2-1|3-2"
+        // this.myBallList = "5-3|1-1|2-1|3-2"
         return this.myBallList;
     }
 
     public SaveMyBall(ballListString: string)
     {
         this.myBallList = ballListString;
+        this.Save();
     }
 
     public SetHistoryHighScore(score:number)
@@ -66,15 +67,14 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 
     public CostCoin(coin:number):boolean
     {
-        // if(this.coin >= coin)
-        // {
-        //     this.coin -= coin;
-        //     if(DEBUG)
-        //         console.log("消耗了" + coin + "金币");
-        //     return true;
-        // }
-        // return false;
-        return true;
+        if(this.coin >= coin)
+        {
+            this.coin -= coin;
+            if(DEBUG)
+                console.log("消耗了" + coin + "金币");
+            return true;
+        }
+        return false;
     }
 
     public GetCoin():number
@@ -125,6 +125,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             version:1,
             historyHighScore:this.historyHighScore , 
             coin:this.coin,
+            myBallList:this.myBallList,
         } 
         var jsonDataStr:string = JSON.stringify(jsonData);
         GameMain.GetInstance().SaveUserData(jsonDataStr);
@@ -141,6 +142,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                 var jsonObj = JSON.parse(userData);
                 this.historyHighScore = jsonObj.historyHighScore;
                 this.coin = jsonObj.coin;
+                this.myBallList = jsonObj.myBallList;
             }
             catch(e)
             {
@@ -150,6 +152,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                 var temp:string[] = userData.split(',');
                 this.historyHighScore = Number(temp[0]);
                 this.coin = Number(temp[1]);
+                this.myBallList = "1-1"
                 this.Save();//存成新版本的数据格式
             }
         }
@@ -158,6 +161,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             //蛋总，这里要注意初始化玩家的数据
             this.historyHighScore = 0;
             this.coin = 0;
+            this.myBallList = "1-1"
         }
     }
 

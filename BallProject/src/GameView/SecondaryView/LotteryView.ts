@@ -2,6 +2,7 @@ class LotteryView extends egret.DisplayObjectContainer
 {
 	private resModule: IResModule;
 	private ballConfigModule: IBallConfigModule;
+	private playerDataModule: IPlayerDataModule;
 
 	private bgCover: FullScreenCover;
 	private back: ShapeBgButton;
@@ -25,6 +26,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		super();
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+        this.playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
 
 		this.CreateBgCover();
 		this.CreateBack();
@@ -113,7 +115,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		// 粒子特效
 		Tools.DetachDisplayObjFromParent(this.particleSys);
 		this.particleSys = this.resModule.CreateParticle("lottyXingxing", "xingxing");
-		this.particleSys.x = stageWidth / 2; 	
+		this.particleSys.x = stageWidth / 2;
 		this.particleSys.y = 500;
 		this.addChild(this.particleSys);
 		this.particleSys.start();
@@ -149,11 +151,12 @@ class LotteryView extends egret.DisplayObjectContainer
 		else if (randomBall.randomBallType == RandomBallType.OldMaxLevelBall)
 		{
 			this.resModule.CreateBitmap("lottyBackCoin", stageWidth / 2, 950, this, AnchorType.Center);
+			this.playerDataModule.AddCoin(Lotty_Ball_Back);
 		}
 		else
 		{
 			this.resModule.CreateBitmap("lottyLvUpDes", stageWidth / 2 - 50, 950, this, AnchorType.Center);
-			this.resModule.CreateBitmap("lottyLevel" + (randomBall.level - 1), stageWidth / 2- 50 - 39, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLevel" + (randomBall.level - 1), stageWidth / 2 - 50 - 39, 950, this, AnchorType.Center);
 			this.resModule.CreateBitmap("lottyLevel" + randomBall.level, stageWidth / 2 - 50 + 195, 950, this, AnchorType.Center);
 		}
 	}

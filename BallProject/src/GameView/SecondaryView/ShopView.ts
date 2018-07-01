@@ -79,7 +79,7 @@ class ShopView extends egret.DisplayObjectContainer
         // this.CreateDetail();
         this.CreateBack();
 
-        this.CreateCoin();
+        this.RefreshCoinInfo();
 
         this.curShowBallPosIndex = 1;
         this.totalBallCount = this.ballConfigModule.GetTotalBallCount();
@@ -117,7 +117,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.addChild(this.bgCover);
     }
 
-    private CreateCoin()
+    private RefreshCoinInfo()
     {
         Tools.DetachDisplayObjFromParent(this.coinBitmap);
         Tools.DetachDisplayObjFromParent(this.coinText);
@@ -626,6 +626,7 @@ class ShopView extends egret.DisplayObjectContainer
     private OnClickLotteryBtn(callbackObj: any)
     {
         callbackObj.TryLottyBall();
+        callbackObj.RefreshCoinInfo();
     }
 
     private TryLottyBall()
@@ -642,5 +643,6 @@ class ShopView extends egret.DisplayObjectContainer
     private OnCloseLotteryView(callbackObj: any)
     {
         egret.log("OnCloseLotteryView");
+        callbackObj.RefreshBallInfo();
     }
 }
