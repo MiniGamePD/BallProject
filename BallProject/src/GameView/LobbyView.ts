@@ -13,7 +13,7 @@ class LobbyView extends GameView
     private ballAnimAcc: number;
     private shop: ShopView;
     //===排行榜===
-    private rankButton:egret.TextField;
+    private rankButton:egret.Bitmap;
 
     private rankMenu:egret.Bitmap;
     private rankBg:FullScreenCover;
@@ -164,15 +164,13 @@ class LobbyView extends GameView
         var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
 
         //入口
-        this.rankButton = new egret.TextField();
-        this.rankButton.text = "排行榜";
-        this.rankButton.width = 200;
-        this.rankButton.height = 100;
-        this.rankButton.anchorOffsetX = 100;
-        this.rankButton.anchorOffsetY = 50;
-        this.rankButton.size = 50;
-        this.rankButton.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.rankButton.y = 900;
+        this.rankButton = this.mResModule.CreateBitmapByName("pd_res_json.rankEntry");
+        this.rankButton.width *= 0.4 * adaptFactor;
+        this.rankButton.height *= 0.4 * adaptFactor;
+        this.rankButton.anchorOffsetX = this.rankButton.width / 2;
+        this.rankButton.anchorOffsetY = this.rankButton.height / 2;
+        this.rankButton.x = 430 * adaptFactor;
+        this.rankButton.y = 830;
         this.rankButton.touchEnabled = true;
         this.rankButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnClickRank, this);
         this.addChild(this.rankButton);

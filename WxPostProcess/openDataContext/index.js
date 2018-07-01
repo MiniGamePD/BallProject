@@ -109,7 +109,7 @@ function init() {
   startX = offsetX_rankToBorder + RankWidth * 1 / 20;
   startY = offsetY_rankToBorder + preOffsetY + 20;
   avatarSize = barRenderHeight * 19 / 20;
-  crownSize = avatarSize * 3 / 4 - 3;
+  crownSize = avatarSize * 3 / 5;
   intervalX = (20 * stageWidth / 640);
   
   //设置字体
@@ -175,27 +175,30 @@ function drawByData(data, i)
   x += intervalX;
 
   //绘制王冠
-  var crownX = x;// + (indexWidth) - crownSize / 2;
+  var crownX = x + (indexWidth) / 2 - crownSize / 2;
   if(data.key == 0)
   {
     context.drawImage(assets.gold, crownX, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
   }
   else if(data.key == 1)
   {
-    context.drawImage(assets.silver, x, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
+    context.drawImage(assets.silver, crownX, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
   }
   else if(data.key == 2)
   {
-    context.drawImage(assets.brozen, x, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
+    context.drawImage(assets.brozen, crownX, startY + i * preOffsetY + (barRenderHeight - crownSize) / 2, crownSize, crownSize);
   }
 
   //绘制序号
-  context.textAlign = "center";
-  context.lineWidth = 6;
-  context.strokeText((data.key+1) + "", x + indexWidth / 2, startY + i * preOffsetY + textOffsetY, indexWidth);
-  context.lineWidth = 4;
-  context.fillText((data.key+1) + "", x + indexWidth / 2, startY + i * preOffsetY + textOffsetY, indexWidth);
-  context.textAlign = "left";
+  if(data.key > 2)
+  {
+    context.textAlign = "center";
+    context.lineWidth = 6;
+    context.strokeText((data.key+1) + "", x + indexWidth / 2, startY + i * preOffsetY + textOffsetY, indexWidth);
+    context.lineWidth = 4;
+    context.fillText((data.key+1) + "", x + indexWidth / 2, startY + i * preOffsetY + textOffsetY, indexWidth);
+    context.textAlign = "left";
+  }
   x += indexWidth + intervalX;
   //绘制头像
   if(data.avatar != null)
@@ -538,11 +541,6 @@ function onGetFriendCloudStorage(storageKey)
                     }
                 }
                 totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i+1, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i+2, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i+3, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i+4, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
-                totalGroup.push({ key: i+5, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
             }
             totalGroup.sort(sortScore);
             for(var i = 0; i < totalGroup.length; ++i)
