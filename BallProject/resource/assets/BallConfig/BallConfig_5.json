@@ -1,6 +1,6 @@
 {
 	"id" : 5,
-	"name" : "盒子分裂球",
+	"name" : "神兽",
 	"textureName": "Skill_shandan",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
@@ -8,11 +8,11 @@
 	"probability": 5,
 
 	"skill_CreateBallOnBoxEliminate_Rate" : [1, 1, 1],
-	"skill_CreateBallOnBoxEliminate_Count" : [10, 15, 20],
+	"skill_CreateBallOnBoxEliminate_Count" : [6, 8, 10],
 
 	"skillDes" : "消灭盒子，分裂出好多弹球",
 	"skillHead" : "分裂",
-	"skillLevellDes" : ["10个", "15个", "20个"],
+	"skillLevellDes" : ["6个", "8个", "10个"],
 
-	"Describe" : ["消灭盒子时分裂10个球", "消灭盒子时分裂15个球", "消灭盒子时分裂20个球"]	
+	"Describe" : ["消灭盒子时分裂6个球", "消灭盒子时分裂8个球", "消灭盒子时分裂10个球"]	
 }

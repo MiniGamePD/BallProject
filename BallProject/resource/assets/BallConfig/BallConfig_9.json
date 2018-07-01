@@ -1,6 +1,6 @@
 {
 	"id" : 9,
-	"name" : "全力开火延长球",
+	"name" : "自由高达",
 	"textureName": "Skill_FireUp",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],

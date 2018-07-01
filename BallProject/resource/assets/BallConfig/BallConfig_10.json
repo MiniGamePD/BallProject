@@ -1,13 +1,13 @@
 {
 	"id" : 10,
-	"name" : "金币",
+	"name" : "软妹币",
 	"textureName": "Coin",
 	"maxLevel" : 3,
 	"emitSpeed" : [1500, 1600, 1700],
 	"ballRadius" : [20, 24, 26],
 	"probability": 10,
 
-	"Box_Effect_MultipleDirections_Time" : [2, 4, 6],
+	"Box_Effect_Gold_Coin" : [10, 12, 14],
 
 	"skillDes" : "增加金币道具获得",
 	"skillHead" : "增加",
