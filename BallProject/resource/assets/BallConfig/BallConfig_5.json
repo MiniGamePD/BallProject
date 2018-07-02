@@ -10,8 +10,8 @@
 	"skill_CreateBallOnBoxEliminate_Rate" : [1, 1, 1],
 	"skill_CreateBallOnBoxEliminate_Count" : [6, 8, 10],
 
-	"skillDes" : "消灭盒子，分裂出好多弹球",
-	"skillHead" : "分裂",
+	"skillDes" : "大闹天宫！消灭敌人时释放多重分身",
+	"skillHead" : "分身",
 	"skillLevellDes" : ["6个", "8个", "10个"],
 
 	"Describe" : ["消灭盒子时分裂6个球", "消灭盒子时分裂8个球", "消灭盒子时分裂10个球"]	

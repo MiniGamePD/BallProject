@@ -9,7 +9,7 @@
 
 	"Box_Effect_Gold_Coin" : [10, 12, 14],
 
-	"skillDes" : "财源滚滚！获得额外的金币",
+	"skillDes" : "财源滚滚！击破金币道具获得额外金币",
 	"skillHead" : "增加",
 	"skillLevellDes" : ["2金币", "4金币", "6金币"],
 

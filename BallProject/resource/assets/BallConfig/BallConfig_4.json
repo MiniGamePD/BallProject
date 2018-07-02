@@ -11,7 +11,7 @@
 	"skill_SplitBallOnHit_Count" : [2, 3, 4],
 	"skill_SplitBallOnHit_Angle" : [30],
 
-	"skillDes" : "碰撞时，有一定概率分裂",
+	"skillDes" : "忍者之王！碰撞时一定概率释放影分身",
 	"skillHead" : "影分身",
 	"skillLevellDes" : ["2个", "3个", "4个"],
 

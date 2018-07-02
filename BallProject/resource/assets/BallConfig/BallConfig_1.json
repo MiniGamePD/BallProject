@@ -7,7 +7,7 @@
 	"ballRadius" : [15, 16, 17],
 	"probability": 10,
 
-	"skillDes" : "没有技能",
+	"skillDes" : "一个白色的球，没有技能",
 
 	"Describe" : ["想要技能就来抽球吧！"]
 
