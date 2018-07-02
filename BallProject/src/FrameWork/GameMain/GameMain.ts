@@ -171,6 +171,11 @@ class GameMain implements IGameMain {
 		return this.GameStage.stageHeight;
 	}
 
+	public GetScreenRatio(): number
+	{
+		return this.GameStage.stageHeight / this.GameStage.stageWidth;
+	}
+
 	public GetAdaptedStageWidth():number
 	{
 		if(this.adaptedStageRect == undefined)

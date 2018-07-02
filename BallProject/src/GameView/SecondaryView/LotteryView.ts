@@ -20,6 +20,7 @@ class LotteryView extends egret.DisplayObjectContainer
 
 	private ballId: number;
 	private ballLevel: number;
+	private randomBallInfo: RandomBallInfo;
 
 	public constructor()
 	{
@@ -58,7 +59,7 @@ class LotteryView extends egret.DisplayObjectContainer
 	private OnClickBack(callbackObj: any)
 	{
 		Tools.DetachDisplayObjFromParent(callbackObj);
-		callbackObj.callbackFun(callbackObj.callbackObj);
+		callbackObj.callbackFun(callbackObj.callbackObj, callbackObj.randomBallInfo);
 	}
 
 	private RefreshBallInfo()
@@ -70,9 +71,9 @@ class LotteryView extends egret.DisplayObjectContainer
 		var stageWidth = GameMain.GetInstance().GetStageWidth();
 		var stageHeight = GameMain.GetInstance().GetStageHeight();
 
-		var randomBall = this.ballConfigModule.RandomBall();
-		this.ballId = randomBall.id;
-		this.ballLevel = randomBall.level;
+		this.randomBallInfo = this.ballConfigModule.RandomBall();
+		this.ballId = this.randomBallInfo.id;
+		this.ballLevel = this.randomBallInfo.level;
 
 		var curLevelBallConfig = this.ballConfigModule.GetBallConfig(this.ballId, this.ballLevel);
 
@@ -134,7 +135,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		this.addChild(this.ballNameText);
 
 		this.ballSkillText = new egret.TextField();
-		this.ballSkillText.size = 35;
+		this.ballSkillText.size = 30;
 		this.ballSkillText.textColor = 0xFFFFFF;
 		this.ballSkillText.text = "- " + curLevelBallConfig.skillDes + " -";
 		this.ballSkillText.textAlign = "center";
@@ -144,11 +145,11 @@ class LotteryView extends egret.DisplayObjectContainer
 		this.ballSkillText.y = 880;
 		this.addChild(this.ballSkillText);
 
-		if (randomBall.randomBallType == RandomBallType.NewBall)
+		if (this.randomBallInfo.randomBallType == RandomBallType.NewBall)
 		{
 			this.resModule.CreateBitmap("lottyNewBall", stageWidth / 2, 950, this, AnchorType.Center);
 		}
-		else if (randomBall.randomBallType == RandomBallType.OldMaxLevelBall)
+		else if (this.randomBallInfo.randomBallType == RandomBallType.OldMaxLevelBall)
 		{
 			this.resModule.CreateBitmap("lottyBackCoin", stageWidth / 2, 950, this, AnchorType.Center);
 			this.playerDataModule.AddCoin(Lotty_Ball_Back);
@@ -156,8 +157,8 @@ class LotteryView extends egret.DisplayObjectContainer
 		else
 		{
 			this.resModule.CreateBitmap("lottyLvUpDes", stageWidth / 2 - 50, 950, this, AnchorType.Center);
-			this.resModule.CreateBitmap("lottyLevel" + (randomBall.level - 1), stageWidth / 2 - 50 - 39, 950, this, AnchorType.Center);
-			this.resModule.CreateBitmap("lottyLevel" + randomBall.level, stageWidth / 2 - 50 + 195, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLevel" + (this.randomBallInfo.level - 1), stageWidth / 2 - 50 - 39, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLevel" + this.randomBallInfo.level, stageWidth / 2 - 50 + 195, 950, this, AnchorType.Center);
 		}
 	}
 }

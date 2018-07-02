@@ -233,7 +233,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.selectBallRoot.addChild(this.ballNameText);
 
         this.ballSkillText = new egret.TextField();
-        this.ballSkillText.size = 30;
+        this.ballSkillText.size = GameMain.GetInstance().GetScreenRatio() > (16/9) ? 27 : 30;
         this.ballSkillText.textColor = 0xFFFFFF;
         this.ballSkillText.text = "- " + curLevelBallConfig.skillDes + " -";
         this.ballSkillText.textAlign = "center";
@@ -495,24 +495,6 @@ class ShopView extends egret.DisplayObjectContainer
                 this.addChild(this.attribute3_nextValue);
             }
         }
-
-        // Tools.AdapteDisplayObject(this.attribute1_point);
-        // Tools.AdapteDisplayObject(this.attribute1_Head);
-        // Tools.AdapteDisplayObject(this.attribute1_value);
-        // Tools.AdapteDisplayObject(this.attribute1_next);
-        // Tools.AdapteDisplayObject(this.attribute1_nextValue);
-
-        // Tools.AdapteDisplayObject(this.attribute2_point);
-        // Tools.AdapteDisplayObject(this.attribute2_Head);
-        // Tools.AdapteDisplayObject(this.attribute2_value);
-        // Tools.AdapteDisplayObject(this.attribute2_next);
-        // Tools.AdapteDisplayObject(this.attribute2_nextValue);
-
-        // Tools.AdapteDisplayObject(this.attribute3_point);
-        // Tools.AdapteDisplayObject(this.attribute3_Head);
-        // Tools.AdapteDisplayObject(this.attribute3_value);
-        // Tools.AdapteDisplayObject(this.attribute3_next);
-        // Tools.AdapteDisplayObject(this.attribute3_nextValue);
     }
 
     // 根据商店展示优先级获得球的ID（index从1开始）
@@ -667,10 +649,26 @@ class ShopView extends egret.DisplayObjectContainer
         }
     }
 
-    private OnCloseLotteryView(callbackObj: any)
+    private OnCloseLotteryView(callbackObj: any, ballInfo: RandomBallInfo)
     {
         egret.log("OnCloseLotteryView");
+        if (ballInfo != null)
+        {
+            callbackObj.SetFocusBall(ballInfo.id);
+        }
         callbackObj.RefreshBallInfo();
         callbackObj.RefreshCoinInfo();
+    }
+
+    private SetFocusBall(ballId: number)
+    {
+        for (var i = 1; i <= this.ballConfigModule.GetTotalBallCount(); ++i)
+        {
+            if (this.GetShopViewBallIdByIndex(i) == ballId)
+            {
+                this.curShowBallPosIndex = i;
+                break;
+            }
+        }
     }
 }
