@@ -1,7 +1,7 @@
 {
 	"id" : 9,
 	"name" : "自由高达",
-	"textureName": "Skill_FireUp",
+	"textureName": "Ball_Gouda",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [15, 16, 17],
