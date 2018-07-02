@@ -221,6 +221,7 @@ class BoxEmitter
 		{
 			this.hitSoundCdTime = BoxHitSoundCDTime;
 			var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
+			platform.vibrateShort();
 			// var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
 			if (soundChannel != null)
 			{
@@ -240,7 +241,6 @@ class BoxEmitter
 
 			box.changeHealth(-1);
 			this.PlayHitSound();
-			platform.vibrateShort();
 
 			if (box.health <= 0)
 			{

@@ -9,7 +9,7 @@
 
 	"Box_Effect_Pause_Time" : [6000, 7000, 8000],
 
-	"skillDes" : "延长定时道具时间",
+	"skillDes" : "时间~静止！延长定时道具时间",
 	"skillHead" : "延长",
 	"skillLevellDes" : ["1秒", "2秒", "3秒"],
 
