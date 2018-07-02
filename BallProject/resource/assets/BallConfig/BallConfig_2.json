@@ -5,7 +5,7 @@
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [20, 25, 30],
-	"probability": 10,
+	"probability": 0,
 	
 	"skill_ScaleOnEmitter_Rate" : [0.4, 0.5, 0.6] ,
 	"skill_ScaleOnEmitter_Scale" : [1.6, 1.8, 2],
