@@ -128,7 +128,7 @@ class ShopView extends egret.DisplayObjectContainer
 
         this.coinBitmap = this.resModule.CreateBitmapByName("shopCoin");
         this.coinBitmap.x = 320 * this.adaptFactor;
-        this.coinBitmap.y = 130;
+        this.coinBitmap.y = 85;
         Tools.SetAnchor(this.coinBitmap, AnchorType.Center);
         this.addChild(this.coinBitmap);
 
@@ -140,7 +140,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.width = 400;
         this.coinText.height = 100;
         this.coinText.x = 340 * this.adaptFactor;
-        this.coinText.y = 160;
+        this.coinText.y = 115;
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
 
