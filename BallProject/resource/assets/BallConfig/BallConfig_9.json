@@ -1,6 +1,6 @@
 {
 	"id" : 9,
-	"name" : "自由高达",
+	"name" : "强袭号",
 	"textureName": "Ball_Gouda",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],

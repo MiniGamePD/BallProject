@@ -11,7 +11,7 @@
 	"skill_ScaleOnHit_Scale" : [1.5, 1.6, 1.7],
 	"skill_ScaleOnHit_BallRadius" : [100, 100, 100],
 
-	"skillDes" : "别动我的猪！碰撞时一定概率因生气而变大",
+	"skillDes" : "别动我的猪！碰撞时一定概率因生气变大",
 	"skillHead" : "球变大",
 	"skillLevellDes" : ["0.5倍", "0.6倍", "0.7倍"],
 
