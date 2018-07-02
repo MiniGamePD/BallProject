@@ -1,7 +1,7 @@
 {
 	"id" : 8,
 	"name" : "超人",
-	"textureName": "Skill_shandan",
+	"textureName": "Ball_SuperMan",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [15, 16, 17],

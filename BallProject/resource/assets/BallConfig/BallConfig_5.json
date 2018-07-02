@@ -1,7 +1,7 @@
 {
 	"id" : 5,
 	"name" : "美猴王",
-	"textureName": "Skill_shandan",
+	"textureName": "Ball_Monkey",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [15, 16, 17],

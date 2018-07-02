@@ -1,7 +1,7 @@
 {
 	"id" : 2,
 	"name" : "世界波",
-	"textureName": "Coin",
+	"textureName": "Ball_FootBall",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [20, 25, 30],

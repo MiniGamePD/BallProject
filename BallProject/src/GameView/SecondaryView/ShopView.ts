@@ -35,7 +35,7 @@ class ShopView extends egret.DisplayObjectContainer
     private selectedBitmap: egret.Bitmap;
 
     private lockBgBitmap: egret.Bitmap;
-    private lockTextBitmap: egret.Bitmap;
+    private lockText: egret.TextField;
 
 
     // 技能描述 -- begin
@@ -157,7 +157,7 @@ class ShopView extends egret.DisplayObjectContainer
         Tools.DetachDisplayObjFromParent(this.ballLevelBitmap);
         Tools.DetachDisplayObjFromParent(this.ballLevelMaxBitmap);
         Tools.DetachDisplayObjFromParent(this.lockBgBitmap);
-        Tools.DetachDisplayObjFromParent(this.lockTextBitmap);
+        Tools.DetachDisplayObjFromParent(this.lockText);
 
         var widthMidX = 320;
 
@@ -215,8 +215,18 @@ class ShopView extends egret.DisplayObjectContainer
         }
         else
         {
-            this.lockTextBitmap = this.resModule.CreateBitmap("lockText",
-                GameMain.GetInstance().GetStageWidth() / 2, ballPosy, this, AnchorType.Center);
+            this.lockText = new egret.TextField();
+            this.lockText.size = 35;
+            this.lockText.textColor = 0xFFFFFF;
+            this.lockText.text = "未拥有";
+            this.lockText.textAlign = "center";
+            this.lockText.strokeColor = 0x000000;
+            this.lockText.stroke = 3;
+            this.lockText.bold = true;
+            Tools.SetAnchor(this.lockText, AnchorType.Center);
+            this.lockText.x = GameMain.GetInstance().GetStageWidth() / 2;
+            this.lockText.y = ballPosy;
+            this.addChild(this.lockText);
         }
 
         this.ballNameText = new egret.TextField();
@@ -233,7 +243,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.selectBallRoot.addChild(this.ballNameText);
 
         this.ballSkillText = new egret.TextField();
-        this.ballSkillText.size = GameMain.GetInstance().GetScreenRatio() > (16/9) ? 27 : 30;
+        this.ballSkillText.size = GameMain.GetInstance().GetScreenRatio() > (16 / 9) ? 27 : 30;
         this.ballSkillText.textColor = 0xFFFFFF;
         this.ballSkillText.text = "- " + curLevelBallConfig.skillDes + " -";
         this.ballSkillText.textAlign = "center";

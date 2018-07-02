@@ -1,7 +1,7 @@
 {
 	"id" : 6,
 	"name" : "粑粑",
-	"textureName": "Skill_Pause",
+	"textureName": "Ball_BaBa",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [15, 16, 17],
