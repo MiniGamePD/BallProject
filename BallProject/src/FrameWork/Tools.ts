@@ -438,6 +438,7 @@ class Tools
 		{
 			var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
 			item.width *= adaptFactor;
+			item.height *= adaptFactor;
 			item.x *= adaptFactor;
 		}
 	}
