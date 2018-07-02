@@ -140,6 +140,8 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.y = 130;
         this.addChild(this.coinText);
 
+        Tools.AdapteDisplayObject(this.coinBitmap);
+        Tools.AdapteDisplayObject(this.coinText);
     }
 
     private RefreshBallInfo()
@@ -247,7 +249,7 @@ class ShopView extends egret.DisplayObjectContainer
         if (hasThisBall)
         {
             this.selectBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.SelectBall_OK", 242, 73, 242, 73, this.OnClickSelectBtn, this);
-            this.selectBtn.x = GameMain.GetInstance().GetStageWidth() / 4 + 20;
+            this.selectBtn.x = GameMain.GetInstance().GetStageWidth() / 4;
             this.selectBtn.y = GameMain.GetInstance().GetStageHeight() - 100;
             this.addChild(this.selectBtn);
 
@@ -257,14 +259,19 @@ class ShopView extends egret.DisplayObjectContainer
                     this.selectBtn.x + 100, this.selectBtn.y - 20, this, AnchorType.Center);
             }
 
-            lottyBtnPosx =  GameMain.GetInstance().GetStageWidth() / 4 * 3;
+            lottyBtnPosx =  GameMain.GetInstance().GetStageWidth() / 4 * 3 - 20;
         }
+        Tools.AdapteDisplayObject(this.selectBtn);
+        Tools.AdapteDisplayObject(this.selectedBitmap);
+        
 
         Tools.DetachDisplayObjFromParent(this.lotteryBtn);
         this.lotteryBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.lottyBtn", 302, 73, 302, 73, this.OnClickLotteryBtn, this);
         this.lotteryBtn.x = lottyBtnPosx;
         this.lotteryBtn.y = GameMain.GetInstance().GetStageHeight() - 100;
         this.addChild(this.lotteryBtn);
+        Tools.AdapteDisplayObject(this.lotteryBtn);
+        
 
         var enoughCoin = this.playerDataModule.GetCoin() > Lotty_Ball_Cost;
 
@@ -279,9 +286,22 @@ class ShopView extends egret.DisplayObjectContainer
         this.lotteryCost.x = lottyBtnPosx + 100;
         this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 100;
         this.addChild(this.lotteryCost);
-
+        Tools.AdapteDisplayObject(this.lotteryCost);
 
         this.CreateAttribute();
+
+
+        Tools.AdapteDisplayObject(this.ballIndexText);
+        Tools.AdapteDisplayObject(this.ballBitmap);
+        Tools.AdapteDisplayObject(this.ballNameText);
+        Tools.AdapteDisplayObject(this.curLevelText);
+        Tools.AdapteDisplayObject(this.nextLevelText);
+        Tools.AdapteDisplayObject(this.ballSkillText);
+        Tools.AdapteDisplayObject(this.ballLevelBitmap);
+        Tools.AdapteDisplayObject(this.ballLevelMaxBitmap);
+        Tools.AdapteDisplayObject(this.lockBgBitmap);
+        Tools.AdapteDisplayObject(this.lockTextBitmap);
+        
     }
 
     private CreateAttribute()
@@ -484,6 +504,26 @@ class ShopView extends egret.DisplayObjectContainer
             }
         }
 
+        Tools.AdapteDisplayObject(this.attributeBg);
+        Tools.AdapteDisplayObject(this.ballLevelDesBitmap);
+
+        Tools.AdapteDisplayObject(this.attribute1_point);
+        Tools.AdapteDisplayObject(this.attribute1_Head);
+        Tools.AdapteDisplayObject(this.attribute1_value);
+        Tools.AdapteDisplayObject(this.attribute1_next);
+        Tools.AdapteDisplayObject(this.attribute1_nextValue);
+
+        Tools.AdapteDisplayObject(this.attribute2_point);
+        Tools.AdapteDisplayObject(this.attribute2_Head);
+        Tools.AdapteDisplayObject(this.attribute2_value);
+        Tools.AdapteDisplayObject(this.attribute2_next);
+        Tools.AdapteDisplayObject(this.attribute2_nextValue);
+
+        Tools.AdapteDisplayObject(this.attribute3_point);
+        Tools.AdapteDisplayObject(this.attribute3_Head);
+        Tools.AdapteDisplayObject(this.attribute3_value);
+        Tools.AdapteDisplayObject(this.attribute3_next);
+        Tools.AdapteDisplayObject(this.attribute3_nextValue);
     }
 
     // 根据商店展示优先级获得球的ID（index从1开始）
@@ -580,6 +620,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.previousBtn.x = 50 + this.previousBtn.width / 2;
         this.previousBtn.y = 350;
         this.addChild(this.previousBtn);
+        Tools.AdapteDisplayObject(this.previousBtn);
 
         Tools.DetachDisplayObjFromParent(this.nextBtn);
         this.nextBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.ballLeft", 92, 92, 92, 92, this.OnClickNextBtn, this);
@@ -587,6 +628,8 @@ class ShopView extends egret.DisplayObjectContainer
         this.nextBtn.rotation = 180;
         this.nextBtn.y = 350;
         this.addChild(this.nextBtn);
+        Tools.AdapteDisplayObject(this.nextBtn);
+        
 
         Tools.DetachDisplayObjFromParent(this.shopDesBitmap);
         this.shopDesBitmap = this.resModule.CreateBitmapByName("shopDes");
@@ -594,7 +637,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.shopDesBitmap.x = GameMain.GetInstance().GetStageWidth() - 10;
         this.shopDesBitmap.y = GameMain.GetInstance().GetStageHeight() - 180;
         this.addChild(this.shopDesBitmap);
-
+        Tools.AdapteDisplayObject(this.shopDesBitmap);
     }
 
     private OnClickPreviousBtn(callbackObj: any)

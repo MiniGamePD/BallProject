@@ -431,4 +431,14 @@ class Tools
 	{
 		return Tools.IsTimeExpired(2017, 6, 22, 18, 0);
 	}
+
+	public static AdapteDisplayObject(item:egret.DisplayObject)
+	{
+		if (item != null)
+		{
+			var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+			item.width *= adaptFactor;
+			item.x *= adaptFactor;
+		}
+	}
 }
