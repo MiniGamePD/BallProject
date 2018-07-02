@@ -129,7 +129,6 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinBitmap = this.resModule.CreateBitmapByName("shopCoin");
         this.coinBitmap.x = 320 * this.adaptFactor;
         this.coinBitmap.y = 130;
-        // Tools.AdapteDisplayObject(this.coinBitmap);
         Tools.SetAnchor(this.coinBitmap, AnchorType.Center);
         this.addChild(this.coinBitmap);
 
@@ -142,7 +141,6 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.height = 100;
         this.coinText.x = 340 * this.adaptFactor;
         this.coinText.y = 160;
-        // Tools.AdapteDisplayObject(this.coinText);
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
 
@@ -656,7 +654,6 @@ class ShopView extends egret.DisplayObjectContainer
     private OnClickLotteryBtn(callbackObj: any)
     {
         callbackObj.TryLottyBall();
-        callbackObj.RefreshCoinInfo();
     }
 
     private TryLottyBall()
@@ -674,5 +671,6 @@ class ShopView extends egret.DisplayObjectContainer
     {
         egret.log("OnCloseLotteryView");
         callbackObj.RefreshBallInfo();
+        callbackObj.RefreshCoinInfo();
     }
 }
