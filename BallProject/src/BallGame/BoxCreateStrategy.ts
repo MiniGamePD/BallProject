@@ -106,10 +106,10 @@ class BoxCreateStrategy
 	public CreateSpecialBoxStrategy()
 	{
 		this.specialBoxStrategy = [];
-		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.SixMulDir, 28000, 32000, 10));
-		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.FireUp, 38000, 42000, 10));
-		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.LevelUp, 14000, 16000, 10));
-		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.Pause, 25000, 35000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.SixMulDir, 38000, 42000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.FireUp, 48000, 52000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.LevelUp, 24000, 26000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.Pause, 35000, 45000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.GoldCoin, 20000, 30000, 10));
 	}
 
