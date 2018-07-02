@@ -29,6 +29,8 @@ declare interface Platform
     getFriendCloudStorage(key:string);
 
     rankTurnPage(dir:number);
+
+    vibrateShort();
 }
 
 class DebugPlatform implements Platform 
@@ -91,6 +93,11 @@ class DebugPlatform implements Platform
     public rankTurnPage(dir:number)
     {
         console.log("排行榜翻页" + dir);
+    }
+
+    public vibrateShort()
+    {
+
     }
 }
 

@@ -240,6 +240,7 @@ class BoxEmitter
 
 			box.changeHealth(-1);
 			this.PlayHitSound();
+			platform.vibrateShort();
 
 			if (box.health <= 0)
 			{

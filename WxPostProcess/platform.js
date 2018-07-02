@@ -173,6 +173,11 @@ class WxgamePlatform
     {
         this.openDataContext.postMessage("rankTurnPage", dir);
     }
+
+    vibrateShort()
+    {
+        wx.vibrateShort();
+    }
 }
 
 class WxgameOpenDataContext {

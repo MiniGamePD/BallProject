@@ -184,7 +184,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.moreCoinText.verticalAlign = "center";
         if(Tools.IsWxReviewTimeExpired())
         {
-            this.moreCoinText.text = "分享一波，金币翻倍$$$";
+            this.moreCoinText.text = "分享好友，金币翻倍$$$";
         }
         else
         {
@@ -219,7 +219,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         lotteryText.size = 30;
         lotteryText.textAlign = "left";
         lotteryText.verticalAlign = "center";
-        lotteryText.text = "兔女郎的弹珠商店";
+        lotteryText.text = "弹球商店";
         this.lottery.addChild(lotteryText);
 
         var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
@@ -237,7 +237,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         costText.size = 30;
         costText.textAlign = "left";
         costText.verticalAlign = "center";
-        costText.text = "100";
+        costText.text = "200";
         this.lottery.addChild(costText);
 
         this.lottery.x = GameMain.GetInstance().GetStageWidth() / 2;
