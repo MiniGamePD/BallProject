@@ -10,7 +10,7 @@
 	"skill_ScaleOnEmitter_Rate" : [0.4, 0.5, 0.6] ,
 	"skill_ScaleOnEmitter_Scale" : [1.6, 1.8, 2],
 
-	"skillDes" : "发射时，有一定概率变大",
+	"skillDes" : "射门！发射时，有一定概率变大",
 	"skillHead" : "球变大",
 	"skillLevellDes" : ["0.6倍", "0.8倍", "1倍"],
 	

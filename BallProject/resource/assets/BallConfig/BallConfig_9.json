@@ -9,7 +9,7 @@
 
 	"Box_Effect_FireUp_Time" : [6000, 7000, 8000],
 
-	"skillDes" : "延长双倍速度道具时间",
+	"skillDes" : "火力全开！延长双倍射速道具时间",
 	"skillHead" : "延长",
 	"skillLevellDes" : ["1秒", "2秒", "3秒"],
 

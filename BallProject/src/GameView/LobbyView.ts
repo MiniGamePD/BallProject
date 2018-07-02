@@ -176,7 +176,7 @@ class LobbyView extends GameView
 
         //返回
         this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
-            "pd_res_json.return", 39, 64, 39, 64, this.OnCloseRank, this);
+            "pd_res_json.shopReturn", 82, 82, 82, 82, this.OnCloseRank, this);
         this.rankBackButton.x = 50;
         this.rankBackButton.y = 80;
 

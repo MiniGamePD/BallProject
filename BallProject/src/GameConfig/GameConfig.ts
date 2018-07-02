@@ -92,7 +92,7 @@ const BoxLineWidth = 4;
 const BoxBackGroundAlpha = 0.2;
 const BoxSquareAndTriangleRate = 0.7;  // 四边形和三角形的生成比例
 const BoxHitHideCDTime = 30;
-const BoxHitSoundCDTime = 30;
+const BoxHitSoundCDTime = 100;
 const BallEmitSoundCDTime = 30;
 
 const GameOverCenterSize = new egret.Point(50, 50);   // 中心的死亡区域判定范围
