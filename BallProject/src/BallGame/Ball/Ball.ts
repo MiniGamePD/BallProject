@@ -33,14 +33,14 @@ class Ball
 		this.canSplitOnHit = canSplit;
 
 		emitDir.normalize(emitSpeed);
-		this.phyShape = new p2.Circle({id: id, radius: this.ballRadius });
+		this.phyShape = new p2.Circle({ id: id, radius: this.ballRadius });
 		this.phyShape.collisionGroup = Collision_Layer_Ball;
 		this.phyShape.collisionMask = Collision_Layer_Box;
 
 
 		this.ballDisplay = this.resModule.CreateBitmapByName(ballTextureName);
-		this.ballDisplay.width = this.ballRadius * 1.5;
-		this.ballDisplay.height = this.ballRadius * 1.5;
+		this.ballDisplay.width = this.ballRadius * 2;
+		this.ballDisplay.height = this.ballRadius * 2;
 		this.ballDisplay.x = emitPos.x;
 		this.ballDisplay.y = emitPos.y;
 
@@ -60,13 +60,14 @@ class Ball
 	public ScaleBallRadius(scale: number, maxRadius: number)
 	{
 		var radius = this.ballRadius * scale;
-		if (radius > this.ballRadius && radius <= maxRadius)
+		radius = Tools.Clamp(radius, 0.1, maxRadius)
+		if (this.ballRadius != radius)
 		{
 			this.ballRadius = radius;
 			(<p2.Circle>this.phyShape).radius = this.ballRadius;
 
-			this.ballDisplay.width = this.ballRadius * 1.5;
-			this.ballDisplay.height = this.ballRadius * 1.5;
+			this.ballDisplay.width = this.ballRadius * 2;
+			this.ballDisplay.height = this.ballRadius * 2;
 			this.ballDisplay.anchorOffsetX = this.ballDisplay.width / 2;
 			this.ballDisplay.anchorOffsetY = this.ballDisplay.height / 2;
 		}

@@ -177,10 +177,10 @@ class ShopView extends egret.DisplayObjectContainer
         this.ballIndexText.height = 100;
         Tools.SetAnchor(this.ballIndexText, AnchorType.Center);
         this.ballIndexText.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.ballIndexText.y = 220;
+        this.ballIndexText.y = 210;
         this.addChild(this.ballIndexText);
 
-        var ballWidth = curLevelBallConfig.ballRadius * 10;
+        var ballWidth = 200; //curLevelBallConfig.ballRadius * 10;
         var ballPosy = 345;
 
         if (!hasThisBall)

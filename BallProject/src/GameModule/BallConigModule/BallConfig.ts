@@ -12,6 +12,7 @@ class BallConfig
 	public emitSpeed: number = 1000; 	//球速
 	public ballMass: number = 1;		//球的质量
 	public ballRadius: number = 15;		//球的半径
+	public displayScale: number = 1; //球的半径在表现层的缩放
 
 	public skill_ScaleOnEmitter_Rate = 0; 		// 技能1：发射放大概率
 	public skill_ScaleOnEmitter_Scale = 0; 		// 技能1：发射放大倍数
@@ -52,6 +53,7 @@ class BallConfig
 		this.emitSpeed = this.GetConfigInList(config.emitSpeed, level, 1000);
 		this.ballMass = this.GetConfigInList(config.ballMass, level, 1);
 		this.ballRadius = this.GetConfigInList(config.ballRadius, level, 15);
+		this.displayScale = config.displayScale != undefined ? config.displayScale : 1;
 
 		this.skill_ScaleOnEmitter_Rate = this.GetConfigInList(config.skill_ScaleOnEmitter_Rate, level, 0);
 		this.skill_ScaleOnEmitter_Scale = this.GetConfigInList(config.skill_ScaleOnEmitter_Scale, level, 0);

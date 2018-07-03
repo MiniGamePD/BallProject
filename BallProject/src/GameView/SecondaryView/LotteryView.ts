@@ -95,9 +95,10 @@ class LotteryView extends egret.DisplayObjectContainer
 		rotationEvent.param = rotationParam;
 		GameMain.GetInstance().DispatchEvent(rotationEvent);
 
+		var ballWidth = 200; //curLevelBallConfig.ballRadius * 10;
 		this.ballBitmap = this.resModule.CreateBitmap(curLevelBallConfig.textureName, stageWidth / 2, 500, this);
-		this.ballBitmap.width = curLevelBallConfig.ballRadius * 10;
-		this.ballBitmap.height = curLevelBallConfig.ballRadius * 10;
+		this.ballBitmap.width = ballWidth;
+		this.ballBitmap.height = ballWidth;
 		Tools.SetAnchor(this.ballBitmap, AnchorType.Center);
 
 		// 缩放动画
