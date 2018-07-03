@@ -4,7 +4,7 @@
 	"textureName": "Ball_BaBa",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
-	"ballRadius" : [15, 16, 17],
+	"ballRadius" : [20, 22, 24],
 	"probability": 5,
 
 	"skill_PauseBoxOnHit_Rate" : [0.1, 0.2, 0.3],
