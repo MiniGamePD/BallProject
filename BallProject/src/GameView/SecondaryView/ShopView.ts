@@ -135,7 +135,6 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText = new egret.TextField();
         this.coinText.size = 40;
         this.coinText.textColor = 0xFFFFFF;
-        this.coinText.text = this.playerDataModule.GetCoin().toString();
         this.coinText.textAlign = "center";
         this.coinText.width = 400;
         this.coinText.height = 100;
@@ -144,6 +143,12 @@ class ShopView extends egret.DisplayObjectContainer
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
 
+        this.RefreshShopData();
+    }
+
+    public RefreshShopData()
+    {
+        this.coinText.text = this.playerDataModule.GetCoin().toString();
     }
 
     private RefreshBallInfo()
