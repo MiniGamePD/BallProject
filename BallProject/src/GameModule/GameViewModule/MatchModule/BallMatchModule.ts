@@ -7,6 +7,7 @@ class BallMatchModule extends GameViewModule
     private ballEmitter: BallEmitter;
     private boxEmitter: BoxEmitter;
     private matchState: BallMatchState;
+    private ballController: BallController;
 
     protected CreateView(): boolean
     {
@@ -26,22 +27,22 @@ class BallMatchModule extends GameViewModule
     }
 
     public ReleaseView(): void
-	{
-		super.ReleaseView();
-		this.DeInitComponents();
+    {
+        super.ReleaseView();
+        this.DeInitComponents();
 
         GameMain.GetInstance().RemoveEventListener(PauseEvent.EventName, this.OnPause, this);
         GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOver, this);
         GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
-	}
+    }
 
     private InitComponents()
-    { 
+    {
         this.ballDataMgr = new BallDataMgr()
         this.ballDataMgr.Init();
         this.matchView.SetBallDataMgr(this.ballDataMgr);
 
-        this.ballGameWorld = new BallGameWorld(); 
+        this.ballGameWorld = new BallGameWorld();
         this.ballGameWorld.Init();
 
         this.ballEmitter = new BallEmitter();
@@ -49,6 +50,9 @@ class BallMatchModule extends GameViewModule
 
         this.boxEmitter = new BoxEmitter();
         this.boxEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround(), this.ballDataMgr);
+
+        this.ballController = new BallController();
+        this.ballController.Init(this.ballGameWorld, this.ballEmitter, this.matchView.GetBattleGround(), );
 
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerData.OnMatchBegin();
@@ -60,53 +64,56 @@ class BallMatchModule extends GameViewModule
     }
 
     public Update(deltaTime: number): void
-	{
-		super.Update(deltaTime);
-		if(this.matchState == BallMatchState.playing)
-		{
-			this.ballGameWorld.Update(deltaTime);
-			this.ballEmitter.Update(deltaTime);
-			this.boxEmitter.Update(deltaTime);
-		}
-	}
+    {
+        super.Update(deltaTime);
+        if (this.matchState == BallMatchState.playing)
+        {
+            this.ballGameWorld.Update(deltaTime);
+            this.ballEmitter.Update(deltaTime);
+            this.boxEmitter.Update(deltaTime);
+            this.ballController.Update(deltaTime);
+        }
+    }
 
     private DeInitComponents()
-	{
-		this.ballGameWorld.Release();
+    {
+        this.ballGameWorld.Release();
         this.ballGameWorld = null;
-		this.ballEmitter.Release();
+        this.ballEmitter.Release();
         this.ballEmitter = null;
         this.boxEmitter.Release();
         this.boxEmitter = null;
-	}
+        this.ballController.Release();
+        this.ballController = null;
+    }
 
-    private OnReviveEvent(event:ReviveEvent)
+    private OnReviveEvent(event: ReviveEvent)
     {
         this.matchState = BallMatchState.playing;
     }
 
-    private OnPause(event:PauseEvent)
-	{
-		if(this.matchState == BallMatchState.gameover)
-			return;
+    private OnPause(event: PauseEvent)
+    {
+        if (this.matchState == BallMatchState.gameover)
+            return;
 
         var pause = this.matchState == BallMatchState.pause;
 
-		if(pause == event.pause)
-			return;
+        if (pause == event.pause)
+            return;
 
         pause = event.pause;
         this.matchState = pause ? BallMatchState.pause : BallMatchState.playing;
 
-		GameMain.GetInstance().SetPause(pause);
+        GameMain.GetInstance().SetPause(pause);
 
-		var hudEvent = new HUDEvent();
-        if(!event.help)
-		    hudEvent.eventType = pause ? HUDEventType.ShowPauseMenu : HUDEventType.HidePauseMenu;
+        var hudEvent = new HUDEvent();
+        if (!event.help)
+            hudEvent.eventType = pause ? HUDEventType.ShowPauseMenu : HUDEventType.HidePauseMenu;
         else
             hudEvent.eventType = pause ? HUDEventType.ShowHelpDetail : HUDEventType.HideHelpDetail;
-		GameMain.GetInstance().DispatchEvent(hudEvent);
-	}
+        GameMain.GetInstance().DispatchEvent(hudEvent);
+    }
 
     private OnGameOver()
     {

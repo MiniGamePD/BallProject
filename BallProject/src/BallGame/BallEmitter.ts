@@ -32,9 +32,9 @@ class BallEmitter
 	// 输入相关 begin
 	private RegisterTouchEvent(): void
 	{
-		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
-		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
-		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
+		// GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
+		// GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
+		// GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
 		GameMain.GetInstance().AddEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 		GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
@@ -45,9 +45,9 @@ class BallEmitter
 
 	private UnRegisterTouchEvent(): void
 	{
-		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
-		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
-		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
+		// GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
+		// GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
+		// GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
 		GameMain.GetInstance().RemoveEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 		GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
@@ -55,15 +55,15 @@ class BallEmitter
 		GameMain.GetInstance().RemoveEventListener(BoxEliminateEvent.EventName, this.OnBoxEliminateEvent, this);
 	}
 
-	private OnTouchEvent(evt: egret.TouchEvent): void
-	{
-		if (evt != null
-			&& evt.stageX != undefined
-			&& evt.stageY != undefined)
-		{
-			this.OnTouchPosition(evt.stageX, evt.stageY);
-		}
-	}
+	// private OnTouchEvent(evt: egret.TouchEvent): void
+	// {
+	// 	if (evt != null
+	// 		&& evt.stageX != undefined
+	// 		&& evt.stageY != undefined)
+	// 	{
+	// 		this.OnTouchPosition(evt.stageX, evt.stageY);
+	// 	}
+	// }
 	// 输入相关 end
 
 	private OnSpecialBoxEliminateEvent(evt: SpecialBoxEliminateEvent): void
@@ -245,12 +245,18 @@ class BallEmitter
 		return emitInterval;
 	}
 
-	public OnTouchPosition(posX: number, posY: number)
+	public SetEmitDir(dir: egret.Point)
 	{
-		this.emitDir.x = posX - this.emitPos.x;
-		this.emitDir.y = posY - this.emitPos.y;
+		this.emitDir = dir;
 		this.ballEmitterSprite.rotation = -90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y);
 	}
+
+	// public OnTouchPosition(posX: number, posY: number)
+	// {
+	// 	this.emitDir.x = posX - this.emitPos.x;
+	// 	this.emitDir.y = posY - this.emitPos.y;
+	// 	this.ballEmitterSprite.rotation = -90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y);
+	// }
 
 	public Update(deltaTime: number)
 	{
