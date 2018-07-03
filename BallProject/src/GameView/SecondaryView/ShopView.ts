@@ -289,7 +289,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.addChild(this.lotteryBtn);
 
 
-        var enoughCoin = this.playerDataModule.GetCoin() > Lotty_Ball_Cost;
+        var enoughCoin = this.playerDataModule.GetCoin() >= Lotty_Ball_Cost;
 
         Tools.DetachDisplayObjFromParent(this.lotteryCost);
         this.lotteryCost = new egret.TextField();

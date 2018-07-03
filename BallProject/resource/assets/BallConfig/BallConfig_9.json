@@ -4,7 +4,7 @@
 	"textureName": "Ball_Gouda",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
-	"ballRadius" : [15, 16, 17],
+	"ballRadius" : [20, 22, 24],
 	"probability": 10,
 
 	"Box_Effect_FireUp_Time" : [6000, 7000, 8000],
