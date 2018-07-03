@@ -319,11 +319,13 @@ class GameOverItem extends egret.DisplayObjectContainer
 
             var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
             playerData.AddCoin(playerData.GetCoinCurGame());
+            playerData.Save();
         }
     }
 
     private OnClickLottery(callbackobj: any)
     {
+        callbackobj.shop.RefreshShopData();
         callbackobj.addChild(callbackobj.shop);
     }
 
