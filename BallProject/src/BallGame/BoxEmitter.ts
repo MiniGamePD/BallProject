@@ -33,6 +33,9 @@ class BoxEmitter
 
 	public gameOverBox: Box;
 
+	private hitSoundArray:egret.Sound[];
+	private hitSoundChannelArray:egret.SoundChannel[];
+
 	public constructor()
 	{
 	}
@@ -61,6 +64,15 @@ class BoxEmitter
 
 		this.hitBoxEvent = new HitBoxEvent();
 		this.boxEliminateEvent = new BoxEliminateEvent();
+
+		this.hitSoundArray = [];
+		this.hitSoundChannelArray = [];
+		for(var i = 1; i <= 20; ++i)
+		{
+			var sound = this.resModule.GetRes("hitBox_" + i + "_mp3");
+			this.hitSoundArray.push(sound);
+			this.hitSoundChannelArray.push(null);
+		}
 
 		this.RegisterEvent();
 	}
@@ -220,15 +232,50 @@ class BoxEmitter
 		if (this.hitSoundCdTime <= 0)
 		{
 			this.hitSoundCdTime = BoxHitSoundCDTime;
-			var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
+			
 			platform.vibrateShort();
-			// var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
-			if (soundChannel != null)
+
+			var availableIndex = -1;
+			for(var i = 0; i < this.hitSoundChannelArray.length; ++i)
 			{
-				soundChannel.volume = 0.5;
+				if(this.hitSoundChannelArray[i] == null)
+				{
+					availableIndex = i;
+					break;
+				}
 			}
+
+			if(availableIndex >= 0)
+			{
+				var channel = this.hitSoundArray[availableIndex].play(0,1);
+				this.hitSoundChannelArray[availableIndex] = channel;
+				channel.addEventListener(egret.Event.SOUND_COMPLETE, this.onHitSoundComplete, this);
+				channel.volume = 0.5;
+			}
+			else
+			{
+				if(DEBUG)
+				{
+					console.log("No Available Hit Sound");
+				}
+			}
+
+			// var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
+			// // var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
+			// if (soundChannel != null)
+			// {
+			// 	//soundChannel.volume = 0.5;
+			// }
 		}
 	}
+
+	private onHitSoundComplete(event:egret.Event):void 
+	{
+		var channel:egret.SoundChannel = event.target;
+		var index = this.hitSoundChannelArray.indexOf(channel);
+		this.hitSoundChannelArray[index] = null;
+		//console.log("onSoundComplete " + index);
+    }
 
 	private OnHitBox(box: Box, ballPhyBody: p2.Body)
 	{
