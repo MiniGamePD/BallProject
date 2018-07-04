@@ -6,7 +6,7 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [18, 22, 26],
 	"displayScale": 0.85,
-	"probability": 10,
+	"probability": 12,
 
 	"skillDes" : "一个白色的球，没有技能",
 
