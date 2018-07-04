@@ -15,15 +15,12 @@ class SquareBox extends Box
 
 	public CreateDisplay(): egret.DisplayObject
 	{
-		var shape = new egret.Shape();
-		shape.graphics.lineStyle(BoxLineWidth, this.color);
-		shape.graphics.beginFill(this.color, 0.2);
-		shape.graphics.drawRect(0, 0, this.boxSize.x, this.boxSize.y);
-		shape.graphics.endFill();
-		shape.x = this.initPos.x;
-		shape.y = this.initPos.y;
-		shape.anchorOffsetX = shape.width / 2;
-		shape.anchorOffsetY = shape.height / 2;
+		var resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+		var boxName = "SquareBox" + (this.colorIndex + 1);
+		var shape = resModule.CreateBitmap(boxName, this.initPos.x, this.initPos.y);
+		shape.width = this.boxSize.x;
+		shape.height = this.boxSize.y;
+		Tools.SetAnchor(shape, AnchorType.Center);
 		return shape;
 	}
 

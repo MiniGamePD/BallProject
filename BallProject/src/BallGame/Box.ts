@@ -13,6 +13,7 @@ abstract class Box
 	public phyBody: p2.Body;
 	public phyShape: p2.Shape;
 	public color: number;
+	public colorIndex: number;
 
 	public isHide = false;
 	public hideCDTime = 0;
@@ -31,7 +32,13 @@ abstract class Box
 		this.boxSize = new egret.Point(80, 80);
 		this.targetPos = targetPos;
 		this.moveSpeed = BoxMoveSpeed;
-		this.SetColor(Tools.GetRandomBoxColor());
+		this.SetColor(this.GetRandomBoxColor());
+	}
+
+	public GetRandomBoxColor(): number
+	{
+		this.colorIndex = Math.floor(Math.random() * BoxColorPool.length);
+		return BoxColorPool[this.colorIndex];
 	}
 
 	public abstract GetBoxType(): BoxType;

@@ -21,6 +21,7 @@ class BallEmitter
 	public multipleDirectionsCount = 0;
 
 	private ballEmitterSprite: egret.Bitmap;
+	private ballEmitterLine: egret.Bitmap;
 	private levelUpEvent: BallEmitterLevelUpEvent;
 
 	private emitSoundCdTime = 0;
@@ -145,7 +146,19 @@ class BallEmitter
 
 		this.SetLevel(1);
 
+		this.CreateEmitterLine();
 		this.RefreshBallEmitterSprite();
+	}
+
+	private CreateEmitterLine()
+	{
+		Tools.DetachDisplayObjFromParent(this.ballEmitterLine);
+		this.ballEmitterLine = this.resModule.CreateBitmapByName("pd_res_json.lockLine");
+		this.ballEmitterLine.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.ballEmitterLine.y = GameMain.GetInstance().GetStageHeight() / 2;
+		this.ballEmitterLine.anchorOffsetX = this.ballEmitterLine.width / 2;
+		this.ballEmitterLine.anchorOffsetY = -this.emitPosOffsetDis;
+		this.battleGround.addChild(this.ballEmitterLine);
 	}
 
 	private OnReviveEvent(evt: ReviveEvent): void
@@ -165,7 +178,7 @@ class BallEmitter
 		this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
 		this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
 		this.battleGround.addChild(this.ballEmitterSprite);
-		this.ballEmitterSprite.rotation = 0;
+		this.SetRotation(0);
 	}
 
 	private RefreshBallEmitterSprite()
@@ -189,7 +202,13 @@ class BallEmitter
 			this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
 			this.battleGround.addChild(this.ballEmitterSprite);
 		}
-		this.ballEmitterSprite.rotation = -90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y);
+		this.SetRotation(-90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y));
+	}
+
+	private SetRotation(rotation: number)
+	{
+		this.ballEmitterSprite.rotation = rotation;
+		this.ballEmitterLine.rotation = rotation;
 	}
 
 	public SetLevel(level: number)
@@ -230,7 +249,7 @@ class BallEmitter
 	public SetEmitDir(dir: egret.Point)
 	{
 		this.emitDir = dir;
-		this.ballEmitterSprite.rotation = -90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y);
+		this.SetRotation(-90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y));
 	}
 
 	public Update(deltaTime: number)

@@ -13,6 +13,7 @@ class TriangleBox extends Box
 	public pointList: egret.Point[];
 	public healthOffset: egret.Point; 
 	private healthOffsetRate = 0.2;
+	private displayScale: egret.Point;
 
 	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number, width: number)
 	{
@@ -53,8 +54,11 @@ class TriangleBox extends Box
 		var leftBottom = new egret.Point(-this.width / 2, this.width / 2);
 		var rightTop = new egret.Point(this.width / 2, -this.width / 2);
 		var rightBottom = new egret.Point(this.width / 2, this.width / 2);
+		this.displayScale = new egret.Point;
 		if (this.triangleBoxType == TriangleBoxType.LeftTop)
 		{
+			this.displayScale.x = 1;
+			this.displayScale.y = 1;
 			this.pointList.push(leftBottom);
 			this.pointList.push(leftTop);
 			this.pointList.push(rightTop);
@@ -62,6 +66,8 @@ class TriangleBox extends Box
 		}
 		else if (this.triangleBoxType == TriangleBoxType.LeftBottom)
 		{
+			this.displayScale.x = 1;
+			this.displayScale.y = -1;
 			this.pointList.push(rightBottom);
 			this.pointList.push(leftBottom);
 			this.pointList.push(leftTop);
@@ -69,6 +75,8 @@ class TriangleBox extends Box
 		}
 		else if (this.triangleBoxType == TriangleBoxType.RightBottom)
 		{
+			this.displayScale.x = -1;
+			this.displayScale.y = -1;
 			this.pointList.push(rightTop);
 			this.pointList.push(rightBottom);
 			this.pointList.push(leftBottom);
@@ -76,6 +84,8 @@ class TriangleBox extends Box
 		}
 		else if (this.triangleBoxType == TriangleBoxType.RightTop)
 		{
+			this.displayScale.x = -1;
+			this.displayScale.y = 1;
 			this.pointList.push(leftTop);
 			this.pointList.push(rightTop);
 			this.pointList.push(rightBottom);
@@ -90,19 +100,14 @@ class TriangleBox extends Box
 
 	public CreateDisplay(): egret.DisplayObject
 	{
-		var shape = new egret.Shape();
-		shape.graphics.lineStyle(BoxLineWidth, this.color);
-		shape.graphics.beginFill(this.color, BoxBackGroundAlpha);
-		shape.graphics.moveTo(this.pointList[this.pointList.length - 1].x, 
-										   this.pointList[this.pointList.length - 1].y);
-										   
-		for (var i = 0; i < this.pointList.length; ++i)
-		{
-			shape.graphics.lineTo(this.pointList[i].x, this.pointList[i].y);
-		}
-		shape.graphics.endFill();
-		shape.x = this.initPos.x;
-		shape.y = this.initPos.y;
+		var resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
+		var boxName = "TriangleBox" + (this.colorIndex + 1);
+		var shape = resModule.CreateBitmap(boxName, this.initPos.x, this.initPos.y);
+		shape.width = this.width;
+		shape.height = this.width;
+		Tools.SetAnchor(shape, AnchorType.Center);
+		shape.scaleX = this.displayScale.x;
+		shape.scaleY = this.displayScale.y;
 		return shape;
 	}
 
