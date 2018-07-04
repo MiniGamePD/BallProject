@@ -56,6 +56,11 @@ class BallMatchModule extends GameViewModule
 
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerData.OnMatchBegin();
+
+        var event = new PauseEvent();
+        event.pause = true;
+        event.help = true;
+        GameMain.GetInstance().DispatchEvent(event);
     }
 
     public SwitchForeOrBack(from: GameStateType, to: GameStateType): void
