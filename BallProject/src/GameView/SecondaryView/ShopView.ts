@@ -661,7 +661,8 @@ class ShopView extends egret.DisplayObjectContainer
     {
         var result = this.playerDataModule.CostCoin(Lotty_Ball_Cost);
         if (result)
-        {
+        {   
+            this.playerDataModule.Save();
             this.lottyView = new LotteryView();
             this.lottyView.Init(this.OnCloseLotteryView, this);
             this.addChild(this.lottyView);
