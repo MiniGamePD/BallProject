@@ -4,11 +4,11 @@
 	"textureName": "Ball_BaBa",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
-	"ballRadius" : [20, 22, 24],
-	"displayScale": 1.5,
+	"ballRadius" : [22, 24, 26],
+	"displayScale": 1.2,
 	"probability": 5,
 
-	"skill_PauseBoxOnHit_Rate" : [0.1, 0.2, 0.3],
+	"skill_PauseBoxOnHit_Rate" : [0.1, 0.1, 0.1],
 	"skill_PauseBoxOnHit_Time" : [0.5, 0.6, 0.7],
 	
 	"skillDes" : "啊，黏住了！一定概率把敌人打停",

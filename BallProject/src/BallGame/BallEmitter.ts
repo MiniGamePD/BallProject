@@ -98,7 +98,7 @@ class BallEmitter
 		{
 			var ran = (Math.random() - 0.5) * 2;
 			var dir = Tools.RotateDirection(dir, Tools.Angle2Radians(ran * angle));
-			var canSplit = false;
+			var canSplit = true;
 			this.EmitBall(pos, dir, canSplit);
 		}
 	}
@@ -297,7 +297,8 @@ class BallEmitter
 		++this.emitBallCount;
 		var ball = new Ball(this.resModule);
 		ball.Init(this.emitBallCount, emitPos, emitDir, this.ballDataMgr.ballConfig.emitSpeed,
-			this.ballDataMgr.ballConfig.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballConfig.textureName, canSplit);
+			this.ballDataMgr.ballConfig.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballConfig.textureName, canSplit,
+		    this.ballDataMgr.ballConfig.displayScale);
 
 		this.ballGameWorld.world.addBody(ball.phyBody);
 		this.battleGround.addChild(ball.ballDisplay);
