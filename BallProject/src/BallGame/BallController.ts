@@ -14,7 +14,7 @@ class BallController
 	private movePoint: egret.Point;
 	private tempPoint: egret.Point;
 
-	private UIMoveMaxDis = 40;
+	private UIMoveMaxDis = 60;
 	private moveUiBgBitmap: egret.Bitmap;
 	private movePointBitmap: egret.Bitmap;
 	private curAlpha = 0;  // 控制UI的当前Alpha
@@ -47,14 +47,14 @@ class BallController
 			this.curAlpha = 1;
 			var uiInitX = GameMain.GetInstance().GetStageWidth() / 2;
 			var uiInitY = GameMain.GetInstance().GetStageHeight() / 4 * 3;
-			this.moveUiBgBitmap = this.resModule.CreateBitmap("Ball_Money", uiInitX, uiInitY, this.battleGround);
-			this.moveUiBgBitmap.width = 100;
-			this.moveUiBgBitmap.height = 100;
+			this.moveUiBgBitmap = this.resModule.CreateBitmap("ControllerBg", uiInitX, uiInitY, this.battleGround);
+			this.moveUiBgBitmap.width = 150;
+			this.moveUiBgBitmap.height = 150;
 			Tools.SetAnchor(this.moveUiBgBitmap, AnchorType.Center);
 
 			this.movePointBitmap = this.resModule.CreateBitmap("Ball_White", uiInitX, uiInitY, this.battleGround);
-			this.movePointBitmap.width = 40;
-			this.movePointBitmap.height = 40;
+			this.movePointBitmap.width = 50;
+			this.movePointBitmap.height = 50;
 			Tools.SetAnchor(this.movePointBitmap, AnchorType.Center);
 		}
 

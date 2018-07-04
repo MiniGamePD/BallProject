@@ -50,7 +50,7 @@ class LotteryView extends egret.DisplayObjectContainer
 
 	private CreateBack()
 	{
-		this.back = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.shopReturn", 82, 82, 82, 82, this.OnClickBack, this);
+		this.back = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.shopReturn", 65, 65, 65, 65, this.OnClickBack, this);
 		this.back.x = 50;
 		this.back.y = 80;
 		this.addChild(this.back);
@@ -82,9 +82,16 @@ class LotteryView extends egret.DisplayObjectContainer
 
 		Tools.DetachDisplayObjFromParent(this.ballBgBitmap);
 		this.ballBgBitmap = this.resModule.CreateBitmap("lottyBg", stageWidth / 2, 480, this, AnchorType.Center);
+		this.ballBgBitmap.width = 500;
+		this.ballBgBitmap.height = 500;
+		Tools.SetAnchor(this.ballBgBitmap, AnchorType.Center);
 
 		Tools.DetachDisplayObjFromParent(this.ballEffectBitmap);
-		this.ballEffectBitmap = this.resModule.CreateBitmap("lottyEff", stageWidth / 2, 500, this, AnchorType.Center);
+		this.ballEffectBitmap = this.resModule.CreateBitmap("lottyEff", stageWidth / 2, 500, this);
+		this.ballEffectBitmap.width = 300;
+		this.ballEffectBitmap.height = 300;
+		Tools.SetAnchor(this.ballEffectBitmap, AnchorType.Center);
+
 
 		var rotationParam = new PaRotationParam();
 		rotationParam.displayObj = this.ballEffectBitmap;

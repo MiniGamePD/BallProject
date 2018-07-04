@@ -190,7 +190,7 @@ class ShopView extends egret.DisplayObjectContainer
 
         if (!hasThisBall)
         {
-            this.lockBgBitmap = this.resModule.CreateBitmap("lockBg", GameMain.GetInstance().GetStageWidth() / 2, ballPosy, this);
+            this.lockBgBitmap = this.resModule.CreateBitmap("lockBg", GameMain.GetInstance().GetStageWidth() / 2, ballPosy - 2.5, this);
             this.lockBgBitmap.width = ballWidth + 30;
             this.lockBgBitmap.height = ballWidth + 30;
             Tools.SetAnchor(this.lockBgBitmap, AnchorType.Center);
@@ -220,18 +220,19 @@ class ShopView extends egret.DisplayObjectContainer
         }
         else
         {
-            this.lockText = new egret.TextField();
-            this.lockText.size = 35;
-            this.lockText.textColor = 0xFFFFFF;
-            this.lockText.text = "未拥有";
-            this.lockText.textAlign = "center";
-            this.lockText.strokeColor = 0x000000;
-            this.lockText.stroke = 3;
-            this.lockText.bold = true;
-            Tools.SetAnchor(this.lockText, AnchorType.Center);
-            this.lockText.x = GameMain.GetInstance().GetStageWidth() / 2;
-            this.lockText.y = ballPosy;
-            this.addChild(this.lockText);
+            this.ballBitmap.alpha = 0.5;
+            // this.lockText = new egret.TextField();
+            // this.lockText.size = 35;
+            // this.lockText.textColor = 0xFFFFFF;
+            // this.lockText.text = "未拥有";
+            // this.lockText.textAlign = "center";
+            // this.lockText.strokeColor = 0x000000;
+            // this.lockText.stroke = 3;
+            // this.lockText.bold = true;
+            // Tools.SetAnchor(this.lockText, AnchorType.Center);
+            // this.lockText.x = GameMain.GetInstance().GetStageWidth() / 2;
+            // this.lockText.y = ballPosy;
+            // this.addChild(this.lockText);
         }
 
         this.ballNameText = new egret.TextField();
@@ -393,7 +394,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.attribute1_value.textAlign = "center";
         this.attribute1_value.text = curLevelBallConfig.ballRadius.toString();
         Tools.SetAnchor(this.attribute1_value, AnchorType.Left);
-        this.attribute1_value.x = 250 * this.adaptFactor;
+        this.attribute1_value.x = 255 * this.adaptFactor;
         this.attribute1_value.y = row1Posy;
         this.addChild(this.attribute1_value);
 
@@ -439,7 +440,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.attribute2_value.textAlign = "center";
         this.attribute2_value.text = curLevelBallConfig.emitSpeed.toString();
         Tools.SetAnchor(this.attribute2_value, AnchorType.Left);
-        this.attribute2_value.x = 250 * this.adaptFactor;
+        this.attribute2_value.x = 255 * this.adaptFactor;
         this.attribute2_value.y = row2Posy;
         this.addChild(this.attribute2_value);
 
@@ -487,7 +488,7 @@ class ShopView extends egret.DisplayObjectContainer
             this.attribute3_value.textAlign = "center";
             this.attribute3_value.text = curLevelBallConfig.skillLevellDes.toString();
             Tools.SetAnchor(this.attribute3_value, AnchorType.Left);
-            this.attribute3_value.x = 250 * this.adaptFactor;
+            this.attribute3_value.x = 255 * this.adaptFactor;
             this.attribute3_value.y = row3Posy;
             this.addChild(this.attribute3_value);
 
@@ -588,7 +589,7 @@ class ShopView extends egret.DisplayObjectContainer
 
     private CreateBack()
     {
-        this.back = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.shopReturn", 82, 82, 82, 82, this.OnClickBack, this);
+        this.back = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.shopReturn", 65, 65, 65, 65, this.OnClickBack, this);
         this.back.x = 50;
         this.back.y = 80;
         this.addChild(this.back);
@@ -646,6 +647,9 @@ class ShopView extends egret.DisplayObjectContainer
         ballConfigModule.ChangeSelectBall(callbackObj.curShowBallId);
         // callbackObj.curShowBallPosIndex = 1;
         callbackObj.RefreshBallInfo();
+
+        // 退回大厅
+        callbackObj.callbackFun(callbackObj.callbackObj);
     }
 
     private OnClickLotteryBtn(callbackObj: any)
