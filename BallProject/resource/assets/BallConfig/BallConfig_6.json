@@ -6,7 +6,7 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1.2,
-	"probability": 5,
+	"probability": 8,
 
 	"skill_PauseBoxOnHit_Rate" : [0.1, 0.1, 0.1],
 	"skill_PauseBoxOnHit_Time" : [0.5, 0.6, 0.7],

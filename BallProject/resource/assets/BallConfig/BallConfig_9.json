@@ -6,7 +6,7 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1.2,
-	"probability": 10,
+	"probability": 12,
 
 	"Box_Effect_FireUp_Time" : [6000, 7000, 8000],
 
