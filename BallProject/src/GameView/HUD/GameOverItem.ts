@@ -219,7 +219,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         lotteryText.size = 30;
         lotteryText.textAlign = "left";
         lotteryText.verticalAlign = "center";
-        lotteryText.text = "弹球商店";
+        lotteryText.text = "获取强力弹球";
         this.lottery.addChild(lotteryText);
 
         var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
