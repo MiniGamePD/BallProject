@@ -63,7 +63,6 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 
         this.coin += coin;
         this.coinCurGame += coin;
-        this.Save();
     }
 
     public CostCoin(coin:number):boolean
@@ -73,7 +72,6 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.coin -= coin;
             if(DEBUG)
                 console.log("消耗了" + coin + "金币");
-            this.Save();
             return true;
         }
         return false;

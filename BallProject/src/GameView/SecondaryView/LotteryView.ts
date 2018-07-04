@@ -161,6 +161,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		{
 			this.resModule.CreateBitmap("lottyBackCoin", stageWidth / 2, 950, this, AnchorType.Center);
 			this.playerDataModule.AddCoin(Lotty_Ball_Back);
+			this.playerDataModule.Save();
 		}
 		else
 		{
