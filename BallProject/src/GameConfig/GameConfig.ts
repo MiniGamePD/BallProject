@@ -84,11 +84,10 @@ const Collision_Layer_Box =  Math.pow(2,1);
 const BallEmitCountPerSecondBase = 4;   // 基础发射频率（个/秒）
 const BallEmitCountPerLevelUp = 0.6;    // 每升一级增加的发射频率（个/秒）
 const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
-// const BoxHealthIncreasePerSecond = 0.3; //Box每秒增加的血量
 const BoxMoveSpeed = 10;    // 方块移动速度
 const BoxCreateCountPerSecond = 0.8; //方块生成速度（个/秒）
-const BoxHealthIncreasePerSecond_TimeZone = [2 * 60000, 4 * 60000, 6 * 60000, 9 * 60000]
-const BoxHealthIncreasePerSecond_Speed = [0.35, 0.45, 0.6, 0.8, 1]
+const BoxHealthIncreasePerSecond_TimeZone = [2 * 60000, 4 * 60000, 6 * 60000, 9 * 60000] //Box每秒增加的血量，时间区间
+const BoxHealthIncreasePerSecond_Speed = [0.35, 0.45, 0.6, 0.8, 1] //Box每秒增加的血量，时间区间对应的血量增加速度
 
 
 const BoxLineWidth = 4;
