@@ -8,7 +8,7 @@
 	"displayScale": 1,
 	"probability": 10,
 
-	"Box_Effect_Gold_Coin" : [9, 10, 11],
+	"Box_Effect_Gold_Coin" : [4, 5, 6],
 
 	"skillDes" : "财源滚滚！击破金币道具获得额外金币",
 	"skillHead" : "增加",
