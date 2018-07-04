@@ -136,7 +136,7 @@ class BallEmitter
 
 		this.emitPos = ballGameWorld.center;
 
-		this.emitDir = new egret.Point(0, 1);
+		this.emitDir = new egret.Point(0, -1);
 
 		this.ballList = [];
 
