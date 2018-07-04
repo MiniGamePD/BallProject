@@ -3,16 +3,16 @@
 	"name" : "软妹币",
 	"textureName": "Ball_Money",
 	"maxLevel" : 3,
-	"emitSpeed" : [1500, 1600, 1700],
-	"ballRadius" : [20, 24, 28],
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [22, 24, 26],
 	"displayScale": 1,
 	"probability": 10,
 
-	"Box_Effect_Gold_Coin" : [10, 12, 14],
+	"Box_Effect_Gold_Coin" : [4, 5, 6],
 
 	"skillDes" : "财源滚滚！击破金币道具获得额外金币",
 	"skillHead" : "增加",
-	"skillLevellDes" : ["2金币", "4金币", "6金币"],
+	"skillLevellDes" : ["1金币", "2金币", "3金币"],
 
 	"Describe" : ["<金币道具>额外加2金币", "<金币道具>额外加4金币", "<金币道具>额外加6金币"]	
 }

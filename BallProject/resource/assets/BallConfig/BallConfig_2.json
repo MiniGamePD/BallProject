@@ -4,16 +4,16 @@
 	"textureName": "Ball_FootBall",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
-	"ballRadius" : [20, 25, 30],
+	"ballRadius" : [20, 22, 24],
 	"displayScale": 1,
 	"probability": 0,
 	
-	"skill_ScaleOnEmitter_Rate" : [0.4, 0.5, 0.6] ,
-	"skill_ScaleOnEmitter_Scale" : [1.6, 1.8, 2],
+	"skill_ScaleOnEmitter_Rate" : [0.2, 0.3, 0.4] ,
+	"skill_ScaleOnEmitter_Scale" : [2, 2, 2],
 
-	"skillDes" : "射门！发射时一定概率变大",
-	"skillHead" : "球变大",
-	"skillLevellDes" : ["0.6倍", "0.8倍", "1倍"],
+	"skillDes" : "射门！发射时一定概率变大2倍",
+	"skillHead" : "概率",
+	"skillLevellDes" : ["20%", "30%", "40%"],
 	
 	"Describe" : ["40%概率变大0.6倍", "50%概率变大0.8倍", "60%概率变大1倍"]	
 }

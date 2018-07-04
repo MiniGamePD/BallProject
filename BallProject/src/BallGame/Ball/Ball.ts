@@ -10,6 +10,7 @@ class Ball
 	public ballRadius: number;
 	public ballTextureName: string;
 	public canSplitOnHit: boolean;
+	public displayScale: number;
 
 	public ballDisplay: egret.Bitmap;
 	public phyShape: p2.Shape;
@@ -21,7 +22,7 @@ class Ball
 	}
 
 	public Init(id: number, emitPos: egret.Point, emitDir: egret.Point,
-		emitSpeed: number, ballMass: number, ballRadius: number, ballTextureName: string, canSplit: boolean)
+		emitSpeed: number, ballMass: number, ballRadius: number, ballTextureName: string, canSplit: boolean, displayScale: number)
 	{
 		this.id = id;
 		this.emitPos = emitPos;
@@ -31,6 +32,7 @@ class Ball
 		this.ballRadius = ballRadius;
 		this.ballTextureName = ballTextureName;
 		this.canSplitOnHit = canSplit;
+		this.displayScale = displayScale;
 
 		emitDir.normalize(emitSpeed);
 		this.phyShape = new p2.Circle({ id: id, radius: this.ballRadius });
@@ -39,8 +41,8 @@ class Ball
 
 
 		this.ballDisplay = this.resModule.CreateBitmapByName(ballTextureName);
-		this.ballDisplay.width = this.ballRadius * 2;
-		this.ballDisplay.height = this.ballRadius * 2;
+		this.ballDisplay.width = this.ballRadius * 2 * this.displayScale;
+		this.ballDisplay.height = this.ballRadius * 2 * this.displayScale;
 		this.ballDisplay.x = emitPos.x;
 		this.ballDisplay.y = emitPos.y;
 
@@ -66,8 +68,8 @@ class Ball
 			this.ballRadius = radius;
 			(<p2.Circle>this.phyShape).radius = this.ballRadius;
 
-			this.ballDisplay.width = this.ballRadius * 2;
-			this.ballDisplay.height = this.ballRadius * 2;
+			this.ballDisplay.width = this.ballRadius * 2 * this.displayScale;
+			this.ballDisplay.height = this.ballRadius * 2 * this.displayScale;
 			this.ballDisplay.anchorOffsetX = this.ballDisplay.width / 2;
 			this.ballDisplay.anchorOffsetY = this.ballDisplay.height / 2;
 		}

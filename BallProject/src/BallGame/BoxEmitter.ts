@@ -254,7 +254,7 @@ class BoxEmitter
 			}
 			else if (!box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
 			{
-				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time);
+				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time * 1000);
 			}
 		}
 	}
