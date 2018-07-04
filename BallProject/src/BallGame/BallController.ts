@@ -44,7 +44,7 @@ class BallController
 
 		if (this.controllerType == BallControllerType.TouchMove)
 		{
-			this.curAlpha = 1;
+			this.curAlpha = 0;
 			var uiInitX = GameMain.GetInstance().GetStageWidth() / 2;
 			var uiInitY = GameMain.GetInstance().GetStageHeight() / 4 * 3;
 			this.moveUiBgBitmap = this.resModule.CreateBitmap("ControllerBg", uiInitX, uiInitY, this.battleGround);
@@ -56,6 +56,9 @@ class BallController
 			this.movePointBitmap.width = 50;
 			this.movePointBitmap.height = 50;
 			Tools.SetAnchor(this.movePointBitmap, AnchorType.Center);
+
+			this.movePointBitmap.alpha = this.curAlpha;
+			this.moveUiBgBitmap.alpha = this.curAlpha;
 		}
 
 		this.RegisterTouchEvent();
