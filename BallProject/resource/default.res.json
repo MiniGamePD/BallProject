@@ -203,104 +203,104 @@
 			"name": "xingxing_json"
 		},
 		{
-			"name": "hitBox_1_mp3",
+			"url": "assets/Sound/hitBox_1.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_1.mp3"
+			"name": "hitBox_1_mp3"
 		},
 		{
-			"name": "hitBox_2_mp3",
+			"url": "assets/Sound/hitBox_2.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_2.mp3"
+			"name": "hitBox_2_mp3"
 		},
 		{
-			"name": "hitBox_3_mp3",
+			"url": "assets/Sound/hitBox_3.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_3.mp3"
+			"name": "hitBox_3_mp3"
 		},
 		{
-			"name": "hitBox_4_mp3",
+			"url": "assets/Sound/hitBox_4.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_4.mp3"
+			"name": "hitBox_4_mp3"
 		},
 		{
-			"name": "hitBox_5_mp3",
+			"url": "assets/Sound/hitBox_5.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_5.mp3"
+			"name": "hitBox_5_mp3"
 		},
 		{
-			"name": "hitBox_6_mp3",
+			"url": "assets/Sound/hitBox_6.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_6.mp3"
+			"name": "hitBox_6_mp3"
 		},
 		{
-			"name": "hitBox_7_mp3",
+			"url": "assets/Sound/hitBox_7.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_7.mp3"
+			"name": "hitBox_7_mp3"
 		},
 		{
-			"name": "hitBox_8_mp3",
+			"url": "assets/Sound/hitBox_8.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_8.mp3"
+			"name": "hitBox_8_mp3"
 		},
 		{
-			"name": "hitBox_9_mp3",
+			"url": "assets/Sound/hitBox_9.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_9.mp3"
+			"name": "hitBox_9_mp3"
 		},
 		{
-			"name": "hitBox_10_mp3",
+			"url": "assets/Sound/hitBox_10.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_10.mp3"
+			"name": "hitBox_10_mp3"
 		},
 		{
-			"name": "hitBox_11_mp3",
+			"url": "assets/Sound/hitBox_11.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_11.mp3"
+			"name": "hitBox_11_mp3"
 		},
 		{
-			"name": "hitBox_12_mp3",
+			"url": "assets/Sound/hitBox_12.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_12.mp3"
+			"name": "hitBox_12_mp3"
 		},
 		{
-			"name": "hitBox_13_mp3",
+			"url": "assets/Sound/hitBox_13.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_13.mp3"
+			"name": "hitBox_13_mp3"
 		},
 		{
-			"name": "hitBox_14_mp3",
+			"url": "assets/Sound/hitBox_14.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_14.mp3"
+			"name": "hitBox_14_mp3"
 		},
 		{
-			"name": "hitBox_15_mp3",
+			"url": "assets/Sound/hitBox_15.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_15.mp3"
+			"name": "hitBox_15_mp3"
 		},
 		{
-			"name": "hitBox_16_mp3",
+			"url": "assets/Sound/hitBox_16.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_16.mp3"
+			"name": "hitBox_16_mp3"
 		},
 		{
-			"name": "hitBox_17_mp3",
+			"url": "assets/Sound/hitBox_17.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_17.mp3"
+			"name": "hitBox_17_mp3"
 		},
 		{
-			"name": "hitBox_18_mp3",
+			"url": "assets/Sound/hitBox_18.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_18.mp3"
+			"name": "hitBox_18_mp3"
 		},
 		{
-			"name": "hitBox_19_mp3",
+			"url": "assets/Sound/hitBox_19.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_19.mp3"
+			"name": "hitBox_19_mp3"
 		},
 		{
-			"name": "hitBox_20_mp3",
+			"url": "assets/Sound/hitBox_20.mp3",
 			"type": "sound",
-			"url": "assets/Sound/hitBox_20.mp3"
+			"name": "hitBox_20_mp3"
 		}
 	]
 }
