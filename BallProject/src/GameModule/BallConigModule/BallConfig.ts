@@ -31,6 +31,10 @@ class BallConfig
 	public skill_PauseBoxOnHit_Rate = 0;	 	// 技能5：打击盒子定身的概率
 	public skill_PauseBoxOnHit_Time = 0;		// 技能5：打击盒子定身的时长
 
+	public skill_BoomOnHit_Rate = 0;	 	// 技能6：打击盒子爆炸的概率
+	public skill_BoomOnHit_Range = 0;		// 技能6：打击盒子爆炸的范围
+	public skill_BoomOnHit_Damage = 0;		// 技能6：打击盒子爆炸的伤害
+
 	public Box_Effect_Pause_Time = Box_Effect_Pause_Time_Default;		// 定时道具的持续时间
 	public Box_Effect_MultipleDirections_Time = Box_Effect_MultipleDirections_Time_Default; // 变身道具的持续时间
 	public Box_Effect_FireUp_Time = Box_Effect_FireUp_Time_Default;		// 全力开火的持续时间
@@ -72,6 +76,10 @@ class BallConfig
 		this.skill_PauseBoxOnHit_Rate = this.GetConfigInList(config.skill_PauseBoxOnHit_Rate, level, 0);
 		this.skill_PauseBoxOnHit_Time = this.GetConfigInList(config.skill_PauseBoxOnHit_Time, level, 0);
 
+		this.skill_BoomOnHit_Rate = this.GetConfigInList(config.skill_BoomOnHit_Rate, level, 0);
+		this.skill_BoomOnHit_Range = this.GetConfigInList(config.skill_BoomOnHit_Range, level, 0);
+		this.skill_BoomOnHit_Damage = this.GetConfigInList(config.skill_BoomOnHit_Damage, level, 0);
+
 		this.Box_Effect_Pause_Time = this.GetConfigInList(config.Box_Effect_Pause_Time, level, Box_Effect_Pause_Time_Default);
 		this.Box_Effect_MultipleDirections_Time = this.GetConfigInList(config.Box_Effect_MultipleDirections_Time, level, Box_Effect_MultipleDirections_Time_Default);
 		this.Box_Effect_FireUp_Time = this.GetConfigInList(config.Box_Effect_FireUp_Time, level, Box_Effect_FireUp_Time_Default);
@@ -79,8 +87,8 @@ class BallConfig
 
 
 		this.skillDes = config.skillDes;
-		this.skillHead= config.skillHead;
-		this.skillLevellDes= this.GetConfigInList(config.skillLevellDes, level, "无");
+		this.skillHead = config.skillHead;
+		this.skillLevellDes = this.GetConfigInList(config.skillLevellDes, level, "无");
 		this.Describe = this.GetConfigInList(config.Describe, level, "默认");
 	}
 
