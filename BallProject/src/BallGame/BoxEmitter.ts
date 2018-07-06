@@ -293,6 +293,10 @@ class BoxEmitter
 				this.BoomDamageOnHit(ballPhyBody, this.ballDataMgr.ballConfig.skill_BoomOnHit_Range,
 					 this.ballDataMgr.ballConfig.skill_BoomOnHit_Damage);
 			}
+			else if (this.ballDataMgr.IsTriggerSkill_CriticalStrike())
+			{
+				this.ApplyCriticalStrike(box, this.ballDataMgr.ballConfig.skill_CriticalStrike_Damage, ballPhyBody);
+			}
 			else
 			{
 				this.ApplyDamageOnBox(box, 1, ballPhyBody)
@@ -318,6 +322,13 @@ class BoxEmitter
 			box.OnEliminate();
 			this.DeleteBox(box, true);
 		}
+	}
+
+	// 暴击伤害
+	private ApplyCriticalStrike(box: Box, damage: number, ballPhyBody: p2.Body)
+	{
+		this.ApplyDamageOnBox(box, damage, ballPhyBody)
+		Tools.ShowTips(box.boxDisplayObj.x, box.boxDisplayObj.y + 20, this.battleGround, "-" + damage, 0xd6340a)
 	}
 
 	// 爆炸伤害周围的盒子

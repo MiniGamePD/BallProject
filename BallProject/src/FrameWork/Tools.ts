@@ -436,4 +436,44 @@ class Tools
 			item.x *= adaptFactor;
 		}
 	}
+
+	public static ShowTips(posx: number, posy:number, parent: egret.DisplayObjectContainer, tipString: string, color: number)
+    {
+        var tips: egret.TextField;
+        tips = new egret.TextField();
+        tips.text = tipString;
+        tips.size = 40;
+        tips.width = 200;
+        tips.height = 60;
+        tips.anchorOffsetX = tips.width / 2;
+        tips.anchorOffsetY = tips.height / 2;
+        tips.textAlign = "center";
+        tips.bold = true;
+        tips.x = posx;
+        tips.y = posy;
+        tips.textColor = color;
+        parent.addChild(tips);
+
+        var moveParam = new PaMovingParam()
+        moveParam.displayObj = tips;
+        moveParam.duration = 800;
+        moveParam.targetPosX = tips.x;
+        moveParam.targetPosY = tips.y - 60;
+        moveParam.needRemoveOnFinish = true;
+        var moveEvent = new PlayProgramAnimationEvent();
+        moveEvent.param = moveParam;
+        GameMain.GetInstance().DispatchEvent(moveEvent);
+
+
+        var alphaParam = new PaAlphaLoopParam();
+        alphaParam.displayObj = tips;
+        alphaParam.duration = 800;
+        alphaParam.interval = alphaParam.duration / 2;
+        alphaParam.startAlpha = 0.7
+        alphaParam.endAlpha = 1
+        alphaParam.reverse = true;
+        var alphaEvent = new PlayProgramAnimationEvent();
+        alphaEvent.param = alphaParam;
+        GameMain.GetInstance().DispatchEvent(alphaEvent);
+    }
 }

@@ -35,6 +35,9 @@ class BallConfig
 	public skill_BoomOnHit_Range = 0;		// 技能6：打击盒子爆炸的范围
 	public skill_BoomOnHit_Damage = 0;		// 技能6：打击盒子爆炸的伤害
 
+	public skill_CriticalStrike_Rate = 0;	 	// 技能7：暴击的概率
+	public skill_CriticalStrike_Damage = 0;		// 技能7：暴击的伤害
+
 	public Box_Effect_Pause_Time = Box_Effect_Pause_Time_Default;		// 定时道具的持续时间
 	public Box_Effect_MultipleDirections_Time = Box_Effect_MultipleDirections_Time_Default; // 变身道具的持续时间
 	public Box_Effect_FireUp_Time = Box_Effect_FireUp_Time_Default;		// 全力开火的持续时间
@@ -80,11 +83,13 @@ class BallConfig
 		this.skill_BoomOnHit_Range = this.GetConfigInList(config.skill_BoomOnHit_Range, level, 0);
 		this.skill_BoomOnHit_Damage = this.GetConfigInList(config.skill_BoomOnHit_Damage, level, 0);
 
+		this.skill_CriticalStrike_Rate = this.GetConfigInList(config.skill_CriticalStrike_Rate, level, 0);
+		this.skill_CriticalStrike_Damage = this.GetConfigInList(config.skill_CriticalStrike_Damage, level, 0);
+
 		this.Box_Effect_Pause_Time = this.GetConfigInList(config.Box_Effect_Pause_Time, level, Box_Effect_Pause_Time_Default);
 		this.Box_Effect_MultipleDirections_Time = this.GetConfigInList(config.Box_Effect_MultipleDirections_Time, level, Box_Effect_MultipleDirections_Time_Default);
 		this.Box_Effect_FireUp_Time = this.GetConfigInList(config.Box_Effect_FireUp_Time, level, Box_Effect_FireUp_Time_Default);
 		this.Box_Effect_Gold_Coin = this.GetConfigInList(config.Box_Effect_Gold_Coin, level, Box_Effect_Gold_Coin_Default);
-
 
 		this.skillDes = config.skillDes;
 		this.skillHead = config.skillHead;

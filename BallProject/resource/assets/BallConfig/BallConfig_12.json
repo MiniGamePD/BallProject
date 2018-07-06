@@ -1,0 +1,19 @@
+{
+	"id" : 12,
+	"name" : "剑圣",
+	"textureName": "Ball_Gouda",
+	"maxLevel" : 3,
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [22, 24, 26],
+	"displayScale": 1,
+	"probability": 12,
+
+	"skill_CriticalStrike_Rate" : [0.2, 0.2, 0.2], 
+	"skill_CriticalStrike_Damage" : [3, 5, 7],
+
+	"skillDes" : "无敌剑圣~~！有一定概率造成暴击伤害！",
+	"skillHead" : "伤害",
+	"skillLevellDes" : ["3", "5", "7"],
+
+	"Describe" : ["<金币道具>额外加2金币", "<金币道具>额外加4金币", "<金币道具>额外加6金币"]	
+}

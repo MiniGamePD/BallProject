@@ -96,4 +96,18 @@ class BallDataMgr
 			return false;
 		}
 	}
+
+	public IsTriggerSkill_CriticalStrike()
+	{
+		if (this.ballConfig.skill_CriticalStrike_Rate > 0 
+			&& this.ballConfig.skill_CriticalStrike_Damage > 0
+			&& Math.random() <= this.ballConfig.skill_CriticalStrike_Rate)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
