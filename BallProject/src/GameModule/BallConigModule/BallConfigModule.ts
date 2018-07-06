@@ -67,6 +67,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		{
 			this.myBallString = "1-1"; // 初始球
 		}
+		// this.myBallString = "10-3"; // 调试代码
 
 		var ballList:string[] = this.myBallString.split('|');
 		for (var i = 0; i < ballList.length; ++i)

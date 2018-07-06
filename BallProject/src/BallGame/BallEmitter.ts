@@ -21,6 +21,7 @@ class BallEmitter
 	public multipleDirectionsCount = 0;
 
 	private ballEmitterSprite: egret.Bitmap;
+	private ballEmitterLine: egret.Bitmap;
 	private levelUpEvent: BallEmitterLevelUpEvent;
 
 	private emitSoundCdTime = 0;
@@ -29,12 +30,8 @@ class BallEmitter
 	{
 	}
 
-	// 输入相关 begin
 	private RegisterTouchEvent(): void
 	{
-		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
-		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
-		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
 		GameMain.GetInstance().AddEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 		GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
@@ -45,26 +42,12 @@ class BallEmitter
 
 	private UnRegisterTouchEvent(): void
 	{
-		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_BEGIN, this.OnTouchEvent, this);
-		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchEvent, this);
-		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchEvent, this);
 		GameMain.GetInstance().RemoveEventListener(SpecialBoxEliminateEvent.EventName, this.OnSpecialBoxEliminateEvent, this);
 		GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOverEvent, this);
 		GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
 		GameMain.GetInstance().RemoveEventListener(HitBoxEvent.EventName, this.OnHitBoxEvent, this);
 		GameMain.GetInstance().RemoveEventListener(BoxEliminateEvent.EventName, this.OnBoxEliminateEvent, this);
 	}
-
-	private OnTouchEvent(evt: egret.TouchEvent): void
-	{
-		if (evt != null
-			&& evt.stageX != undefined
-			&& evt.stageY != undefined)
-		{
-			this.OnTouchPosition(evt.stageX, evt.stageY);
-		}
-	}
-	// 输入相关 end
 
 	private OnSpecialBoxEliminateEvent(evt: SpecialBoxEliminateEvent): void
 	{
@@ -116,7 +99,7 @@ class BallEmitter
 		{
 			var ran = (Math.random() - 0.5) * 2;
 			var dir = Tools.RotateDirection(dir, Tools.Angle2Radians(ran * angle));
-			var canSplit = false;
+			var canSplit = true;
 			this.EmitBall(pos, dir, canSplit);
 		}
 	}
@@ -153,7 +136,7 @@ class BallEmitter
 
 		this.emitPos = ballGameWorld.center;
 
-		this.emitDir = new egret.Point(0, 1);
+		this.emitDir = new egret.Point(0, -1);
 
 		this.ballList = [];
 
@@ -163,7 +146,19 @@ class BallEmitter
 
 		this.SetLevel(1);
 
+		this.CreateEmitterLine();
 		this.RefreshBallEmitterSprite();
+	}
+
+	private CreateEmitterLine()
+	{
+		Tools.DetachDisplayObjFromParent(this.ballEmitterLine);
+		this.ballEmitterLine = this.resModule.CreateBitmapByName("pd_res_json.lockLine");
+		this.ballEmitterLine.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.ballEmitterLine.y = GameMain.GetInstance().GetStageHeight() / 2;
+		this.ballEmitterLine.anchorOffsetX = this.ballEmitterLine.width / 2;
+		this.ballEmitterLine.anchorOffsetY = -this.emitPosOffsetDis;
+		this.battleGround.addChild(this.ballEmitterLine);
 	}
 
 	private OnReviveEvent(evt: ReviveEvent): void
@@ -183,7 +178,7 @@ class BallEmitter
 		this.ballEmitterSprite.anchorOffsetX = this.ballEmitterSprite.width / 2;
 		this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
 		this.battleGround.addChild(this.ballEmitterSprite);
-		this.ballEmitterSprite.rotation = 0;
+		this.SetRotation(0);
 	}
 
 	private RefreshBallEmitterSprite()
@@ -207,7 +202,13 @@ class BallEmitter
 			this.ballEmitterSprite.anchorOffsetY = this.ballEmitterSprite.height / 2;
 			this.battleGround.addChild(this.ballEmitterSprite);
 		}
-		this.ballEmitterSprite.rotation = -90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y);
+		this.SetRotation(-90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y));
+	}
+
+	private SetRotation(rotation: number)
+	{
+		this.ballEmitterSprite.rotation = rotation;
+		this.ballEmitterLine.rotation = rotation;
 	}
 
 	public SetLevel(level: number)
@@ -245,11 +246,10 @@ class BallEmitter
 		return emitInterval;
 	}
 
-	public OnTouchPosition(posX: number, posY: number)
+	public SetEmitDir(dir: egret.Point)
 	{
-		this.emitDir.x = posX - this.emitPos.x;
-		this.emitDir.y = posY - this.emitPos.y;
-		this.ballEmitterSprite.rotation = -90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y);
+		this.emitDir = dir;
+		this.SetRotation(-90 + Tools.GetRotateAngle(0, 0, this.emitDir.x, this.emitDir.y));
 	}
 
 	public Update(deltaTime: number)
@@ -316,7 +316,8 @@ class BallEmitter
 		++this.emitBallCount;
 		var ball = new Ball(this.resModule);
 		ball.Init(this.emitBallCount, emitPos, emitDir, this.ballDataMgr.ballConfig.emitSpeed,
-			this.ballDataMgr.ballConfig.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballConfig.textureName, canSplit);
+			this.ballDataMgr.ballConfig.ballMass, this.ballDataMgr.GetBallEmitRadius(), this.ballDataMgr.ballConfig.textureName, canSplit,
+		    this.ballDataMgr.ballConfig.displayScale);
 
 		this.ballGameWorld.world.addBody(ball.phyBody);
 		this.battleGround.addChild(ball.ballDisplay);

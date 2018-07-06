@@ -405,12 +405,6 @@ class Tools
 		return targetDir;
 	}
 
-	public static GetRandomBoxColor(): number
-	{
-		var randomIdx = Math.floor(Math.random() * BoxColorPool.length);
-		return BoxColorPool[randomIdx];
-	}
-
 	public static RandomInterval(minInterval: number, maxInterval: number)
 	{
 		return Math.floor(Math.random() * (maxInterval - minInterval) + minInterval);

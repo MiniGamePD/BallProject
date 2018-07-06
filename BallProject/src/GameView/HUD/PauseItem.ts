@@ -11,6 +11,7 @@ class PauseItem extends egret.DisplayObjectContainer
     private bgCoverHelp:FullScreenCover;
     private helpDetail:egret.Bitmap;
     private helpIcon:egret.Bitmap;
+    private helpQuitHint:egret.TextField;
 
     public constructor(x:number, y:number, width:number, height:number)
     {
@@ -97,7 +98,7 @@ class PauseItem extends egret.DisplayObjectContainer
     {
         var res:IResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
         this.helpDetail = res.CreateBitmapByName("pd_res_json.Help");
-        var helpDetailFactor = GameMain.GetInstance().GetStageWidth() * 0.8 / this.helpDetail.width;
+        var helpDetailFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.helpDetail.width *= helpDetailFactor;
         this.helpDetail.height *= helpDetailFactor;
         this.helpDetail.anchorOffsetX = this.helpDetail.width / 2;
@@ -108,6 +109,17 @@ class PauseItem extends egret.DisplayObjectContainer
         this.bgCoverHelp = new FullScreenCover(0x000000, 0.9);
         this.bgCoverHelp.touchEnabled = true;
         this.bgCoverHelp.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnCloseHelp, this);
+
+        this.helpQuitHint = new egret.TextField();
+        this.helpQuitHint.y = 250;
+        this.helpQuitHint.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.helpQuitHint.width = GameMain.GetInstance().GetStageWidth();
+        this.helpQuitHint.height = 100;
+        this.helpQuitHint.size = 40;
+        this.helpQuitHint.anchorOffsetX = this.helpQuitHint.width / 2;
+        this.helpQuitHint.anchorOffsetY = this.helpQuitHint.height / 2;
+        this.helpQuitHint.textAlign = "center";
+        this.helpQuitHint.text = "点击任意位置继续游戏";
     }
 
     public Init()
@@ -185,12 +197,14 @@ class PauseItem extends egret.DisplayObjectContainer
     {
         this.addChild(this.bgCoverHelp);
         this.addChild(this.helpDetail);
+        this.addChild(this.helpQuitHint);
     }
 
     private HideHelpDetail()
     {
         this.removeChild(this.bgCoverHelp);
         this.removeChild(this.helpDetail);
+        this.removeChild(this.helpQuitHint);
     }
 
     public ShowPauseMenu()

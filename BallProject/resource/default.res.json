@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "pd_res_json,Boom_mp3,Eliminate_mp3,EliminateRow_mp3,EnemySinisterSmile1_mp3,GameOver_mp3,Go_mp3,OnDown_mp3,Ready_mp3,VirusBorn_mp3,VirusEliminate_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,Pause_mp3,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillMove_mp3,PillMove2_mp3,PillRotation2_mp3,ice_Boom_json,AddFeverPower_mp3,ballEmit_mp3,hitBox_mp3,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,SkillBox_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json,BallConfig_10_json,xingxing_json",
+			"keys": "pd_res_json,GameOver_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillRotation2_mp3,ice_Boom_json,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json,BallConfig_10_json,xingxing_json,hitBox_1_mp3,hitBox_2_mp3,hitBox_3_mp3,hitBox_4_mp3,hitBox_5_mp3,hitBox_6_mp3,hitBox_7_mp3,hitBox_8_mp3,hitBox_9_mp3,hitBox_10_mp3,hitBox_11_mp3,hitBox_12_mp3,hitBox_13_mp3,hitBox_14_mp3,hitBox_15_mp3,hitBox_16_mp3,hitBox_17_mp3,hitBox_18_mp3,hitBox_19_mp3,hitBox_20_mp3,BallConfig_11_json",
 			"name": "preload"
 		}
 	],
@@ -15,57 +15,12 @@
 			"url": "assets/pd_res.json",
 			"type": "sheet",
 			"name": "pd_res_json",
-			"subkeys": "AdRevive,Ball_AngryBird,Ball_BaBa,Ball_Clock,Ball_FootBall,Ball_Gouda,Ball_Money,Ball_Monkey,Ball_Naruto,Ball_SuperMan,Ball_White,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,attributeBg,ballLeft,bgCover,cash,level1,level2,level3,levelMax,lockBg,lockText,lottyBackCoin,lottyBg,lottyBtn,lottyEff,lottyLevel1,lottyLevel2,lottyLevel3,lottyLvUpDes,lottyNewBall,lottyTitle,lottyXingxing,maxLevelDes,newball,nextLevelDes,pause,play,point,rankEntry,rankInviteA,rankInviteB,rankLastPage,rankNextPage,rankTitle,return,selected,shopCoin,shopDes,shopReturn,skillArrow,zhangyu,zhangyu_dead"
-		},
-		{
-			"url": "assets/Sound/Boom.mp3",
-			"type": "sound",
-			"name": "Boom_mp3"
-		},
-		{
-			"url": "assets/Sound/Eliminate.mp3",
-			"type": "sound",
-			"name": "Eliminate_mp3"
-		},
-		{
-			"url": "assets/Sound/EliminateRow.mp3",
-			"type": "sound",
-			"name": "EliminateRow_mp3"
-		},
-		{
-			"url": "assets/Sound/EnemySinisterSmile1.mp3",
-			"type": "sound",
-			"name": "EnemySinisterSmile1_mp3"
+			"subkeys": "AdRevive,Ball_AngryBird,Ball_BaBa,Ball_Clock,Ball_FootBall,Ball_Gouda,Ball_Money,Ball_Monkey,Ball_Naruto,Ball_SuperMan,Ball_White,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,ControllerBg,GameOver,Help,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,SquareBox1,SquareBox2,SquareBox3,SquareBox4,SquareBox5,SquareBox6,SquareBox7,TriangleBox1,TriangleBox2,TriangleBox3,TriangleBox4,TriangleBox5,TriangleBox6,TriangleBox7,attributeBg,ballLeft,bgCover,cash,level1,level2,level3,levelMax,lockBg,lockLine,lockText,lottyBackCoin,lottyBg,lottyBtn,lottyEff,lottyLevel1,lottyLevel2,lottyLevel3,lottyLvUpDes,lottyNewBall,lottyTitle,lottyXingxing,maxLevelDes,newball,nextLevelDes,pause,play,point,rankEntry,rankInviteA,rankInviteB,rankLastPage,rankNextPage,rankTitle,return,selected,shopCoin,shopDes,shopReturn,skillArrow,zhangyu,zhangyu_dead"
 		},
 		{
 			"url": "assets/Sound/GameOver.mp3",
 			"type": "sound",
 			"name": "GameOver_mp3"
-		},
-		{
-			"url": "assets/Sound/Go.mp3",
-			"type": "sound",
-			"name": "Go_mp3"
-		},
-		{
-			"url": "assets/Sound/OnDown.mp3",
-			"type": "sound",
-			"name": "OnDown_mp3"
-		},
-		{
-			"url": "assets/Sound/Ready.mp3",
-			"type": "sound",
-			"name": "Ready_mp3"
-		},
-		{
-			"url": "assets/Sound/VirusBorn.mp3",
-			"type": "sound",
-			"name": "VirusBorn_mp3"
-		},
-		{
-			"url": "assets/Sound/VirusEliminate.mp3",
-			"type": "sound",
-			"name": "VirusEliminate_mp3"
 		},
 		{
 			"url": "assets/Particle/Particle_Boom_Bomb.json",
@@ -133,11 +88,6 @@
 			"name": "font_num1_png"
 		},
 		{
-			"url": "assets/Sound/Pause.mp3",
-			"type": "sound",
-			"name": "Pause_mp3"
-		},
-		{
 			"url": "assets/Particle/LandEffect.json",
 			"type": "json",
 			"name": "LandEffect_json"
@@ -163,16 +113,6 @@
 			"name": "PillRotation_mp3"
 		},
 		{
-			"url": "assets/Sound/PillMove.mp3",
-			"type": "sound",
-			"name": "PillMove_mp3"
-		},
-		{
-			"url": "assets/Sound/PillMove.mp3",
-			"type": "sound",
-			"name": "PillMove2_mp3"
-		},
-		{
 			"url": "assets/Sound/PillRotation.mp3",
 			"type": "sound",
 			"name": "PillRotation2_mp3"
@@ -181,21 +121,6 @@
 			"url": "assets/Particle/ice_Boom.json",
 			"type": "json",
 			"name": "ice_Boom_json"
-		},
-		{
-			"url": "assets/Sound/AddFeverPower.mp3",
-			"type": "sound",
-			"name": "AddFeverPower_mp3"
-		},
-		{
-			"url": "assets/Sound/ballEmit.mp3",
-			"type": "sound",
-			"name": "ballEmit_mp3"
-		},
-		{
-			"url": "assets/Sound/hitBox.mp3",
-			"type": "sound",
-			"name": "hitBox_mp3"
 		},
 		{
 			"url": "assets/Particle/BoxBoom.json",
@@ -216,11 +141,6 @@
 			"url": "assets/Sound/Title.mp3",
 			"type": "sound",
 			"name": "Title2_mp3"
-		},
-		{
-			"url": "assets/Sound/SkillBox.mp3",
-			"type": "sound",
-			"name": "SkillBox_mp3"
 		},
 		{
 			"url": "assets/Sound/LevelUp.mp3",
@@ -281,6 +201,111 @@
 			"url": "assets/Particle/xingxing.json",
 			"type": "json",
 			"name": "xingxing_json"
+		},
+		{
+			"url": "assets/Sound/hitBox_1.mp3",
+			"type": "sound",
+			"name": "hitBox_1_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_2.mp3",
+			"type": "sound",
+			"name": "hitBox_2_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_3.mp3",
+			"type": "sound",
+			"name": "hitBox_3_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_4.mp3",
+			"type": "sound",
+			"name": "hitBox_4_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_5.mp3",
+			"type": "sound",
+			"name": "hitBox_5_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_6.mp3",
+			"type": "sound",
+			"name": "hitBox_6_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_7.mp3",
+			"type": "sound",
+			"name": "hitBox_7_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_8.mp3",
+			"type": "sound",
+			"name": "hitBox_8_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_9.mp3",
+			"type": "sound",
+			"name": "hitBox_9_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_10.mp3",
+			"type": "sound",
+			"name": "hitBox_10_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_11.mp3",
+			"type": "sound",
+			"name": "hitBox_11_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_12.mp3",
+			"type": "sound",
+			"name": "hitBox_12_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_13.mp3",
+			"type": "sound",
+			"name": "hitBox_13_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_14.mp3",
+			"type": "sound",
+			"name": "hitBox_14_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_15.mp3",
+			"type": "sound",
+			"name": "hitBox_15_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_16.mp3",
+			"type": "sound",
+			"name": "hitBox_16_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_17.mp3",
+			"type": "sound",
+			"name": "hitBox_17_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_18.mp3",
+			"type": "sound",
+			"name": "hitBox_18_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_19.mp3",
+			"type": "sound",
+			"name": "hitBox_19_mp3"
+		},
+		{
+			"url": "assets/Sound/hitBox_20.mp3",
+			"type": "sound",
+			"name": "hitBox_20_mp3"
+		},
+		{
+			"url": "assets/BallConfig/BallConfig_11.json",
+			"type": "json",
+			"name": "BallConfig_11_json"
 		}
 	]
 }

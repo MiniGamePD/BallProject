@@ -84,9 +84,11 @@ const Collision_Layer_Box =  Math.pow(2,1);
 const BallEmitCountPerSecondBase = 4;   // 基础发射频率（个/秒）
 const BallEmitCountPerLevelUp = 0.6;    // 每升一级增加的发射频率（个/秒）
 const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
-const BoxHealthIncreasePerSecond = 0.4; //Box每秒增加的血量
 const BoxMoveSpeed = 10;    // 方块移动速度
-const BoxCreateCountPerSecond = 0.8; //方块生成速度（个/秒）
+const BoxCreateCountPerSecond = 0.7; //方块生成速度（个/秒）
+const BoxHealthIncreasePerSecond_TimeZone = [2 * 60000, 4 * 60000, 6 * 60000, 9 * 60000] //Box每秒增加的血量，时间区间
+const BoxHealthIncreasePerSecond_Speed = [0.25, 0.35, 0.5, 0.7, 1] //Box每秒增加的血量，时间区间对应的血量增加速度
+
 
 const BoxLineWidth = 4;
 const BoxBackGroundAlpha = 0.2;
@@ -100,14 +102,14 @@ const GameOverCenterSize = new egret.Point(50, 50);   // 中心的死亡区域�
 const SpecialBoxRandomBirthPos_Stage_Range = 0.6
 const SpecialBoxRandomBirthPos_Center_Offset = 150
 
-const BoxColorPool = [0x6726a5, 0xd6340a, 0xf1be22, 0x11fdff, 0x3562ec, 0xff8526, 0x59d61b];
+const BoxColorPool = [0xff8526, 0xd6340a, 0xf1be22, 0x11fdff, 0x59d61b, 0x3562ec, 0x6726a5];
 
 const ScorePerBox = 1;
 
 const Box_Effect_Pause_Time_Default = 5000;		// 定时道具的持续时间
 const Box_Effect_MultipleDirections_Time_Default = 5000; // 变身道具的持续时间
 const Box_Effect_FireUp_Time_Default = 5000;		// 全力开火的持续时间
-const Box_Effect_Gold_Coin_Default = 8;         // 金币增加数量
+const Box_Effect_Gold_Coin_Default = 3;         // 金币增加数量
 
 const Lotty_Ball_Cost = 200; // 抽球的加个
 const Lotty_Ball_Back = 160; // 抽球到已经有的球，返回的金币数量

@@ -16,6 +16,7 @@ class BoxCreateStrategy
 	public specialBoxRandomBirthPosTemp = new egret.Point(0, 0);
 
 	public specialBoxStrategy: SpecialBoxStrategy[];
+	public boxHealth = 1;
 
 	public constructor()
 	{
@@ -26,6 +27,7 @@ class BoxCreateStrategy
 		this.boxEmitter = boxEmitter;
 		this.emitInterval = 1000 / BoxCreateCountPerSecond;
 		this.runTime = 0;
+		this.boxHealth = 1
 
 		var minWidth = -this.extraWidth;
 		var maxWidth = GameMain.GetInstance().GetStageWidth() + this.extraWidth;
@@ -67,11 +69,36 @@ class BoxCreateStrategy
 		}
 
 		this.UpdateSpecialBoxStrategy(deltaTime);
+
+		this.UpdateBoxHealth(deltaTime);
+	}
+
+	private UpdateBoxHealth(deltaTime: number)
+	{
+		var index = 0;
+		while (index < BoxHealthIncreasePerSecond_TimeZone.length)
+		{
+			if (this.runTime <= BoxHealthIncreasePerSecond_TimeZone[index])
+			{
+				break;
+			}
+			else
+			{
+				++index;
+			}
+		}
+		
+		if (index >= BoxHealthIncreasePerSecond_Speed.length)
+		{
+			index = BoxHealthIncreasePerSecond_Speed.length - 1
+		}
+		var speed = BoxHealthIncreasePerSecond_Speed[index];
+		this.boxHealth += deltaTime * 0.001 * speed;
 	}
 
 	public GetRandomBoxHealth(): number
 	{
-		return Math.floor(this.runTime * 0.001 * BoxHealthIncreasePerSecond)  + 1;
+		return Math.floor(this.boxHealth);
 	}
 
 	public GetRandomBirthPos(): egret.Point
@@ -110,7 +137,7 @@ class BoxCreateStrategy
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.FireUp, 48000, 52000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.LevelUp, 24000, 26000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.Pause, 35000, 45000, 10));
-		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.GoldCoin, 20000, 30000, 10));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.GoldCoin, 20000, 30000, 3));
 	}
 
 	private UpdateSpecialBoxStrategy(deltaTime: number)

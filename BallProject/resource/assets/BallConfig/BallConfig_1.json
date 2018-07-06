@@ -3,9 +3,10 @@
 	"name" : "白球",
 	"textureName": "Ball_White",
 	"maxLevel" : 3,
-	"emitSpeed" : [1000, 1000, 1000],
-	"ballRadius" : [15, 16, 17],
-	"probability": 10,
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [18, 22, 26],
+	"displayScale": 0.85,
+	"probability": 12,
 
 	"skillDes" : "一个白色的球，没有技能",
 

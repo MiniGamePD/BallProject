@@ -33,6 +33,9 @@ class BoxEmitter
 
 	public gameOverBox: Box;
 
+	private hitSoundArray: egret.Sound[];
+	private hitSoundChannelArray: egret.SoundChannel[];
+
 	public constructor()
 	{
 	}
@@ -61,6 +64,15 @@ class BoxEmitter
 
 		this.hitBoxEvent = new HitBoxEvent();
 		this.boxEliminateEvent = new BoxEliminateEvent();
+
+		this.hitSoundArray = [];
+		this.hitSoundChannelArray = [];
+		for (var i = 1; i <= 20; ++i)
+		{
+			var sound = this.resModule.GetRes("hitBox_" + i + "_mp3");
+			this.hitSoundArray.push(sound);
+			this.hitSoundChannelArray.push(null);
+		}
 
 		this.RegisterEvent();
 	}
@@ -220,14 +232,49 @@ class BoxEmitter
 		if (this.hitSoundCdTime <= 0)
 		{
 			this.hitSoundCdTime = BoxHitSoundCDTime;
-			var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
+
 			platform.vibrateShort();
-			// var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
-			if (soundChannel != null)
+
+			var availableIndex = -1;
+			for (var i = 0; i < this.hitSoundChannelArray.length; ++i)
 			{
-				soundChannel.volume = 0.5;
+				if (this.hitSoundChannelArray[i] == null)
+				{
+					availableIndex = i;
+					break;
+				}
 			}
+
+			if (availableIndex >= 0)
+			{
+				var channel = this.hitSoundArray[availableIndex].play(0, 1);
+				this.hitSoundChannelArray[availableIndex] = channel;
+				channel.addEventListener(egret.Event.SOUND_COMPLETE, this.onHitSoundComplete, this);
+				channel.volume = 0.5;
+			}
+			else
+			{
+				if (DEBUG)
+				{
+					console.log("No Available Hit Sound");
+				}
+			}
+
+			// var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
+			// // var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
+			// if (soundChannel != null)
+			// {
+			// 	//soundChannel.volume = 0.5;
+			// }
 		}
+	}
+
+	private onHitSoundComplete(event: egret.Event): void 
+	{
+		var channel: egret.SoundChannel = event.target;
+		var index = this.hitSoundChannelArray.indexOf(channel);
+		this.hitSoundChannelArray[index] = null;
+		//console.log("onSoundComplete " + index);
 	}
 
 	private OnHitBox(box: Box, ballPhyBody: p2.Body)
@@ -239,24 +286,77 @@ class BoxEmitter
 			this.hitBoxEvent.ballPhyBody = ballPhyBody;
 			GameMain.GetInstance().DispatchEvent(this.hitBoxEvent);
 
-			box.changeHealth(-1);
 			this.PlayHitSound();
 
-			if (box.health <= 0)
+			if (this.ballDataMgr.IsTriggerSkill_BoomOnHit())
 			{
-				this.boxEliminateEvent.boxType = box.GetBoxType();
-				this.boxEliminateEvent.box = box;
-				this.boxEliminateEvent.ballPhyBody = ballPhyBody;
-				GameMain.GetInstance().DispatchEvent(this.boxEliminateEvent);
-
-				box.OnEliminate();
-				this.DeleteBox(box, true);
+				this.BoomDamageOnHit(ballPhyBody, this.ballDataMgr.ballConfig.skill_BoomOnHit_Range,
+					 this.ballDataMgr.ballConfig.skill_BoomOnHit_Damage);
 			}
-			else if (!box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
+			else
 			{
-				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time);
+				this.ApplyDamageOnBox(box, 1, ballPhyBody)
+			}
+			
+			 if (box.health > 0 && !box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
+			{
+				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time * 1000);
 			}
 		}
+	}
+
+	private ApplyDamageOnBox(box: Box, damage: number, ballPhyBody: p2.Body)
+	{
+		box.changeHealth(-damage);
+		if (box.health <= 0)
+		{
+			this.boxEliminateEvent.boxType = box.GetBoxType();
+			this.boxEliminateEvent.box = box;
+			this.boxEliminateEvent.ballPhyBody = ballPhyBody;
+			GameMain.GetInstance().DispatchEvent(this.boxEliminateEvent);
+
+			box.OnEliminate();
+			this.DeleteBox(box, true);
+		}
+	}
+
+	// 爆炸伤害周围的盒子
+	private BoomDamageOnHit(ballPhyBody: p2.Body, range:number, damage: number)
+	{
+		if (ballPhyBody != null)
+		{
+			var posx = ballPhyBody.position[0];
+			var posy = ballPhyBody.position[1];
+			this.BoomDamagePartical(posx, posy);
+			var point = new egret.Point();
+			for (var i = 0; i < this.boxList.length; ++i)
+			{
+				if (this.boxList[i] != null)
+				{
+					point.x = posx - this.boxList[i].boxDisplayObj.x;
+					point.y = posy - this.boxList[i].boxDisplayObj.y;
+					var dis = point.length;
+					if (dis <= range)
+					{
+						this.ApplyDamageOnBox(this.boxList[i], damage, ballPhyBody)
+					}
+				}
+			}
+		}
+	}
+
+	public BoomDamagePartical(posx: number, posy: number)
+	{
+		var param = new PaPlayParticalParam;
+		param.textureName = "Lobby_Light_Red";
+		param.jsonName = "Particle_Boom_Bomb";
+		param.duration = 1000;
+		param.emitDuration = 100;
+		param.posX = posx;
+		param.posY = posy;
+		var event = new PlayProgramAnimationEvent();
+		event.param = param;
+		GameMain.GetInstance().DispatchEvent(event);
 	}
 
 	private DeleteBox(box: Box, detachDisplay: boolean): boolean
@@ -399,7 +499,7 @@ class BoxEmitter
 		var shapeB: p2.Shape = event.shapeB;
 		var bodyA: p2.Body = event.bodyA;
 		var bodyB: p2.Body = event.bodyB;
-		
+
 		if (shapeA != null
 			&& shapeB != null)
 		{

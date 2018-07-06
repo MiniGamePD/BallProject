@@ -81,4 +81,19 @@ class BallDataMgr
 			return false;
 		}
 	}
+
+	public IsTriggerSkill_BoomOnHit()
+	{
+		if (this.ballConfig.skill_BoomOnHit_Rate > 0 
+			&& this.ballConfig.skill_BoomOnHit_Range > 0
+			&& this.ballConfig.skill_BoomOnHit_Damage > 0
+			&& Math.random() <= this.ballConfig.skill_BoomOnHit_Rate)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

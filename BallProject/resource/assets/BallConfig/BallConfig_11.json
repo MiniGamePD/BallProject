@@ -1,0 +1,20 @@
+{
+	"id" : 11,
+	"name" : "炸弹",
+	"textureName": "Ball_AngryBird",
+	"maxLevel" : 3,
+	"emitSpeed" : [1000, 1100, 1200],
+	"ballRadius" : [22, 24, 26],
+	"displayScale": 1,
+	"probability": 12,
+
+	"skill_BoomOnHit_Rate" : [0.1, 0.1, 0.1], 
+	"skill_BoomOnHit_Range" : [200, 200, 200],
+	"skill_BoomOnHit_Damage" : [1, 2, 3],
+
+	"skillDes" : "Boom~~！有一定概率爆炸伤害范围内的敌人！",
+	"skillHead" : "伤害",
+	"skillLevellDes" : ["1", "2", "3"],
+
+	"Describe" : ["<金币道具>额外加2金币", "<金币道具>额外加4金币", "<金币道具>额外加6金币"]	
+}

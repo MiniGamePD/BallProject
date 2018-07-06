@@ -4,8 +4,9 @@
 	"textureName": "Ball_Clock",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
-	"ballRadius" : [15, 16, 17],
-	"probability": 10,
+	"ballRadius" : [22, 24, 26],
+	"displayScale": 1,
+	"probability": 12,
 
 	"Box_Effect_Pause_Time" : [6000, 7000, 8000],
 

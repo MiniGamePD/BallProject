@@ -79,16 +79,19 @@ class LobbyView extends GameView
         //this.addChild(shape);
 
 
+        var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
 
-        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_Play", 193, 82, 193, 82,
+        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_Play", 
+            273*adaptFactor, 86*adaptFactor, 273*adaptFactor, 86*adaptFactor,
             this.OnClickStartGame, this);
-        button.x = this.mStageWidth / 2 + 120;
+        button.x = this.mStageWidth / 2 + 150 * adaptFactor;
         button.y = 1000;
         this.addChild(button);
 
-        var shop = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_ChangBall", 193, 82, 193, 82,
+        var shop = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_ChangBall", 
+            273*adaptFactor, 86*adaptFactor, 273*adaptFactor, 86*adaptFactor,
             this.OnClickShop, this);
-        shop.x = this.mStageWidth / 2 - 120;
+        shop.x = this.mStageWidth / 2 - 150 * adaptFactor;
         shop.y = 1000;
         this.addChild(shop);
 
@@ -176,7 +179,7 @@ class LobbyView extends GameView
 
         //返回
         this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
-            "pd_res_json.shopReturn", 82, 82, 82, 82, this.OnCloseRank, this);
+            "pd_res_json.shopReturn", 65, 65, 65, 65, this.OnCloseRank, this);
         this.rankBackButton.x = 50;
         this.rankBackButton.y = 80;
 
