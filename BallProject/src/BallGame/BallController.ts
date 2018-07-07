@@ -15,6 +15,7 @@ class BallController
 	private tempPoint: egret.Point;
 
 	private UIMoveMaxDis = 60;
+	private UIMoveMinis = 12;
 	private moveUiBgBitmap: egret.Bitmap;
 	private movePointBitmap: egret.Bitmap;
 	private curAlpha = 0;  // 控制UI的当前Alpha
@@ -127,7 +128,10 @@ class BallController
 					this.movePoint.y = evt.stageY;
 					this.emitDir.x = evt.stageX - this.beginTouchPoint.x;
 					this.emitDir.y = evt.stageY - this.beginTouchPoint.y;
-					this.ballEmitter.SetEmitDir(this.emitDir);
+					if (this.emitDir.length > this.UIMoveMinis)
+					{
+						this.ballEmitter.SetEmitDir(this.emitDir);
+					}
 					this.RefreshUIMove();
 				}
 			}
