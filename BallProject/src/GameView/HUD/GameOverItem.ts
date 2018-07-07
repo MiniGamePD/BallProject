@@ -356,7 +356,7 @@ class GameOverItem extends egret.DisplayObjectContainer
             Tools.DetachDisplayObjFromParent(callbackobj.hintFinger);
         }
 
-        callbackobj.shop.RefreshShopData();
+        callbackobj.shop.OnOpenShop();
         callbackobj.addChild(callbackobj.shop);
     }
 

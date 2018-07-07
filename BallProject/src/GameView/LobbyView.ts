@@ -305,6 +305,7 @@ class LobbyView extends GameView
 
     private OnClickShop(callbackObj: any)
     {
+        callbackObj.shop.OnOpenShop();
         callbackObj.addChild(callbackObj.shop);
     }
 
