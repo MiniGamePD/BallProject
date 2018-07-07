@@ -69,6 +69,8 @@ class ShopView extends egret.DisplayObjectContainer
 
     private adaptFactor: number;
 
+    private hintFinger:egret.Bitmap;
+
     public constructor()
     {
         super();
@@ -107,6 +109,8 @@ class ShopView extends egret.DisplayObjectContainer
     {
         this.callbackFun = callbackFun;
         this.callbackObj = callbackObj;
+
+        this.RefreshShopData();
     }
 
     public Release()
@@ -142,13 +146,41 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.y = 115;
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
-
-        this.RefreshShopData();
     }
 
     public RefreshShopData()
     {
-        this.coinText.text = this.playerDataModule.GetCoin().toString();
+        var coin = this.playerDataModule.GetCoin();
+        //金币数量
+        if(this.coinText != null && this.coinText != undefined)
+            this.coinText.text = coin.toString();
+
+        //抽球按钮上的金币颜色
+        var enoughCoin = coin >= Lotty_Ball_Cost;
+        if(this.lotteryCost != null && this.lotteryCost != undefined)
+            this.lotteryCost = new egret.TextField();
+
+        //首抽免费的手指
+        var ballMgr = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+        if(ballMgr.IsNewPlayer() && this.lotteryBtn != null && this.lotteryBtn != undefined)
+        {
+            this.hintFinger = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.finger");
+            this.hintFinger.x = this.lotteryBtn.width / 2;
+            this.hintFinger.y = this.lotteryBtn.height / 2;
+            Tools.AdapteDisplayObject(this.hintFinger);
+            this.lotteryBtn.addChild(this.hintFinger);
+
+            var scaleParam = new PaScalingParam()
+            scaleParam.displayObj = this.hintFinger;
+            scaleParam.targetScaleX = 0.8;
+            scaleParam.targetScaleY = 0.8;
+            scaleParam.duration = 50000000;
+            scaleParam.interval = 500;
+            scaleParam.reverse = true;
+            var scaleEvent = new PlayProgramAnimationEvent()
+            scaleEvent.param = scaleParam;
+            GameMain.GetInstance().DispatchEvent(scaleEvent);
+        }
     }
 
     private RefreshBallInfo()
@@ -281,14 +313,16 @@ class ShopView extends egret.DisplayObjectContainer
             lottyBtnPosx = widthMidX / 2 * 3 - 20;
         }
 
-
-        Tools.DetachDisplayObjFromParent(this.lotteryBtn);
-        this.lotteryBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.lottyBtn",
-            302 * this.adaptFactor, 73 * this.adaptFactor, 302 * this.adaptFactor, 73 * this.adaptFactor, this.OnClickLotteryBtn, this);
+        if(this.lotteryBtn == null || this.lotteryBtn == undefined)
+        {
+            Tools.DetachDisplayObjFromParent(this.lotteryBtn);
+            this.lotteryBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.lottyBtn",
+                302 * this.adaptFactor, 73 * this.adaptFactor, 302 * this.adaptFactor, 73 * this.adaptFactor, this.OnClickLotteryBtn, this);
+            this.addChild(this.lotteryBtn);
+        }
+        
         this.lotteryBtn.x = lottyBtnPosx * this.adaptFactor;
         this.lotteryBtn.y = GameMain.GetInstance().GetStageHeight() - 100;
-        this.addChild(this.lotteryBtn);
-
 
         var enoughCoin = this.playerDataModule.GetCoin() >= Lotty_Ball_Cost;
 

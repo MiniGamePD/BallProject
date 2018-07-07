@@ -268,6 +268,20 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		this.SaveMyBall();
 		return newBall;
 	}
+
+	public IsNewPlayer():boolean
+	{
+        if(this.myBallList != null && this.myBallList != undefined && this.myBallList.length == 1)
+        {
+            //只有一个球
+            var ballInfo:MyBallInfo = this.myBallList[0];
+            if(ballInfo != null && ballInfo != undefined && ballInfo.level == 1)
+            {
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 class MyBallInfo

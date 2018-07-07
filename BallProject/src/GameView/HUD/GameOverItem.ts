@@ -16,6 +16,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     private moreCoinIcon:egret.Bitmap;
     private lottery: egret.DisplayObjectContainer;
     private gotoLobby: ShapeBgButton;
+    private hintFinger:egret.Bitmap;
 
     //商店
     private shop: ShopView;
@@ -260,6 +261,29 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.shop.Init(this.OnCloseShop, this);
     }
 
+    private CreateHintFinger()
+    {
+        var ballMgr = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+        if(ballMgr.IsNewPlayer() && this.lottery != null && this.lottery != undefined)
+        {
+            this.hintFinger = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.finger");
+            this.hintFinger.x = 0;
+            this.hintFinger.y = 20;
+            Tools.AdapteDisplayObject(this.hintFinger);
+            this.lottery.addChild(this.hintFinger);
+            var scaleParam = new PaScalingParam()
+            scaleParam.displayObj = this.hintFinger;
+            scaleParam.targetScaleX = 0.8;
+            scaleParam.targetScaleY = 0.8;
+            scaleParam.duration = 50000000;
+            scaleParam.interval = 500;
+            scaleParam.reverse = true;
+            var scaleEvent = new PlayProgramAnimationEvent()
+            scaleEvent.param = scaleParam;
+            GameMain.GetInstance().DispatchEvent(scaleEvent);
+        }
+    }
+
     private OnCloseShop(callbackobj: any)
     {
         callbackobj.removeChild(callbackobj.shop);
@@ -272,6 +296,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.CreateScore();
         this.CreateHistoryHighScore();
         this.CreateCoin();
+        this.CreateHintFinger();
 
         this.addChild(this.bgCover);
         this.addChild(this.score);
@@ -325,6 +350,12 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnClickLottery(callbackobj: any)
     {
+        //隐藏手指，如果有的话
+        if(callbackobj.hintFinger != null && callbackobj.hintFinger != undefined)
+        {
+            Tools.DetachDisplayObjFromParent(callbackobj.hintFinger);
+        }
+
         callbackobj.shop.RefreshShopData();
         callbackobj.addChild(callbackobj.shop);
     }

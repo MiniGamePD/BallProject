@@ -28,4 +28,7 @@ interface IBallConfigModule extends IModule
 
     // 抽取一个球
     RandomBall(): RandomBallInfo;
+
+    // 是否是新玩家：只有一个1级的白球
+    IsNewPlayer(): boolean;
 }
