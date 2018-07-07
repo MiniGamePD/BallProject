@@ -6,7 +6,8 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1,
-	"probability": 12,
+	"probability": [12, 12, 12],
+	"firstBallProbability": 12,
 
 	"Box_Effect_Gold_Coin" : [4, 5, 6],
 

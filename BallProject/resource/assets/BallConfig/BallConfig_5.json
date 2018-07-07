@@ -6,7 +6,8 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1.1,
-	"probability": 8,
+	"probability": [8, 8, 8],
+	"firstBallProbability": 8,
 
 	"skill_CreateBallOnBoxEliminate_Rate" : [1, 1, 1],
 	"skill_CreateBallOnBoxEliminate_Count" : [6, 8, 10],

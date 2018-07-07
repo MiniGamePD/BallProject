@@ -476,4 +476,24 @@ class Tools
         alphaEvent.param = alphaParam;
         GameMain.GetInstance().DispatchEvent(alphaEvent);
     }
+
+	public static GetConfigInList(list: any[], level: number, defaultValue: any): any
+	{
+		if (list != undefined && list != null && list.length > 0)
+		{
+			if (level > 0 && level < list.length)
+			{
+				return list[level - 1];
+			}
+			else if (level >= list.length)
+			{
+				return list[list.length - 1];
+			}
+			else
+			{
+				return defaultValue
+			}
+		}
+		return defaultValue;
+	}
 }
