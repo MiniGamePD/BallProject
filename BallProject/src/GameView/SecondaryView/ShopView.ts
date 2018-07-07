@@ -389,25 +389,27 @@ class ShopView extends egret.DisplayObjectContainer
             row2Posy = row1Posy + 50;
         }
 
+        var fontSize = GameMain.GetInstance().GetScreenRatio() > 16 / 9 ? 27 : 30;
+
 
         this.attribute1_point = this.resModule.CreateBitmapByName("point");
         Tools.SetAnchor(this.attribute1_point, AnchorType.Center);
-        this.attribute1_point.x = 80 * this.adaptFactor;
+        this.attribute1_point.x = 75 * this.adaptFactor;
         this.attribute1_point.y = row1Posy;
         this.addChild(this.attribute1_point);
 
         this.attribute1_Head = new egret.TextField();
-        this.attribute1_Head.size = 30;
+        this.attribute1_Head.size = fontSize;
         this.attribute1_Head.textColor = 0xFFFFFF;
         this.attribute1_Head.textAlign = "left";
         this.attribute1_Head.text = "半径:";
         Tools.SetAnchor(this.attribute1_Head, AnchorType.Left);
-        this.attribute1_Head.x = 120 * this.adaptFactor;
+        this.attribute1_Head.x = 115 * this.adaptFactor;
         this.attribute1_Head.y = row1Posy;
         this.addChild(this.attribute1_Head);
 
         this.attribute1_value = new egret.TextField();
-        this.attribute1_value.size = 30;
+        this.attribute1_value.size = fontSize;
         this.attribute1_value.textColor = 0xFFFFFF;
         this.attribute1_value.textAlign = "center";
         this.attribute1_value.text = curLevelBallConfig.ballRadius.toString();
@@ -425,7 +427,7 @@ class ShopView extends egret.DisplayObjectContainer
             this.addChild(this.attribute1_next);
 
             this.attribute1_nextValue = new egret.TextField();
-            this.attribute1_nextValue.size = 30;
+            this.attribute1_nextValue.size = fontSize;
             this.attribute1_nextValue.textColor = 0xf1be22;
             this.attribute1_nextValue.textAlign = "center";
             this.attribute1_nextValue.text = nextLevelBallConfig.ballRadius.toString();
@@ -438,22 +440,22 @@ class ShopView extends egret.DisplayObjectContainer
         // 第二排
         this.attribute2_point = this.resModule.CreateBitmapByName("point");
         Tools.SetAnchor(this.attribute2_point, AnchorType.Center);
-        this.attribute2_point.x = 80 * this.adaptFactor;
+        this.attribute2_point.x = 75 * this.adaptFactor;
         this.attribute2_point.y = row2Posy;
         this.addChild(this.attribute2_point);
 
         this.attribute2_Head = new egret.TextField();
-        this.attribute2_Head.size = 30;
+        this.attribute2_Head.size = fontSize;
         this.attribute2_Head.textColor = 0xFFFFFF;
         this.attribute2_Head.textAlign = "left";
         this.attribute2_Head.text = "速度:";
         Tools.SetAnchor(this.attribute2_Head, AnchorType.Left);
-        this.attribute2_Head.x = 120 * this.adaptFactor;
+        this.attribute2_Head.x = 115 * this.adaptFactor;
         this.attribute2_Head.y = row2Posy;
         this.addChild(this.attribute2_Head);
 
         this.attribute2_value = new egret.TextField();
-        this.attribute2_value.size = 30;
+        this.attribute2_value.size = fontSize;
         this.attribute2_value.textColor = 0xFFFFFF;
         this.attribute2_value.textAlign = "center";
         this.attribute2_value.text = curLevelBallConfig.emitSpeed.toString();
@@ -471,7 +473,7 @@ class ShopView extends egret.DisplayObjectContainer
             this.addChild(this.attribute2_next);
 
             this.attribute2_nextValue = new egret.TextField();
-            this.attribute2_nextValue.size = 30;
+            this.attribute2_nextValue.size = fontSize;
             this.attribute2_nextValue.textColor = 0xf1be22;
             this.attribute2_nextValue.textAlign = "center";
             this.attribute2_nextValue.text = nextLevelBallConfig.emitSpeed.toString();
@@ -486,22 +488,22 @@ class ShopView extends egret.DisplayObjectContainer
         {
             this.attribute3_point = this.resModule.CreateBitmapByName("point");
             Tools.SetAnchor(this.attribute3_point, AnchorType.Center);
-            this.attribute3_point.x = 80 * this.adaptFactor;
+            this.attribute3_point.x = 75 * this.adaptFactor;
             this.attribute3_point.y = row3Posy;
             this.addChild(this.attribute3_point);
 
             this.attribute3_Head = new egret.TextField();
-            this.attribute3_Head.size = 30;
+            this.attribute3_Head.size = fontSize;
             this.attribute3_Head.textColor = 0xFFFFFF;
             this.attribute3_Head.textAlign = "left";
             this.attribute3_Head.text = curLevelBallConfig.skillHead + ":";
             Tools.SetAnchor(this.attribute3_Head, AnchorType.Left);
-            this.attribute3_Head.x = 120 * this.adaptFactor;
+            this.attribute3_Head.x = 115 * this.adaptFactor;
             this.attribute3_Head.y = row3Posy;
             this.addChild(this.attribute3_Head);
 
             this.attribute3_value = new egret.TextField();
-            this.attribute3_value.size = 30;
+            this.attribute3_value.size = fontSize;
             this.attribute3_value.textColor = 0xFFFFFF;
             this.attribute3_value.textAlign = "center";
             this.attribute3_value.text = curLevelBallConfig.skillLevellDes.toString();
@@ -519,7 +521,7 @@ class ShopView extends egret.DisplayObjectContainer
                 this.addChild(this.attribute3_next);
 
                 this.attribute3_nextValue = new egret.TextField();
-                this.attribute3_nextValue.size = 30;
+                this.attribute3_nextValue.size = fontSize;
                 this.attribute3_nextValue.textColor = 0xf1be22;
                 this.attribute3_nextValue.textAlign = "center";
                 this.attribute3_nextValue.text = nextLevelBallConfig.skillLevellDes.toString();
