@@ -75,7 +75,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         if(this.breakRecordHistoryHighScore)
         {
             this.breakRecordHistoryHighScore = false;
-            platform.setUserCloudStorage("HighScore", this.historyHighScore.toString());
+            if(platform.canUseCloudStorage())
+                platform.setUserCloudStorage("HighScore", this.historyHighScore.toString());
         }
     }
 

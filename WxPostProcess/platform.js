@@ -169,6 +169,33 @@ class WxgamePlatform
         this.openDataContext.postMessage("getFriendCloudStorage", storageKey);
     }
 
+    canUseCloudStorage()
+    {
+        try
+        {
+            var sysInfo = wx.getSystemInfoSync();
+            var version = sysInfo.SDKVersion;
+            var temp = version.split(".");
+            var mainVer = 0;
+            if(temp.length > 0)
+                mainVer = parseInt(temp[0]);
+            var subVer = 0;
+            if(temp.length > 1)
+                subVer = parseInt(temp[1]);
+            var thirdVer = 0;
+            if(temp.length > 2)
+                thirdVer = parseInt(temp[2]);
+
+            var version = mainVer*10000+subVer*100+thirdVer;
+            console.log(version);
+            return version >= 10992;
+        }
+        catch (e)
+        {
+            return false;
+        }
+    }
+
     rankTurnPage(dir)
     {
         this.openDataContext.postMessage("rankTurnPage", dir);

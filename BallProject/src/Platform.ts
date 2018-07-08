@@ -28,6 +28,8 @@ declare interface Platform
 
     getFriendCloudStorage(key:string);
 
+    canUseCloudStorage():boolean;
+
     rankTurnPage(dir:number);
 
     vibrateShort();
@@ -67,7 +69,7 @@ class DebugPlatform implements Platform
 
     public loadUserData():string
     {
-        return "10,100";
+        return "10,1000";
     }
 
     public hasUserData():boolean
@@ -88,6 +90,11 @@ class DebugPlatform implements Platform
     public getFriendCloudStorage(key:string)
     {
         console.log("获取云端数据:" + key);
+    }
+
+    public canUseCloudStorage():boolean
+    {
+        return false;
     }
 
     public rankTurnPage(dir:number)

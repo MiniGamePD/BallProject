@@ -129,17 +129,17 @@ class BallExperienceView extends egret.DisplayObjectContainer
 		Tools.SetAnchor(this.ballBitmap, AnchorType.Center);
 
 		// 缩放动画
-		this.ballBitmap.scaleX = 0;
-		this.ballBitmap.scaleY = 0;
-		var scaleParam = new PaScalingParam()
-		scaleParam.displayObj = this.ballBitmap;
-		scaleParam.duration = 200;
-		scaleParam.targetScaleX = 1;
-		scaleParam.targetScaleY = 1;
-		scaleParam.interval = scaleParam.duration;
-		var scaleEvent = new PlayProgramAnimationEvent()
-		scaleEvent.param = scaleParam;
-		GameMain.GetInstance().DispatchEvent(scaleEvent);
+		// this.ballBitmap.scaleX = 0;
+		// this.ballBitmap.scaleY = 0;
+		// var scaleParam = new PaScalingParam()
+		// scaleParam.displayObj = this.ballBitmap;
+		// scaleParam.duration = 200;
+		// scaleParam.targetScaleX = 1;
+		// scaleParam.targetScaleY = 1;
+		// scaleParam.interval = scaleParam.duration;
+		// var scaleEvent = new PlayProgramAnimationEvent()
+		// scaleEvent.param = scaleParam;
+		// GameMain.GetInstance().DispatchEvent(scaleEvent);
 
 		// 粒子特效
 		Tools.DetachDisplayObjFromParent(this.particleSys);

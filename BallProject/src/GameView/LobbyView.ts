@@ -24,6 +24,7 @@ class LobbyView extends GameView
     private rankFrame:egret.Shape;
     private rankLastButton:ShapeBgButton;
     private rankNextButton:ShapeBgButton;
+    private rankCantUseCouldStorage:egret.TextField;
 
     public CreateView(): void
     {
@@ -241,40 +242,57 @@ class LobbyView extends GameView
             this.rankMenu.x = GameMain.GetInstance().GetStageWidth() / 2;
             this.rankMenu.y = GameMain.GetInstance().GetStageHeight() / 2;
         }
+
+        //无法使用排行榜
+        this.rankCantUseCouldStorage = new egret.TextField;
+        this.rankCantUseCouldStorage.size = 35;
+        this.rankCantUseCouldStorage.text = "微信版本太低了哟\n\n看不到好友数据好寂寞\n\no(╥﹏╥)o";
+        this.rankCantUseCouldStorage.width = GameMain.GetInstance().GetStageWidth();
+        this.rankCantUseCouldStorage.height = 250;
+        this.rankCantUseCouldStorage.anchorOffsetX = this.rankCantUseCouldStorage.width / 2;
+        this.rankCantUseCouldStorage.anchorOffsetY = this.rankCantUseCouldStorage.height / 2;
+        this.rankCantUseCouldStorage.x = GameMain.GetInstance().GetStageWidth() / 2;
+        this.rankCantUseCouldStorage.y = 400;
+        this.rankCantUseCouldStorage.textAlign = "center";
+        this.rankCantUseCouldStorage.verticalAlign = "middle";
     }
 
     private OnClickRank(callbackobj:any)
     {
+        callbackobj.addChild(callbackobj.rankBg);
+        callbackobj.addChild(callbackobj.rankFrame);
+        callbackobj.addChild(callbackobj.rankTitle);
         if(callbackobj.rankMenu != null && callbackobj.rankMenu != undefined)
         {
-            platform.getFriendCloudStorage("HighScore");
-
-            callbackobj.addChild(callbackobj.rankBg);
-            callbackobj.addChild(callbackobj.rankFrame);
-            callbackobj.addChild(callbackobj.rankTitle);
             callbackobj.addChild(callbackobj.rankMenu);
-            callbackobj.addChild(callbackobj.rankBackButton);
-            callbackobj.addChild(callbackobj.rankLastButton);
-            callbackobj.addChild(callbackobj.rankNextButton);
-            callbackobj.addChild(callbackobj.rankInviteA);
-            callbackobj.addChild(callbackobj.rankInviteB);
         }
+        callbackobj.addChild(callbackobj.rankBackButton);
+        callbackobj.addChild(callbackobj.rankLastButton);
+        callbackobj.addChild(callbackobj.rankNextButton);
+        callbackobj.addChild(callbackobj.rankInviteA);
+        callbackobj.addChild(callbackobj.rankInviteB);
+
+        if(platform.canUseCloudStorage())
+            platform.getFriendCloudStorage("HighScore");
+        else
+            callbackobj.addChild(callbackobj.rankCantUseCouldStorage);
     }
 
     private OnCloseRank(callbackObj:any)
     {
+        Tools.DetachDisplayObjFromParent(callbackObj.rankBg);
+        Tools.DetachDisplayObjFromParent(callbackObj.rankFrame);
+        Tools.DetachDisplayObjFromParent(callbackObj.rankTitle);
         if(callbackObj.rankMenu != null && callbackObj.rankMenu != undefined)
         {
-            callbackObj.removeChild(callbackObj.rankBg);
-            callbackObj.removeChild(callbackObj.rankFrame);
-            callbackObj.removeChild(callbackObj.rankTitle);
-            callbackObj.removeChild(callbackObj.rankMenu);
-            callbackObj.removeChild(callbackObj.rankBackButton);
-            callbackObj.removeChild(callbackObj.rankLastButton);
-            callbackObj.removeChild(callbackObj.rankNextButton);
-            callbackObj.removeChild(callbackObj.rankInviteA);
-            callbackObj.removeChild(callbackObj.rankInviteB);
+            Tools.DetachDisplayObjFromParent(callbackObj.rankMenu);
         }
+        Tools.DetachDisplayObjFromParent(callbackObj.rankBackButton);
+        Tools.DetachDisplayObjFromParent(callbackObj.rankLastButton);
+        Tools.DetachDisplayObjFromParent(callbackObj.rankNextButton);
+        Tools.DetachDisplayObjFromParent(callbackObj.rankInviteA);
+        Tools.DetachDisplayObjFromParent(callbackObj.rankInviteB);
+        Tools.DetachDisplayObjFromParent(callbackObj.rankCantUseCouldStorage);
     }
 
     private OnRankLastPage()
