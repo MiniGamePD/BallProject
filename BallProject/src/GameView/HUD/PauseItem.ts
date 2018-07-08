@@ -12,6 +12,10 @@ class PauseItem extends egret.DisplayObjectContainer
     private helpDetail:egret.Bitmap;
     private helpIcon:egret.Bitmap;
     private helpQuitHint:egret.TextField;
+    private controlSelector1On:ShapeBgButton;
+    private controlSelector1Off:ShapeBgButton;
+    private controlSelector2On:ShapeBgButton;
+    private controlSelector2Off:ShapeBgButton;
 
     public constructor(x:number, y:number, width:number, height:number)
     {
@@ -106,6 +110,20 @@ class PauseItem extends egret.DisplayObjectContainer
         this.helpDetail.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.helpDetail.y = GameMain.GetInstance().GetStageHeight() / 2;
 
+        var controlSelectorWidth = (this.helpDetail.width - 30) / 2;
+        this.controlSelector1On = this.CreateControlSelector(controlSelectorWidth, "摇杆操作", 0xFFFFFF00, 0xFFFFFF, null);
+        this.controlSelector1Off = this.CreateControlSelector(controlSelectorWidth, "摇杆操作", 0x88888800, 0x888888, this.OnChooseJoyStick);
+        this.controlSelector2On = this.CreateControlSelector(controlSelectorWidth, "点击操作", 0xFFFFFF00, 0xFFFFFF, null);
+        this.controlSelector2Off = this.CreateControlSelector(controlSelectorWidth, "点击操作", 0x88888800, 0x888888, this.OnChooseTouch);
+        this.controlSelector1On.x = this.helpDetail.x - 30 / 2 - controlSelectorWidth / 2;
+        this.controlSelector1Off.x = this.controlSelector1On.x;
+        this.controlSelector1On.y = this.helpDetail.y + this.helpDetail.height / 2 + 10 + controlSelectorWidth / 2;
+        this.controlSelector1Off.y = this.controlSelector1On.y;
+        this.controlSelector2On.x = this.helpDetail.x + 30 / 2 + controlSelectorWidth / 2;
+        this.controlSelector2Off.x = this.controlSelector2On.x;
+        this.controlSelector2On.y = this.helpDetail.y + this.helpDetail.height / 2 + 10 + controlSelectorWidth / 2;
+        this.controlSelector2Off.y = this.controlSelector2On.y;
+
         this.bgCoverHelp = new FullScreenCover(0x000000, 0.9);
         this.bgCoverHelp.touchEnabled = true;
         this.bgCoverHelp.addEventListener(egret.TouchEvent.TOUCH_TAP, this.OnCloseHelp, this);
@@ -114,12 +132,34 @@ class PauseItem extends egret.DisplayObjectContainer
         this.helpQuitHint.y = 250;
         this.helpQuitHint.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.helpQuitHint.width = GameMain.GetInstance().GetStageWidth();
-        this.helpQuitHint.height = 100;
+        this.helpQuitHint.height = 200;
         this.helpQuitHint.size = 40;
         this.helpQuitHint.anchorOffsetX = this.helpQuitHint.width / 2;
         this.helpQuitHint.anchorOffsetY = this.helpQuitHint.height / 2;
         this.helpQuitHint.textAlign = "center";
-        this.helpQuitHint.text = "点击任意位置继续游戏";
+        this.helpQuitHint.text = "点击按钮选择操作模式\n\n点击屏幕其他位置继续游戏";
+    }
+
+    private CreateControlSelector(width:number, desc:string, bgColor:number, textColor:number, callback:Function):ShapeBgButton
+    {
+        var result = new ShapeBgButton(ShapeBgType.RoundRect, bgColor, 6, 16, null,
+            width, width / 2, 0, 0, 
+            callback, this);
+        var text = new egret.TextField();
+        text.text = desc;
+        text.textColor = textColor;
+        text.size = 35;
+        text.width = width;
+        text.height = width / 2;
+        text.anchorOffsetX = text.width / 2;
+        text.anchorOffsetY = text.height / 2;
+        text.x = text.width / 2;
+        text.y = text.height / 2;
+        text.textAlign = "center";
+        text.verticalAlign = "middle";
+        result.addChild(text);
+
+        return result;
     }
 
     public Init()
@@ -193,18 +233,69 @@ class PauseItem extends egret.DisplayObjectContainer
         this.OnPauseFalse(true);
     }
 
+    private OnChooseJoyStick(callbackObj:any)
+    {
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector1On);
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector1Off);
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector2On);
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector2Off);
+
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        playerData.SetControlType(BallControllerType.TouchMove);
+        callbackObj.addChild(callbackObj.controlSelector1On);
+        callbackObj.addChild(callbackObj.controlSelector2Off);
+    }
+
+    private OnChooseTouch(callbackObj:any)
+    {
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector1On);
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector1Off);
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector2On);
+        Tools.DetachDisplayObjFromParent(callbackObj.controlSelector2Off);
+
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        playerData.SetControlType(BallControllerType.TouchMove);
+        callbackObj.addChild(callbackObj.controlSelector1Off);
+        callbackObj.addChild(callbackObj.controlSelector2On);
+    }
+
     private ShowHelpDetail()
     {
         this.addChild(this.bgCoverHelp);
         this.addChild(this.helpDetail);
         this.addChild(this.helpQuitHint);
+
+        //1 is touchMove, 2 is touch point
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        if(playerData.GetControlType() == BallControllerType.TouchMove)
+        {
+            this.addChild(this.controlSelector1On);
+            this.addChild(this.controlSelector2Off);
+        }
+        else if(playerData.GetControlType() == BallControllerType.TouchPoint)
+        {
+            this.addChild(this.controlSelector1Off);
+            this.addChild(this.controlSelector2On);
+        }
+        else
+        {
+            if(DEBUG)
+            {
+                console.error("未知的操作类型：" + playerData.GetControlType());
+            }
+            playerData.SetControlType(BallControllerType.TouchMove);
+            this.addChild(this.controlSelector1On);
+            this.addChild(this.controlSelector2Off);
+        }
     }
 
     private HideHelpDetail()
     {
-        this.removeChild(this.bgCoverHelp);
-        this.removeChild(this.helpDetail);
-        this.removeChild(this.helpQuitHint);
+        Tools.DetachDisplayObjFromParent(this.bgCoverHelp);
+        Tools.DetachDisplayObjFromParent(this.helpDetail);
+        Tools.DetachDisplayObjFromParent(this.helpQuitHint);
+        Tools.DetachDisplayObjFromParent(this.controlSelector1On);
+        Tools.DetachDisplayObjFromParent(this.controlSelector2On);
     }
 
     public ShowPauseMenu()

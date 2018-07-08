@@ -328,7 +328,12 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnClickMoreCoin(callbackObj:any)
     {
-        GameMain.GetInstance().ShareAppMsg();
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        if(playerData.GetHistoryHighScore() > 0)
+            platform.shareAppMsgRank(playerData.GetHistoryHighScore());
+        else
+            platform.shareAppMsg();
+            
         if(Tools.IsWxReviewTimeExpired())
         {
             callbackObj.coin.addChild(callbackObj.addtionalCoin);
