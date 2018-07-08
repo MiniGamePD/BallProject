@@ -71,18 +71,16 @@ class BallExperienceView extends egret.DisplayObjectContainer
 
 	private OnClickAccept(callbackObj:any)
 	{
+		var event = new ChangeBallEvent();
+		event.ballId = callbackObj.randomBallInfo.id;
+		GameMain.GetInstance().DispatchEvent(event);
+
 		callbackObj.callbackFun(callbackObj.callbackObj);
 	}
 
 	private OnClickReject(callbackObj:any)
 	{
 		callbackObj.callbackFun(callbackObj.callbackObj);
-	}
-
-	private OnClickBack(callbackObj: any)
-	{
-		Tools.DetachDisplayObjFromParent(callbackObj);
-		callbackObj.callbackFun(callbackObj.callbackObj, callbackObj.randomBallInfo);
 	}
 
 	private RefreshBallInfo()

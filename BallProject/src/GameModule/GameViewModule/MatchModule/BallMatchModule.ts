@@ -14,6 +14,7 @@ class BallMatchModule extends GameViewModule
         GameMain.GetInstance().AddEventListener(PauseEvent.EventName, this.OnPause, this);
         GameMain.GetInstance().AddEventListener(GameOverEvent.EventName, this.OnGameOver, this);
         GameMain.GetInstance().AddEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
+        GameMain.GetInstance().AddEventListener(ChangeBallEvent.EventName, this.OnChangeBallEvent, this);
 
         this.matchView = new BallMatchView();
         this.matchView.CreateView();
@@ -34,6 +35,7 @@ class BallMatchModule extends GameViewModule
         GameMain.GetInstance().RemoveEventListener(PauseEvent.EventName, this.OnPause, this);
         GameMain.GetInstance().RemoveEventListener(GameOverEvent.EventName, this.OnGameOver, this);
         GameMain.GetInstance().RemoveEventListener(ReviveEvent.EventName, this.OnReviveEvent, this);
+        GameMain.GetInstance().RemoveEventListener(ChangeBallEvent.EventName, this.OnChangeBallEvent, this);
     }
 
     private InitComponents()
@@ -123,6 +125,11 @@ class BallMatchModule extends GameViewModule
     private OnGameOver()
     {
         this.matchState = BallMatchState.gameover;
+    }
+
+    private OnChangeBallEvent(event:ChangeBallEvent)
+    {
+        this.ballDataMgr.ChangeBall(event.ballId, 1);
     }
 }
 
