@@ -67,7 +67,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		{
 			this.myBallString = "1-1"; // 初始球
 		}
-		// this.myBallString = "10-3"; // 调试代码
+		this.myBallString = "1-1"; // 调试代码
 
 		var ballList:string[] = this.myBallString.split('|');
 		for (var i = 0; i < ballList.length; ++i)
@@ -207,15 +207,16 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	private RandomBallIdByProbability(): number
 	{
 		var ranBallId = 0;
+		var ballProbability = this.GetBallProbability();
 		var totalProbability = 0;
 		for (var i = 0; i < this.ballConfigList.length; ++i)
 		{
-			totalProbability += this.ballConfigList[i].probability;
+			totalProbability += ballProbability[i];
 		}
 		var ranProbability = Math.random() * totalProbability;
 		for (var i = 0; i < this.ballConfigList.length; ++i)
 		{
-			ranProbability -= this.ballConfigList[i].probability;
+			ranProbability -= ballProbability[i];
 			if (ranProbability <= 0)
 			{
 				ranBallId = this.ballConfigList[i].id;
@@ -223,6 +224,28 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 			}
 		}
 		return ranBallId;
+	}
+
+	private GetBallProbability(): number[]
+	{
+		var ballProbability = [];
+		if (this.IsNewPlayer())
+		{
+			for (var i = 0; i < this.ballConfigList.length; ++i)
+			{
+				ballProbability.push(this.ballConfigList[i].firstBallProbability);
+			}
+		}
+		else
+		{
+			for (var i = 0; i < this.ballConfigList.length; ++i)
+			{
+				var level = this.GetMyBallLevel(this.ballConfigList[i].id);
+				var p = Tools.GetConfigInList(this.ballConfigList[i].probability, level + 1, 0);
+				ballProbability.push(p);
+			}
+		}
+		return ballProbability;
 	}
 
 	// 抽取一个球

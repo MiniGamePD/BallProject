@@ -69,7 +69,7 @@ class ShopView extends egret.DisplayObjectContainer
 
     private adaptFactor: number;
 
-    private hintFinger:egret.Bitmap;
+    private hintFinger: egret.Bitmap;
 
     public constructor()
     {
@@ -109,8 +109,12 @@ class ShopView extends egret.DisplayObjectContainer
     {
         this.callbackFun = callbackFun;
         this.callbackObj = callbackObj;
+    }
 
-        this.RefreshShopData();
+    public OnOpenShop()
+    {
+        this.RefreshCoinInfo();
+        this.RefreshBallInfo();
     }
 
     public Release()
@@ -144,43 +148,9 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.height = 100;
         this.coinText.x = 340 * this.adaptFactor;
         this.coinText.y = 115;
+        this.coinText.text = this.playerDataModule.GetCoin().toString();
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
-    }
-
-    public RefreshShopData()
-    {
-        var coin = this.playerDataModule.GetCoin();
-        //金币数量
-        if(this.coinText != null && this.coinText != undefined)
-            this.coinText.text = coin.toString();
-
-        //抽球按钮上的金币颜色
-        var enoughCoin = coin >= Lotty_Ball_Cost;
-        if(this.lotteryCost != null && this.lotteryCost != undefined)
-            this.lotteryCost = new egret.TextField();
-
-        //首抽免费的手指
-        var ballMgr = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
-        if(ballMgr.IsNewPlayer() && this.lotteryBtn != null && this.lotteryBtn != undefined)
-        {
-            this.hintFinger = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.finger");
-            this.hintFinger.x = this.lotteryBtn.width / 2;
-            this.hintFinger.y = this.lotteryBtn.height / 2;
-            Tools.AdapteDisplayObject(this.hintFinger);
-            this.lotteryBtn.addChild(this.hintFinger);
-
-            var scaleParam = new PaScalingParam()
-            scaleParam.displayObj = this.hintFinger;
-            scaleParam.targetScaleX = 0.8;
-            scaleParam.targetScaleY = 0.8;
-            scaleParam.duration = 50000000;
-            scaleParam.interval = 500;
-            scaleParam.reverse = true;
-            var scaleEvent = new PlayProgramAnimationEvent()
-            scaleEvent.param = scaleParam;
-            GameMain.GetInstance().DispatchEvent(scaleEvent);
-        }
     }
 
     private RefreshBallInfo()
@@ -253,18 +223,6 @@ class ShopView extends egret.DisplayObjectContainer
         else
         {
             this.ballBitmap.alpha = 0.5;
-            // this.lockText = new egret.TextField();
-            // this.lockText.size = 35;
-            // this.lockText.textColor = 0xFFFFFF;
-            // this.lockText.text = "未拥有";
-            // this.lockText.textAlign = "center";
-            // this.lockText.strokeColor = 0x000000;
-            // this.lockText.stroke = 3;
-            // this.lockText.bold = true;
-            // Tools.SetAnchor(this.lockText, AnchorType.Center);
-            // this.lockText.x = GameMain.GetInstance().GetStageWidth() / 2;
-            // this.lockText.y = ballPosy;
-            // this.addChild(this.lockText);
         }
 
         this.ballNameText = new egret.TextField();
@@ -313,14 +271,14 @@ class ShopView extends egret.DisplayObjectContainer
             lottyBtnPosx = widthMidX / 2 * 3 - 20;
         }
 
-        if(this.lotteryBtn == null || this.lotteryBtn == undefined)
+        if (this.lotteryBtn == null || this.lotteryBtn == undefined)
         {
             Tools.DetachDisplayObjFromParent(this.lotteryBtn);
             this.lotteryBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.lottyBtn",
                 302 * this.adaptFactor, 73 * this.adaptFactor, 302 * this.adaptFactor, 73 * this.adaptFactor, this.OnClickLotteryBtn, this);
             this.addChild(this.lotteryBtn);
         }
-        
+
         this.lotteryBtn.x = lottyBtnPosx * this.adaptFactor;
         this.lotteryBtn.y = GameMain.GetInstance().GetStageHeight() - 100;
 
@@ -334,10 +292,36 @@ class ShopView extends egret.DisplayObjectContainer
         this.lotteryCost.bold = true;
         this.lotteryCost.text = Lotty_Ball_Cost.toString();
         this.lotteryCost.x = (lottyBtnPosx + 100) * this.adaptFactor;
-        this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 100;
+        this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 95;
         // Tools.AdapteDisplayObject(this.lotteryCost);
         Tools.SetAnchor(this.lotteryCost, AnchorType.Center);
         this.addChild(this.lotteryCost);
+
+        Tools.DetachDisplayObjFromParent(this.hintFinger);
+        //首抽免费的手指
+        if (this.ballConfigModule.IsNewPlayer() && this.lotteryBtn != null && this.lotteryBtn != undefined)
+        {
+            this.lotteryCost.textColor = 0xffffff;
+            this.lotteryCost.size = 40;
+            this.lotteryCost.text = "免费";
+
+            this.hintFinger = this.resModule.CreateBitmapByName("pd_res_json.finger");
+            this.hintFinger.x = this.lotteryBtn.width / 2;
+            this.hintFinger.y = this.lotteryBtn.height / 2;
+            Tools.AdapteDisplayObject(this.hintFinger);
+            this.lotteryBtn.addChild(this.hintFinger);
+
+            var scaleParam = new PaScalingParam()
+            scaleParam.displayObj = this.hintFinger;
+            scaleParam.targetScaleX = 0.8;
+            scaleParam.targetScaleY = 0.8;
+            scaleParam.duration = 50000000;
+            scaleParam.interval = 500;
+            scaleParam.reverse = true;
+            var scaleEvent = new PlayProgramAnimationEvent()
+            scaleEvent.param = scaleParam;
+            GameMain.GetInstance().DispatchEvent(scaleEvent);
+        }
 
         this.CreateAttribute();
     }
@@ -405,25 +389,27 @@ class ShopView extends egret.DisplayObjectContainer
             row2Posy = row1Posy + 50;
         }
 
+        var fontSize = GameMain.GetInstance().GetScreenRatio() > 16 / 9 ? 27 : 30;
+
 
         this.attribute1_point = this.resModule.CreateBitmapByName("point");
         Tools.SetAnchor(this.attribute1_point, AnchorType.Center);
-        this.attribute1_point.x = 80 * this.adaptFactor;
+        this.attribute1_point.x = 75 * this.adaptFactor;
         this.attribute1_point.y = row1Posy;
         this.addChild(this.attribute1_point);
 
         this.attribute1_Head = new egret.TextField();
-        this.attribute1_Head.size = 30;
+        this.attribute1_Head.size = fontSize;
         this.attribute1_Head.textColor = 0xFFFFFF;
         this.attribute1_Head.textAlign = "left";
         this.attribute1_Head.text = "半径:";
         Tools.SetAnchor(this.attribute1_Head, AnchorType.Left);
-        this.attribute1_Head.x = 120 * this.adaptFactor;
+        this.attribute1_Head.x = 115 * this.adaptFactor;
         this.attribute1_Head.y = row1Posy;
         this.addChild(this.attribute1_Head);
 
         this.attribute1_value = new egret.TextField();
-        this.attribute1_value.size = 30;
+        this.attribute1_value.size = fontSize;
         this.attribute1_value.textColor = 0xFFFFFF;
         this.attribute1_value.textAlign = "center";
         this.attribute1_value.text = curLevelBallConfig.ballRadius.toString();
@@ -441,7 +427,7 @@ class ShopView extends egret.DisplayObjectContainer
             this.addChild(this.attribute1_next);
 
             this.attribute1_nextValue = new egret.TextField();
-            this.attribute1_nextValue.size = 30;
+            this.attribute1_nextValue.size = fontSize;
             this.attribute1_nextValue.textColor = 0xf1be22;
             this.attribute1_nextValue.textAlign = "center";
             this.attribute1_nextValue.text = nextLevelBallConfig.ballRadius.toString();
@@ -454,22 +440,22 @@ class ShopView extends egret.DisplayObjectContainer
         // 第二排
         this.attribute2_point = this.resModule.CreateBitmapByName("point");
         Tools.SetAnchor(this.attribute2_point, AnchorType.Center);
-        this.attribute2_point.x = 80 * this.adaptFactor;
+        this.attribute2_point.x = 75 * this.adaptFactor;
         this.attribute2_point.y = row2Posy;
         this.addChild(this.attribute2_point);
 
         this.attribute2_Head = new egret.TextField();
-        this.attribute2_Head.size = 30;
+        this.attribute2_Head.size = fontSize;
         this.attribute2_Head.textColor = 0xFFFFFF;
         this.attribute2_Head.textAlign = "left";
         this.attribute2_Head.text = "速度:";
         Tools.SetAnchor(this.attribute2_Head, AnchorType.Left);
-        this.attribute2_Head.x = 120 * this.adaptFactor;
+        this.attribute2_Head.x = 115 * this.adaptFactor;
         this.attribute2_Head.y = row2Posy;
         this.addChild(this.attribute2_Head);
 
         this.attribute2_value = new egret.TextField();
-        this.attribute2_value.size = 30;
+        this.attribute2_value.size = fontSize;
         this.attribute2_value.textColor = 0xFFFFFF;
         this.attribute2_value.textAlign = "center";
         this.attribute2_value.text = curLevelBallConfig.emitSpeed.toString();
@@ -487,7 +473,7 @@ class ShopView extends egret.DisplayObjectContainer
             this.addChild(this.attribute2_next);
 
             this.attribute2_nextValue = new egret.TextField();
-            this.attribute2_nextValue.size = 30;
+            this.attribute2_nextValue.size = fontSize;
             this.attribute2_nextValue.textColor = 0xf1be22;
             this.attribute2_nextValue.textAlign = "center";
             this.attribute2_nextValue.text = nextLevelBallConfig.emitSpeed.toString();
@@ -502,22 +488,22 @@ class ShopView extends egret.DisplayObjectContainer
         {
             this.attribute3_point = this.resModule.CreateBitmapByName("point");
             Tools.SetAnchor(this.attribute3_point, AnchorType.Center);
-            this.attribute3_point.x = 80 * this.adaptFactor;
+            this.attribute3_point.x = 75 * this.adaptFactor;
             this.attribute3_point.y = row3Posy;
             this.addChild(this.attribute3_point);
 
             this.attribute3_Head = new egret.TextField();
-            this.attribute3_Head.size = 30;
+            this.attribute3_Head.size = fontSize;
             this.attribute3_Head.textColor = 0xFFFFFF;
             this.attribute3_Head.textAlign = "left";
             this.attribute3_Head.text = curLevelBallConfig.skillHead + ":";
             Tools.SetAnchor(this.attribute3_Head, AnchorType.Left);
-            this.attribute3_Head.x = 120 * this.adaptFactor;
+            this.attribute3_Head.x = 115 * this.adaptFactor;
             this.attribute3_Head.y = row3Posy;
             this.addChild(this.attribute3_Head);
 
             this.attribute3_value = new egret.TextField();
-            this.attribute3_value.size = 30;
+            this.attribute3_value.size = fontSize;
             this.attribute3_value.textColor = 0xFFFFFF;
             this.attribute3_value.textAlign = "center";
             this.attribute3_value.text = curLevelBallConfig.skillLevellDes.toString();
@@ -535,7 +521,7 @@ class ShopView extends egret.DisplayObjectContainer
                 this.addChild(this.attribute3_next);
 
                 this.attribute3_nextValue = new egret.TextField();
-                this.attribute3_nextValue.size = 30;
+                this.attribute3_nextValue.size = fontSize;
                 this.attribute3_nextValue.textColor = 0xf1be22;
                 this.attribute3_nextValue.textAlign = "center";
                 this.attribute3_nextValue.text = nextLevelBallConfig.skillLevellDes.toString();
@@ -693,9 +679,10 @@ class ShopView extends egret.DisplayObjectContainer
 
     private TryLottyBall()
     {
-        var result = this.playerDataModule.CostCoin(Lotty_Ball_Cost);
+        var result = this.ballConfigModule.IsNewPlayer() 
+                    || this.playerDataModule.CostCoin(Lotty_Ball_Cost);
         if (result)
-        {   
+        {
             this.playerDataModule.Save();
             this.lottyView = new LotteryView();
             this.lottyView.Init(this.OnCloseLotteryView, this);
@@ -710,8 +697,7 @@ class ShopView extends egret.DisplayObjectContainer
         {
             callbackObj.SetFocusBall(ballInfo.id);
         }
-        callbackObj.RefreshBallInfo();
-        callbackObj.RefreshCoinInfo();
+        callbackObj.OnOpenShop();
     }
 
     private SetFocusBall(ballId: number)

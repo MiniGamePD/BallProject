@@ -328,7 +328,7 @@ class BoxEmitter
 	private ApplyCriticalStrike(box: Box, damage: number, ballPhyBody: p2.Body)
 	{
 		this.ApplyDamageOnBox(box, damage, ballPhyBody)
-		Tools.ShowTips(box.boxDisplayObj.x, box.boxDisplayObj.y + 20, this.battleGround, "-" + damage, 0xd6340a)
+		Tools.ShowTips(box.healthDisplayObj.x, box.healthDisplayObj.y + 20, this.battleGround, "-" + damage, 0xd6340a)
 	}
 
 	// 爆炸伤害周围的盒子
