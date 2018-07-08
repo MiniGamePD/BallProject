@@ -63,6 +63,8 @@ class ShopView extends egret.DisplayObjectContainer
     private attribute3_nextValue: egret.TextField;
     // 技能描述 -- end
 
+
+    private shopDesText: egret.TextField;
     private shopDesBitmap: egret.Bitmap;
 
     private lottyView: LotteryView;
@@ -70,6 +72,7 @@ class ShopView extends egret.DisplayObjectContainer
     private adaptFactor: number;
 
     private hintFinger: egret.Bitmap;
+    private dicountBitmap: egret.Bitmap;
 
     public constructor()
     {
@@ -256,7 +259,7 @@ class ShopView extends egret.DisplayObjectContainer
         if (hasThisBall)
         {
             this.selectBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.SelectBall_OK",
-                242 * this.adaptFactor, 73 * this.adaptFactor, 242 * this.adaptFactor, 73 * this.adaptFactor, this.OnClickSelectBtn, this);
+                242 * this.adaptFactor, 79 * this.adaptFactor, 242 * this.adaptFactor, 79 * this.adaptFactor, this.OnClickSelectBtn, this);
             this.selectBtn.x = (widthMidX / 2) * this.adaptFactor;
             this.selectBtn.y = GameMain.GetInstance().GetStageHeight() - 100;
             this.addChild(this.selectBtn);
@@ -275,7 +278,7 @@ class ShopView extends egret.DisplayObjectContainer
         {
             Tools.DetachDisplayObjFromParent(this.lotteryBtn);
             this.lotteryBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.lottyBtn",
-                302 * this.adaptFactor, 73 * this.adaptFactor, 302 * this.adaptFactor, 73 * this.adaptFactor, this.OnClickLotteryBtn, this);
+                302 * this.adaptFactor, 79 * this.adaptFactor, 302 * this.adaptFactor, 79 * this.adaptFactor, this.OnClickLotteryBtn, this);
             this.addChild(this.lotteryBtn);
         }
 
@@ -292,7 +295,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.lotteryCost.bold = true;
         this.lotteryCost.text = Lotty_Ball_Cost.toString();
         this.lotteryCost.x = (lottyBtnPosx + 100) * this.adaptFactor;
-        this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 95;
+        this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 100;
         // Tools.AdapteDisplayObject(this.lotteryCost);
         Tools.SetAnchor(this.lotteryCost, AnchorType.Center);
         this.addChild(this.lotteryCost);
@@ -302,8 +305,8 @@ class ShopView extends egret.DisplayObjectContainer
         if (this.ballConfigModule.IsNewPlayer() && this.lotteryBtn != null && this.lotteryBtn != undefined)
         {
             this.lotteryCost.textColor = 0xffffff;
-            this.lotteryCost.size = 40;
-            this.lotteryCost.text = "免费";
+            Tools.DetachDisplayObjFromParent(this.dicountBitmap);
+            this.dicountBitmap = this.resModule.CreateBitmap("discount", this.lotteryCost.x, this.lotteryCost.y, this, AnchorType.Center);
 
             this.hintFinger = this.resModule.CreateBitmapByName("pd_res_json.finger");
             this.hintFinger.x = this.lotteryBtn.width / 2;
@@ -638,9 +641,22 @@ class ShopView extends egret.DisplayObjectContainer
         Tools.DetachDisplayObjFromParent(this.shopDesBitmap);
         this.shopDesBitmap = this.resModule.CreateBitmapByName("shopDes");
         Tools.SetAnchor(this.shopDesBitmap, AnchorType.Right);
-        this.shopDesBitmap.x = 630 * this.adaptFactor;
+        this.shopDesBitmap.x = GameMain.GetInstance().GetStageWidth() - 10;
         this.shopDesBitmap.y = GameMain.GetInstance().GetStageHeight() - 180;
         this.addChild(this.shopDesBitmap);
+
+        Tools.DetachDisplayObjFromParent(this.shopDesText);
+        this.shopDesText = new egret.TextField();
+        this.shopDesText.text = this.ballConfigModule.IsNewPlayer ? "首次抽球免费哦！" : "抽到相同的球升一级哦！";
+        this.shopDesText.size = 28;
+        this.shopDesText.anchorOffsetX = this.shopDesText.width / 2;
+        this.shopDesText.anchorOffsetY = this.shopDesText.height / 2;
+        this.shopDesText.textAlign = "center";
+        this.shopDesText.bold = false;
+        this.shopDesText.x = GameMain.GetInstance().GetStageWidth() - 235;
+        this.shopDesText.y = GameMain.GetInstance().GetStageHeight() - 234;
+        this.shopDesText.textColor = 0xFFFFFF;
+        this.addChild(this.shopDesText);
     }
 
     private OnClickPreviousBtn(callbackObj: any)

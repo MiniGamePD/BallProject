@@ -1,7 +1,7 @@
 {
 	"groups": [
 		{
-			"keys": "pd_res_json,GameOver_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillRotation2_mp3,ice_Boom_json,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json,BallConfig_10_json,xingxing_json,hitBox_1_mp3,hitBox_2_mp3,hitBox_3_mp3,hitBox_4_mp3,hitBox_5_mp3,hitBox_6_mp3,hitBox_7_mp3,hitBox_8_mp3,hitBox_9_mp3,hitBox_10_mp3,hitBox_11_mp3,hitBox_12_mp3,hitBox_13_mp3,hitBox_14_mp3,hitBox_15_mp3,hitBox_16_mp3,hitBox_17_mp3,hitBox_18_mp3,hitBox_19_mp3,hitBox_20_mp3,BallConfig_11_json,BallConfig_12_json,WebConfig_json",
+			"keys": "pd_res_json,GameOver_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillRotation2_mp3,ice_Boom_json,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json,BallConfig_10_json,xingxing_json,hitBox_1_mp3,hitBox_2_mp3,hitBox_3_mp3,hitBox_4_mp3,hitBox_5_mp3,hitBox_6_mp3,hitBox_7_mp3,hitBox_8_mp3,hitBox_9_mp3,hitBox_10_mp3,hitBox_11_mp3,hitBox_12_mp3,hitBox_13_mp3,hitBox_14_mp3,hitBox_15_mp3,hitBox_16_mp3,hitBox_17_mp3,hitBox_18_mp3,hitBox_19_mp3,hitBox_20_mp3,BallConfig_11_json,BallConfig_12_json,WebConfig_json,Ball_Boom_json,Ball_Blade_json",
 			"name": "preload"
 		}
 	],
@@ -15,7 +15,7 @@
 			"url": "assets/pd_res.json",
 			"type": "sheet",
 			"name": "pd_res_json",
-			"subkeys": "AdRevive,Ball_AngryBird,Ball_BaBa,Ball_Clock,Ball_FootBall,Ball_Gouda,Ball_Money,Ball_Monkey,Ball_Naruto,Ball_SuperMan,Ball_White,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,ControllerBg,GameOver,Help,Help1,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Shop,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,SquareBox1,SquareBox2,SquareBox3,SquareBox4,SquareBox5,SquareBox6,SquareBox7,TianShiJuanGu,TriangleBox1,TriangleBox2,TriangleBox3,TriangleBox4,TriangleBox5,TriangleBox6,TriangleBox7,attributeBg,ballLeft,bgCover,cash,expAccept,expReject,finger,level1,level2,level3,levelMax,lockBg,lockLine,lockText,lottyBackCoin,lottyBg,lottyBtn,lottyEff,lottyLevel1,lottyLevel2,lottyLevel3,lottyLvUpDes,lottyNewBall,lottyTitle,lottyXingxing,maxLevelDes,newball,nextLevelDes,pause,play,point,rankEntry,rankInviteA,rankInviteB,rankLastPage,rankNextPage,rankTitle,return,selected,shopCoin,shopDes,shopReturn,skillArrow,zhangyu,zhangyu_dead"
+			"subkeys": "AdRevive,Ball_AngryBird,Ball_BaBa,Ball_BladeMaster,Ball_BoomMan,Ball_Clock,Ball_FootBall,Ball_Gouda,Ball_Money,Ball_Monkey,Ball_Naruto,Ball_SuperMan,Ball_White,Blade,BoxBoom1,BoxBoom2,BoxBoom3,BoxBoom4,BoxBoom5,BoxBoom6,BoxBoom7,Coin,ControllerBg,GameOver,Help,Help1,HelpIcon,Home,Lobby_ChangBall,Lobby_Light_Blue,Lobby_Light_Green,Lobby_Light_Red,Lobby_Play,Lobby_platfrom,Logo,SelectBall_OK,Share,ShareRevive,Shop,Skill_FireUp,Skill_GoldCoin,Skill_LvUp,Skill_Pause,Skill_shandan,Skill_zhangyu,SquareBox1,SquareBox2,SquareBox3,SquareBox4,SquareBox5,SquareBox6,SquareBox7,TianShiJuanGu,TriangleBox1,TriangleBox2,TriangleBox3,TriangleBox4,TriangleBox5,TriangleBox6,TriangleBox7,attributeBg,ballLeft,bgCover,boom,cash,discount,expAccept,expReject,finger,level1,level2,level3,levelMax,lockBg,lockLine,lockText,lottyBackCoin,lottyBg,lottyBtn,lottyEff,lottyLevel1,lottyLevel2,lottyLevel3,lottyLvUpDes,lottyNewBall,lottyTitle,lottyXingxing,maxLevelDes,newball,nextLevelDes,pause,play,point,rankEntry,rankInviteA,rankInviteB,rankLastPage,rankNextPage,rankTitle,return,selected,shopCoin,shopDes,shopReturn,skillArrow,zhangyu,zhangyu_dead"
 		},
 		{
 			"url": "assets/Sound/GameOver.mp3",
@@ -316,6 +316,16 @@
 			"url": "assets/WebConfig.json",
 			"type": "json",
 			"name": "WebConfig_json"
+		},
+		{
+			"url": "assets/Particle/Ball_Boom.json",
+			"type": "json",
+			"name": "Ball_Boom_json"
+		},
+		{
+			"url": "assets/Particle/Ball_Blade.json",
+			"type": "json",
+			"name": "Ball_Blade_json"
 		}
 	]
 }
