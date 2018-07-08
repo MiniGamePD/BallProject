@@ -138,10 +138,14 @@ class Main extends egret.DisplayObjectContainer
     {
         if(DEBUG)
             console.log("SaveUserData:" + userData);
+        
         platform.saveUserData(userData);
-        var result = platform.loadUserData();
+        
         if(DEBUG)
+        {
+            var result = platform.loadUserData();
             console.log("Check Save Result " + result);
+        }
     }
 
     public loadUserData():string
