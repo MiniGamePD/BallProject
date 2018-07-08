@@ -145,12 +145,32 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         {
             //有就加载
             this.Load();
+
+            //做个搂底，防止saveData损坏
+            if(this.coin == undefined)
+                this.coin = 0;
+            if(this.historyHighScore == undefined)
+                this.historyHighScore = 0;
+            if(this.myBallList == undefined)
+                this.myBallList = "1-1";
+            if(this.expedBallList == undefined)
+                this.expedBallList = "";
+            if(this.controlType == undefined)
+                this.controlType = BallControllerType.TouchMove;
+            if(this.battleTimes == undefined)
+                this.battleTimes = 0;
         }
         else
         {
+            //蛋总，这里是创建新的saveData的地方，新增的数据，一定要在这里初始化
             //没有就新建一个
             this.coin = 0;
             this.historyHighScore = 0;
+            this.myBallList = "1-1";
+            this.expedBallList = "";
+            this.controlType = BallControllerType.TouchMove;
+            this.battleTimes = 0;
+
             this.Save();
         }
     }

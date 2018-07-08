@@ -58,7 +58,10 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		var expedBallStr = "";
 		for(var i = 0; i < this.expedBallList.length; ++i)
 		{
-			expedBallStr += "|" + this.expedBallList[i];
+			if(expedBallStr == "")
+				expedBallStr += this.expedBallList[i];
+			else
+				expedBallStr += "|" + this.expedBallList[i];
 		}
 
 		this.playerDataModule.SetExpedBallList(expedBallStr);
