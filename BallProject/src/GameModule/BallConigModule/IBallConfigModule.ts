@@ -31,4 +31,7 @@ interface IBallConfigModule extends IModule
 
     // 是否是新玩家：只有一个1级的白球
     IsNewPlayer(): boolean;
+
+    // 获得一个随机的体验球，返回空表示没有球可以体验
+    GetExpBall(): RandomBallInfo;
 }

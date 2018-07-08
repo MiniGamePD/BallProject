@@ -17,6 +17,10 @@ class PauseItem extends egret.DisplayObjectContainer
     private controlSelector1Off:ShapeBgButton;
     private controlSelector2On:ShapeBgButton;
     private controlSelector2Off:ShapeBgButton;
+    
+    //体验球界面，为了流程方便，叠在帮助界面上面
+    private ballExpView:BallExperienceView;
+    private hasShowBallExpView:boolean = false;
 
     public constructor(x:number, y:number, width:number, height:number)
     {
@@ -148,6 +152,32 @@ class PauseItem extends egret.DisplayObjectContainer
         this.helpQuitHint.anchorOffsetY = this.helpQuitHint.height / 2;
         this.helpQuitHint.textAlign = "center";
         this.helpQuitHint.text = "点击按钮选择操作模式\n\n点击屏幕其他位置继续游戏";
+    }
+
+    private CreateBallExpView()
+    {
+        if(!this.hasShowBallExpView)
+        {
+            //如果这句没有体验的资格，但是也算已经show过了
+            this.hasShowBallExpView = true;
+
+            var ballMgr = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+            var ballExpInfo = ballMgr.GetExpBall();
+            if(ballExpInfo != null && ballExpInfo != undefined)
+            {
+                this.ballExpView = new BallExperienceView(ballExpInfo);
+                this.ballExpView.Init(this.OnCloseBallExpView, this);
+                this.addChild(this.ballExpView);
+            }
+        }
+    }
+
+    private OnCloseBallExpView(callbackObj:any)
+    {
+        if(callbackObj.ballExpView != null && callbackObj.ballExpView != undefined)
+        {
+            Tools.DetachDisplayObjFromParent(callbackObj.ballExpView);
+        }
     }
 
     private CreateControlSelector(width:number, desc:string, bgColor:number, textColor:number, callback:Function):ShapeBgButton
@@ -315,6 +345,8 @@ class PauseItem extends egret.DisplayObjectContainer
             this.addChild(this.controlSelector2Off);
             this.addChild(this.helpDetail1);
         }
+
+        this.CreateBallExpView();
     }
 
     private HideHelpDetail()

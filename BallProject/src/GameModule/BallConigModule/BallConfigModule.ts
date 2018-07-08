@@ -292,6 +292,19 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		return newBall;
 	}
 
+	public GetExpBall():RandomBallInfo
+	{
+		if(this.myBallList.length < this.GetTotalBallCount())
+		{
+			var expBall = new RandomBallInfo();
+			expBall.id = 3;
+			expBall.level = 1;
+			expBall.randomBallType = RandomBallType.Experience;
+			return expBall;
+		}
+		return null;
+	}
+
 	public IsNewPlayer():boolean
 	{
         if(this.myBallList != null && this.myBallList != undefined && this.myBallList.length == 1)
@@ -327,4 +340,5 @@ enum RandomBallType
 	NewBall,
 	NewLevel,
 	OldMaxLevelBall,
+	Experience,
 }
