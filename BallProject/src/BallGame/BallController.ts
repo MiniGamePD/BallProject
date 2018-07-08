@@ -41,7 +41,10 @@ class BallController
 		this.ballEmitter = ballEmitter;
 		this.battleGround = battleGround;
 
-		this.controllerType = BallControllerType.TouchMove;
+		var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+		this.controllerType = playerData.GetControlType();
+		//For Debug
+		//this.controllerType = BallControllerType.TouchMove;
 
 		if (this.controllerType == BallControllerType.TouchMove)
 		{

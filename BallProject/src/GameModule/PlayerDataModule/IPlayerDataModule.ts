@@ -15,4 +15,6 @@ interface IPlayerDataModule extends IModule
     Load();
     InitUserData();
     OnMatchBegin();
+    SetControlType(type:BallControllerType);
+    GetControlType():BallControllerType;
 }

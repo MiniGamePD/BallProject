@@ -3,8 +3,10 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     private historyHighScore:number;
     private coin:number;
     private curMatchScore:number = 0; //当前比赛分数
-    private myBallList: string;
+    private myBallList:string;
     private coinCurGame:number;
+    private controlType:BallControllerType;
+    private saveDataVersion:number = 2; //常量值，请勿修改
 
     private breakRecordHistoryHighScore:boolean;
 
@@ -97,6 +99,16 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         return this.curMatchScore;
     }
 
+    public SetControlType(type:BallControllerType)
+    {
+        this.controlType = type;
+    }
+    
+    public GetControlType():BallControllerType
+    {
+        return this.controlType;
+    }
+
     public SwitchForeOrBack(from: GameStateType, to: GameStateType): void
     {
 		this.isForeground = true;
@@ -122,10 +134,11 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     {
         let jsonData = 
         {  
-            version:1,
+            version:this.saveDataVersion, //版本2，新增玩家操作模式的存档
             historyHighScore:this.historyHighScore , 
             coin:this.coin,
             myBallList:this.myBallList,
+            controlType:this.controlType,
         } 
         var jsonDataStr:string = JSON.stringify(jsonData);
         GameMain.GetInstance().SaveUserData(jsonDataStr);
@@ -140,28 +153,45 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             {
                 //蛋总，如果新增需要保存的内容，一定要注意兼容老版本的saveData
                 var jsonObj = JSON.parse(userData);
-                this.historyHighScore = jsonObj.historyHighScore;
-                this.coin = jsonObj.coin;
-                this.myBallList = jsonObj.myBallList;
+                if(jsonObj.version == 1)
+                {
+                    //注意：如果新增了saveData的内容，需要在这里添加兼容
+                    this.historyHighScore = jsonObj.historyHighScore;
+                    this.coin = jsonObj.coin;
+                    this.myBallList = jsonObj.myBallList;
+                    this.controlType = BallControllerType.TouchMove;
+                    this.Save();
+                }
+                else if(jsonObj.version == 2)
+                {
+                    //注意：如果新增了saveData的内容，需要在这里添加兼容
+                    this.historyHighScore = jsonObj.historyHighScore;
+                    this.coin = jsonObj.coin;
+                    this.myBallList = jsonObj.myBallList;
+                    this.controlType = jsonObj.controlType;
+                }
             }
             catch(e)
             {
-                //兼容老版本的saveData
+                //这里是兼容最老版本的saveData
                 if(DEBUG)
                     console.log(e);
                 var temp:string[] = userData.split(',');
                 this.historyHighScore = Number(temp[0]);
                 this.coin = Number(temp[1]);
-                this.myBallList = "1-1"
+                this.myBallList = "1-1";
+                this.controlType = BallControllerType.TouchMove;
                 this.Save();//存成新版本的数据格式
             }
         }
         else
         {
+            //这里是没有saveData的时候，初始化数据的地方
             //蛋总，这里要注意初始化玩家的数据
             this.historyHighScore = 0;
             this.coin = 0;
             this.myBallList = "1-1"
+            this.controlType = BallControllerType.TouchMove;
         }
     }
 
