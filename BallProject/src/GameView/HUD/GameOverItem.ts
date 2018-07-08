@@ -183,7 +183,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.moreCoinText.size = 30;
         this.moreCoinText.textAlign = "left";
         this.moreCoinText.verticalAlign = "center";
-        if(Tools.IsWxReviewTimeExpired())
+        if(this.IsEnableShare())
         {
             this.moreCoinText.text = "分享好友，金币翻倍$$$";
         }
@@ -334,7 +334,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         else
             platform.shareAppMsg();
             
-        if(Tools.IsWxReviewTimeExpired())
+        if(callbackObj.IsEnableShare())
         {
             callbackObj.coin.addChild(callbackObj.addtionalCoin);
             callbackObj.moreCoinText.text = "感谢支持，您的额外收益已到账";
@@ -414,7 +414,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnReallyGameOverEvent()
     {
-        var result = Tools.IsWxReviewTimeExpired(); // 是否超过了指定的时间
+        var result = this.IsEnableShare(); // 是否超过了指定的时间
         if (result && GameMain.GetInstance().hasRevive == false)
         {
             this.ShowReviveMenu();
@@ -423,5 +423,12 @@ class GameOverItem extends egret.DisplayObjectContainer
         {
             this.ShowGameOverMenu();
         }
+    }
+
+    private IsEnableShare(): boolean
+    {
+        var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
+        var networkConfig = networkConfigModule.GetNetWorkConfig();
+        return networkConfig.EnableShare;
     }
 }
