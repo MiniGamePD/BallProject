@@ -424,8 +424,8 @@ class BoxEmitter
 
 					var scaleParam = new PaScalingParam()
 					scaleParam.displayObj = boxA.boxDisplayObj;
-					scaleParam.targetScaleX = 1.2;
-					scaleParam.targetScaleY = 1.2;
+					scaleParam.targetScaleX = 1.2 * (boxA.boxDisplayObj.scaleX > 0 ? 1 : -1);
+					scaleParam.targetScaleY = 1.2 * (boxA.boxDisplayObj.scaleY > 0 ? 1 : -1);
 					scaleParam.duration = 2000;
 					scaleParam.interval = 200;
 					scaleParam.reverse = true;

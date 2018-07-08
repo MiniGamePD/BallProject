@@ -688,6 +688,73 @@ class ShopView extends egret.DisplayObjectContainer
             this.lottyView.Init(this.OnCloseLotteryView, this);
             this.addChild(this.lottyView);
         }
+        else
+        {
+            var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
+            var networkConfig = networkConfigModule.GetNetWorkConfig();
+            var tips = "糟糕，金币不够!\n游戏中击破金币道具可以获得金币。";
+            if (networkConfig.EnableShare)
+            {
+                tips += "\n分享好友，金币可以翻倍哦~"
+            }
+            this.ShowTips(GameMain.GetInstance().GetStageWidth() / 2,
+                 GameMain.GetInstance().GetStageHeight() / 2, tips);
+        }
+    }
+
+    private tips: egret.TextField;
+    private tipsShapeBg: egret.Shape;
+    public ShowTips(posx: number, posy:number, tipString: string)
+    {
+        Tools.DetachDisplayObjFromParent(this.tips);
+        Tools.DetachDisplayObjFromParent(this.tipsShapeBg);
+
+        this.tips = new egret.TextField();
+        this.tips.text = tipString;
+        this.tips.size = 28;
+        this.tips.anchorOffsetX = this.tips.width / 2;
+        this.tips.anchorOffsetY = this.tips.height / 2;
+        this.tips.textAlign = "center";
+        this.tips.bold = false;
+        // tips.strokeColor = 0x000000;
+        // tips.stroke = 2;
+        this.tips.x = posx;
+        this.tips.y = posy;
+        this.tips.textColor = 0x11fdff;
+
+		this.tipsShapeBg = new egret.Shape();
+		this.tipsShapeBg.graphics.lineStyle(2, 0x000000);
+		this.tipsShapeBg.graphics.beginFill(0x6B6B6B, 1);
+		this.tipsShapeBg.graphics.drawRect(0, 0, this.tips.width + 40, this.tips.height + 50);
+		this.tipsShapeBg.graphics.endFill();
+		this.tipsShapeBg.x = posx
+		this.tipsShapeBg.y = posy
+		this.tipsShapeBg.width = this.tips.width + 40;
+		this.tipsShapeBg.height = this.tips.height + 50;
+		Tools.SetAnchor(this.tipsShapeBg, AnchorType.Center);
+        this.addChild(this.tipsShapeBg)
+
+        this.addChild(this.tips);
+
+        var moveParam = new PaMovingParam()
+        moveParam.displayObj = this.tips;
+        moveParam.duration = 5000;
+        moveParam.targetPosX = this.tips.x;
+        moveParam.targetPosY = this.tips.y - 60;
+        moveParam.needRemoveOnFinish = true;
+        var moveEvent = new PlayProgramAnimationEvent();
+        moveEvent.param = moveParam;
+        GameMain.GetInstance().DispatchEvent(moveEvent);
+
+        var moveParam = new PaMovingParam()
+        moveParam.displayObj = this.tipsShapeBg;
+        moveParam.duration = 5000;
+        moveParam.targetPosX = this.tips.x;
+        moveParam.targetPosY = this.tips.y - 60;
+        moveParam.needRemoveOnFinish = true;
+        var moveEvent = new PlayProgramAnimationEvent();
+        moveEvent.param = moveParam;
+        GameMain.GetInstance().DispatchEvent(moveEvent);
     }
 
     private OnCloseLotteryView(callbackObj: any, ballInfo: RandomBallInfo)
