@@ -7,7 +7,7 @@ class BallController
 	private battleGround: egret.DisplayObjectContainer;
 	private emitDir: egret.Point;
 
-	private controllerType: BallControllerType;
+	public controllerType: BallControllerType;
 
 	private curTouchPointId = -1;
 	private beginTouchPoint: egret.Point;
@@ -45,24 +45,45 @@ class BallController
 
 		if (this.controllerType == BallControllerType.TouchMove)
 		{
-			this.curAlpha = 1;
-			var uiInitX = GameMain.GetInstance().GetStageWidth() / 2;
-			var uiInitY = GameMain.GetInstance().GetStageHeight() / 4 * 3;
-			this.moveUiBgBitmap = this.resModule.CreateBitmap("ControllerBg", uiInitX, uiInitY, this.battleGround);
-			this.moveUiBgBitmap.width = 150;
-			this.moveUiBgBitmap.height = 150;
-			Tools.SetAnchor(this.moveUiBgBitmap, AnchorType.Center);
-
-			this.movePointBitmap = this.resModule.CreateBitmap("Lobby_Light_Red", uiInitX, uiInitY, this.battleGround);
-			this.movePointBitmap.width = 80;
-			this.movePointBitmap.height = 80;
-			Tools.SetAnchor(this.movePointBitmap, AnchorType.Center);
-
-			this.movePointBitmap.alpha = this.curAlpha;
-			this.moveUiBgBitmap.alpha = this.curAlpha;
+			this.InitTouchMoveUI()
 		}
 
 		this.RegisterTouchEvent();
+	}
+
+	private InitTouchMoveUI()
+	{
+		Tools.DetachDisplayObjFromParent(this.movePointBitmap);
+		Tools.DetachDisplayObjFromParent(this.moveUiBgBitmap);
+		this.curAlpha = 1;
+		var uiInitX = GameMain.GetInstance().GetStageWidth() / 2;
+		var uiInitY = GameMain.GetInstance().GetStageHeight() / 4 * 3;
+		this.moveUiBgBitmap = this.resModule.CreateBitmap("ControllerBg", uiInitX, uiInitY, this.battleGround);
+		this.moveUiBgBitmap.width = 150;
+		this.moveUiBgBitmap.height = 150;
+		Tools.SetAnchor(this.moveUiBgBitmap, AnchorType.Center);
+
+		this.movePointBitmap = this.resModule.CreateBitmap("Lobby_Light_Red", uiInitX, uiInitY, this.battleGround);
+		this.movePointBitmap.width = 80;
+		this.movePointBitmap.height = 80;
+		Tools.SetAnchor(this.movePointBitmap, AnchorType.Center);
+
+		this.movePointBitmap.alpha = this.curAlpha;
+		this.moveUiBgBitmap.alpha = this.curAlpha;
+	}
+
+	public SwitchControllerType(controllerType: BallControllerType)
+	{
+		this.controllerType = controllerType;
+		if (this.controllerType == BallControllerType.TouchMove)
+		{
+			this.InitTouchMoveUI();
+		}
+		else
+		{
+			Tools.DetachDisplayObjFromParent(this.movePointBitmap);
+			Tools.DetachDisplayObjFromParent(this.moveUiBgBitmap);
+		}
 	}
 
 
@@ -188,10 +209,6 @@ class BallController
 			{
 				this.OnTouchPosition(evt.stageX, evt.stageY);
 			}
-			else
-			{
-
-			}
 		}
 	}
 
@@ -209,30 +226,35 @@ class BallController
 
 	private UpdateUiAlpha(deltaTime: number)
 	{
-		if (this.curTouchPointId < 0)
+		if (this.controllerType == BallControllerType.TouchMove
+			&& this.movePointBitmap
+			&& this.moveUiBgBitmap)
 		{
-			if (this.curAlpha > this.MinAlpha)
+			if (this.curTouchPointId < 0)
 			{
-				this.curAlpha -= deltaTime * 0.001 / this.LerpAlphaDownSpeed;
-				if (this.curAlpha < this.MinAlpha)
+				if (this.curAlpha > this.MinAlpha)
 				{
-					this.curAlpha = this.MinAlpha;
+					this.curAlpha -= deltaTime * 0.001 / this.LerpAlphaDownSpeed;
+					if (this.curAlpha < this.MinAlpha)
+					{
+						this.curAlpha = this.MinAlpha;
+					}
+					this.movePointBitmap.alpha = this.curAlpha;
+					this.moveUiBgBitmap.alpha = this.curAlpha;
 				}
-				this.movePointBitmap.alpha = this.curAlpha;
-				this.moveUiBgBitmap.alpha = this.curAlpha;
 			}
-		}
-		else
-		{
-			if (this.curAlpha < this.MaxAlpha)
+			else
 			{
-				this.curAlpha += deltaTime * 0.001 / this.LerpAlphaUpSpeed;
-				if (this.curAlpha > this.MaxAlpha)
+				if (this.curAlpha < this.MaxAlpha)
 				{
-					this.curAlpha = this.MaxAlpha;
+					this.curAlpha += deltaTime * 0.001 / this.LerpAlphaUpSpeed;
+					if (this.curAlpha > this.MaxAlpha)
+					{
+						this.curAlpha = this.MaxAlpha;
+					}
+					this.movePointBitmap.alpha = this.curAlpha;
+					this.moveUiBgBitmap.alpha = this.curAlpha;
 				}
-				this.movePointBitmap.alpha = this.curAlpha;
-				this.moveUiBgBitmap.alpha = this.curAlpha;
 			}
 		}
 	}
