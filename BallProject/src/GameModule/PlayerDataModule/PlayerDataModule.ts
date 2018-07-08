@@ -4,8 +4,11 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     private coin:number;
     private curMatchScore:number = 0; //当前比赛分数
     private myBallList:string;
+    private expedBallList:string;
     private coinCurGame:number;
     private controlType:BallControllerType;
+    private battleTimes:number;
+
     private saveDataVersion:number = 2; //常量值，请勿修改
 
     private breakRecordHistoryHighScore:boolean;
@@ -29,6 +32,28 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     {
         this.myBallList = ballListString;
         this.Save();
+    }
+
+    public GetExpedBallList():string
+    {
+        return this.expedBallList;
+    }
+
+    public SetExpedBallList(list:string)
+    {
+        this.expedBallList = list;
+    }
+
+    public GetBattleTimes():number
+    {
+        return this.battleTimes;
+    }
+
+    public SetBattleTimes(times:number)
+    {
+        this.battleTimes = times;
+        if(DEBUG)
+            console.log("Set Battle Times:" + this.battleTimes);
     }
 
     public SetHistoryHighScore(score:number)
@@ -139,6 +164,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             coin:this.coin,
             myBallList:this.myBallList,
             controlType:this.controlType,
+            expedBallList:this.expedBallList,
+            battleTimes:this.battleTimes,
         } 
         var jsonDataStr:string = JSON.stringify(jsonData);
         GameMain.GetInstance().SaveUserData(jsonDataStr);
@@ -159,6 +186,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                     this.historyHighScore = jsonObj.historyHighScore;
                     this.coin = jsonObj.coin;
                     this.myBallList = jsonObj.myBallList;
+                    this.expedBallList = "";
+                    this.battleTimes = 0;
                     this.controlType = BallControllerType.TouchMove;
                     this.Save();
                 }
@@ -169,6 +198,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                     this.coin = jsonObj.coin;
                     this.myBallList = jsonObj.myBallList;
                     this.controlType = jsonObj.controlType;
+                    this.expedBallList = jsonObj.expedBallList;
+                    this.battleTimes = jsonObj.battleTimes;
                 }
             }
             catch(e)
@@ -180,7 +211,9 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                 this.historyHighScore = Number(temp[0]);
                 this.coin = Number(temp[1]);
                 this.myBallList = "1-1";
+                this.expedBallList = "";
                 this.controlType = BallControllerType.TouchMove;
+                this.battleTimes = 0;
                 this.Save();//存成新版本的数据格式
             }
         }
@@ -190,7 +223,9 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             //蛋总，这里要注意初始化玩家的数据
             this.historyHighScore = 0;
             this.coin = 0;
-            this.myBallList = "1-1"
+            this.myBallList = "1-1";
+            this.expedBallList = "";
+            this.battleTimes = 0;
             this.controlType = BallControllerType.TouchMove;
         }
     }

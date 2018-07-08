@@ -17,4 +17,8 @@ interface IPlayerDataModule extends IModule
     OnMatchBegin();
     SetControlType(type:BallControllerType);
     GetControlType():BallControllerType;
+    SetBattleTimes(times:number);
+    GetBattleTimes():number;
+    SetExpedBallList(list:string);
+    GetExpedBallList():string;
 }

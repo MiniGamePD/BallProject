@@ -58,6 +58,9 @@ class BallMatchModule extends GameViewModule
 
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerData.OnMatchBegin();
+        var battleTimes = playerData.GetBattleTimes();
+        playerData.SetBattleTimes(battleTimes + 1);
+        playerData.Save();
 
         var event = new PauseEvent();
         event.pause = true;

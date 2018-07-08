@@ -13,6 +13,9 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	private curBallLevel: number;
 	private curBallConfig: BallConfig;
 
+	private expBallList:number[] = [3,4,10,12];//鸡，鸣，币，剑
+	private expedBallList:number[];
+
 	public Init():boolean
 	{
 		super.Init();
@@ -33,6 +36,33 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		this.LoadBallJsonConfig();
 		this.LoadMyBall();
 		this.LoadCurBallConfig();
+		this.LoadExpedBall();
+	}
+
+	private LoadExpedBall()
+	{
+		this.expedBallList = [];
+		var expedBallStr = this.playerDataModule.GetExpedBallList();
+		if(expedBallStr != undefined && expedBallStr != null && expedBallStr != "")
+		{
+			var temp = expedBallStr.split("|");
+			for(var i = 0; i < temp.length; ++i)
+			{
+				this.expedBallList.push(Number(temp[i]));
+			}
+		}
+	}
+
+	private SaveExpedBall()
+	{
+		var expedBallStr = "";
+		for(var i = 0; i < this.expedBallList.length; ++i)
+		{
+			expedBallStr += "|" + this.expedBallList[i];
+		}
+
+		this.playerDataModule.SetExpedBallList(expedBallStr);
+		this.playerDataModule.Save();
 	}
 
 	private LoadBallJsonConfig()
@@ -294,13 +324,39 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 
 	public GetExpBall():RandomBallInfo
 	{
-		if(this.myBallList.length < this.GetTotalBallCount())
+		var battleTimes = this.playerDataModule.GetBattleTimes();
+		var isExpBattleTimes:boolean = battleTimes > 0 && (battleTimes == 3 || battleTimes % 10 == 0)
+
+		if(isExpBattleTimes && this.expBallList.length > this.expedBallList.length)
 		{
-			var expBall = new RandomBallInfo();
-			expBall.id = 3;
-			expBall.level = 1;
-			expBall.randomBallType = RandomBallType.Experience;
-			return expBall;
+			//整理还有哪些球没有体验过
+			var tobeExp:number[] = [];
+			for(var i = 0; i < this.expBallList.length; ++i)
+			{
+				var id = this.expBallList[i];
+				if(this.expedBallList.indexOf(id) < 0)
+				{
+					tobeExp.push(id);
+				}
+			}
+
+			//随机一个
+			if(tobeExp.length > 0)
+			{
+				var ranProbability = Math.floor(Math.random() * tobeExp.length);
+				ranProbability = Math.min(ranProbability, tobeExp.length - 1);
+				ranProbability = Math.max(ranProbability, 0);
+
+				var tobeExpId = tobeExp[ranProbability];
+				this.expedBallList.push(tobeExpId);
+				this.SaveExpedBall();
+
+				var expBall = new RandomBallInfo();
+				expBall.id = tobeExpId;
+				expBall.level = 1;
+				expBall.randomBallType = RandomBallType.Experience;
+				return expBall;
+			}
 		}
 		return null;
 	}

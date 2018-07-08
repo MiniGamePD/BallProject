@@ -310,6 +310,9 @@ class GameOverItem extends egret.DisplayObjectContainer
         var playerdata = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerdata.Save();
         playerdata.UploadHistoryHighScore();
+
+        var soundEvent: PlaySoundEvent = new PlaySoundEvent("GameOver_mp3", 1);
+        GameMain.GetInstance().DispatchEvent(soundEvent);
     }
 
     public ShowReviveMenu()
