@@ -291,7 +291,7 @@ class BoxEmitter
 			if (this.ballDataMgr.IsTriggerSkill_BoomOnHit())
 			{
 				this.BoomDamageOnHit(ballPhyBody, this.ballDataMgr.ballConfig.skill_BoomOnHit_Range,
-					 this.ballDataMgr.ballConfig.skill_BoomOnHit_Damage);
+					this.ballDataMgr.ballConfig.skill_BoomOnHit_Damage);
 			}
 			else if (this.ballDataMgr.IsTriggerSkill_CriticalStrike())
 			{
@@ -301,8 +301,8 @@ class BoxEmitter
 			{
 				this.ApplyDamageOnBox(box, 1, ballPhyBody)
 			}
-			
-			 if (box.health > 0 && !box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
+
+			if (box.health > 0 && !box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
 			{
 				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time * 1000);
 			}
@@ -328,11 +328,23 @@ class BoxEmitter
 	private ApplyCriticalStrike(box: Box, damage: number, ballPhyBody: p2.Body)
 	{
 		this.ApplyDamageOnBox(box, damage, ballPhyBody)
-		Tools.ShowTips(box.healthDisplayObj.x, box.healthDisplayObj.y + 20, this.battleGround, "-" + damage, 0xd6340a)
+		Tools.ShowTips(box.healthDisplayObj.x, box.healthDisplayObj.y + 20, this.battleGround, "-" + damage, 0xd6340a);
+
+		var param = new PaPlayParticalParam;
+		param.textureName = "Blade";
+		param.jsonName = "Ball_Blade";
+		param.duration = 1000;
+		param.emitDuration = 100;
+		param.posX = box.healthDisplayObj.x;
+		param.posY = box.healthDisplayObj.y;
+		var event = new PlayProgramAnimationEvent();
+		event.param = param;
+		GameMain.GetInstance().DispatchEvent(event);
+
 	}
 
 	// 爆炸伤害周围的盒子
-	private BoomDamageOnHit(ballPhyBody: p2.Body, range:number, damage: number)
+	private BoomDamageOnHit(ballPhyBody: p2.Body, range: number, damage: number)
 	{
 		if (ballPhyBody != null)
 		{
@@ -349,6 +361,8 @@ class BoxEmitter
 					var dis = point.length;
 					if (dis <= range)
 					{
+						Tools.ShowTips(this.boxList[i].healthDisplayObj.x,
+							this.boxList[i].healthDisplayObj.y + 20, this.battleGround, "-" + damage, 0xd6340a);
 						this.ApplyDamageOnBox(this.boxList[i], damage, ballPhyBody)
 					}
 				}
@@ -359,8 +373,8 @@ class BoxEmitter
 	public BoomDamagePartical(posx: number, posy: number)
 	{
 		var param = new PaPlayParticalParam;
-		param.textureName = "Lobby_Light_Red";
-		param.jsonName = "Particle_Boom_Bomb";
+		param.textureName = "boom";
+		param.jsonName = "Ball_Boom";
 		param.duration = 1000;
 		param.emitDuration = 100;
 		param.posX = posx;
