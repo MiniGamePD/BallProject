@@ -61,7 +61,7 @@ class BallMatchView extends GameView
         this.addChild(this.playerLv);
 
         // this.playerLv.touchEnabled = true;
-        // this.playerLv.addEventListener(egret.TouchEvent.TOUCH_TAP, this.GameOver, this);
+        // this.playerLv.addEventListener(egret.TouchEvent.TOUCH_TAP, this.ChangBall, this);
     }
 
     private OnBallEmitterLevelUpEvent(event: BallEmitterLevelUpEvent)
@@ -82,10 +82,12 @@ class BallMatchView extends GameView
         return this.battleGround;
     }
 
-    private GameOver()
+    private ChangBallTest()
     {
-        let event = new GameOverEvent();
-        GameMain.GetInstance().DispatchEvent(event);
+        var ballId = Math.ceil(Math.random() * 12)
+        var level = Math.ceil(Math.random() * 3)
+        this.ballDataMgr.ChangeBall(ballId,level);
+        this.ShowTips("换球：ballId = " + ballId + ", Lv" + level, 0xffffff)
     }
 
     private DeletePlayerLv()

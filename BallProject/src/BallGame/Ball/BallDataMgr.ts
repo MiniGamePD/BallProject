@@ -1,15 +1,17 @@
 class BallDataMgr
 {
-	public constructor()
-	{
-	}
-
 	public ballConfig: BallConfig;
 
 	public Init()
 	{
 		var ballConfigMdl = <IBallConfigModule> GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
 		this.ballConfig  = ballConfigMdl.GetCurBallConfig();
+	}
+
+	public ChangeBall(ballId: number, level: number)
+	{
+		var ballConfigMdl = <IBallConfigModule> GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+		this.ballConfig = ballConfigMdl.GetBallConfig(ballId, level);
 	}
 
 	public GetBallEmitRadius()
