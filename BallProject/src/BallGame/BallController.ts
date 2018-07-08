@@ -97,6 +97,7 @@ class BallController
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchMove, this);
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchTap, this);
 		GameMain.GetInstance().AddEventListener(egret.TouchEvent.TOUCH_END, this.OnTouchEnd, this);
+		GameMain.GetInstance().AddEventListener(SwitchControlTypeEvent.EventName, this.OnSwitchControlTypeEvent, this);
 	}
 
 
@@ -106,7 +107,12 @@ class BallController
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_MOVE, this.OnTouchMove, this);
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_TAP, this.OnTouchTap, this);
 		GameMain.GetInstance().RemoveEventListener(egret.TouchEvent.TOUCH_END, this.OnTouchEnd, this);
+		GameMain.GetInstance().RemoveEventListener(SwitchControlTypeEvent.EventName, this.OnSwitchControlTypeEvent, this);
+	}
 
+	private OnSwitchControlTypeEvent(event:SwitchControlTypeEvent)
+	{
+		this.SwitchControllerType(event.newControlType);
 	}
 
 	private OnTouchBegin(evt: egret.TouchEvent): void

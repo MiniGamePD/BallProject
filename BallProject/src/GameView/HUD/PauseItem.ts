@@ -258,6 +258,10 @@ class PauseItem extends egret.DisplayObjectContainer
         callbackObj.addChild(callbackObj.controlSelector1On);
         callbackObj.addChild(callbackObj.controlSelector2Off);
         callbackObj.addChild(callbackObj.helpDetail1);
+
+        var event:SwitchControlTypeEvent = new SwitchControlTypeEvent();
+        event.newControlType = BallControllerType.TouchMove;
+        GameMain.GetInstance().DispatchEvent(event);
     }
 
     private OnChooseTouch(callbackObj:any)
@@ -270,11 +274,15 @@ class PauseItem extends egret.DisplayObjectContainer
         Tools.DetachDisplayObjFromParent(callbackObj.helpDetail2);
 
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
-        playerData.SetControlType(BallControllerType.TouchMove);
+        playerData.SetControlType(BallControllerType.TouchPoint);
         playerData.Save();
         callbackObj.addChild(callbackObj.controlSelector1Off);
         callbackObj.addChild(callbackObj.controlSelector2On);
         callbackObj.addChild(callbackObj.helpDetail2);
+
+        var event:SwitchControlTypeEvent = new SwitchControlTypeEvent();
+        event.newControlType = BallControllerType.TouchPoint;
+        GameMain.GetInstance().DispatchEvent(event);
     }
 
     private ShowHelpDetail()
@@ -316,7 +324,9 @@ class PauseItem extends egret.DisplayObjectContainer
         Tools.DetachDisplayObjFromParent(this.helpDetail2);
         Tools.DetachDisplayObjFromParent(this.helpQuitHint);
         Tools.DetachDisplayObjFromParent(this.controlSelector1On);
+        Tools.DetachDisplayObjFromParent(this.controlSelector1Off);
         Tools.DetachDisplayObjFromParent(this.controlSelector2On);
+        Tools.DetachDisplayObjFromParent(this.controlSelector2Off);
     }
 
     public ShowPauseMenu()
