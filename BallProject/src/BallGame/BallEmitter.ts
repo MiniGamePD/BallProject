@@ -331,12 +331,18 @@ class BallEmitter
 			if (this.ballList[i].ballDisplay.x < 0
 				|| this.ballList[i].ballDisplay.x > GameMain.GetInstance().GetStageWidth()
 				|| this.ballList[i].ballDisplay.y < 0
-				|| this.ballList[i].ballDisplay.y > GameMain.GetInstance().GetStageHeight())
+				|| this.ballList[i].ballDisplay.y > GameMain.GetInstance().GetStageHeight()
+				|| this.IsSlowBall(this.ballList[i]))
 			{
 				this.DeleteBall(this.ballList[i]);
 				--i;
 			}
 		}
+	}
+
+	private IsSlowBall(ball: Ball): boolean
+	{
+		return ball.phyBody.sleepState == p2.Body.SLEEPY || ball.phyBody.sleepState == p2.Body.SLEEPING;
 	}
 
 	public GetBallById(id: number): Ball
