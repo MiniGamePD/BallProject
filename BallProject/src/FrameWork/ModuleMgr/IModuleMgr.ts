@@ -35,5 +35,6 @@ enum ModuleType{
 	MATCH,
 	PLAYER_DATA,
 	BALL_CONFIG,
+	NETWORK_CONFIG,
 	MAX
 }
