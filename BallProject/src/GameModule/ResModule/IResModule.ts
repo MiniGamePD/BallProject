@@ -3,7 +3,7 @@ interface IResModule extends IModule
 	/**
 	 * 开始加载资源
 	 */
-	StartLoadResource(finishCallBack: Function): void;
+	StartLoadResource(): void;
 
 	/**
 	 * 获取资源

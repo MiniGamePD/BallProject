@@ -11,7 +11,7 @@ class LoadingModule extends GameViewModule
 
 		this.RegisterLoadingEvent();
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
-		this.resModule.StartLoadResource(this.OnFinishCallBack);
+		this.resModule.StartLoadResource();
 
 		//Load User Data
 		var playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
@@ -75,17 +75,11 @@ class LoadingModule extends GameViewModule
 	private OnLoadingComplete()
 	{
 		egret.log("OnLoadingComplete");
-	}
-
-	private OnFinishCallBack()
-	{
-		egret.log("OnFinishCallBack");
-				
+						
 		var ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
 		ballConfigModule.LoadBallConfig();
 
 		GameMain.GetInstance().SwitchGameState(GameStateType.Lobby);
-		
 	}
 
 	public Release():void

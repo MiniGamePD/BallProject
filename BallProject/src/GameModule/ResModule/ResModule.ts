@@ -22,23 +22,17 @@ class ResModule extends ModuleBase implements IResModule
 		this.isForeground = true;
 	}
 
-	public StartLoadResource(finishCallBack: Function): void
+	public StartLoadResource(): void
 	{
-		this.LoadResource(finishCallBack);
+		this.LoadResource();
 	}
 
-	public async LoadResource(finishCallBack: Function)
+	public async LoadResource()
 	{
 		try
 		{
 			await RES.loadConfig("resource/default.res.json", "resource/");
 			await RES.loadGroup("preload", 0, null);
-			// await this.InitDragonBonesData();
-			if (finishCallBack != null
-				&& finishCallBack != undefined)
-			{
-				finishCallBack();
-			}
 			return true;
 		}
 		catch (e)
