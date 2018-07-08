@@ -9,13 +9,13 @@
 	"probability": [12, 12, 12],
 	"firstBallProbability": 12,
 
-	"skill_BoomOnHit_Rate" : [0.1, 0.1, 0.1], 
-	"skill_BoomOnHit_Range" : [200, 200, 200],
-	"skill_BoomOnHit_Damage" : [1, 2, 3],
+	"skill_BoomOnHit_Rate" : [0.1, 0.15, 0.2], 
+	"skill_BoomOnHit_Range" : [180, 180, 180],
+	"skill_BoomOnHit_Damage" : [1, 1, 1],
 
 	"skillDes" : "Boom~~！有一定概率爆炸伤害范围内的敌人！",
-	"skillHead" : "伤害",
-	"skillLevellDes" : ["1", "2", "3"],
+	"skillHead" : "概率",
+	"skillLevellDes" : ["10%", "15%", "20%"],
 
 	"Describe" : ["<金币道具>额外加2金币", "<金币道具>额外加4金币", "<金币道具>额外加6金币"]	
 }
