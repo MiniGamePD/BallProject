@@ -13,18 +13,18 @@ class LobbyView extends GameView
     private ballAnimAcc: number;
     private shop: ShopView;
     //===排行榜===
-    private rankButton:ShapeBgButton;
+    private rankButton: ShapeBgButton;
 
-    private rankMenu:egret.Bitmap;
-    private rankBg:FullScreenCover;
-    private rankBackButton:ShapeBgButton;
-    private rankInviteA:ShapeBgButton;
-    private rankInviteB:egret.Bitmap;
-    private rankTitle:egret.Bitmap;
-    private rankFrame:egret.Shape;
-    private rankLastButton:ShapeBgButton;
-    private rankNextButton:ShapeBgButton;
-    private rankCantUseCouldStorage:egret.TextField;
+    private rankMenu: egret.Bitmap;
+    private rankBg: FullScreenCover;
+    private rankBackButton: ShapeBgButton;
+    private rankInviteA: ShapeBgButton;
+    private rankInviteB: egret.Bitmap;
+    private rankTitle: egret.Bitmap;
+    private rankFrame: egret.Shape;
+    private rankLastButton: ShapeBgButton;
+    private rankNextButton: ShapeBgButton;
+    private rankCantUseCouldStorage: egret.TextField;
 
     public CreateView(): void
     {
@@ -82,15 +82,15 @@ class LobbyView extends GameView
 
         var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
 
-        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_Play", 
-            273*adaptFactor, 86*adaptFactor, 273*adaptFactor, 86*adaptFactor,
+        var button = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_Play",
+            273 * adaptFactor, 86 * adaptFactor, 273 * adaptFactor, 86 * adaptFactor,
             this.OnClickStartGame, this);
         button.x = this.mStageWidth / 2 + 150 * adaptFactor;
         button.y = 1000;
         this.addChild(button);
 
-        var shop = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_ChangBall", 
-            273*adaptFactor, 86*adaptFactor, 273*adaptFactor, 86*adaptFactor,
+        var shop = new ShapeBgButton(ShapeBgType.RoundRect, 0x00000000, 0, 0, "pd_res_json.Lobby_ChangBall",
+            273 * adaptFactor, 86 * adaptFactor, 273 * adaptFactor, 86 * adaptFactor,
             this.OnClickShop, this);
         shop.x = this.mStageWidth / 2 - 150 * adaptFactor;
         shop.y = 1000;
@@ -142,10 +142,10 @@ class LobbyView extends GameView
         var ballConfigMdl = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
         var res = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
         this.ball = res.CreateBitmapByName("pd_res_json." + ballConfigMdl.GetCurBallConfig().textureName);
-        this.ball.x = this.mStageWidth / 2 + 100;
-        this.ball.y = 500;
-        this.ball.width = 50;
-        this.ball.height = 50;
+        this.ball.x = this.mStageWidth / 2 + 130;
+        this.ball.y = 470;
+        this.ball.width = 70;
+        this.ball.height = 70;
 
         this.addChild(this.ball);
     }
@@ -168,10 +168,10 @@ class LobbyView extends GameView
         var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
 
         //入口
-        this.rankButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
-            "pd_res_json.rankEntry", 117*0.8*adaptFactor, 118*0.8*adaptFactor,
-            117*0.8*adaptFactor, 118*0.8*adaptFactor, this.OnClickRank, this);
-        this.rankButton.x = 430*adaptFactor;
+        this.rankButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0,
+            "pd_res_json.rankEntry", 117 * 0.8 * adaptFactor, 118 * 0.8 * adaptFactor,
+            117 * 0.8 * adaptFactor, 118 * 0.8 * adaptFactor, this.OnClickRank, this);
+        this.rankButton.x = 430 * adaptFactor;
         this.rankButton.y = 830;
         this.addChild(this.rankButton);
 
@@ -179,7 +179,7 @@ class LobbyView extends GameView
         this.rankBg = new FullScreenCover(0x000000, 0.9);
 
         //返回
-        this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
+        this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0,
             "pd_res_json.shopReturn", 65, 65, 65, 65, this.OnCloseRank, this);
         this.rankBackButton.x = 50;
         this.rankBackButton.y = 80;
@@ -201,26 +201,26 @@ class LobbyView extends GameView
         this.rankFrame.anchorOffsetY = rankFrameHeight / 2;
         this.rankFrame.graphics.lineStyle(10, 0xFFFFFF);
         this.rankFrame.graphics.beginFill(0x000000, 0);
-        this.rankFrame.graphics.drawRoundRect(GameMain.GetInstance().GetStageWidth()/2, GameMain.GetInstance().GetStageHeight()/2-60, 
+        this.rankFrame.graphics.drawRoundRect(GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() / 2 - 60,
             rankFrameWidth, rankFrameHeight, 60);
         this.rankFrame.graphics.endFill();
 
         //翻页按钮
-        this.rankLastButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
-            "pd_res_json.rankLastPage", 105*adaptFactor, 105*adaptFactor,
-            105*adaptFactor, 105*adaptFactor, this.OnRankLastPage, this);
+        this.rankLastButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0,
+            "pd_res_json.rankLastPage", 105 * adaptFactor, 105 * adaptFactor,
+            105 * adaptFactor, 105 * adaptFactor, this.OnRankLastPage, this);
         this.rankLastButton.x = 80 * adaptFactor;
         this.rankLastButton.y = 900;
-        this.rankNextButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
-            "pd_res_json.rankNextPage", 105*adaptFactor, 105*adaptFactor,
-            105*adaptFactor, 105*adaptFactor, this.OnRankNextPage, this);
+        this.rankNextButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0,
+            "pd_res_json.rankNextPage", 105 * adaptFactor, 105 * adaptFactor,
+            105 * adaptFactor, 105 * adaptFactor, this.OnRankNextPage, this);
         this.rankNextButton.x = 560 * adaptFactor;
         this.rankNextButton.y = 900;
 
         //分享
-        this.rankInviteA = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, 
-            "pd_res_json.rankInviteA", 198*adaptFactor, 66*adaptFactor,
-            198*adaptFactor, 66*adaptFactor, this.OnRankShare, this);
+        this.rankInviteA = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0,
+            "pd_res_json.rankInviteA", 198 * adaptFactor, 66 * adaptFactor,
+            198 * adaptFactor, 66 * adaptFactor, this.OnRankShare, this);
         this.rankInviteA.x = GameMain.GetInstance().GetStageWidth() / 2 + 190 * adaptFactor;
         this.rankInviteA.y = 1050;
 
@@ -234,7 +234,7 @@ class LobbyView extends GameView
 
         this.rankMenu = platform.createOpenDataBitmap(GameMain.GetInstance().GetStageWidth(),
             GameMain.GetInstance().GetStageHeight());
-        if(this.rankMenu != null)
+        if (this.rankMenu != null)
         {
             this.rankMenu.touchEnabled = true;
             this.rankMenu.anchorOffsetX = this.rankMenu.width / 2;
@@ -257,12 +257,12 @@ class LobbyView extends GameView
         this.rankCantUseCouldStorage.verticalAlign = "middle";
     }
 
-    private OnClickRank(callbackobj:any)
+    private OnClickRank(callbackobj: any)
     {
         callbackobj.addChild(callbackobj.rankBg);
         callbackobj.addChild(callbackobj.rankFrame);
         callbackobj.addChild(callbackobj.rankTitle);
-        if(callbackobj.rankMenu != null && callbackobj.rankMenu != undefined)
+        if (callbackobj.rankMenu != null && callbackobj.rankMenu != undefined)
         {
             callbackobj.addChild(callbackobj.rankMenu);
         }
@@ -272,18 +272,18 @@ class LobbyView extends GameView
         callbackobj.addChild(callbackobj.rankInviteA);
         callbackobj.addChild(callbackobj.rankInviteB);
 
-        if(platform.canUseCloudStorage())
+        if (platform.canUseCloudStorage())
             platform.getFriendCloudStorage("HighScore");
         else
             callbackobj.addChild(callbackobj.rankCantUseCouldStorage);
     }
 
-    private OnCloseRank(callbackObj:any)
+    private OnCloseRank(callbackObj: any)
     {
         Tools.DetachDisplayObjFromParent(callbackObj.rankBg);
         Tools.DetachDisplayObjFromParent(callbackObj.rankFrame);
         Tools.DetachDisplayObjFromParent(callbackObj.rankTitle);
-        if(callbackObj.rankMenu != null && callbackObj.rankMenu != undefined)
+        if (callbackObj.rankMenu != null && callbackObj.rankMenu != undefined)
         {
             Tools.DetachDisplayObjFromParent(callbackObj.rankMenu);
         }
@@ -308,14 +308,14 @@ class LobbyView extends GameView
     private OnRankShare()
     {
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
-        if(playerData.GetHistoryHighScore() > 0)
+        if (playerData.GetHistoryHighScore() > 0)
         {
             GameMain.GetInstance().ShareAppMsgRank(playerData.GetHistoryHighScore());
         }
         else
         {
             GameMain.GetInstance().ShareAppMsg();
-        }    
+        }
     }
 
     private OnClickStartGame(): void
@@ -364,7 +364,7 @@ class LobbyView extends GameView
 
     private PlayBgm()
     {
-        if(LobbyView.hasPlayedBgm)
+        if (LobbyView.hasPlayedBgm)
             return;
 
         LobbyView.hasPlayedBgm = true;
@@ -467,7 +467,7 @@ class LobbyView extends GameView
             var ballCount = jsonFile.BallCount;
             if (jsonFile.BallName != undefined)
             {
-                 egret.log("ballCount=" + ballCount);
+                egret.log("ballCount=" + ballCount);
             }
             var list = jsonFile.ConfigList;
             egret.log("ballCount=" + ballCount);
