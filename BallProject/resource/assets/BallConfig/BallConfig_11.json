@@ -6,8 +6,8 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1,
-	"probability": [12, 12, 12],
-	"firstBallProbability": 12,
+	"probability": [8, 8, 8],
+	"firstBallProbability": 0,
 
 	"skill_BoomOnHit_Rate" : [0.1, 0.15, 0.2], 
 	"skill_BoomOnHit_Range" : [180, 180, 180],

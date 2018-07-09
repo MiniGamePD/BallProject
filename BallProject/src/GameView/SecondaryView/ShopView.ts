@@ -289,7 +289,7 @@ class ShopView extends egret.DisplayObjectContainer
 
         Tools.DetachDisplayObjFromParent(this.lotteryCost);
         this.lotteryCost = new egret.TextField();
-        this.lotteryCost.size = 45;
+        this.lotteryCost.size = 40;
         this.lotteryCost.textColor = enoughCoin ? 0xffffff : 0xd6340a;
         this.lotteryCost.textAlign = "center";
         this.lotteryCost.bold = true;
@@ -301,11 +301,12 @@ class ShopView extends egret.DisplayObjectContainer
         this.addChild(this.lotteryCost);
 
         Tools.DetachDisplayObjFromParent(this.hintFinger);
+        Tools.DetachDisplayObjFromParent(this.dicountBitmap);
         //首抽免费的手指
         if (this.ballConfigModule.IsNewPlayer() && this.lotteryBtn != null && this.lotteryBtn != undefined)
         {
             this.lotteryCost.textColor = 0xffffff;
-            Tools.DetachDisplayObjFromParent(this.dicountBitmap);
+
             this.dicountBitmap = this.resModule.CreateBitmap("discount", this.lotteryCost.x, this.lotteryCost.y, this, AnchorType.Center);
 
             this.hintFinger = this.resModule.CreateBitmapByName("pd_res_json.finger");
@@ -325,6 +326,19 @@ class ShopView extends egret.DisplayObjectContainer
             scaleEvent.param = scaleParam;
             GameMain.GetInstance().DispatchEvent(scaleEvent);
         }
+
+        Tools.DetachDisplayObjFromParent(this.shopDesText);
+        this.shopDesText = new egret.TextField();
+        this.shopDesText.text = this.ballConfigModule.IsNewPlayer() ? "首次抽球免费哦！" : "抽到相同的球升一级哦！";
+        this.shopDesText.size = 28;
+        this.shopDesText.anchorOffsetX = this.shopDesText.width / 2;
+        this.shopDesText.anchorOffsetY = this.shopDesText.height / 2;
+        this.shopDesText.textAlign = "center";
+        this.shopDesText.bold = false;
+        this.shopDesText.x = GameMain.GetInstance().GetStageWidth() - 235;
+        this.shopDesText.y = GameMain.GetInstance().GetStageHeight() - 234;
+        this.shopDesText.textColor = 0xFFFFFF;
+        this.addChild(this.shopDesText);
 
         this.CreateAttribute();
     }
@@ -644,19 +658,6 @@ class ShopView extends egret.DisplayObjectContainer
         this.shopDesBitmap.x = GameMain.GetInstance().GetStageWidth() - 10;
         this.shopDesBitmap.y = GameMain.GetInstance().GetStageHeight() - 180;
         this.addChild(this.shopDesBitmap);
-
-        Tools.DetachDisplayObjFromParent(this.shopDesText);
-        this.shopDesText = new egret.TextField();
-        this.shopDesText.text = this.ballConfigModule.IsNewPlayer ? "首次抽球免费哦！" : "抽到相同的球升一级哦！";
-        this.shopDesText.size = 28;
-        this.shopDesText.anchorOffsetX = this.shopDesText.width / 2;
-        this.shopDesText.anchorOffsetY = this.shopDesText.height / 2;
-        this.shopDesText.textAlign = "center";
-        this.shopDesText.bold = false;
-        this.shopDesText.x = GameMain.GetInstance().GetStageWidth() - 235;
-        this.shopDesText.y = GameMain.GetInstance().GetStageHeight() - 234;
-        this.shopDesText.textColor = 0xFFFFFF;
-        this.addChild(this.shopDesText);
     }
 
     private OnClickPreviousBtn(callbackObj: any)
