@@ -13,7 +13,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	private curBallLevel: number;
 	private curBallConfig: BallConfig;
 
-	private expBallList:number[] = [3,4,10,12];//鸡，鸣，币，剑
+	private expBallList:number[] = [2,3,4,10];//波，鸡，鸣，币
 	private expedBallList:number[];
 
 	public Init():boolean
