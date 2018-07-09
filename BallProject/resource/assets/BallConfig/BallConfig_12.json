@@ -10,11 +10,11 @@
 	"firstBallProbability": 10,
 
 	"skill_CriticalStrike_Rate" : [0.2, 0.2, 0.2], 
-	"skill_CriticalStrike_Damage" : [3, 4, 5],
+	"skill_CriticalStrike_Damage" : [2, 3, 4],
 
-	"skillDes" : "剑刃风暴！一定概率造成暴击伤害！",
+	"skillDes" : "剑刃风暴！20%概率造成暴击伤害！",
 	"skillHead" : "伤害",
-	"skillLevellDes" : ["3", "4", "5"],
+	"skillLevellDes" : ["2", "3", "4"],
 
 	"Describe" : ["<金币道具>额外加2金币", "<金币道具>额外加4金币", "<金币道具>额外加6金币"]	
 }
