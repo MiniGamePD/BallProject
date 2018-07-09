@@ -401,7 +401,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         callbackObj.ShowGameOverMenu();
     }
 
-    private OnClickShapeRevive(): void
+    private OnClickShapeRevive(callbackObj: any): void
     {
         if (DEBUG)
         {
@@ -412,6 +412,13 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         GameMain.GetInstance().hasRevive = true;
 
+        var timer = new egret.Timer(500,1);
+        timer.addEventListener(egret.TimerEvent.TIMER, callbackObj.OnRealRevive, callbackObj);
+        timer.start();
+    }
+
+    private OnRealRevive()
+    {
         var event = new ReviveEvent();
         GameMain.GetInstance().DispatchEvent(event);
     }
