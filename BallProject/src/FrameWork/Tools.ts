@@ -442,13 +442,13 @@ class Tools
         var tips: egret.TextField;
         tips = new egret.TextField();
         tips.text = tipString;
-        tips.size = 40;
+        tips.size = 30;
         tips.width = 200;
         tips.height = 60;
         tips.anchorOffsetX = tips.width / 2;
         tips.anchorOffsetY = tips.height / 2;
         tips.textAlign = "center";
-        tips.bold = true;
+        // tips.bold = true;
         tips.x = posx;
         tips.y = posy;
         tips.textColor = color;

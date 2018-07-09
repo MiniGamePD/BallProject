@@ -7,7 +7,7 @@
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1,
 	"probability": [12, 12, 12],
-	"firstBallProbability": 12,
+	"firstBallProbability": 0,
 
 	"Box_Effect_Pause_Time" : [6000, 7000, 8000],
 

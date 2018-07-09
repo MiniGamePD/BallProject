@@ -7,7 +7,7 @@
 	"ballRadius" : [20, 22, 24],
 	"displayScale": 1,
 	"probability": [8, 8, 8],
-	"firstBallProbability": 8,
+	"firstBallProbability": 0,
 	
 	"skill_ScaleOnEmitter_Rate" : [0.2, 0.3, 0.4] ,
 	"skill_ScaleOnEmitter_Scale" : [2, 2, 2],
