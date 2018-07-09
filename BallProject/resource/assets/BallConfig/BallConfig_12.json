@@ -12,7 +12,7 @@
 	"skill_CriticalStrike_Rate" : [0.2, 0.2, 0.2], 
 	"skill_CriticalStrike_Damage" : [3, 4, 5],
 
-	"skillDes" : "无敌剑圣~~！有一定概率造成暴击伤害！",
+	"skillDes" : "剑刃风暴！一定概率造成暴击伤害！",
 	"skillHead" : "伤害",
 	"skillLevellDes" : ["3", "4", "5"],
 
