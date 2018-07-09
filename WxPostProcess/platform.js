@@ -15,8 +15,8 @@ class WxgamePlatform
           wx.onShareAppMessage(function () {
             // 用户点击了“转发”按钮
             return {
-              title: '快来和小章鱼一起玩弹球吧~',
-              imageUrl: 'resource/assets/Share.png',
+              title: '00后都在秀恩爱了，还在玩老式弹球？',
+              imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share1.png',
               success()
               {
                 console.log("share success");
@@ -67,11 +67,35 @@ class WxgamePlatform
         })
     }
 
-    shareAppMsg() 
+    shareAppMsg1() 
     {
         wx.shareAppMessage({
-            title: '快来和小章鱼一起玩弹球吧~',
-            imageUrl: 'resource/assets/Share.png',
+            title: '00后都在秀恩爱了，还在玩老式弹球？',
+            imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share1.png',
+            success()
+            {
+                console.log("share success");
+            }
+        })
+    }
+
+    shareAppMsg2() 
+    {
+        wx.shareAppMessage({
+            title: '每次上厕所都玩到站不起来',
+            imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share2.png',
+            success()
+            {
+                console.log("share success");
+            }
+        })
+    }
+
+    shareAppMsg3() 
+    {
+        wx.shareAppMessage({
+            title: '今天不和这萌物分出胜负没完',
+            imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share3.png',
             success()
             {
                 console.log("share success");
@@ -82,8 +106,8 @@ class WxgamePlatform
     shareAppMsgRevive() 
     {
         wx.shareAppMessage({
-            title: '我的小章鱼被围攻啦，快来救我！',
-            imageUrl: 'resource/assets/Share.png',
+            title: '又被围攻啦，快来救我！',
+            imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share4.png',
             success()
             {
                 console.log("share success");
@@ -95,7 +119,7 @@ class WxgamePlatform
     {
         wx.shareAppMessage({
             title: '我的纪录是'+score+'分，不服来战！',
-            imageUrl: 'resource/assets/Share.png',
+            imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share5.png',
             success()
             {
                 console.log("share success");

@@ -41,8 +41,18 @@ class LoadingView extends GameView
 
 	public SetProgress(rate: number)
 	{
+        if(this.hasError)
+            return;
+            
 		var text = "Loading... " + rate.toFixed(0) + "%";
 		this.loadingText.text = text
 		// egret.log(text);
 	}
+
+    private hasError:boolean = false;
+    public SetError(err:string)
+    {
+        this.hasError = true;
+        this.loadingText.text += "\n" + err;
+    }
 }

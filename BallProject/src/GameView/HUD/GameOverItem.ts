@@ -333,9 +333,13 @@ class GameOverItem extends egret.DisplayObjectContainer
     {
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         if(playerData.GetHistoryHighScore() > 0)
-            platform.shareAppMsgRank(playerData.GetHistoryHighScore());
+        {
+            GameMain.GetInstance().ShareAppMsgRank(playerData.GetHistoryHighScore());
+        } 
         else
-            platform.shareAppMsg();
+        {
+            GameMain.GetInstance().ShareAppMsg();
+        }   
             
         if(callbackObj.IsEnableShare())
         {

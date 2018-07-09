@@ -126,12 +126,39 @@ class Main extends egret.DisplayObjectContainer
 
     public ShareAppMsg()
     {
-        platform.shareAppMsg();
+        var temp = Math.floor(Math.random() * 3);
+        if(temp == 0)
+            platform.shareAppMsg3();
+        else if(temp == 1)
+            platform.shareAppMsg1();
+        else
+            platform.shareAppMsg2();
+    }
+
+    public ShareAppMsgRank(score:number)
+    {
+        var temp = Math.floor(Math.random() * 4);
+        if(temp == 0)
+            platform.shareAppMsgRank(score);
+        else if(temp == 1)
+            platform.shareAppMsg1();
+        else if(temp == 2)
+            platform.shareAppMsg2();
+        else
+            platform.shareAppMsg3();
     }
 
     public ShareAppMsgRevive()
     {
-        platform.shareAppMsgRevive();
+        var temp = Math.floor(Math.random() * 4);
+        if(temp == 0)
+            platform.shareAppMsg1();
+        else if(temp == 1)
+            platform.shareAppMsg2();
+        else if(temp == 2)
+            platform.shareAppMsg3();
+        else
+            platform.shareAppMsgRevive();
     }
 
     public SaveUserData(userData:string)

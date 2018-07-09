@@ -10,7 +10,11 @@ declare interface Platform
 
     login(): Promise<any>
 
-    shareAppMsg();
+    shareAppMsg1();
+
+    shareAppMsg2();
+
+    shareAppMsg3();
 
     shareAppMsgRevive();
 
@@ -52,9 +56,19 @@ class DebugPlatform implements Platform
         console.log("Share App Msg Revive");
     }
 
-    public shareAppMsg()
+    public shareAppMsg1()
     {
-        console.log("Share App Msg");
+        console.log("Share App Msg1");
+    }
+
+    public shareAppMsg2()
+    {
+        console.log("Share App Msg2");
+    }
+
+    public shareAppMsg3()
+    {
+        console.log("Share App Msg3");
     }
 
     public shareAppMsgRank(score:number)
