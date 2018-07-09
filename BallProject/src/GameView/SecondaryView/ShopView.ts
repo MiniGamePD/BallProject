@@ -664,8 +664,12 @@ class ShopView extends egret.DisplayObjectContainer
         if (callbackObj.curShowBallPosIndex > 1)
         {
             --callbackObj.curShowBallPosIndex;
-            callbackObj.RefreshBallInfo();
         }
+        else
+        {
+            callbackObj.curShowBallPosIndex = callbackObj.totalBallCount;
+        }
+        callbackObj.RefreshBallInfo();
     }
 
     private OnClickNextBtn(callbackObj: any)
@@ -673,8 +677,12 @@ class ShopView extends egret.DisplayObjectContainer
         if (callbackObj.curShowBallPosIndex < callbackObj.totalBallCount)
         {
             ++callbackObj.curShowBallPosIndex;
-            callbackObj.RefreshBallInfo();
         }
+        else
+        {
+            callbackObj.curShowBallPosIndex = 1;
+        }
+        callbackObj.RefreshBallInfo();
     }
 
     private OnClickSelectBtn(callbackObj: any)
