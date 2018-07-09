@@ -319,9 +319,6 @@ class GameOverItem extends egret.DisplayObjectContainer
     {
         this.addChild(this.bgCover);
         this.addChild(this.reviveMenu);
-
-        var soundEvent: PlaySoundEvent = new PlaySoundEvent("GameOver_mp3", 1);
-        GameMain.GetInstance().DispatchEvent(soundEvent);
     }
 
     public Hide()
@@ -343,21 +340,28 @@ class GameOverItem extends egret.DisplayObjectContainer
             
         if(callbackObj.IsEnableShare())
         {
-            callbackObj.coin.addChild(callbackObj.addtionalCoin);
-            callbackObj.moreCoinText.text = "感谢支持，您的额外收益已到账";
-            callbackObj.moreCoinText.textColor = 0x888888;
-
-            callbackObj.moreCoin.removeChild(callbackObj.moreCoinButton);
-            callbackObj.moreCoinButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x88888800, 6, 16, null, 
-                GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, null, null);
-            callbackObj.moreCoin.addChild(callbackObj.moreCoinButton);
-
-            callbackObj.moreCoin.removeChild(callbackObj.moreCoinIcon);
-
-            var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
-            playerData.AddCoin(playerData.GetCoinCurGame());
-            playerData.Save();
+            var timer = new egret.Timer(500,1);
+            timer.addEventListener(egret.TimerEvent.TIMER, callbackObj.OnRealAddMoreCoin, callbackObj);
+            timer.start();
         }
+    }
+
+    private OnRealAddMoreCoin()
+    {
+        this.coin.addChild(this.addtionalCoin);
+        this.moreCoinText.text = "感谢支持，您的额外收益已到账";
+        this.moreCoinText.textColor = 0x888888;
+
+        Tools.DetachDisplayObjFromParent(this.moreCoinButton);
+        this.moreCoinButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x88888800, 6, 16, null, 
+            GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, null, null);
+        this.moreCoin.addChild(this.moreCoinButton);
+
+        Tools.DetachDisplayObjFromParent(this.moreCoinIcon);
+
+        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+        playerData.AddCoin(playerData.GetCoinCurGame());
+        playerData.Save();
     }
 
     private OnClickLottery(callbackobj: any)
