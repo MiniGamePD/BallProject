@@ -117,6 +117,17 @@ class BallMatchView extends GameView
         this.playerLv.text = "Lv. " + level;
     }
 
+    public OnApplyDamageOnBox(box: Box, healthChanged: number)
+    {
+        if (this.hud != null
+            && this.hud != undefined
+            && this.hud.score != null
+            && this.hud.score != undefined)
+        {
+            this.hud.score.AddScore(-healthChanged);
+        }
+    }
+
     private OnSpecialBoxEliminateEvent(evt: SpecialBoxEliminateEvent): void
 	{
 		if (evt != null)

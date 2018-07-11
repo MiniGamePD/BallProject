@@ -1,7 +1,7 @@
 class MatchHUD extends egret.DisplayObjectContainer
 {
     private readyGo:ReadyGoItem;
-    private score:MatchScoreItem;
+    public score:MatchScoreItem;
     private gameover:GameOverItem;
     private pause:PauseItem;
 

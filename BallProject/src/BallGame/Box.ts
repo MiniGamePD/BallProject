@@ -78,12 +78,14 @@ abstract class Box
 		}
 	}
 
-	public changeHealth(healthValue: number)
+	public changeHealth(healthValue: number): number
 	{
+		var lastHealth = this.health;
 		this.health += healthValue;
 		this.health = this.health < 0 ? 0 : this.health;
 		this.SetHide(true);
 		this.RefreshDisplay();
+		return this.health - lastHealth;
 	}
 
 	public OnEliminate()
