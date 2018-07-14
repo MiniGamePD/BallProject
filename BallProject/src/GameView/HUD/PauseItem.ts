@@ -371,9 +371,9 @@ class PauseItem extends egret.DisplayObjectContainer
 
     public HidePauseMenu()
     {
-        this.removeChild(this.bgCover);
-        this.removeChild(this.pauseTitle);
-        this.removeChild(this.gotoLobbyButton);
-        this.removeChild(this.continueButton);
+        Tools.DetachDisplayObjFromParent(this.bgCover);
+        Tools.DetachDisplayObjFromParent(this.pauseTitle);
+        Tools.DetachDisplayObjFromParent(this.gotoLobbyButton);
+        Tools.DetachDisplayObjFromParent(this.continueButton);
     }
 }

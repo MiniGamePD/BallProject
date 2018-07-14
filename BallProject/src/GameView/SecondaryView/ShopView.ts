@@ -68,6 +68,7 @@ class ShopView extends egret.DisplayObjectContainer
     private shopDesBitmap: egret.Bitmap;
 
     private lottyView: LotteryView;
+    private shareView: ShareView;
 
     private adaptFactor: number;
 
@@ -704,32 +705,76 @@ class ShopView extends egret.DisplayObjectContainer
 
     private TryLottyBall()
     {
-        var result = this.ballConfigModule.IsNewPlayer() 
-                    || this.playerDataModule.CostCoin(Lotty_Ball_Cost);
+        var isNewPlayer = this.ballConfigModule.IsNewPlayer();
+        var result = isNewPlayer
+            || this.playerDataModule.CostCoin(Lotty_Ball_Cost);
         if (result)
         {
             this.playerDataModule.Save();
             this.lottyView = new LotteryView();
-            this.lottyView.Init(this.OnCloseLotteryView, this);
+            this.lottyView.Init(this.OnCloseLotteryView, this, isNewPlayer);
             this.addChild(this.lottyView);
         }
         else
         {
-            var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
-            var networkConfig = networkConfigModule.GetNetWorkConfig();
-            var tips = "糟糕，金币不够!\n游戏中击破金币道具可以获得金币。";
-            if (networkConfig.EnableShare)
-            {
-                tips += "\n分享好友，金币可以翻倍哦~"
-            }
-            this.ShowTips(GameMain.GetInstance().GetStageWidth() / 2,
-                 GameMain.GetInstance().GetStageHeight() / 2, tips);
+            this.shareView = new ShareView();
+            this.shareView.Init(this.OnCloseShareView, this);
+            this.addChild(this.shareView);
+
+            // var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
+            // var networkConfig = networkConfigModule.GetNetWorkConfig();
+            // var tips = "糟糕，金币不够!\n游戏中击破金币道具可以获得金币。";
+            // if (networkConfig.EnableShare)
+            // {
+            //     tips += "\n分享好友，金币可以翻倍哦~"
+            // }
+            // this.ShowTips(GameMain.GetInstance().GetStageWidth() / 2,
+            //      GameMain.GetInstance().GetStageHeight() / 2, tips);
+
+
         }
+    }
+
+    private OnCloseShareView(callbackObj: any, hasShare: boolean)
+    {
+        egret.log("OnCloseShareView");
+        callbackObj.RefreshCoinInfo();
+        if (hasShare)
+        {
+            callbackObj.ShowShareAddCoin();
+        }
+    }
+
+    private ShowShareAddCoin()
+    {
+        var addCoinText = new egret.TextField();
+        addCoinText.text = "+" + Share_Add_Coin_Count;
+        addCoinText.size = 28;
+        addCoinText.anchorOffsetX = addCoinText.width / 2;
+        addCoinText.anchorOffsetY = addCoinText.height / 2;
+        addCoinText.textAlign = "center";
+        addCoinText.bold = false;
+        addCoinText.strokeColor = 0x000000;
+        addCoinText.stroke = 1;
+        addCoinText.x = this.coinBitmap.x + this.coinBitmap.width / 2 + 20;
+        addCoinText.y = this.coinBitmap.y;
+        addCoinText.textColor = 0xf1be22;
+        this.addChild(addCoinText)
+
+        var moveParam = new PaMovingParam()
+        moveParam.displayObj = addCoinText;
+        moveParam.duration = 1000;
+        moveParam.targetPosX = addCoinText.x;
+        moveParam.targetPosY = addCoinText.y - 20;
+        moveParam.needRemoveOnFinish = true;
+        var moveEvent = new PlayProgramAnimationEvent();
+        moveEvent.param = moveParam;
+        GameMain.GetInstance().DispatchEvent(moveEvent);
     }
 
     private tips: egret.TextField;
     private tipsShapeBg: egret.Shape;
-    public ShowTips(posx: number, posy:number, tipString: string)
+    public ShowTips(posx: number, posy: number, tipString: string)
     {
         Tools.DetachDisplayObjFromParent(this.tips);
         Tools.DetachDisplayObjFromParent(this.tipsShapeBg);
@@ -747,16 +792,16 @@ class ShopView extends egret.DisplayObjectContainer
         this.tips.y = posy;
         this.tips.textColor = 0x11fdff;
 
-		this.tipsShapeBg = new egret.Shape();
-		this.tipsShapeBg.graphics.lineStyle(2, 0x000000);
-		this.tipsShapeBg.graphics.beginFill(0x6B6B6B, 1);
-		this.tipsShapeBg.graphics.drawRect(0, 0, this.tips.width + 40, this.tips.height + 50);
-		this.tipsShapeBg.graphics.endFill();
-		this.tipsShapeBg.x = posx
-		this.tipsShapeBg.y = posy
-		this.tipsShapeBg.width = this.tips.width + 40;
-		this.tipsShapeBg.height = this.tips.height + 50;
-		Tools.SetAnchor(this.tipsShapeBg, AnchorType.Center);
+        this.tipsShapeBg = new egret.Shape();
+        this.tipsShapeBg.graphics.lineStyle(2, 0x000000);
+        this.tipsShapeBg.graphics.beginFill(0x6B6B6B, 1);
+        this.tipsShapeBg.graphics.drawRect(0, 0, this.tips.width + 40, this.tips.height + 50);
+        this.tipsShapeBg.graphics.endFill();
+        this.tipsShapeBg.x = posx
+        this.tipsShapeBg.y = posy
+        this.tipsShapeBg.width = this.tips.width + 40;
+        this.tipsShapeBg.height = this.tips.height + 50;
+        Tools.SetAnchor(this.tipsShapeBg, AnchorType.Center);
         this.addChild(this.tipsShapeBg)
 
         this.addChild(this.tips);

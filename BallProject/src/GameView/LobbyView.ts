@@ -333,7 +333,7 @@ class LobbyView extends GameView
 
     private OnCloseShop(callbackobj: any)
     {
-        callbackobj.removeChild(callbackobj.shop);
+        Tools.DetachDisplayObjFromParent(callbackobj.shop);
         callbackobj.CreateBall();
     }
 
