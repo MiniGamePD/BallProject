@@ -15,7 +15,7 @@ class WxgamePlatform
           wx.onShareAppMessage(function () {
             // 用户点击了“转发”按钮
             return {
-              title: '00后都在秀恩爱了，还在玩老式弹球？',
+              title: '00后都在秀恩爱了，你还在玩老式弹球？',
               imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share1.png',
               success()
               {
@@ -70,7 +70,7 @@ class WxgamePlatform
     shareAppMsg1() 
     {
         wx.shareAppMessage({
-            title: '00后都在秀恩爱了，还在玩老式弹球？',
+            title: '00后都在秀恩爱了，你还在玩老式弹球？',
             imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share1.png',
             success()
             {
