@@ -22,12 +22,14 @@ class LotteryView extends egret.DisplayObjectContainer
 	private ballLevel: number;
 	private randomBallInfo: RandomBallInfo;
 
+	private selectBtn: ShapeBgButton;
+
 	public constructor()
 	{
 		super();
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
-        this.playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+		this.playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
 
 		this.CreateBgCover();
 		this.CreateBack();
@@ -137,7 +139,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		this.ballNameText.textAlign = "center";
 		Tools.SetAnchor(this.ballNameText, AnchorType.Center);
 		this.ballNameText.x = GameMain.GetInstance().GetStageWidth() / 2;
-		this.ballNameText.y = 800;
+		this.ballNameText.y = 750;
 		this.ballNameText.strokeColor = 0x000000;
 		this.ballNameText.stroke = 2;
 		this.addChild(this.ballNameText);
@@ -150,24 +152,40 @@ class LotteryView extends egret.DisplayObjectContainer
 		this.ballSkillText.width = GameMain.GetInstance().GetStageWidth();
 		Tools.SetAnchor(this.ballSkillText, AnchorType.Center);
 		this.ballSkillText.x = GameMain.GetInstance().GetStageWidth() / 2;
-		this.ballSkillText.y = 880;
+		this.ballSkillText.y = 830;
 		this.addChild(this.ballSkillText);
 
 		if (this.randomBallInfo.randomBallType == RandomBallType.NewBall)
 		{
-			this.resModule.CreateBitmap("lottyNewBall", stageWidth / 2, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyNewBall", stageWidth / 2, 900, this, AnchorType.Center);
 		}
 		else if (this.randomBallInfo.randomBallType == RandomBallType.OldMaxLevelBall)
 		{
-			this.resModule.CreateBitmap("lottyBackCoin", stageWidth / 2, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyBackCoin", stageWidth / 2, 900, this, AnchorType.Center);
 			this.playerDataModule.AddCoin(Lotty_Ball_Back);
 			this.playerDataModule.Save();
 		}
 		else
 		{
-			this.resModule.CreateBitmap("lottyLvUpDes", stageWidth / 2 - 50, 950, this, AnchorType.Center);
-			this.resModule.CreateBitmap("lottyLevel" + (this.randomBallInfo.level - 1), stageWidth / 2 - 50 - 39, 950, this, AnchorType.Center);
-			this.resModule.CreateBitmap("lottyLevel" + this.randomBallInfo.level, stageWidth / 2 - 50 + 195, 950, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLvUpDes", stageWidth / 2 - 50, 900, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLevel" + (this.randomBallInfo.level - 1), stageWidth / 2 - 50 - 39, 900, this, AnchorType.Center);
+			this.resModule.CreateBitmap("lottyLevel" + this.randomBallInfo.level, stageWidth / 2 - 50 + 195, 900, this, AnchorType.Center);
 		}
+
+		this.selectBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.SelectBall_OK",
+			242, 79, 242, 79, this.OnClickSelectBtn, this);
+		this.selectBtn.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.selectBtn.y = 1000;
+		this.addChild(this.selectBtn);
 	}
+
+	private OnClickSelectBtn(callbackObj: any)
+    {
+        var ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+        ballConfigModule.ChangeSelectBall(callbackObj.ballId);
+
+        // 退回大厅
+        Tools.DetachDisplayObjFromParent(callbackObj);
+		callbackObj.callbackFun(callbackObj.callbackObj, callbackObj.randomBallInfo);
+    }
 }
