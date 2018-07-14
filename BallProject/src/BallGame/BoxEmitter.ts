@@ -70,13 +70,16 @@ class BoxEmitter
 
 		this.hitSoundArray = [];
 		this.hitSoundChannelArray = [];
-		for (var i = 1; i <= 20; ++i)
+		if(this.soundModule.SoundHitBoxResReady())
 		{
-			var sound = this.resModule.GetRes("hitBox_" + i + "_mp3");
-			this.hitSoundArray.push(sound);
-			this.hitSoundChannelArray.push(null);
+			for (var i = 1; i <= 20; ++i)
+			{
+				var sound = this.resModule.GetRes("hitBox_" + i + "_mp3");
+				this.hitSoundArray.push(sound);
+				this.hitSoundChannelArray.push(null);
+			}
 		}
-
+		
 		this.RegisterEvent();
 	}
 
@@ -232,7 +235,7 @@ class BoxEmitter
 
 	private PlayHitSound()
 	{
-		if (this.hitSoundCdTime <= 0)
+		if (this.soundModule.SoundHitBoxResReady() && this.hitSoundCdTime <= 0)
 		{
 			this.hitSoundCdTime = BoxHitSoundCDTime;
 

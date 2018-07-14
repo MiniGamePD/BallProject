@@ -3,6 +3,12 @@ class LoadingModule extends GameViewModule
 	private resModule: IResModule;
 	private loadingView: LoadingView
 
+	private preloadReady:boolean;
+	private ballconfigReady:boolean;
+	private particlyReady:boolean;
+	//private soundReady:boolean; sound不是关键路径，不要卡住主流程
+	
+
 	protected CreateView(): boolean
 	{
 		this.loadingView = new LoadingView();
@@ -46,41 +52,80 @@ class LoadingModule extends GameViewModule
 
 	private OnConfigComplete(event: RES.ResourceEvent)
 	{
-		egret.log("OnConfigComplete");
+		if(DEBUG)
+		{
+			console.log("OnConfigComplete");
+			this.loadingView.SetError("OnConfigComplete");
+		}
 	}
 
 	private OnConfigLoadErr(event: RES.ResourceEvent)
 	{
-		egret.log("OnConfigLoadErr");
+		if(DEBUG)
+		{
+			console.log("OnConfigLoadErr");
+			this.loadingView.SetError("OnConfigLoadErr");
+		}
 	}
 
 	private OnResourceLoadComplete(event: RES.ResourceEvent)
 	{
-		egret.log("OnResourceLoadComplete");
-		this.OnLoadingComplete();
+		if(DEBUG)
+		{
+			console.log("OnResourceLoadComplete");
+			this.loadingView.SetError("OnResourceLoadComplete " + event.groupName);
+		}	
+		
+		if(event.groupName == "preload")
+		{
+			this.preloadReady = true;
+		}
+		else if(event.groupName == "Particle")
+		{
+			this.particlyReady = true;
+		}
+		else if(event.groupName == "BallConfig")
+		{
+			this.ballconfigReady = true;
+		}
+
+		if(this.preloadReady && this.particlyReady && this.ballconfigReady)
+		{
+			var ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+			ballConfigModule.LoadBallConfig();
+			GameMain.GetInstance().SwitchGameState(GameStateType.Lobby);
+		}
+
+		//this.OnLoadingComplete();
 	}
 
 	private OnResourceProgress(event: RES.ResourceEvent)
 	{
-		var rate = event.itemsLoaded / event.itemsTotal;
-		// egret.log("OnResourceProgress, rate = " + rate);
-		this.loadingView.SetProgress(rate * 100);
+		
+		if(DEBUG)
+		{
+			var rate = event.itemsLoaded / event.itemsTotal;
+			console.log(event.groupName + " OnResourceProgress, rate = " + rate);
+		}
+			
+		//this.loadingView.SetProgress(rate * 100);
 	}
 
 	private OnResourceLoadErr(event: RES.ResourceEvent)
 	{
-		egret.log("OnResourceLoadErr");
+		if(DEBUG)
+		{
+			this.loadingView.SetError("OnResourceLoadErr");
+			console.log("OnResourceLoadErr");
+		}
 	}
 
-	private OnLoadingComplete()
-	{
-		egret.log("OnLoadingComplete");
+	// private OnLoadingComplete()
+	// {
+	// 	egret.log("OnLoadingComplete");
 						
-		var ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
-		ballConfigModule.LoadBallConfig();
 
-		GameMain.GetInstance().SwitchGameState(GameStateType.Lobby);
-	}
+	// }
 
 	public Release():void
 	{

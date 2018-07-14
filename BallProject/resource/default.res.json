@@ -1,8 +1,28 @@
 {
 	"groups": [
 		{
-			"keys": "pd_res_json,GameOver_mp3,Particle_Boom_Bomb_json,Particle_Boom_json,Particle_Boss_Skill_Fly_json,Particle_Virus_Boom_json,huojian_json,caihong_shinning_json,boss_jineng_json,Boom_shinning_json,Caidai_json,huojian_shinning_json,font_num1_fnt,font_num1_png,LandEffect_json,FeverFlyEffect_json,font_num3_fnt,font_num3_png,PillRotation_mp3,PillRotation2_mp3,ice_Boom_json,BoxBoom_json,Share_png,Title_mp3,Title2_mp3,LevelUp_mp3,BallConfig_1_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json,BallConfig_10_json,xingxing_json,hitBox_1_mp3,hitBox_2_mp3,hitBox_3_mp3,hitBox_4_mp3,hitBox_5_mp3,hitBox_6_mp3,hitBox_7_mp3,hitBox_8_mp3,hitBox_9_mp3,hitBox_10_mp3,hitBox_11_mp3,hitBox_12_mp3,hitBox_13_mp3,hitBox_14_mp3,hitBox_15_mp3,hitBox_16_mp3,hitBox_17_mp3,hitBox_18_mp3,hitBox_19_mp3,hitBox_20_mp3,BallConfig_11_json,BallConfig_12_json,WebConfig_json,Ball_Boom_json,Ball_Blade_json",
+			"keys": "pd_res_json,WebConfig_json",
 			"name": "preload"
+		},
+		{
+			"keys": "GameOver_mp3,LevelUp_mp3,PillRotation_mp3",
+			"name": "Sound"
+		},
+		{
+			"keys": "Ball_Blade_json,Ball_Boom_json,BoxBoom_json,xingxing_json",
+			"name": "Particle"
+		},
+		{
+			"keys": "BallConfig_1_json,BallConfig_10_json,BallConfig_11_json,BallConfig_12_json,BallConfig_2_json,BallConfig_3_json,BallConfig_4_json,BallConfig_5_json,BallConfig_6_json,BallConfig_7_json,BallConfig_8_json,BallConfig_9_json",
+			"name": "BallConfig"
+		},
+		{
+			"keys": "Title_mp3",
+			"name": "SoundTitle"
+		},
+		{
+			"keys": "hitBox_9_mp3,hitBox_8_mp3,hitBox_7_mp3,hitBox_6_mp3,hitBox_5_mp3,hitBox_4_mp3,hitBox_3_mp3,hitBox_20_mp3,hitBox_2_mp3,hitBox_19_mp3,hitBox_18_mp3,hitBox_17_mp3,hitBox_16_mp3,hitBox_15_mp3,hitBox_14_mp3,hitBox_13_mp3,hitBox_12_mp3,hitBox_11_mp3,hitBox_10_mp3,hitBox_1_mp3",
+			"name": "SoundHitBox"
 		}
 	],
 	"resources": [
@@ -23,109 +43,9 @@
 			"name": "GameOver_mp3"
 		},
 		{
-			"url": "assets/Particle/Particle_Boom_Bomb.json",
-			"type": "json",
-			"name": "Particle_Boom_Bomb_json"
-		},
-		{
-			"url": "assets/Particle/Particle_Boom.json",
-			"type": "json",
-			"name": "Particle_Boom_json"
-		},
-		{
-			"url": "assets/Particle/Particle_Boss_Skill_Fly.json",
-			"type": "json",
-			"name": "Particle_Boss_Skill_Fly_json"
-		},
-		{
-			"url": "assets/Particle/Particle_Virus_Boom.json",
-			"type": "json",
-			"name": "Particle_Virus_Boom_json"
-		},
-		{
-			"url": "assets/Particle/huojian.json",
-			"type": "json",
-			"name": "huojian_json"
-		},
-		{
-			"url": "assets/Particle/caihong_shinning.json",
-			"type": "json",
-			"name": "caihong_shinning_json"
-		},
-		{
-			"url": "assets/Particle/boss_jineng.json",
-			"type": "json",
-			"name": "boss_jineng_json"
-		},
-		{
-			"url": "assets/Particle/Boom_shinning.json",
-			"type": "json",
-			"name": "Boom_shinning_json"
-		},
-		{
-			"url": "assets/Particle/Caidai.json",
-			"type": "json",
-			"name": "Caidai_json"
-		},
-		{
-			"url": "assets/Particle/huojian_shinning.json",
-			"type": "json",
-			"name": "huojian_shinning_json"
-		},
-		{
-			"url": "assets/DB_Animation/.DS_Store",
-			"type": "bin",
-			"name": "_DS_Store"
-		},
-		{
-			"url": "assets/font/font_num1.fnt",
-			"type": "font",
-			"name": "font_num1_fnt"
-		},
-		{
-			"url": "assets/font/font_num1.png",
-			"type": "image",
-			"name": "font_num1_png"
-		},
-		{
-			"url": "assets/Particle/LandEffect.json",
-			"type": "json",
-			"name": "LandEffect_json"
-		},
-		{
-			"url": "assets/Particle/FeverFlyEffect.json",
-			"type": "json",
-			"name": "FeverFlyEffect_json"
-		},
-		{
-			"url": "assets/font/font_num3.fnt",
-			"type": "font",
-			"name": "font_num3_fnt"
-		},
-		{
-			"url": "assets/font/font_num3.png",
-			"type": "image",
-			"name": "font_num3_png"
-		},
-		{
 			"url": "assets/Sound/PillRotation.mp3",
 			"type": "sound",
 			"name": "PillRotation_mp3"
-		},
-		{
-			"url": "assets/Sound/PillRotation.mp3",
-			"type": "sound",
-			"name": "PillRotation2_mp3"
-		},
-		{
-			"url": "assets/Particle/ice_Boom.json",
-			"type": "json",
-			"name": "ice_Boom_json"
-		},
-		{
-			"url": "assets/Particle/BoxBoom.json",
-			"type": "json",
-			"name": "BoxBoom_json"
 		},
 		{
 			"url": "assets/Share.png",
@@ -136,11 +56,6 @@
 			"url": "assets/Sound/Title.mp3",
 			"type": "sound",
 			"name": "Title_mp3"
-		},
-		{
-			"url": "assets/Sound/Title.mp3",
-			"type": "sound",
-			"name": "Title2_mp3"
 		},
 		{
 			"url": "assets/Sound/LevelUp.mp3",
@@ -196,11 +111,6 @@
 			"url": "assets/BallConfig/BallConfig_10.json",
 			"type": "json",
 			"name": "BallConfig_10_json"
-		},
-		{
-			"url": "assets/Particle/xingxing.json",
-			"type": "json",
-			"name": "xingxing_json"
 		},
 		{
 			"url": "assets/Sound/hitBox_1.mp3",
@@ -318,14 +228,24 @@
 			"name": "WebConfig_json"
 		},
 		{
+			"url": "assets/Particle/Ball_Blade.json",
+			"type": "json",
+			"name": "Ball_Blade_json"
+		},
+		{
 			"url": "assets/Particle/Ball_Boom.json",
 			"type": "json",
 			"name": "Ball_Boom_json"
 		},
 		{
-			"url": "assets/Particle/Ball_Blade.json",
+			"url": "assets/Particle/BoxBoom.json",
 			"type": "json",
-			"name": "Ball_Blade_json"
+			"name": "BoxBoom_json"
+		},
+		{
+			"url": "assets/Particle/xingxing.json",
+			"type": "json",
+			"name": "xingxing_json"
 		}
 	]
 }

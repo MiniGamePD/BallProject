@@ -32,12 +32,17 @@ class ResModule extends ModuleBase implements IResModule
 		try
 		{
 			await RES.loadConfig("resource/default.res.json", "resource/");
-			await RES.loadGroup("preload", 0, null);
+			RES.loadGroup("preload", 1, null);
+			RES.loadGroup("SoundTitle", 2, null);
+			RES.loadGroup("Particle", 1, null);
+			RES.loadGroup("BallConfig", 1, null);
+			RES.loadGroup("Sound", 0, null);
+			RES.loadGroup("SoundHitBox", 0, null);
 			return true;
 		}
 		catch (e)
 		{
-			console.error(e);
+			console.log(e);
 			return false;
 		}
 	}

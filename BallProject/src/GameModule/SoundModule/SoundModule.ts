@@ -9,6 +9,8 @@ class SoundModule extends ModuleBase implements ISoundModule
 	private mBgmLoopTimer:egret.Timer;
 	private mCurBgmStage:BgmStage;
 
+	private soundHitBoxResReady:boolean;
+
 	public Init(): boolean 
 	{
 		this.isForeground = true;
@@ -17,6 +19,10 @@ class SoundModule extends ModuleBase implements ISoundModule
 		this.mResModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		GameMain.GetInstance().AddEventListener(PlaySoundEvent.EventName, this.OnPlaySoundEvent, this);
 		GameMain.GetInstance().AddEventListener(BgmControlEvent.EventName, this.OnBgmControlEvent, this);
+
+		this.soundHitBoxResReady = false;
+		RES.addEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.OnResourceLoadComplete, this);
+
 		return true;
 	}
 
@@ -73,6 +79,16 @@ class SoundModule extends ModuleBase implements ISoundModule
 	{
 		GameMain.GetInstance().RemoveEventListener(PlaySoundEvent.EventName, this.OnPlaySoundEvent, this);
 		GameMain.GetInstance().RemoveEventListener(BgmControlEvent.EventName, this.OnBgmControlEvent, this);
+
+		RES.removeEventListener(RES.ResourceEvent.GROUP_COMPLETE, this.OnResourceLoadComplete, this);
+	}
+
+	private OnResourceLoadComplete(event: RES.ResourceEvent)
+	{
+		if(event.groupName == "SoundHitBox")
+		{
+			this.soundHitBoxResReady = true;
+		}
 	}
 
 	public SwitchForeOrBack(from: GameStateType, to: GameStateType): void 
@@ -282,6 +298,11 @@ class SoundModule extends ModuleBase implements ISoundModule
 	private CheckStageValidity(stage:BgmStage):boolean
 	{
 		return stage == this.mCurBgmStage;
+	}
+
+	public SoundHitBoxResReady():boolean
+	{
+		return this.soundHitBoxResReady;
 	}
 }
 
