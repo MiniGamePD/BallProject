@@ -43,7 +43,7 @@ class ShareView extends egret.DisplayObjectContainer
 	private OnClickBack()
 	{
 		Tools.DetachDisplayObjFromParent(this);
-		this.callbackFun(this.callbackObj);
+		this.callbackFun(this.callbackObj, false);
 	}
 
 	private CreateCoinInfo()
@@ -97,7 +97,7 @@ class ShareView extends egret.DisplayObjectContainer
 		callbackObj.playerDataModule.AddCoin(Share_Add_Coin_Count);
 		callbackObj.playerDataModule.Save();
 		Tools.DetachDisplayObjFromParent(callbackObj);
-		callbackObj.callbackFun(callbackObj.callbackObj);
+		callbackObj.callbackFun(callbackObj.callbackObj, true);
 	}
 
 	private CreateShareBtn()
