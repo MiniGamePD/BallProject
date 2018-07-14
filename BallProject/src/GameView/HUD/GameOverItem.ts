@@ -286,7 +286,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnCloseShop(callbackobj: any)
     {
-        callbackobj.removeChild(callbackobj.shop);
+        Tools.DetachDisplayObjFromParent(callbackobj.shop);
     }
 
     public ShowGameOverMenu()

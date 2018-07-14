@@ -92,7 +92,7 @@ class BallMatchView extends GameView
 
     private DeletePlayerLv()
     {
-        this.removeChild(this.playerLv);
+        Tools.DetachDisplayObjFromParent(this.playerLv);
         this.playerLv = null;
     }
 
