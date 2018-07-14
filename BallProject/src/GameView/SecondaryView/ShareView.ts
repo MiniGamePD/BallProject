@@ -23,7 +23,7 @@ class ShareView extends egret.DisplayObjectContainer
 
 		this.CreateBgCover();
 		this.CreateCoinInfo();
-		this.CreateShareBtn();
+		this.CreateShareBg();
 	}
 
 	public Init(callbackFun: Function, callbackObj: any)
@@ -67,15 +67,27 @@ class ShareView extends egret.DisplayObjectContainer
 		this.addChild(this.coinText);
 	}
 
-	private CreateShareBtn()
+	private CreateShareBg()
 	{
 		this.shareBg = this.resModule.CreateBitmap("pd_res_json.ShareGetCoinBg", GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() / 2,
 			this, AnchorType.Center);
 
-		this.shareBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.ShareBtn", 400, 80, 261, 80, this.OnShare, this);
-		this.shareBtn.x = GameMain.GetInstance().GetStageWidth() / 2;
-		this.shareBtn.y = GameMain.GetInstance().GetStageHeight() / 2 + 200;
-		this.addChild(this.shareBtn);
+		this.shareBg.scaleX = 0;
+		this.shareBg.scaleY = 0;
+		var scaleParam = new PaScalingParam()
+		scaleParam.displayObj = this.shareBg;
+		scaleParam.duration = 200;
+		scaleParam.targetScaleX = 1;
+		scaleParam.targetScaleY = 1;
+		scaleParam.interval = scaleParam.duration;
+		var scaleEvent = new PlayProgramAnimationEvent()
+		scaleEvent.param = scaleParam;
+		GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+		this.CreateShareBtn()
+		// var timer = new egret.Timer(200,1);
+        // timer.addEventListener(egret.TimerEvent.TIMER, this.CreateShareBtn, this);
+        // timer.start();
 	}
 
 	private OnShare(callbackObj: any)
@@ -86,5 +98,25 @@ class ShareView extends egret.DisplayObjectContainer
 		callbackObj.playerDataModule.Save();
 		Tools.DetachDisplayObjFromParent(callbackObj);
 		callbackObj.callbackFun(callbackObj.callbackObj);
+	}
+
+	private CreateShareBtn()
+	{
+		this.shareBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.ShareBtn", 400, 80, 261, 80, this.OnShare, this);
+		this.shareBtn.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.shareBtn.y = GameMain.GetInstance().GetStageHeight() / 2 + 200;
+		this.addChild(this.shareBtn);
+
+		this.shareBtn.scaleX = 0;
+		this.shareBtn.scaleY = 0;
+		var scaleParam = new PaScalingParam()
+		scaleParam.displayObj = this.shareBtn;
+		scaleParam.duration = 200;
+		scaleParam.targetScaleX = 1;
+		scaleParam.targetScaleY = 1;
+		scaleParam.interval = scaleParam.duration;
+		var scaleEvent = new PlayProgramAnimationEvent()
+		scaleEvent.param = scaleParam;
+		GameMain.GetInstance().DispatchEvent(scaleEvent);
 	}
 }

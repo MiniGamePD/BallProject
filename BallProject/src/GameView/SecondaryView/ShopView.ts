@@ -705,13 +705,14 @@ class ShopView extends egret.DisplayObjectContainer
 
     private TryLottyBall()
     {
-        var result = this.ballConfigModule.IsNewPlayer() 
+        var isNewPlayer = this.ballConfigModule.IsNewPlayer();
+        var result = isNewPlayer
                     || this.playerDataModule.CostCoin(Lotty_Ball_Cost);
         if (result)
         {
             this.playerDataModule.Save();
             this.lottyView = new LotteryView();
-            this.lottyView.Init(this.OnCloseLotteryView, this);
+            this.lottyView.Init(this.OnCloseLotteryView, this, isNewPlayer);
             this.addChild(this.lottyView);
         }
         else
@@ -737,6 +738,7 @@ class ShopView extends egret.DisplayObjectContainer
     private OnCloseShareView(callbackObj: any)
     {
         egret.log("OnCloseShareView");
+        callbackObj.RefreshCoinInfo();
     }
 
     private tips: egret.TextField;

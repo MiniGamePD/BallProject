@@ -37,10 +37,14 @@ class LotteryView extends egret.DisplayObjectContainer
 		this.RefreshBallInfo();
 	}
 
-	public Init(callbackFun: Function, callbackObj: any)
+	public Init(callbackFun: Function, callbackObj: any, needGuide: boolean)
 	{
 		this.callbackFun = callbackFun;
 		this.callbackObj = callbackObj;
+		if (needGuide)
+		{
+			this.CreateGuide();
+		}
 	}
 
 	private CreateBgCover()
@@ -180,12 +184,35 @@ class LotteryView extends egret.DisplayObjectContainer
 	}
 
 	private OnClickSelectBtn(callbackObj: any)
-    {
-        var ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
-        ballConfigModule.ChangeSelectBall(callbackObj.ballId);
+	{
+		var ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
+		ballConfigModule.ChangeSelectBall(callbackObj.ballId);
 
-        // 退回大厅
-        Tools.DetachDisplayObjFromParent(callbackObj);
+		// 退回大厅
+		Tools.DetachDisplayObjFromParent(callbackObj);
 		callbackObj.callbackFun(callbackObj.callbackObj, callbackObj.randomBallInfo);
-    }
+	}
+
+	private CreateGuide()
+	{
+		if (this.selectBtn)
+		{
+			var hintFinger = this.resModule.CreateBitmapByName("pd_res_json.finger");
+			hintFinger.x = this.selectBtn.width / 2;
+			hintFinger.y = this.selectBtn.height / 2;
+			Tools.AdapteDisplayObject(hintFinger);
+			this.selectBtn.addChild(hintFinger);
+
+			var scaleParam = new PaScalingParam()
+			scaleParam.displayObj = hintFinger;
+			scaleParam.targetScaleX = 0.8;
+			scaleParam.targetScaleY = 0.8;
+			scaleParam.duration = 50000000;
+			scaleParam.interval = 500;
+			scaleParam.reverse = true;
+			var scaleEvent = new PlayProgramAnimationEvent()
+			scaleEvent.param = scaleParam;
+			GameMain.GetInstance().DispatchEvent(scaleEvent);
+		}
+	}
 }
