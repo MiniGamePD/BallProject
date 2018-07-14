@@ -320,7 +320,7 @@ class LobbyView extends GameView
 
     private OnClickStartGame(): void
     {
-        egret.log("OnClickStartGame");
+        //egret.log("OnClickStartGame");
 
         GameMain.GetInstance().SwitchGameState(GameStateType.Match);
     }

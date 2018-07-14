@@ -143,7 +143,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		this.addChild(this.ballNameText);
 
 		this.ballSkillText = new egret.TextField();
-		this.ballSkillText.size = 30;
+		this.ballSkillText.size = 26;
 		this.ballSkillText.textColor = 0xFFFFFF;
 		this.ballSkillText.text = "- " + curLevelBallConfig.skillDes + " -";
 		this.ballSkillText.textAlign = "center";
