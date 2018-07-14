@@ -128,7 +128,7 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 		this.SetHistoryHighScore(this.playerData.GetHistoryHighScore());
 	}
 
-	private AddScore(score: number)
+	public AddScore(score: number)
 	{
 		var newScore = this.targetScore + score;
 		this.SetScore(newScore);	
@@ -142,10 +142,10 @@ class MatchScoreItem extends egret.DisplayObjectContainer
 
 	private OnBoxEliminateEvent(evt: BoxEliminateEvent): void
 	{
-		if (evt != null)
-		{
-			this.AddScore(ScorePerBox);
-		}
+		// if (evt != null)
+		// {
+		// 	this.AddScore(ScorePerBox);
+		// }
 	}
 
 	public Release()

@@ -16,6 +16,7 @@ class BoxEmitter
 	private resModule: IResModule;
 	private soundModule: ISoundModule;
 
+	private matchView: BallMatchView;
 	private ballDataMgr: BallDataMgr;
 	public ballGameWorld: BallGameWorld;
 
@@ -40,11 +41,13 @@ class BoxEmitter
 	{
 	}
 
-	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer, ballDataMgr: BallDataMgr)
+	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer, 
+			ballDataMgr: BallDataMgr, matchView: BallMatchView)
 	{
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
 
+		this.matchView = matchView;
 		this.ballDataMgr = ballDataMgr;
 		this.ballGameWorld = ballGameWorld;
 
@@ -311,7 +314,8 @@ class BoxEmitter
 
 	private ApplyDamageOnBox(box: Box, damage: number, ballPhyBody: p2.Body)
 	{
-		box.changeHealth(-damage);
+		var healthChanged = box.changeHealth(-damage);
+		this.matchView.OnApplyDamageOnBox(box, healthChanged);
 		if (box.health <= 0)
 		{
 			this.boxEliminateEvent.boxType = box.GetBoxType();
