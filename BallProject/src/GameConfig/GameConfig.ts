@@ -113,3 +113,4 @@ const Box_Effect_Gold_Coin_Default = 3;         // 金币增加数量
 
 const Lotty_Ball_Cost = 200; // 抽球的加个
 const Lotty_Ball_Back = 160; // 抽球到已经有的球，返回的金币数量
+const Share_Add_Coin_Count = 50; // 分享获得金币数量

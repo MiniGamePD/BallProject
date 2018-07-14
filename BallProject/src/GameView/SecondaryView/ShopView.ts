@@ -68,6 +68,7 @@ class ShopView extends egret.DisplayObjectContainer
     private shopDesBitmap: egret.Bitmap;
 
     private lottyView: LotteryView;
+    private shareView: ShareView;
 
     private adaptFactor: number;
 
@@ -715,16 +716,27 @@ class ShopView extends egret.DisplayObjectContainer
         }
         else
         {
-            var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
-            var networkConfig = networkConfigModule.GetNetWorkConfig();
-            var tips = "糟糕，金币不够!\n游戏中击破金币道具可以获得金币。";
-            if (networkConfig.EnableShare)
-            {
-                tips += "\n分享好友，金币可以翻倍哦~"
-            }
-            this.ShowTips(GameMain.GetInstance().GetStageWidth() / 2,
-                 GameMain.GetInstance().GetStageHeight() / 2, tips);
+            this.shareView = new ShareView();
+            this.shareView.Init(this.OnCloseShareView, this);
+            this.addChild(this.shareView);
+            
+            // var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
+            // var networkConfig = networkConfigModule.GetNetWorkConfig();
+            // var tips = "糟糕，金币不够!\n游戏中击破金币道具可以获得金币。";
+            // if (networkConfig.EnableShare)
+            // {
+            //     tips += "\n分享好友，金币可以翻倍哦~"
+            // }
+            // this.ShowTips(GameMain.GetInstance().GetStageWidth() / 2,
+            //      GameMain.GetInstance().GetStageHeight() / 2, tips);
+
+
         }
+    }
+
+    private OnCloseShareView(callbackObj: any)
+    {
+        egret.log("OnCloseShareView");
     }
 
     private tips: egret.TextField;
