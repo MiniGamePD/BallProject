@@ -13,7 +13,7 @@ class ShareView extends egret.DisplayObjectContainer
 
 	private coinBitmap: egret.Bitmap;
 	private coinText: egret.TextField;
-
+	private TipText: egret.TextField;
 	public constructor()
 	{
 		super();
@@ -24,6 +24,7 @@ class ShareView extends egret.DisplayObjectContainer
 		this.CreateBgCover();
 		this.CreateCoinInfo();
 		this.CreateShareBg();
+		this.CreateTipsTextInfo();
 	}
 
 	public Init(callbackFun: Function, callbackObj: any)
@@ -44,6 +45,31 @@ class ShareView extends egret.DisplayObjectContainer
 	{
 		Tools.DetachDisplayObjFromParent(this);
 		this.callbackFun(this.callbackObj, false);
+	}
+
+	private CreateTipsTextInfo()
+	{
+		this.TipText = new egret.TextField();
+		this.TipText.size = 40;
+		this.TipText.textColor = 0xFFFFFF;
+		this.TipText.textAlign = "center";
+		this.TipText.width = 400;
+		this.TipText.height = 100;
+		this.TipText.x = GameMain.GetInstance().GetStageWidth() / 2;
+		this.TipText.y = 330;
+
+		var LeftNum = this.playerDataModule.GetTodayLeftLotteryShowTipCnt();
+		this.TipText.textFlow = <Array<egret.ITextElement>>
+            [
+                { text: "当天剩余", style: { "textColor": 0xFFFFFF, "size": 30 } },
+                { text: LeftNum, style: { "textColor": 0xFFC900, "size": 30 } },
+                { text: "次数", style: { "textColor": 0xFFFFFF, "size": 30 } },
+                
+            ]
+
+		//this.TipText.text = "当天剩余" +  + "次";
+		Tools.SetAnchor(this.TipText, AnchorType.Center);
+		this.addChild(this.TipText);
 	}
 
 	private CreateCoinInfo()
