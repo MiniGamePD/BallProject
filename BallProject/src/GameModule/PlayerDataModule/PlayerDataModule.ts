@@ -40,7 +40,9 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 
     public CanShowLotteryTips() : boolean
     {
-        var Static_Limit = 3;//
+        var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
+        var networkConfig = networkConfigModule.GetNetWorkConfig();
+        var Static_Limit = networkConfig.m_LotteryShareShowTipLimit;
         return this.m_tTodayLotteryShareCnt < Static_Limit; 
     } 
 

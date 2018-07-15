@@ -1,3 +1,4 @@
 {
-    "EnableShare": true
+    "EnableShare": true,
+    "LotteryShareShowTimeTipLimit":10
 }
