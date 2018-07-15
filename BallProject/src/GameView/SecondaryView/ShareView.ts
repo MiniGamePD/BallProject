@@ -83,23 +83,24 @@ class ShareView extends egret.DisplayObjectContainer
 
 	private CreateCoinInfo()
 	{
-		this.coinBitmap = this.resModule.CreateBitmapByName("shopCoin");
-		this.coinBitmap.x = 320 * this.adaptFactor;
-		this.coinBitmap.y = 85;
-		Tools.SetAnchor(this.coinBitmap, AnchorType.Center);
-		this.addChild(this.coinBitmap);
+        this.coinBitmap = this.resModule.CreateBitmapByName("shopCoin");
+        this.coinBitmap.x = 320 * this.adaptFactor;
+        this.coinBitmap.y = 85;
+        Tools.SetAnchor(this.coinBitmap, AnchorType.Center);
+        this.addChild(this.coinBitmap);
 
-		this.coinText = new egret.TextField();
-		this.coinText.size = 40;
-		this.coinText.textColor = 0xFFFFFF;
-		this.coinText.textAlign = "center";
-		this.coinText.width = 400;
-		this.coinText.height = 100;
-		this.coinText.x = 340 * this.adaptFactor;
-		this.coinText.y = 115;
-		this.coinText.text = this.playerDataModule.GetCoin().toString();
-		Tools.SetAnchor(this.coinText, AnchorType.Center);
-		this.addChild(this.coinText);
+        this.coinText = new egret.TextField();
+        this.coinText.size = 40 * this.adaptFactor;
+        this.coinText.text = this.playerDataModule.GetCoin().toString();
+        this.coinText.textColor = 0xFFFFFF;
+        this.coinText.textAlign = "center";
+        this.coinText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this.coinText.stroke = 2;
+        this.coinText.strokeColor = 0x000000;
+        this.coinText.x = 320 * this.adaptFactor;
+        this.coinText.y = 85;
+        Tools.SetAnchor(this.coinText, AnchorType.Center);
+        this.addChild(this.coinText);
 	}
 
 	private CreateNoMoneyBg()
