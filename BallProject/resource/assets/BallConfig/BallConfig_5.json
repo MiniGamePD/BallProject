@@ -6,7 +6,7 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1.1,
-	"price": [200, 300, 400],
+	"price": [1000, 1000, 1000],
 
 	"probability": [8, 8, 8],
 	"firstBallProbability": 10,

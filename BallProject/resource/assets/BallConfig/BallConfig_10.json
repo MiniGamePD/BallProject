@@ -6,16 +6,16 @@
 	"emitSpeed" : [1000, 1100, 1200],
 	"ballRadius" : [22, 24, 26],
 	"displayScale": 1,
-	"price": [200, 300, 400],
+	"price": [1000, 1000, 1000],
 	
 	"probability": [12, 12, 12],
 	"firstBallProbability": 0,
 
-	"Box_Effect_Gold_Coin" : [4, 5, 6],
+	"Box_Effect_Gold_Coin" : [25, 30, 35],
 
 	"skillDes" : "财源滚滚！击破金币道具获得额外金币",
 	"skillHead" : "增加",
-	"skillLevellDes" : ["1金币", "2金币", "3金币"],
+	"skillLevellDes" : ["5金币", "10金币", "15金币"],
 
 	"Describe" : ["<金币道具>额外加2金币", "<金币道具>额外加4金币", "<金币道具>额外加6金币"]	
 }
