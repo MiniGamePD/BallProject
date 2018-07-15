@@ -11,6 +11,7 @@ class ShopView extends egret.DisplayObjectContainer
     private nextBtn: ShapeBgButton;
     private selectBtn: ShapeBgButton;
     private lotteryBtn: ShapeBgButton;
+    private lotteryBtnText: egret.Bitmap;
     private lotteryCost: egret.TextField;
 
     private resModule: IResModule;
@@ -296,6 +297,11 @@ class ShopView extends egret.DisplayObjectContainer
         var lottyBtnPosx = hasThisBall ? widthMidX / 2 * 3 - 20 : widthMidX;
         this.lotteryBtn.x = lottyBtnPosx * this.adaptFactor;
         this.lotteryBtn.visible = !isMaxLevel;
+
+        Tools.DetachDisplayObjFromParent(this.lotteryBtnText);
+        var lotteryBtnTextName = hasThisBall ? "lottyBtn_Upgrade" : "lottyBtn_Buy"
+        this.lotteryBtnText = this.resModule.CreateBitmap(lotteryBtnTextName, this.lotteryBtn.x - 80, this.lotteryBtn.y - 2, this, AnchorType.Center);
+        this.lotteryBtnText.visible = !isMaxLevel;
 
         var enoughCoin = this.playerDataModule.GetCoin() >= this.curBallPrice;
         if (!this.lotteryCost)
