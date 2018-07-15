@@ -41,8 +41,8 @@ class BoxEmitter
 	{
 	}
 
-	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer, 
-			ballDataMgr: BallDataMgr, matchView: BallMatchView)
+	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer,
+		ballDataMgr: BallDataMgr, matchView: BallMatchView)
 	{
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
@@ -70,7 +70,7 @@ class BoxEmitter
 
 		this.hitSoundArray = [];
 		this.hitSoundChannelArray = [];
-		if(this.soundModule.SoundHitBoxResReady())
+		if (this.soundModule.SoundHitBoxResReady())
 		{
 			for (var i = 1; i <= 20; ++i)
 			{
@@ -79,7 +79,7 @@ class BoxEmitter
 				this.hitSoundChannelArray.push(null);
 			}
 		}
-		
+
 		this.RegisterEvent();
 	}
 
@@ -308,9 +308,33 @@ class BoxEmitter
 				this.ApplyDamageOnBox(box, 1, ballPhyBody)
 			}
 
-			if (box.health > 0 && !box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
+			if (box.health > 0 
+				&& !box.pause 
+				&& this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit()
+				&& (box.GetBoxType() == BoxType.Square || box.GetBoxType() == BoxType.Triangle))
 			{
-				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time * 1000);
+				var pauseTime = this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time * 1000;
+				var pauseEffect = this.resModule.CreateBitmapByName("Ball_BaBa");
+				pauseEffect.width = 50
+				pauseEffect.height = 50
+				Tools.SetAnchor(pauseEffect, AnchorType.Center);
+				pauseEffect.x = box.GetCenterPos().x;
+				pauseEffect.y = box.GetCenterPos().y;
+				this.battleGround.addChildAt(pauseEffect, 3);
+
+				var scaleParam = new PaScalingParam()
+				scaleParam.displayObj = pauseEffect;
+				scaleParam.targetScaleX = 0.7;
+				scaleParam.targetScaleY = 0.7;
+				scaleParam.duration = pauseTime;
+				scaleParam.interval = 100;
+				scaleParam.reverse = true;
+				scaleParam.needRemoveOnFinish = true;
+				var scaleEvent = new PlayProgramAnimationEvent()
+				scaleEvent.param = scaleParam;
+				GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+				box.Pause(pauseTime, pauseEffect);
 			}
 		}
 	}
@@ -520,6 +544,8 @@ class BoxEmitter
 			var scaleEvent = new PlayProgramAnimationEvent()
 			scaleEvent.param = scaleParam;
 			GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+			Tools.DetachDisplayObjFromParent(nearBox.pauseEffect);
 
 			this.DeleteBox(nearBox, false);
 		}

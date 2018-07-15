@@ -95,7 +95,14 @@ class TriangleBox extends Box
 
 	public GetBoxType(): BoxType
 	{
-		return BoxType.Square;
+		return BoxType.Triangle;
+	}
+
+	public GetCenterPos(): egret.Point
+	{
+		this.boxCenterPosTemp.x = this.healthDisplayObj.x + this.healthOffset.x;
+		this.boxCenterPosTemp.y = this.healthDisplayObj.y + this.healthOffset.y;
+		return this.boxCenterPosTemp;
 	}
 
 	public CreateDisplay(): egret.DisplayObject
