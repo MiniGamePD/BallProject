@@ -21,4 +21,9 @@ interface IPlayerDataModule extends IModule
     GetBattleTimes():number;
     SetExpedBallList(list:string);
     GetExpedBallList():string;
+
+    IncreaseLotteryShowTipCnt() : void
+
+    CanShowLotteryTips() : boolean
+
 }

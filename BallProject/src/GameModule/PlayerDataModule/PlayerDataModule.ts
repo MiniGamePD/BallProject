@@ -9,15 +9,53 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
     private controlType:BallControllerType;
     private battleTimes:number;
 
-    private saveDataVersion:number = 2; //常量值，请勿修改
+    private saveDataVersion:number = 3; //常量值，请勿修改
 
     private breakRecordHistoryHighScore:boolean;
+
+    private m_tLastLoginTime: number; //上一次登录时间
+
+    private m_tTodayLotteryShareCnt: number ;// 当天抽奖分享次数
+
+    //private static m_stTodayLotteryShareCntLimit 
+    public OnLoginDone():void
+    {
+        if(CTimeHelper.IsNewDay(this.m_tLastLoginTime))
+        {
+            this.OnResetToday();
+        }
+
+        this.m_tLastLoginTime = CTimeHelper.Now();
+
+        this.Save();
+        return;
+    }
+
+    public IncreaseLotteryShowTipCnt() : void
+    {
+        this.m_tTodayLotteryShareCnt ++;
+        this.Save();
+        return;
+    }
+
+    public CanShowLotteryTips() : boolean
+    {
+        var Static_Limit = 3;//
+        return this.m_tTodayLotteryShareCnt < Static_Limit; 
+    } 
+
+    private OnResetToday(): void
+    {
+        this.m_tTodayLotteryShareCnt = 0;
+        return;
+    }
 
     public Init():boolean
     {
         super.Init();
 
         this.breakRecordHistoryHighScore = false;
+
 
         return true;
     }
@@ -160,6 +198,16 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                 this.controlType = BallControllerType.TouchMove;
             if(this.battleTimes == undefined)
                 this.battleTimes = 0;
+
+            if(this.m_tLastLoginTime == undefined)
+            {
+                this.m_tLastLoginTime = 0;
+            }
+
+            if(this.m_tTodayLotteryShareCnt == undefined)
+            {
+                this.m_tTodayLotteryShareCnt = 0;
+            }
         }
         else
         {
@@ -171,7 +219,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.expedBallList = "";
             this.controlType = BallControllerType.TouchMove;
             this.battleTimes = 0;
-
+            this.m_tLastLoginTime = 0;
+            this.m_tTodayLotteryShareCnt = 0;
             this.Save();
         }
     }
@@ -187,6 +236,9 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             controlType:this.controlType,
             expedBallList:this.expedBallList,
             battleTimes:this.battleTimes,
+            LastLoginTime:this.m_tLastLoginTime,
+            TodayLotteryShareCnt:this.m_tTodayLotteryShareCnt
+
         } 
         var jsonDataStr:string = JSON.stringify(jsonData);
         GameMain.GetInstance().SaveUserData(jsonDataStr);
@@ -210,6 +262,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                     this.expedBallList = "";
                     this.battleTimes = 0;
                     this.controlType = BallControllerType.TouchMove;
+                    this.m_tLastLoginTime = 0;//jsonObj.LastLoginTime;
+                    this.m_tTodayLotteryShareCnt = 0;//jsonObj.TodayLotteryShareCnt;
                     this.Save();
                 }
                 else if(jsonObj.version == 2)
@@ -221,6 +275,21 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                     this.controlType = jsonObj.controlType;
                     this.expedBallList = jsonObj.expedBallList;
                     this.battleTimes = jsonObj.battleTimes;
+                    this.m_tLastLoginTime = 0;//jsonObj.LastLoginTime;
+                    this.m_tTodayLotteryShareCnt = 0;//jsonObj.TodayLotteryShareCnt;
+                    this.Save();
+                }
+                else if(jsonObj.version == 3)
+                {
+                    this.historyHighScore = jsonObj.historyHighScore;
+                    this.coin = jsonObj.coin;
+                    this.myBallList = jsonObj.myBallList;
+                    this.controlType = jsonObj.controlType;
+                    this.expedBallList = jsonObj.expedBallList;
+                    this.battleTimes = jsonObj.battleTimes;
+                    this.m_tLastLoginTime = jsonObj.LastLoginTime;//jsonObj.LastLoginTime;
+                    this.m_tTodayLotteryShareCnt = jsonObj.TodayLotteryShareCnt;//
+                    this.Save();      
                 }
             }
             catch(e)
@@ -235,6 +304,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                 this.expedBallList = "";
                 this.controlType = BallControllerType.TouchMove;
                 this.battleTimes = 0;
+                this.m_tLastLoginTime = 0;
+                this.m_tTodayLotteryShareCnt = 0;
                 this.Save();//存成新版本的数据格式
             }
         }
@@ -248,7 +319,11 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.expedBallList = "";
             this.battleTimes = 0;
             this.controlType = BallControllerType.TouchMove;
+            this.m_tLastLoginTime = 0;
+            this.m_tTodayLotteryShareCnt =0;
         }
+
+        this.OnLoginDone();
     }
 
     public OnMatchBegin()

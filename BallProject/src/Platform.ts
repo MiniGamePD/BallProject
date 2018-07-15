@@ -78,12 +78,14 @@ class DebugPlatform implements Platform
 
     public saveUserData(userData:string)
     {
-
+        
     }
 
     public loadUserData():string
     {
-        return "10,1000";
+        //var tmpstr = '{"version":3,"historyHighScore":24,"LastLoginTime":33,"TodayLotteryShareCnt":0,"coin":10,"myBallList":"5-1|1-1|10-1|2-1|6-1","controlType":0,"expedBallList":"10","battleTimes":8}'
+        var tmpstr = "10000";
+        return tmpstr;
     }
 
     public hasUserData():boolean

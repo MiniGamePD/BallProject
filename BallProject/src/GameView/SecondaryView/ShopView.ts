@@ -743,10 +743,13 @@ class ShopView extends egret.DisplayObjectContainer
         }
         else
         {
-            this.shareView = new ShareView();
-            this.shareView.Init(this.OnCloseShareView, this);
-            this.addChild(this.shareView);
-
+            if(this.playerDataModule.CanShowLotteryTips())
+            {
+                this.shareView = new ShareView();
+                this.shareView.Init(this.OnCloseShareView, this);
+                this.addChild(this.shareView);
+            }
+            
             // var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
             // var networkConfig = networkConfigModule.GetNetWorkConfig();
             // var tips = "糟糕，金币不够!\n游戏中击破金币道具可以获得金币。";
@@ -768,6 +771,7 @@ class ShopView extends egret.DisplayObjectContainer
         callbackObj.RefreshBallInfo();
         if (hasShare)
         {
+            this.playerDataModule.IncreaseLotteryShowTipCnt();
             callbackObj.ShowShareAddCoin();
         }
     }
