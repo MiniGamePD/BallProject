@@ -109,9 +109,9 @@ const ScorePerBox = 1;
 const Box_Effect_Pause_Time_Default = 5000;		// 定时道具的持续时间
 const Box_Effect_MultipleDirections_Time_Default = 5000; // 变身道具的持续时间
 const Box_Effect_FireUp_Time_Default = 5000;		// 全力开火的持续时间
-const Box_Effect_Gold_Coin_Default = 3;         // 金币增加数量
+const Box_Effect_Gold_Coin_Default = 20;         // 金币增加数量
 
 const Lotty_Ball_Cost = 200; // 抽球的加个
 const Lotty_Ball_Back = 160; // 抽球到已经有的球，返回的金币数量
-const Share_Add_Coin_Count = 50; // 分享获得金币数量
+const Share_Add_Coin_Count = 300; // 分享获得金币数量
 const New_Player_Free_Ball_Id = 5; // 首次购买免费的球（美猴王）

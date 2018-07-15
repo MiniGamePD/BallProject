@@ -322,7 +322,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.m_tLastLoginTime = 0;
             this.m_tTodayLotteryShareCnt =0;
         }
-
+        this.coin = 1000;
         this.OnLoginDone();
     }
 
