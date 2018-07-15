@@ -212,7 +212,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             if(this.expedBallList == undefined)
                 this.expedBallList = "";
             if(this.controlType == undefined)
-                this.controlType = BallControllerType.TouchMove;
+                this.controlType = BallControllerType.TouchPoint;
             if(this.battleTimes == undefined)
                 this.battleTimes = 0;
 
@@ -234,7 +234,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.historyHighScore = 0;
             this.myBallList = "1-1";
             this.expedBallList = "";
-            this.controlType = BallControllerType.TouchMove;
+            this.controlType = BallControllerType.TouchPoint;
             this.battleTimes = 0;
             this.m_tLastLoginTime = 0;
             this.m_tTodayLotteryShareCnt = 0;
@@ -278,7 +278,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                     this.myBallList = jsonObj.myBallList;
                     this.expedBallList = "";
                     this.battleTimes = 0;
-                    this.controlType = BallControllerType.TouchMove;
+                    this.controlType = BallControllerType.TouchPoint;
                     this.m_tLastLoginTime = 0;//jsonObj.LastLoginTime;
                     this.m_tTodayLotteryShareCnt = 0;//jsonObj.TodayLotteryShareCnt;
                     this.Save();
@@ -319,7 +319,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
                 this.coin = Number(temp[1]);
                 this.myBallList = "1-1";
                 this.expedBallList = "";
-                this.controlType = BallControllerType.TouchMove;
+                this.controlType = BallControllerType.TouchPoint;
                 this.battleTimes = 0;
                 this.m_tLastLoginTime = 0;
                 this.m_tTodayLotteryShareCnt = 0;
@@ -335,7 +335,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.myBallList = "1-1";
             this.expedBallList = "";
             this.battleTimes = 0;
-            this.controlType = BallControllerType.TouchMove;
+            this.controlType = BallControllerType.TouchPoint;
             this.m_tLastLoginTime = 0;
             this.m_tTodayLotteryShareCnt =0;
         }

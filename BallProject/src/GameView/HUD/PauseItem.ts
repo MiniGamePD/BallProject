@@ -129,14 +129,14 @@ class PauseItem extends egret.DisplayObjectContainer
         this.controlSelector1Off = this.CreateControlSelector(controlSelectorWidth, "摇杆操作", 0x88888800, 0x888888, this.OnChooseJoyStick);
         this.controlSelector2On = this.CreateControlSelector(controlSelectorWidth, "点击操作", 0xFFFFFF00, 0xFFFFFF, null);
         this.controlSelector2Off = this.CreateControlSelector(controlSelectorWidth, "点击操作", 0x88888800, 0x888888, this.OnChooseTouch);
-        this.controlSelector1On.x = this.helpDetail1.x - 30 / 2 - controlSelectorWidth / 2;
-        this.controlSelector1Off.x = this.controlSelector1On.x;
-        this.controlSelector1On.y = this.helpDetail1.y + this.helpDetail1.height / 2 + 10 + controlSelectorWidth / 2;
-        this.controlSelector1Off.y = this.controlSelector1On.y;
-        this.controlSelector2On.x = this.helpDetail1.x + 30 / 2 + controlSelectorWidth / 2;
+        this.controlSelector2On.x = this.helpDetail1.x - 30 / 2 - controlSelectorWidth / 2;
         this.controlSelector2Off.x = this.controlSelector2On.x;
         this.controlSelector2On.y = this.helpDetail1.y + this.helpDetail1.height / 2 + 10 + controlSelectorWidth / 2;
         this.controlSelector2Off.y = this.controlSelector2On.y;
+        this.controlSelector1On.x = this.helpDetail1.x + 30 / 2 + controlSelectorWidth / 2;
+        this.controlSelector1Off.x = this.controlSelector1On.x;
+        this.controlSelector1On.y = this.helpDetail1.y + this.helpDetail1.height / 2 + 10 + controlSelectorWidth / 2;
+        this.controlSelector1Off.y = this.controlSelector1On.y;
 
         this.bgCoverHelp = new FullScreenCover(0x000000, 0.9);
         this.bgCoverHelp.touchEnabled = true;
