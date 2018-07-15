@@ -196,8 +196,8 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         this.moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
         this.moreCoinIcon.x = 206 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-        this.moreCoinIcon.width = 60;
-        this.moreCoinIcon.width = 49;
+        this.moreCoinIcon.width *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.moreCoinIcon.height *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.moreCoinIcon.anchorOffsetX = this.moreCoinIcon.width / 2;
         this.moreCoinIcon.anchorOffsetY = this.moreCoinIcon.height / 2;
         this.moreCoin.addChild(this.moreCoinIcon);
@@ -223,23 +223,23 @@ class GameOverItem extends egret.DisplayObjectContainer
         lotteryText.text = "获取强力弹球";
         this.lottery.addChild(lotteryText);
 
-        var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
-        lotteryIcon.x = 163 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Shop");
+        lotteryIcon.x = 206 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         lotteryIcon.y = 5;
-        lotteryIcon.width = 40;
-        lotteryIcon.height = 40;
+        lotteryIcon.width *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        lotteryIcon.height *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         lotteryIcon.anchorOffsetX = lotteryIcon.width / 2;
         lotteryIcon.anchorOffsetY = lotteryIcon.height / 2;
         this.lottery.addChild(lotteryIcon);
 
-        var costText = new egret.TextField();
-        costText.x = 192 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-        costText.y = -10;
-        costText.size = 30;
-        costText.textAlign = "left";
-        costText.verticalAlign = "center";
-        costText.text = "200";
-        this.lottery.addChild(costText);
+        // var costText = new egret.TextField();
+        // costText.x = 192 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        // costText.y = -10;
+        // costText.size = 30;
+        // costText.textAlign = "left";
+        // costText.verticalAlign = "center";
+        // costText.text = "200";
+        // this.lottery.addChild(costText);
 
         this.lottery.x = GameMain.GetInstance().GetStageWidth() / 2;
         this.lottery.y = 610;
@@ -349,7 +349,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     private OnRealAddMoreCoin()
     {
         this.coin.addChild(this.addtionalCoin);
-        this.moreCoinText.text = "感谢支持，您的额外收益已到账";
+        this.moreCoinText.text = "感谢支持，额外收益已到账";
         this.moreCoinText.textColor = 0x888888;
 
         Tools.DetachDisplayObjFromParent(this.moreCoinButton);
