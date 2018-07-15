@@ -26,4 +26,5 @@ interface IPlayerDataModule extends IModule
 
     CanShowLotteryTips() : boolean
 
+    GetTodayLeftLotteryShowTipCnt():number
 }

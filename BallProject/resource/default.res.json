@@ -48,11 +48,6 @@
 			"name": "PillRotation_mp3"
 		},
 		{
-			"url": "assets/Share.png",
-			"type": "image",
-			"name": "Share_png"
-		},
-		{
 			"url": "assets/Sound/Title.mp3",
 			"type": "sound",
 			"name": "Title_mp3"
