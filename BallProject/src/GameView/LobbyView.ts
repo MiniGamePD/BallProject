@@ -177,6 +177,7 @@ class LobbyView extends GameView
 
         //背景
         this.rankBg = new FullScreenCover(0x000000, 0.9);
+        this.rankBg.touchEnabled = true;
 
         //返回
         this.rankBackButton = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0,
@@ -236,7 +237,7 @@ class LobbyView extends GameView
             GameMain.GetInstance().GetStageHeight());
         if (this.rankMenu != null)
         {
-            this.rankMenu.touchEnabled = true;
+            //this.rankMenu.touchEnabled = true;
             this.rankMenu.anchorOffsetX = this.rankMenu.width / 2;
             this.rankMenu.anchorOffsetY = this.rankMenu.height / 2;
             this.rankMenu.x = GameMain.GetInstance().GetStageWidth() / 2;
