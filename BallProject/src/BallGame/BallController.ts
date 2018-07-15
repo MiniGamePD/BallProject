@@ -15,7 +15,7 @@ class BallController
 	private tempPoint: egret.Point;
 
 	private UIMoveMaxDis = 60;
-	private UIMoveMinis = 12;
+	private UIMoveMinis = 10;
 	private moveUiBgBitmap: egret.Bitmap;
 	private movePointBitmap: egret.Bitmap;
 	private curAlpha = 0;  // 控制UI的当前Alpha
@@ -34,7 +34,7 @@ class BallController
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 
 		this.emitDir = new egret.Point();
-		this.beginTouchPoint = new egret.Point();
+		this.beginTouchPoint = new egret.Point(GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() * (4/5));
 		this.movePoint = new egret.Point();
 		this.tempPoint = new egret.Point();
 		this.ballGameWorld = ballGameWorld;
@@ -110,7 +110,7 @@ class BallController
 		GameMain.GetInstance().RemoveEventListener(SwitchControlTypeEvent.EventName, this.OnSwitchControlTypeEvent, this);
 	}
 
-	private OnSwitchControlTypeEvent(event:SwitchControlTypeEvent)
+	private OnSwitchControlTypeEvent(event: SwitchControlTypeEvent)
 	{
 		this.SwitchControllerType(event.newControlType);
 	}
@@ -130,14 +130,23 @@ class BallController
 				if (this.curTouchPointId < 0)
 				{
 					this.curTouchPointId = evt.touchPointID;
-					this.beginTouchPoint.x = evt.stageX;
-					this.beginTouchPoint.y = evt.stageY;
 					this.movePoint.x = evt.stageX;
 					this.movePoint.y = evt.stageY;
-					this.RefreshUIMove();
+					this.OnCtrlTouchMove();
 				}
 			}
 		}
+	}
+
+	private OnCtrlTouchMove()
+	{
+		this.emitDir.x = this.movePoint.x - this.beginTouchPoint.x;
+		this.emitDir.y = this.movePoint.y - this.beginTouchPoint.y;
+		if (this.emitDir.length > this.UIMoveMinis)
+		{
+			this.ballEmitter.SetEmitDir(this.emitDir);
+		}
+		this.RefreshUIMove();
 	}
 
 	private OnTouchMove(evt: egret.TouchEvent): void
@@ -156,13 +165,7 @@ class BallController
 				{
 					this.movePoint.x = evt.stageX;
 					this.movePoint.y = evt.stageY;
-					this.emitDir.x = evt.stageX - this.beginTouchPoint.x;
-					this.emitDir.y = evt.stageY - this.beginTouchPoint.y;
-					if (this.emitDir.length > this.UIMoveMinis)
-					{
-						this.ballEmitter.SetEmitDir(this.emitDir);
-					}
-					this.RefreshUIMove();
+					this.OnCtrlTouchMove();
 				}
 			}
 		}
@@ -199,9 +202,9 @@ class BallController
 			{
 				if (this.curTouchPointId == evt.touchPointID)
 				{
-					this.movePoint.x = this.beginTouchPoint.x;
-					this.movePoint.y = this.beginTouchPoint.y;
-					this.RefreshUIMove();
+					this.movePoint.x = evt.stageX;
+					this.movePoint.y = evt.stageY;
+					this.OnCtrlTouchMove();
 					this.curTouchPointId = -1;
 				}
 			}
