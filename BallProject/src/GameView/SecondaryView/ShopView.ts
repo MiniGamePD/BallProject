@@ -173,12 +173,10 @@ class ShopView extends egret.DisplayObjectContainer
 
     private TryAddCoin()
     {
-        if (this.playerDataModule.CanShowLotteryTips())
-        {
-            this.shareView = new ShareView();
-            this.shareView.Init(this.OnCloseShareView, this);
-            this.addChild(this.shareView);
-        }
+        this.shareView = new ShareView();
+        this.shareView.Init(this.OnCloseShareView, this);
+        this.addChild(this.shareView);
+            
     }
 
     private RefreshBallInfo()

@@ -262,20 +262,21 @@ class LobbyView extends GameView
         callbackobj.addChild(callbackobj.rankBg);
         callbackobj.addChild(callbackobj.rankFrame);
         callbackobj.addChild(callbackobj.rankTitle);
-        if (callbackobj.rankMenu != null && callbackobj.rankMenu != undefined)
-        {
-            callbackobj.addChild(callbackobj.rankMenu);
-        }
         callbackobj.addChild(callbackobj.rankBackButton);
         callbackobj.addChild(callbackobj.rankLastButton);
         callbackobj.addChild(callbackobj.rankNextButton);
         callbackobj.addChild(callbackobj.rankInviteA);
         callbackobj.addChild(callbackobj.rankInviteB);
 
-        if (platform.canUseCloudStorage())
+        if (platform.canUseCloudStorage() && callbackobj.rankMenu != null && callbackobj.rankMenu != undefined)
+        {
+            callbackobj.addChild(callbackobj.rankMenu);
             platform.getFriendCloudStorage("HighScore");
+        }    
         else
+        {
             callbackobj.addChild(callbackobj.rankCantUseCouldStorage);
+        }
     }
 
     private OnCloseRank(callbackObj: any)
@@ -283,10 +284,7 @@ class LobbyView extends GameView
         Tools.DetachDisplayObjFromParent(callbackObj.rankBg);
         Tools.DetachDisplayObjFromParent(callbackObj.rankFrame);
         Tools.DetachDisplayObjFromParent(callbackObj.rankTitle);
-        if (callbackObj.rankMenu != null && callbackObj.rankMenu != undefined)
-        {
-            Tools.DetachDisplayObjFromParent(callbackObj.rankMenu);
-        }
+        Tools.DetachDisplayObjFromParent(callbackObj.rankMenu);
         Tools.DetachDisplayObjFromParent(callbackObj.rankBackButton);
         Tools.DetachDisplayObjFromParent(callbackObj.rankLastButton);
         Tools.DetachDisplayObjFromParent(callbackObj.rankNextButton);

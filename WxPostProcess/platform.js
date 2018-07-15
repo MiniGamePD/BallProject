@@ -150,7 +150,11 @@ class WxgamePlatform
 
     createOpenDataBitmap(width, height)
     {
-        return this.openDataContext.createDisplayObject(width, height);
+        if(this.isWxVersionSatisfy(10992))
+        {
+            return this.openDataContext.createDisplayObject(width, height);
+        }
+        return null;
     }
 
     setUserCloudStorage(storageKey, storageValue)
@@ -195,6 +199,11 @@ class WxgamePlatform
 
     canUseCloudStorage()
     {
+       return this.isWxVersionSatisfy(10992);
+    }
+
+    isWxVersionSatisfy(limitVersion)
+    {
         try
         {
             var sysInfo = wx.getSystemInfoSync();
@@ -212,7 +221,7 @@ class WxgamePlatform
 
             var version = mainVer*10000+subVer*100+thirdVer;
             console.log(version);
-            return version >= 10992;
+            return version >= limitVersion;
         }
         catch (e)
         {
@@ -222,7 +231,10 @@ class WxgamePlatform
 
     rankTurnPage(dir)
     {
-        this.openDataContext.postMessage("rankTurnPage", dir);
+        if(this.isWxVersionSatisfy(10992))
+        {
+            this.openDataContext.postMessage("rankTurnPage", dir);
+        }
     }
 
     vibrateShort()
