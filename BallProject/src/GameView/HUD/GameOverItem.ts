@@ -103,7 +103,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         var scoreNum = new egret.TextField();
         scoreNum.y = 80;
-        scoreNum.size = 100;
+        scoreNum.size = 80;
         scoreNum.textAlign = "left";
         scoreNum.fontFamily = "Impact";
         scoreNum.text = playerDataModule.GetCurMatchScore();
