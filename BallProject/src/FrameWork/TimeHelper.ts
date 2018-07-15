@@ -13,7 +13,7 @@ public static IsNewDay(timestamp: number): boolean
 public static BeginTimeOfToday() : number
 {
     
-    return 1;
+    return 10000000000000;
 }
 
 };

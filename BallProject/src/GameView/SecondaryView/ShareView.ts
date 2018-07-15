@@ -23,8 +23,16 @@ class ShareView extends egret.DisplayObjectContainer
 
 		this.CreateBgCover();
 		this.CreateCoinInfo();
-		this.CreateShareBg();
-		this.CreateTipsTextInfo();
+		if (this.playerDataModule.CanShowLotteryTips())
+		{
+			this.CreateTipsTextInfo();
+			this.CreateShareBg();
+		}
+		else
+		{
+			this.CreateNoMoneyBg();
+		}
+	
 	}
 
 	public Init(callbackFun: Function, callbackObj: any)
@@ -57,11 +65,12 @@ class ShareView extends egret.DisplayObjectContainer
 		this.TipText.height = 100;
 		this.TipText.x = GameMain.GetInstance().GetStageWidth() / 2;
 		this.TipText.y = 330;
-
+		this.TipText.stroke = 2;
+		this.TipText.strokeColor = 0x000000;
 		var LeftNum = this.playerDataModule.GetTodayLeftLotteryShowTipCnt();
 		this.TipText.textFlow = <Array<egret.ITextElement>>
             [
-                { text: "当天剩余", style: { "textColor": 0xFFFFFF, "size": 30 } },
+                { text: "今天剩余", style: { "textColor": 0xFFFFFF, "size": 30 } },
                 { text: LeftNum, style: { "textColor": 0xFFC900, "size": 30 } },
                 { text: "次数", style: { "textColor": 0xFFFFFF, "size": 30 } },
                 
@@ -93,6 +102,25 @@ class ShareView extends egret.DisplayObjectContainer
 		this.addChild(this.coinText);
 	}
 
+	private CreateNoMoneyBg()
+	{
+		this.shareBg = this.resModule.CreateBitmap("pd_res_json.noMoneyTips", GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() / 2,
+			this, AnchorType.Center);
+
+		this.shareBg.scaleX = 0;
+		this.shareBg.scaleY = 0;
+		var scaleParam = new PaScalingParam()
+		scaleParam.displayObj = this.shareBg;
+		scaleParam.duration = 200;
+		scaleParam.targetScaleX = 1;
+		scaleParam.targetScaleY = 1;
+		scaleParam.interval = scaleParam.duration;
+		var scaleEvent = new PlayProgramAnimationEvent()
+		scaleEvent.param = scaleParam;
+		GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+	//	this.CreateShareBtn()
+	}
 	private CreateShareBg()
 	{
 		this.shareBg = this.resModule.CreateBitmap("pd_res_json.ShareGetCoinBg", GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() / 2,
