@@ -20,6 +20,7 @@ class ShopView extends egret.DisplayObjectContainer
     private curShowBallPosIndex: number;
     private curShowBallId: number;
     private totalBallCount: number;
+    private curBallPrice: number;
 
     private coinBitmap: egret.Bitmap;
     private coinText: egret.TextField;
@@ -157,6 +158,12 @@ class ShopView extends egret.DisplayObjectContainer
     private RefreshBallInfo()
     {
         var widthMidX = 320;
+        var isNewPlayer = this.ballConfigModule.IsNewPlayer();
+
+        if (isNewPlayer)
+        {
+            this.SetFocusBall(New_Player_Free_Ball_Id);
+        }
 
         this.curShowBallId = this.GetShopViewBallIdByIndex(this.curShowBallPosIndex);
         var ballLevel = this.ballConfigModule.GetMyBallLevel(this.curShowBallId);
@@ -164,6 +171,12 @@ class ShopView extends egret.DisplayObjectContainer
         var curLevel = hasThisBall ? ballLevel : 1;
         var curLevelBallConfig = this.ballConfigModule.GetBallConfig(this.curShowBallId, curLevel);
         var isMaxLevel = curLevelBallConfig.level == curLevelBallConfig.maxLevel;
+        var nextLevelBallConfig: BallConfig = null;
+        if (!isMaxLevel)
+        {
+            nextLevelBallConfig = this.ballConfigModule.GetBallConfig(this.curShowBallId, curLevel + 1);
+        }
+        this.curBallPrice = hasThisBall && nextLevelBallConfig != null ? nextLevelBallConfig.price : curLevelBallConfig.price;
 
         if (!this.ballIndexText)
         {
@@ -256,18 +269,20 @@ class ShopView extends egret.DisplayObjectContainer
         {
             this.selectBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.SelectBall_OK",
                 242 * this.adaptFactor, 79 * this.adaptFactor, 242 * this.adaptFactor, 79 * this.adaptFactor, this.OnClickSelectBtn, this);
-            this.selectBtn.x = (widthMidX / 2) * this.adaptFactor;
+
             this.selectBtn.y = GameMain.GetInstance().GetStageHeight() - 100;
             this.addChild(this.selectBtn);
         }
+        this.selectBtn.x = (isMaxLevel ? widthMidX : (widthMidX / 2)) * this.adaptFactor;
         this.selectBtn.visible = hasThisBall;
 
         if (!this.selectedBitmap)
         {
-            this.selectedBitmap = this.resModule.CreateBitmap("selected", widthMidX / 2 + 100, this.selectBtn.y - 20, this);
+            this.selectedBitmap = this.resModule.CreateBitmap("selected", this.selectBtn.x + 100, this.selectBtn.y - 20, this);
             Tools.AdapteDisplayObject(this.selectedBitmap);
             Tools.SetAnchor(this.selectedBitmap, AnchorType.Center);
         }
+        this.selectedBitmap.x = this.selectBtn.x + 100;
         this.selectedBitmap.visible = hasThisBall && this.curShowBallId == this.ballConfigModule.GetCurBallConfig().id;
 
 
@@ -280,24 +295,24 @@ class ShopView extends egret.DisplayObjectContainer
         }
         var lottyBtnPosx = hasThisBall ? widthMidX / 2 * 3 - 20 : widthMidX;
         this.lotteryBtn.x = lottyBtnPosx * this.adaptFactor;
+        this.lotteryBtn.visible = !isMaxLevel;
 
-        var enoughCoin = this.playerDataModule.GetCoin() >= Lotty_Ball_Cost;
-        var isNewPlayer = this.ballConfigModule.IsNewPlayer();
+        var enoughCoin = this.playerDataModule.GetCoin() >= this.curBallPrice;
         if (!this.lotteryCost)
         {
             this.lotteryCost = new egret.TextField();
             this.lotteryCost.size = 40;
             this.lotteryCost.textAlign = "center";
             this.lotteryCost.bold = true;
-            this.lotteryCost.text = Lotty_Ball_Cost.toString();
             this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 100;
-            Tools.SetAnchor(this.lotteryCost, AnchorType.Center);
             this.addChild(this.lotteryCost);
         }
+        this.lotteryCost.text = this.curBallPrice.toString();
         this.lotteryCost.textColor = enoughCoin || isNewPlayer ? 0xffffff : 0xd6340a;
+        Tools.SetAnchor(this.lotteryCost, AnchorType.Center);
         this.lotteryCost.x = (lottyBtnPosx + 100) * this.adaptFactor;
+        this.lotteryCost.visible = !isMaxLevel;
 
-        Tools.DetachDisplayObjFromParent(this.hintFinger);
         if (!this.dicountBitmap)
         {
             this.dicountBitmap = this.resModule.CreateBitmap("discount", this.lotteryCost.x, this.lotteryCost.y, this, AnchorType.Center);
@@ -338,7 +353,7 @@ class ShopView extends egret.DisplayObjectContainer
             this.shopDesText.textColor = 0xFFFFFF;
             this.addChild(this.shopDesText);
         }
-        this.shopDesText.text = isNewPlayer ? "首次抽球免费哦！" : "抽到相同的球升一级哦！";
+        this.shopDesText.text = isNewPlayer ? "首次购买免费哦！" : "球升级会更厉害哦！";
         Tools.SetAnchor(this.shopDesText, AnchorType.Center);
 
         this.CreateAttribute();
@@ -733,11 +748,11 @@ class ShopView extends egret.DisplayObjectContainer
     {
         var isNewPlayer = this.ballConfigModule.IsNewPlayer();
         var result = isNewPlayer
-            || this.playerDataModule.CostCoin(Lotty_Ball_Cost);
+            || this.playerDataModule.CostCoin(this.curBallPrice);
         if (result)
         {
             this.playerDataModule.Save();
-            this.lottyView = new LotteryView();
+            this.lottyView = new LotteryView(this.curShowBallId);
             this.lottyView.Init(this.OnCloseLotteryView, this, isNewPlayer);
             this.addChild(this.lottyView);
         }

@@ -29,6 +29,9 @@ interface IBallConfigModule extends IModule
     // 抽取一个球
     RandomBall(): RandomBallInfo;
 
+    // 购买或者升级一个球
+    BuyOrUpgradeBall(ballId): RandomBallInfo;
+
     // 是否是新玩家：只有一个1级的白球
     IsNewPlayer(): boolean;
 

@@ -284,8 +284,15 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	// 抽取一个球
     public RandomBall(): RandomBallInfo
 	{
+		var randomBallId = this.RandomBallIdByProbability();
+		return this.BuyOrUpgradeBall(randomBallId);
+	}
+
+	// 购买或者升级一个球
+    public BuyOrUpgradeBall(ballId): RandomBallInfo
+	{
 		var newBall = new RandomBallInfo();
-		newBall.id = this.RandomBallIdByProbability();
+		newBall.id = ballId;
 		var myBallInfo = this.GetMyBallInfo(newBall.id);
 		if (myBallInfo != null)
 		{
