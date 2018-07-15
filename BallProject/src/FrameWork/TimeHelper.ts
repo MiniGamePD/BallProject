@@ -12,8 +12,21 @@ public static IsNewDay(timestamp: number): boolean
 
 public static BeginTimeOfToday() : number
 {
+
+    var NowDate = new Date();
     
-    return 10000000000000;
+    console.log("Now date: " + NowDate);
+
+    NowDate.setMinutes(0);
+    NowDate.setHours(0);
+    NowDate.setSeconds(0);
+    console.log("Now date: " + NowDate);
+    
+    return Math.floor(NowDate.getTime() / 1000);
+
+    //return 10000000000000;
 }
+
+
 
 };
