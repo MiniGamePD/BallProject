@@ -132,7 +132,7 @@ class BallMatchModule extends GameViewModule
 
     private OnChangeBallEvent(event:ChangeBallEvent)
     {
-        this.ballDataMgr.ChangeBall(event.ballId, 1);
+        this.ballDataMgr.ChangeBall(event.ballId, event.ballLevel);
     }
 }
 

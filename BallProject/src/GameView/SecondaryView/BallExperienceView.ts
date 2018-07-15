@@ -23,6 +23,9 @@ class BallExperienceView extends egret.DisplayObjectContainer
 	private ballLevel: number;
 	private randomBallInfo: RandomBallInfo;
 
+	private ballLevelBitmap:egret.Bitmap;
+	private ballLevelMaxBitmap:egret.Bitmap;
+
 	public constructor(expBallInfo:RandomBallInfo)
 	{
 		super();
@@ -73,6 +76,7 @@ class BallExperienceView extends egret.DisplayObjectContainer
 	{
 		var event = new ChangeBallEvent();
 		event.ballId = callbackObj.randomBallInfo.id;
+		event.ballLevel = 3;
 		GameMain.GetInstance().DispatchEvent(event);
 
 		callbackObj.callbackFun(callbackObj.callbackObj);
@@ -149,6 +153,16 @@ class BallExperienceView extends egret.DisplayObjectContainer
 		this.addChild(this.particleSys);
 		this.particleSys.start();
 
+		// 球的等级
+		var adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+		this.ballLevelBitmap = this.resModule.CreateBitmapByName("level" + curLevelBallConfig.level);
+        this.ballLevelBitmap.x = (320 + 100) * adaptFactor;
+        this.ballLevelBitmap.y = 600;
+        Tools.SetAnchor(this.ballLevelBitmap, AnchorType.Center);
+        this.addChild(this.ballLevelBitmap);
+		this.ballLevelMaxBitmap = this.resModule.CreateBitmap("levelMax",
+			(320 + 130) * adaptFactor, 630, this, AnchorType.Center);
+
 		this.ballNameText = new egret.TextField();
 		this.ballNameText.size = 40;
 		this.ballNameText.textColor = 0xFFFFFF;
@@ -157,7 +171,7 @@ class BallExperienceView extends egret.DisplayObjectContainer
         this.ballNameText.textFlow = <Array<egret.ITextElement>>
             [
                 { text: "本局可免费使用\n\n", style: { "textColor": 0xFFFFFF, "size": 40 } },
-                { text: curLevelBallConfig.name+"\n", style: { "textColor": 0xFFC900, "size": 40 } },
+                { text: "Lv.Max " + curLevelBallConfig.name+"\n", style: { "textColor": 0xFFC900, "size": 40 } },
             ]
 
 		this.ballNameText.textAlign = "center";

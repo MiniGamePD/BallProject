@@ -13,7 +13,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	private curBallLevel: number;
 	private curBallConfig: BallConfig;
 
-	private expBallList:number[] = [2,3,4,10];//波，鸡，鸣，币
+	private expBallList:number[] = [2,3,4,11];//波，鸡，鸣，炸
 	private expedBallList:number[];
 
 	public Init():boolean
@@ -356,7 +356,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 
 				var expBall = new RandomBallInfo();
 				expBall.id = tobeExpId;
-				expBall.level = 1;
+				expBall.level = 3;
 				expBall.randomBallType = RandomBallType.Experience;
 				return expBall;
 			}
