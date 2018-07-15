@@ -24,7 +24,7 @@ class LotteryView extends egret.DisplayObjectContainer
 
 	private selectBtn: ShapeBgButton;
 
-	public constructor()
+	public constructor(ballId: number)
 	{
 		super();
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
@@ -33,7 +33,7 @@ class LotteryView extends egret.DisplayObjectContainer
 
 		this.CreateBgCover();
 		this.CreateBack();
-
+		this.ballId = ballId;
 		this.RefreshBallInfo();
 	}
 
@@ -77,7 +77,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		var stageWidth = GameMain.GetInstance().GetStageWidth();
 		var stageHeight = GameMain.GetInstance().GetStageHeight();
 
-		this.randomBallInfo = this.ballConfigModule.RandomBall();
+		this.randomBallInfo = this.ballConfigModule.BuyOrUpgradeBall(this.ballId);
 		this.ballId = this.randomBallInfo.id;
 		this.ballLevel = this.randomBallInfo.level;
 

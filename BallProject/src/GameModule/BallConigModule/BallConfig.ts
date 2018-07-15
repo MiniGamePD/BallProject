@@ -43,11 +43,11 @@ class BallConfig
 	public Box_Effect_FireUp_Time = Box_Effect_FireUp_Time_Default;		// 全力开火的持续时间
 	public Box_Effect_Gold_Coin = Box_Effect_Gold_Coin_Default;         // 金币增加数量
 
-
 	public skillDes: string;  // 技能描述
 	public skillHead: string;  // 技能描述
 	public skillLevellDes: string;  // 技能等级描述
 	public Describe: string;  // 描述
+	public price: number = 0; // 购买价格
 
 	public InitByConfig(config, level)
 	{
@@ -95,6 +95,8 @@ class BallConfig
 		this.skillHead = config.skillHead;
 		this.skillLevellDes = this.GetConfigInList(config.skillLevellDes, level, "无");
 		this.Describe = this.GetConfigInList(config.Describe, level, "默认");
+
+		this.price = this.GetConfigInList(config.price, level, 9999);
 	}
 
 	private GetConfigInList(list: any[], level: number, defaultValue: any): any
