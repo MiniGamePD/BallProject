@@ -154,7 +154,7 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.stroke = 2;
         this.coinText.strokeColor = 0x000000;
         this.coinText.x = 330 * this.adaptFactor;
-        this.coinText.y = 85;
+        this.coinText.y = 87;
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
 
@@ -338,7 +338,7 @@ class ShopView extends egret.DisplayObjectContainer
             this.lotteryCost.verticalAlign = egret.VerticalAlign.MIDDLE;
             this.lotteryCost.bold = true;
             this.lotteryCost.stroke = 3;
-            this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 103;
+            this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 100;
             this.addChild(this.lotteryCost);
         }
         this.lotteryCost.text = this.curBallPrice.toString();
@@ -351,8 +351,11 @@ class ShopView extends egret.DisplayObjectContainer
         if (!this.dicountBitmap)
         {
             this.dicountBitmap = this.resModule.CreateBitmap("discount", this.lotteryCost.x, this.lotteryCost.y, this, AnchorType.Center);
+            this.dicountBitmap.width *= this.adaptFactor;
+            this.dicountBitmap.height *= this.adaptFactor;
         }
-        this.dicountBitmap.x = this.lotteryCost.x;
+        this.dicountBitmap.x = this.lotteryCost.x + 10 * this.adaptFactor;
+        this.dicountBitmap.y = this.lotteryCost.y + 5 * this.adaptFactor;
         this.dicountBitmap.visible = isNewPlayer;
 
         //首抽免费的手指
