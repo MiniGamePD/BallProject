@@ -87,7 +87,7 @@ const BallEmitCountPerSecond_Skill_FireUp = 2; //加速道具的加速倍数
 const BoxMoveSpeed = 10;    // 方块移动速度
 const BoxCreateCountPerSecond = 0.7; //方块生成速度（个/秒）
 const BoxHealthIncreasePerSecond_TimeZone = [2 * 60000, 4 * 60000, 6 * 60000, 9 * 60000] //Box每秒增加的血量，时间区间
-const BoxHealthIncreasePerSecond_Speed = [0.25, 0.35, 0.5, 0.7, 1] //Box每秒增加的血量，时间区间对应的血量增加速度
+const BoxHealthIncreasePerSecond_Speed = [0.25, 0.3, 0.4, 0.6, 1] //Box每秒增加的血量，时间区间对应的血量增加速度
 
 
 const BoxLineWidth = 4;
