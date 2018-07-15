@@ -3,6 +3,7 @@ class LotteryView extends egret.DisplayObjectContainer
 	private resModule: IResModule;
 	private ballConfigModule: IBallConfigModule;
 	private playerDataModule: IPlayerDataModule;
+	private adaptFactor: number;
 
 	private bgCover: FullScreenCover;
 	private back: ShapeBgButton;
@@ -31,6 +32,7 @@ class LotteryView extends egret.DisplayObjectContainer
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.ballConfigModule = <IBallConfigModule>GameMain.GetInstance().GetModule(ModuleType.BALL_CONFIG);
 		this.playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
+		this.adaptFactor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
 
 		this.CreateBgCover();
 		this.CreateBack();
@@ -181,17 +183,17 @@ class LotteryView extends egret.DisplayObjectContainer
 		}
 
 		this.selectBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.SelectBall_OK",
-			242, 79, 242, 79, this.OnClickSelectBtn, this);
-		this.selectBtn.x = GameMain.GetInstance().GetStageWidth() / 4 + 20;
+			242 * this.adaptFactor, 79 * this.adaptFactor, 242 * this.adaptFactor, 79 * this.adaptFactor, this.OnClickSelectBtn, this);
+		this.selectBtn.x = (640 / 4 + 20) * this.adaptFactor;
 		this.selectBtn.y = 1000;
 		this.addChild(this.selectBtn);
 
 		this.returnBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.lottyReturn",
-			242, 79, 242, 79, this.OnClickBack, this);
-		this.returnBtn.x = GameMain.GetInstance().GetStageWidth() / 4 * 3 - 20;
+			242 * this.adaptFactor, 79 * this.adaptFactor, 242 * this.adaptFactor, 79 * this.adaptFactor, this.OnClickBack, this);
+		this.returnBtn.x = (640 / 4 * 3 - 20) * this.adaptFactor;
 		this.returnBtn.y = 1000;
 		this.addChild(this.returnBtn);
-		
+
 	}
 
 	private OnClickSelectBtn(callbackObj: any)

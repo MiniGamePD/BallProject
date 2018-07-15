@@ -146,23 +146,23 @@ class ShopView extends egret.DisplayObjectContainer
         this.addChild(this.coinBitmap);
 
         this.coinText = new egret.TextField();
-        this.coinText.size = 40;
+        this.coinText.size = 40 * this.adaptFactor;
+        this.coinText.text = this.playerDataModule.GetCoin().toString();
         this.coinText.textColor = 0xFFFFFF;
         this.coinText.textAlign = "center";
-        this.coinText.stroke = 4;
+        this.coinText.verticalAlign = egret.VerticalAlign.MIDDLE;
+        this.coinText.stroke = 2;
         this.coinText.strokeColor = 0x000000;
-        this.coinText.width = 400;
-        this.coinText.height = 100;
-        this.coinText.x = 340 * this.adaptFactor;
-        this.coinText.y = 115;
-        this.coinText.text = this.playerDataModule.GetCoin().toString();
+        this.coinText.x = 330 * this.adaptFactor;
+        this.coinText.y = 87;
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
 
         this.addCoinBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.addCoin",
-            200 * this.adaptFactor, 50 * this.adaptFactor, 46 * this.adaptFactor, 50 * this.adaptFactor, this.OnClickAddCoinBtn, this);
-        this.addCoinBtn.x = this.coinBitmap.x + this.coinBitmap.width / 2 - 25;
+            200, 50, 46, 50, this.OnClickAddCoinBtn, this);
+        this.addCoinBtn.x = (this.coinBitmap.x + this.coinBitmap.width / 2 - 23);
         this.addCoinBtn.y = 85;
+
         this.addChild(this.addCoinBtn);
     }
 
@@ -173,12 +173,10 @@ class ShopView extends egret.DisplayObjectContainer
 
     private TryAddCoin()
     {
-        if (this.playerDataModule.CanShowLotteryTips())
-        {
-            this.shareView = new ShareView();
-            this.shareView.Init(this.OnCloseShareView, this);
-            this.addChild(this.shareView);
-        }
+        this.shareView = new ShareView();
+        this.shareView.Init(this.OnCloseShareView, this);
+        this.addChild(this.shareView);
+
     }
 
     private RefreshBallInfo()
@@ -325,18 +323,22 @@ class ShopView extends egret.DisplayObjectContainer
 
         Tools.DetachDisplayObjFromParent(this.lotteryBtnText);
         var lotteryBtnTextName = hasThisBall ? "lottyBtn_Upgrade" : "lottyBtn_Buy"
-        this.lotteryBtnText = this.resModule.CreateBitmap(lotteryBtnTextName, this.lotteryBtn.x - 80, this.lotteryBtn.y - 2, this, AnchorType.Center);
+        this.lotteryBtnText = this.resModule.CreateBitmap(lotteryBtnTextName, (lottyBtnPosx - 80) * this.adaptFactor, this.lotteryBtn.y - 2 * this.adaptFactor, this);
+        this.lotteryBtnText.width *= this.adaptFactor;
+        this.lotteryBtnText.height *= this.adaptFactor;
+        Tools.SetAnchor(this.lotteryBtnText, AnchorType.Center);
         this.lotteryBtnText.visible = !isMaxLevel;
 
         var enoughCoin = this.playerDataModule.GetCoin() >= this.curBallPrice;
         if (!this.lotteryCost)
         {
             this.lotteryCost = new egret.TextField();
-            this.lotteryCost.size = 42;
+            this.lotteryCost.size = 42 * this.adaptFactor;
             this.lotteryCost.textAlign = "center";
+            this.lotteryCost.verticalAlign = egret.VerticalAlign.MIDDLE;
             this.lotteryCost.bold = true;
             this.lotteryCost.stroke = 3;
-            this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 103;
+            this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 100;
             this.addChild(this.lotteryCost);
         }
         this.lotteryCost.text = this.curBallPrice.toString();
@@ -349,8 +351,11 @@ class ShopView extends egret.DisplayObjectContainer
         if (!this.dicountBitmap)
         {
             this.dicountBitmap = this.resModule.CreateBitmap("discount", this.lotteryCost.x, this.lotteryCost.y, this, AnchorType.Center);
+            this.dicountBitmap.width *= this.adaptFactor;
+            this.dicountBitmap.height *= this.adaptFactor;
         }
-        this.dicountBitmap.x = this.lotteryCost.x;
+        this.dicountBitmap.x = this.lotteryCost.x + 10 * this.adaptFactor;
+        this.dicountBitmap.y = this.lotteryCost.y + 5 * this.adaptFactor;
         this.dicountBitmap.visible = isNewPlayer;
 
         //首抽免费的手指
