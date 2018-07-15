@@ -137,7 +137,7 @@ class BoxCreateStrategy
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.FireUp, 48000, 52000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.LevelUp, 24000, 26000, 10));
 		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.Pause, 35000, 45000, 10));
-		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.GoldCoin, 20000, 30000, 3));
+		this.specialBoxStrategy.push(new SpecialBoxStrategy(BoxType.GoldCoin, 15000, 20000, 10));
 	}
 
 	private UpdateSpecialBoxStrategy(deltaTime: number)

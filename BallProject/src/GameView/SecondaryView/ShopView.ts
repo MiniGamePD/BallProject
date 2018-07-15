@@ -25,6 +25,7 @@ class ShopView extends egret.DisplayObjectContainer
 
     private coinBitmap: egret.Bitmap;
     private coinText: egret.TextField;
+    private addCoinBtn: ShapeBgButton;
 
     private selectBallRoot: egret.DisplayObjectContainer;
     private ballBitmap: egret.Bitmap;
@@ -136,6 +137,7 @@ class ShopView extends egret.DisplayObjectContainer
     {
         Tools.DetachDisplayObjFromParent(this.coinBitmap);
         Tools.DetachDisplayObjFromParent(this.coinText);
+        Tools.DetachDisplayObjFromParent(this.addCoinBtn);
 
         this.coinBitmap = this.resModule.CreateBitmapByName("shopCoin");
         this.coinBitmap.x = 320 * this.adaptFactor;
@@ -147,6 +149,8 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.size = 40;
         this.coinText.textColor = 0xFFFFFF;
         this.coinText.textAlign = "center";
+        this.coinText.stroke = 4;
+        this.coinText.strokeColor = 0x000000;
         this.coinText.width = 400;
         this.coinText.height = 100;
         this.coinText.x = 340 * this.adaptFactor;
@@ -154,6 +158,27 @@ class ShopView extends egret.DisplayObjectContainer
         this.coinText.text = this.playerDataModule.GetCoin().toString();
         Tools.SetAnchor(this.coinText, AnchorType.Center);
         this.addChild(this.coinText);
+
+        this.addCoinBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.addCoin",
+            200 * this.adaptFactor, 50 * this.adaptFactor, 46 * this.adaptFactor, 50 * this.adaptFactor, this.OnClickAddCoinBtn, this);
+        this.addCoinBtn.x = this.coinBitmap.x + this.coinBitmap.width / 2 - 25;
+        this.addCoinBtn.y = 85;
+        this.addChild(this.addCoinBtn);
+    }
+
+    private OnClickAddCoinBtn(callbackObj: any)
+    {
+        callbackObj.TryAddCoin();
+    }
+
+    private TryAddCoin()
+    {
+        if (this.playerDataModule.CanShowLotteryTips())
+        {
+            this.shareView = new ShareView();
+            this.shareView.Init(this.OnCloseShareView, this);
+            this.addChild(this.shareView);
+        }
     }
 
     private RefreshBallInfo()
@@ -307,16 +332,18 @@ class ShopView extends egret.DisplayObjectContainer
         if (!this.lotteryCost)
         {
             this.lotteryCost = new egret.TextField();
-            this.lotteryCost.size = 40;
+            this.lotteryCost.size = 42;
             this.lotteryCost.textAlign = "center";
             this.lotteryCost.bold = true;
-            this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 100;
+            this.lotteryCost.stroke = 3;
+            this.lotteryCost.y = GameMain.GetInstance().GetStageHeight() - 103;
             this.addChild(this.lotteryCost);
         }
         this.lotteryCost.text = this.curBallPrice.toString();
         this.lotteryCost.textColor = enoughCoin || isNewPlayer ? 0xffffff : 0xd6340a;
+        this.lotteryCost.strokeColor = enoughCoin || isNewPlayer ? 0x328bad : 0x000000;
         Tools.SetAnchor(this.lotteryCost, AnchorType.Center);
-        this.lotteryCost.x = (lottyBtnPosx + 100) * this.adaptFactor;
+        this.lotteryCost.x = (lottyBtnPosx + 87) * this.adaptFactor;
         this.lotteryCost.visible = !isMaxLevel;
 
         if (!this.dicountBitmap)
@@ -764,24 +791,7 @@ class ShopView extends egret.DisplayObjectContainer
         }
         else
         {
-            if(this.playerDataModule.CanShowLotteryTips())
-            {
-                this.shareView = new ShareView();
-                this.shareView.Init(this.OnCloseShareView, this);
-                this.addChild(this.shareView);
-            }
-            
-            // var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
-            // var networkConfig = networkConfigModule.GetNetWorkConfig();
-            // var tips = "糟糕，金币不够!\n游戏中击破金币道具可以获得金币。";
-            // if (networkConfig.EnableShare)
-            // {
-            //     tips += "\n分享好友，金币可以翻倍哦~"
-            // }
-            // this.ShowTips(GameMain.GetInstance().GetStageWidth() / 2,
-            //      GameMain.GetInstance().GetStageHeight() / 2, tips);
-
-
+            this.TryAddCoin();
         }
     }
 
