@@ -13,6 +13,8 @@ class ShareView extends egret.DisplayObjectContainer
 
 	private coinBitmap: egret.Bitmap;
 	private coinText: egret.TextField;
+	private addCoinBtn: ShapeBgButton;
+
 	private TipText: egret.TextField;
 	public constructor()
 	{
@@ -32,7 +34,7 @@ class ShareView extends egret.DisplayObjectContainer
 		{
 			this.CreateNoMoneyBg();
 		}
-	
+
 	}
 
 	public Init(callbackFun: Function, callbackObj: any)
@@ -69,12 +71,12 @@ class ShareView extends egret.DisplayObjectContainer
 		this.TipText.strokeColor = 0x000000;
 		var LeftNum = this.playerDataModule.GetTodayLeftLotteryShowTipCnt();
 		this.TipText.textFlow = <Array<egret.ITextElement>>
-            [
-                { text: "今天剩余", style: { "textColor": 0xFFFFFF, "size": 30 } },
-                { text: LeftNum, style: { "textColor": 0xFFC900, "size": 30 } },
-                { text: "次数", style: { "textColor": 0xFFFFFF, "size": 30 } },
-                
-            ]
+			[
+				{ text: "今天剩余", style: { "textColor": 0xFFFFFF, "size": 30 } },
+				{ text: LeftNum, style: { "textColor": 0xFFC900, "size": 30 } },
+				{ text: "次数", style: { "textColor": 0xFFFFFF, "size": 30 } },
+
+			]
 
 		//this.TipText.text = "当天剩余" +  + "次";
 		Tools.SetAnchor(this.TipText, AnchorType.Center);
@@ -83,25 +85,36 @@ class ShareView extends egret.DisplayObjectContainer
 
 	private CreateCoinInfo()
 	{
-        this.coinBitmap = this.resModule.CreateBitmapByName("shopCoin");
-        this.coinBitmap.x = 320 * this.adaptFactor;
-        this.coinBitmap.y = 85;
-        Tools.SetAnchor(this.coinBitmap, AnchorType.Center);
-        this.addChild(this.coinBitmap);
+		this.coinBitmap = this.resModule.CreateBitmapByName("shopCoin");
+		this.coinBitmap.x = 320 * this.adaptFactor;
+		this.coinBitmap.y = 85;
+		Tools.SetAnchor(this.coinBitmap, AnchorType.Center);
+		this.addChild(this.coinBitmap);
 
-        this.coinText = new egret.TextField();
-        this.coinText.size = 40 * this.adaptFactor;
-        this.coinText.text = this.playerDataModule.GetCoin().toString();
-        this.coinText.textColor = 0xFFFFFF;
-        this.coinText.textAlign = "center";
-        this.coinText.verticalAlign = egret.VerticalAlign.MIDDLE;
-        this.coinText.stroke = 2;
-        this.coinText.strokeColor = 0x000000;
-        this.coinText.x = 320 * this.adaptFactor;
-        this.coinText.y = 85;
-        Tools.SetAnchor(this.coinText, AnchorType.Center);
-        this.addChild(this.coinText);
+		this.coinText = new egret.TextField();
+		this.coinText.size = 40 * this.adaptFactor;
+		this.coinText.text = this.playerDataModule.GetCoin().toString();
+		this.coinText.textColor = 0xFFFFFF;
+		this.coinText.textAlign = "center";
+		this.coinText.verticalAlign = egret.VerticalAlign.MIDDLE;
+		this.coinText.stroke = 2;
+		this.coinText.strokeColor = 0x000000;
+		this.coinText.x = 330 * this.adaptFactor;
+		this.coinText.y = 87;
+		Tools.SetAnchor(this.coinText, AnchorType.Center);
+		this.addChild(this.coinText);
+
+		this.addCoinBtn = new ShapeBgButton(ShapeBgType.Rect, 0x00000000, 0, 0, "pd_res_json.addCoin",
+			200, 50, 46, 50, this.OnClickAddCoinBtn, this);
+		this.addCoinBtn.x = (this.coinBitmap.x + this.coinBitmap.width / 2 - 23);
+		this.addCoinBtn.y = 85;
+
+		this.addChild(this.addCoinBtn);
 	}
+
+	private OnClickAddCoinBtn(callbackObj: any)
+    {
+    }
 
 	private CreateNoMoneyBg()
 	{
@@ -120,7 +133,7 @@ class ShareView extends egret.DisplayObjectContainer
 		scaleEvent.param = scaleParam;
 		GameMain.GetInstance().DispatchEvent(scaleEvent);
 
-	//	this.CreateShareBtn()
+		//	this.CreateShareBtn()
 	}
 	private CreateShareBg()
 	{
@@ -141,8 +154,8 @@ class ShareView extends egret.DisplayObjectContainer
 
 		this.CreateShareBtn()
 		// var timer = new egret.Timer(200,1);
-        // timer.addEventListener(egret.TimerEvent.TIMER, this.CreateShareBtn, this);
-        // timer.start();
+		// timer.addEventListener(egret.TimerEvent.TIMER, this.CreateShareBtn, this);
+		// timer.start();
 	}
 
 	private OnShare(callbackObj: any)
