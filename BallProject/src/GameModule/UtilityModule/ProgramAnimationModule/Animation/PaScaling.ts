@@ -8,6 +8,8 @@ class PaScalingParam extends ProgramAnimationParamBase
 	public targetScaleY: number;	// 缩放目标ScaleY
 	public interval: number;	// 一个周期的时间
 	public reverse: boolean;     // 偶数周期翻转
+	public needRemoveOnFinish: boolean; // 动画结束是否需要从场景中移除
+
 
 	public constructor()
 	{
@@ -18,6 +20,7 @@ class PaScalingParam extends ProgramAnimationParamBase
 		this.targetScaleY = 0;
 		this.interval = 0;
 		this.reverse = false;
+		this.needRemoveOnFinish = false;
 	}
 }
 
@@ -30,7 +33,7 @@ class PaScaling extends ProgramAnimationBase<PaScalingParam>
 		this.startScaleX = this.param.displayObj.scaleX;
 		this.startScaleY = this.param.displayObj.scaleY;
 
-		if(this.param.interval == 0)
+		if (this.param.interval == 0)
 		{
 			this.param.interval = this.param.duration;
 		}
@@ -47,7 +50,7 @@ class PaScaling extends ProgramAnimationBase<PaScalingParam>
 			var rate = curLoopTime / this.param.interval;
 			var scaleX = 1;
 			var scaleY = 1;
-			if (loopTurn % 2 == 1 &&  this.param.reverse)
+			if (loopTurn % 2 == 1 && this.param.reverse)
 			{
 				scaleX = Tools.Lerp(this.param.targetScaleX, this.startScaleX, rate);
 				scaleY = Tools.Lerp(this.param.targetScaleY, this.startScaleY, rate);
@@ -57,7 +60,7 @@ class PaScaling extends ProgramAnimationBase<PaScalingParam>
 				scaleX = Tools.Lerp(this.startScaleX, this.param.targetScaleX, rate);
 				scaleY = Tools.Lerp(this.startScaleY, this.param.targetScaleY, rate);
 			}
-			
+
 			this.param.displayObj.scaleX = scaleX;
 			this.param.displayObj.scaleY = scaleY;
 		}
@@ -65,7 +68,14 @@ class PaScaling extends ProgramAnimationBase<PaScalingParam>
 
 	protected OnRelease()
 	{
-
+		if (this.param.needRemoveOnFinish)
+		{
+			if (this.param.displayObj.parent != undefined 
+				&& this.param.displayObj.parent != null)
+			{
+				this.param.displayObj.parent.removeChild(this.param.displayObj);
+			}
+		}
 	}
 
 	public IsFinish()
