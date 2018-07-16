@@ -1,7 +1,7 @@
 class BallConfigModule extends ModuleBase implements IBallConfigModule
 {
 	private resModule: IResModule;
-	private playerDataModule : IPlayerDataModule;
+	private playerDataModule: IPlayerDataModule;
 
 	private ballConfigList: any[];
 	private totalBallCount: number;
@@ -13,10 +13,10 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	private curBallLevel: number;
 	private curBallConfig: BallConfig;
 
-	private expBallList:number[] = [2,3,4,11];//波，鸡，鸣，炸
-	private expedBallList:number[];
+	private expBallList: number[] = [2, 3, 4, 11];//波，鸡，鸣，炸
+	private expedBallList: number[];
 
-	public Init():boolean
+	public Init(): boolean
 	{
 		super.Init();
 
@@ -24,7 +24,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	}
 
 	public SwitchForeOrBack(from: GameStateType, to: GameStateType): void
-    {
+	{
 		this.isForeground = true;
 	}
 
@@ -43,10 +43,10 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	{
 		this.expedBallList = [];
 		var expedBallStr = this.playerDataModule.GetExpedBallList();
-		if(expedBallStr != undefined && expedBallStr != null && expedBallStr != "")
+		if (expedBallStr != undefined && expedBallStr != null && expedBallStr != "")
 		{
 			var temp = expedBallStr.split("|");
-			for(var i = 0; i < temp.length; ++i)
+			for (var i = 0; i < temp.length; ++i)
 			{
 				this.expedBallList.push(Number(temp[i]));
 			}
@@ -56,9 +56,9 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	private SaveExpedBall()
 	{
 		var expedBallStr = "";
-		for(var i = 0; i < this.expedBallList.length; ++i)
+		for (var i = 0; i < this.expedBallList.length; ++i)
 		{
-			if(expedBallStr == "")
+			if (expedBallStr == "")
 				expedBallStr += this.expedBallList[i];
 			else
 				expedBallStr += "|" + this.expedBallList[i];
@@ -102,10 +102,10 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		}
 		// this.myBallString = "12-1"; // 调试代码
 
-		var ballList:string[] = this.myBallString.split('|');
+		var ballList: string[] = this.myBallString.split('|');
 		for (var i = 0; i < ballList.length; ++i)
 		{
-			var temp:string[] = ballList[i].split('-');
+			var temp: string[] = ballList[i].split('-');
 			if (temp.length == 2)
 			{
 				var id = Number(temp[0]);
@@ -124,19 +124,24 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 
 		this.curBallId = this.myBallList[0].id;
 		this.curBallLevel = this.myBallList[0].level;
-
-		egret.log("<Ball> myBallCount= " + this.myBallList.length);
+		if (DEBUG)
+		{
+			egret.log("<Ball> myBallCount= " + this.myBallList.length);
+		}
 	}
 
 	private LoadCurBallConfig()
 	{
 		this.curBallConfig = this.GetBallConfig(this.curBallId, this.curBallLevel);
 
-		egret.log("<Ball> id = " + this.curBallConfig.id 
-		+ ", level = " + this.curBallConfig.level 
-		+ ", maxLevel = " + this.curBallConfig.maxLevel
-		+ ", textureName = " + this.curBallConfig.textureName
-		+ ", ballRadius = " + this.curBallConfig.ballRadius);
+		if (DEBUG)
+		{
+			egret.log("<Ball> id = " + this.curBallConfig.id
+				+ ", level = " + this.curBallConfig.level
+				+ ", maxLevel = " + this.curBallConfig.maxLevel
+				+ ", textureName = " + this.curBallConfig.textureName
+				+ ", ballRadius = " + this.curBallConfig.ballRadius);
+		}
 	}
 
 	public GetMyBallList()
@@ -145,13 +150,13 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	}
 
 	// 拥有的球的数量
-    public GetMyBallCount(): number
+	public GetMyBallCount(): number
 	{
 		return this.myBallList.length;
 	}
 
 	// 是否拥有这个球, 返回null，代表没有这个球。
-    public GetMyBallInfo(id: number): MyBallInfo
+	public GetMyBallInfo(id: number): MyBallInfo
 	{
 		for (var i = 0; i < this.myBallList.length; ++i)
 		{
@@ -164,7 +169,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	}
 
 	// 获取我的球的等级, 返回0，代码没有这个球。
-    public GetMyBallLevel(id: number): number
+	public GetMyBallLevel(id: number): number
 	{
 		var ballInfo = this.GetMyBallInfo(id);
 		return ballInfo != null ? ballInfo.level : 0;
@@ -180,7 +185,10 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 				ballListStr += "|" + this.myBallList[i].id + "-" + this.myBallList[i].level;
 			}
 		}
-		egret.log("<SaveBall> oldStr= " + this.myBallString + ", newStr= " + ballListStr);
+		if (DEBUG)
+		{
+			egret.log("<SaveBall> oldStr= " + this.myBallString + ", newStr= " + ballListStr);
+		}
 		this.myBallString = ballListStr;
 		this.playerDataModule.SaveMyBall(this.myBallString);
 	}
@@ -203,7 +211,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	}
 
 	// 根据球的ID，返回配置
-    public GetBallConfig(id: number, level: number): BallConfig
+	public GetBallConfig(id: number, level: number): BallConfig
 	{
 		var jsonConfig = this.GetBallJsonConfig(id);
 		if (jsonConfig != null && level > 0 && level <= jsonConfig.maxLevel)
@@ -224,7 +232,7 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	}
 
 	// 换球
-    public ChangeSelectBall(id: number)
+	public ChangeSelectBall(id: number)
 	{
 		var level = this.GetMyBallLevel(id);
 		if (level > 0)
@@ -282,14 +290,14 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 	}
 
 	// 抽取一个球
-    public RandomBall(): RandomBallInfo
+	public RandomBall(): RandomBallInfo
 	{
 		var randomBallId = this.RandomBallIdByProbability();
 		return this.BuyOrUpgradeBall(randomBallId);
 	}
 
 	// 购买或者升级一个球
-    public BuyOrUpgradeBall(ballId): RandomBallInfo
+	public BuyOrUpgradeBall(ballId): RandomBallInfo
 	{
 		var newBall = new RandomBallInfo();
 		newBall.id = ballId;
@@ -332,26 +340,26 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		return newBall;
 	}
 
-	public GetExpBall():RandomBallInfo
+	public GetExpBall(): RandomBallInfo
 	{
 		var battleTimes = this.playerDataModule.GetBattleTimes();
-		var isExpBattleTimes:boolean = battleTimes > 0 && (battleTimes == 3 || battleTimes % 10 == 0)
+		var isExpBattleTimes: boolean = battleTimes > 0 && (battleTimes == 3 || battleTimes % 10 == 0)
 
-		if(isExpBattleTimes && this.expBallList.length > this.expedBallList.length)
+		if (isExpBattleTimes && this.expBallList.length > this.expedBallList.length)
 		{
 			//整理还有哪些球没有体验过
-			var tobeExp:number[] = [];
-			for(var i = 0; i < this.expBallList.length; ++i)
+			var tobeExp: number[] = [];
+			for (var i = 0; i < this.expBallList.length; ++i)
 			{
 				var id = this.expBallList[i];
-				if(this.expedBallList.indexOf(id) < 0)
+				if (this.expedBallList.indexOf(id) < 0)
 				{
 					tobeExp.push(id);
 				}
 			}
 
 			//随机一个
-			if(tobeExp.length > 0)
+			if (tobeExp.length > 0)
 			{
 				var ranProbability = Math.floor(Math.random() * tobeExp.length);
 				ranProbability = Math.min(ranProbability, tobeExp.length - 1);
@@ -371,14 +379,14 @@ class BallConfigModule extends ModuleBase implements IBallConfigModule
 		return null;
 	}
 
-	public IsNewPlayer():boolean
+	public IsNewPlayer(): boolean
 	{
-        if(this.myBallList != null && this.myBallList != undefined && this.myBallList.length == 1)
-        {
-            //只有一个球
-            var ballInfo:MyBallInfo = this.myBallList[0];
-            if(ballInfo != null && ballInfo != undefined && ballInfo.level == 1)
-            {
+		if (this.myBallList != null && this.myBallList != undefined && this.myBallList.length == 1)
+		{
+			//只有一个球
+			var ballInfo: MyBallInfo = this.myBallList[0];
+			if (ballInfo != null && ballInfo != undefined && ballInfo.level == 1)
+			{
 				return true;
 			}
 		}
@@ -396,9 +404,9 @@ class MyBallInfo
 
 class RandomBallInfo
 {
-    public id: number;
-    public level: number;
-    public randomBallType: RandomBallType; // 全新的球
+	public id: number;
+	public level: number;
+	public randomBallType: RandomBallType; // 全新的球
 }
 
 enum RandomBallType
