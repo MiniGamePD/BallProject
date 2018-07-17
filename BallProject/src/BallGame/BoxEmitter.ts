@@ -308,8 +308,8 @@ class BoxEmitter
 				this.ApplyDamageOnBox(box, 1, ballPhyBody)
 			}
 
-			if (box.health > 0 
-				&& !box.pause 
+			if (box.health > 0
+				&& !box.pause
 				&& this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit()
 				&& (box.GetBoxType() == BoxType.Square || box.GetBoxType() == BoxType.Triangle))
 			{
@@ -381,7 +381,7 @@ class BoxEmitter
 		{
 			var posx = ballPhyBody.position[0];
 			var posy = ballPhyBody.position[1];
-			this.BoomDamagePartical(posx, posy);
+			this.BoomDamagePartical(posx, posy, range);
 			var point = new egret.Point();
 			for (var i = 0; i < this.boxList.length; ++i)
 			{
@@ -401,18 +401,42 @@ class BoxEmitter
 		}
 	}
 
-	public BoomDamagePartical(posx: number, posy: number)
+	public BoomDamagePartical(posx: number, posy: number, range: number)
 	{
-		var param = new PaPlayParticalParam;
-		param.textureName = "boom";
-		param.jsonName = "Ball_Boom";
-		param.duration = 1000;
-		param.emitDuration = 100;
-		param.posX = posx;
-		param.posY = posy;
-		var event = new PlayProgramAnimationEvent();
-		event.param = param;
-		GameMain.GetInstance().DispatchEvent(event);
+		var color = 0xd6340a;
+		var shape = new egret.Shape();
+		shape.graphics.lineStyle(4, color, 0.8);
+		shape.graphics.beginFill(color, 0.4);
+		shape.graphics.drawCircle(0, 0, range - 30);
+		shape.graphics.endFill();
+		shape.x = posx;
+		shape.y = posy;
+		this.battleGround.addChildAt(shape, 3);
+
+		shape.scaleX = 0;
+		shape.scaleY = 0;
+		var scaleParam = new PaScalingParam()
+		scaleParam.displayObj = shape;
+		scaleParam.targetScaleX = 1;
+		scaleParam.targetScaleY = 1;
+		scaleParam.duration = 350;
+		scaleParam.interval = 350;
+		scaleParam.reverse = true;
+		scaleParam.needRemoveOnFinish = true;
+		var scaleEvent = new PlayProgramAnimationEvent()
+		scaleEvent.param = scaleParam;
+		GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+		// var param = new PaPlayParticalParam;
+		// param.textureName = "boom";
+		// param.jsonName = "Ball_Boom";
+		// param.duration = 1000;
+		// param.emitDuration = 100;
+		// param.posX = posx;
+		// param.posY = posy;
+		// var event = new PlayProgramAnimationEvent();
+		// event.param = param;
+		// GameMain.GetInstance().DispatchEvent(event);
 	}
 
 	private DeleteBox(box: Box, detachDisplay: boolean): boolean
