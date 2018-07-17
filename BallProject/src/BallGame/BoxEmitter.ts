@@ -413,19 +413,33 @@ class BoxEmitter
 		shape.y = posy;
 		this.battleGround.addChildAt(shape, 3);
 
+		var scaleTime = 350; // 放大时长
+		var alphaTime = 500; // 放大后，淡出的时长
+
 		shape.scaleX = 0;
 		shape.scaleY = 0;
 		var scaleParam = new PaScalingParam()
 		scaleParam.displayObj = shape;
 		scaleParam.targetScaleX = 1;
 		scaleParam.targetScaleY = 1;
-		scaleParam.duration = 350;
-		scaleParam.interval = 350;
+		scaleParam.duration = scaleTime;
+		scaleParam.interval = scaleTime;
 		scaleParam.reverse = true;
-		scaleParam.needRemoveOnFinish = true;
 		var scaleEvent = new PlayProgramAnimationEvent()
 		scaleEvent.param = scaleParam;
 		GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+		var alphaParam = new PaAlphaLoopParam()
+		alphaParam.displayObj = shape;
+		alphaParam.duration = alphaTime;
+		alphaParam.interval = alphaTime;
+		alphaParam.startAlpha = shape.alpha;
+		alphaParam.endAlpha = 0;
+		alphaParam.delayTime = scaleTime;
+		alphaParam.needRemoveOnFinish = true;
+		var alphaEvent = new PlayProgramAnimationEvent()
+		alphaEvent.param = alphaParam;
+		GameMain.GetInstance().DispatchEvent(alphaEvent);
 
 		// var param = new PaPlayParticalParam;
 		// param.textureName = "boom";
