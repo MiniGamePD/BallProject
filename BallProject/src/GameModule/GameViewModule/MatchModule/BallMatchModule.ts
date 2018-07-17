@@ -54,7 +54,7 @@ class BallMatchModule extends GameViewModule
         this.boxEmitter.Init(this.ballGameWorld, this.matchView.GetBattleGround(), this.ballDataMgr, this.matchView);
 
         this.ballController = new BallController();
-        this.ballController.Init(this.ballGameWorld, this.ballEmitter, this.matchView.GetBattleGround());
+        this.ballController.Init(this, this.ballGameWorld, this.ballEmitter, this.matchView.GetBattleGround());
 
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerData.OnMatchBegin();
@@ -133,6 +133,11 @@ class BallMatchModule extends GameViewModule
     private OnChangeBallEvent(event:ChangeBallEvent)
     {
         this.ballDataMgr.ChangeBall(event.ballId, event.ballLevel);
+    }
+
+    public GetMatchState(): BallMatchState
+    {
+        return this.matchState;
     }
 }
 
