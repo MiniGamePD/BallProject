@@ -82,7 +82,7 @@ class WxgamePlatform
     shareAppMsg2() 
     {
         wx.shareAppMessage({
-            title: '每次上厕所都玩到站不起来',
+            title: '每次上厕所，都玩到站不起来',
             imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share2.png',
             success()
             {
@@ -94,7 +94,7 @@ class WxgamePlatform
     shareAppMsg3() 
     {
         wx.shareAppMessage({
-            title: '今天不和这萌物分出胜负没完',
+            title: '不和这货分出胜负，没完！',
             imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share3.png',
             success()
             {
@@ -178,8 +178,8 @@ class WxgamePlatform
             KVDataList: [userKVData], 
             success:  function   (res) 
             { 
-                console.log("--success res:", res); 
-                console.log('设置CloudStorage:' + storageKey + '-' + storageValue + "成功");
+                //console.log("--success res:", res); 
+                //console.log('设置CloudStorage:' + storageKey + '-' + storageValue + "成功");
             }, 
             fail:  function   (res) 
             { 
@@ -187,7 +187,7 @@ class WxgamePlatform
             }, 
             complete:  function   (res) 
             { 
-                console.log( '--complete res:' , res); 
+                //console.log( '--complete res:' , res); 
             }, 
         }); 
     }
@@ -220,7 +220,7 @@ class WxgamePlatform
                 thirdVer = parseInt(temp[2]);
 
             var version = mainVer*10000+subVer*100+thirdVer;
-            console.log(version);
+            //console.log(version);
             return version >= limitVersion;
         }
         catch (e)
@@ -247,7 +247,7 @@ class WxgameOpenDataContext {
 
     createDisplayObject(width,height)
     {
-        console.log("createDisplayObject:" + width + "," + height);
+        //console.log("createDisplayObject:" + width + "," + height);
         sharedCanvas.width = width;
         sharedCanvas.height = height;
         const bitmapdata = new egret.BitmapData(sharedCanvas);
