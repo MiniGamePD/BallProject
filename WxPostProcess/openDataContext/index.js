@@ -17,7 +17,7 @@
 var assets = {
   //icon: "openDataContext/assets/icon.png",
   box: "openDataContext/assets/panel.png",
-  //panel: "openDataContext/assets/panel.png",
+  myPanel: "openDataContext/assets/myPanel.png",
   //buttonNext: "openDataContext/assets/nextPage.png",
   //buttonLast: "openDataContext/assets/lastPage.png",
   //title: "openDataContext/assets/rankingtitle.png",
@@ -68,6 +68,8 @@ let totalGroup = [
   // { key: 15, name: "1515151515", url: assets.icon, scroes: 2000 },
   // { key: 16, name: "1616161616", url: assets.icon, scroes: 2000 },
 ];
+
+let gameOverRankGroup = [];
 
 /**
  * 创建排行榜
@@ -211,8 +213,8 @@ function drawByData(data, i)
       avatar.src = data.url;
       avatar.width = avatar.height = avatarSize;
       avatar.onload = (res) => {
-          console.log(res);
-          renderDirty = true;
+          //console.log(res);
+          renderAllDirty = true;
           data.avatar = avatar;
         }
   }
@@ -286,24 +288,24 @@ function buttonClick(buttonKey) {
     old_buttonY = lastButtonY;
     lastButtonY += 10;
     page--;
-    renderDirty = true;
-    console.log('上一页');
+    renderAllDirty = true;
+    //console.log('上一页');
     setTimeout(() => {
       lastButtonY = old_buttonY;
       //重新渲染必须标脏
-      renderDirty = true;
+      renderAllDirty = true;
     }, 100);
   } else if (buttonKey == 1) {
     //下一页按钮
     old_buttonY = nextButtonY;
     nextButtonY += 10;
     page++;
-    renderDirty = true;
-    console.log('下一页');
+    renderAllDirty = true;
+    //console.log('下一页');
     setTimeout(() => {
       nextButtonY = old_buttonY;
       //重新渲染必须标脏
-      renderDirty = true;
+      renderAllDirty = true;
     }, 100);
   }
 
@@ -317,7 +319,8 @@ function buttonClick(buttonKey) {
  * 渲染标脏量
  * 会在被标脏（true）后重新渲染
  */
-let renderDirty = true;
+let renderAllDirty = true;
+let renderGameOverRankDirty = false;
 
 /**
  * 当前绘制组
@@ -474,7 +477,7 @@ function preloadAssets() {
  */
 function createScene() {
   if (sharedCanvas.width && sharedCanvas.height) {
-    console.log('初始化完成')
+    //console.log('初始化完成')
     stageWidth = sharedCanvas.width;
     stageHeight = sharedCanvas.height;
   } else {
@@ -490,26 +493,137 @@ function createScene() {
  */
 function loop() 
 {
-  if (renderDirty) 
+  if (renderAllDirty) 
   {
     if(stageWidth != sharedCanvas.width || stageHeight != sharedCanvas.height)
     {
       createScene();
     }
-    console.log(`stageWidth :${sharedCanvas.width}   stageHeight:${sharedCanvas.height}`)
+    //console.log(`stageWidth :${sharedCanvas.width}   stageHeight:${sharedCanvas.height}`)
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, sharedCanvas.width, sharedCanvas.height);
     drawRankPanel();
-    renderDirty = false;
+    renderAllDirty = false;
+  }
+  else if(renderGameOverRankDirty)
+  {
+    stageWidth = sharedCanvas.width;
+    stageHeight = sharedCanvas.height;
+
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.clearRect(0, 0, stageWidth, stageHeight);
+    
+    var boxX = 0;
+    var boxWidth = stageWidth / 3;
+    var avatarWidth = boxWidth * 0.7;
+    context.font = "bold " + fontSize + "px Arial";
+    context.fillStyle = "#FFFFFF";
+    context.lineWidth = 4;
+    context.strokeStyle = 'black';
+
+    if(gameOverRankGroup.length == 0)
+    {
+      //预先画一个底出来占位
+      for(var i = 0; i < 3; ++i)
+      {
+        //绘制底框
+        context.drawImage(assets.box, boxX, 0, boxWidth, stageHeight);
+      }
+    }
+    
+    for(var i = 0; i < gameOverRankGroup.length; ++i)
+    {
+      var data = gameOverRankGroup[i];
+
+      //绘制底框
+      if(data.isMe)
+      {
+        context.drawImage(assets.box, boxX, 0, boxWidth, stageHeight);
+      }
+      else
+      {
+        context.drawImage(assets.myPanel, boxX, 0, boxWidth, stageHeight);
+      }
+
+      //绘制排名
+      context.textAlign = "center";
+      context.lineWidth = 6;
+      context.strokeText((data.key+1) + "", boxX + boxWidth / 2, 60, boxWidth);
+      context.lineWidth = 4;
+      context.fillText((data.key+1) + "", boxX + boxWidth / 2, 60, boxWidth);
+
+      //绘制头像
+      if(data.avatar != null)
+      {
+          context.drawImage(data.avatar, boxX+(boxWidth-avatarWidth)/2, 80, avatarWidth, avatarWidth);
+      }
+      else
+      {
+          var avatar = wx.createImage();
+          avatar.src = data.url;
+          avatar.width = avatar.height = avatarWidth;
+          data.avatar = avatar;
+          avatar.onload = (res) => {
+              console.log("refresh avatar:" + data.name);
+              renderGameOverRankDirty = true;
+            }
+      }
+
+      //绘制名称
+      var oldFont = context.font;
+      var nameFontSize = 25;
+      context.font = nameFontSize + "px Arial";
+      var minNameFontSize = 10;
+      var nameOffsetY = 10
+      var nameWidth = 0;
+      while(nameFontSize > minNameFontSize)
+      {
+          var measureText = context.measureText(data.name);
+          nameWidth = measureText.width;
+          if(nameWidth > boxWidth)
+          {
+              nameFontSize -= 1;
+              context.font = nameFontSize + "px Arial";
+              nameOffsetY = (barHeight + nameFontSize) / 2;
+          }
+          else
+          {
+              break;
+          }
+      }
+      context.lineWidth = 2;
+      context.strokeText(data.name + "", boxX + boxWidth / 2, 240, textMaxSize);
+      context.lineWidth = 4;
+      context.fillText(data.name + "", boxX + boxWidth / 2, 240, textMaxSize);
+      context.font = oldFont;
+
+      //绘制分数
+      var oldFont = context.font;
+      context.font = "bold " + 26 + "px Arial";
+      context.strokeText(data.scroes + "", boxX + boxWidth / 2, 300, boxWidth);
+      context.fillText(data.scroes + "", boxX + boxWidth / 2, 300, boxWidth);
+      context.font = oldFont;
+
+      boxX += boxWidth;
+    }
+
+    renderGameOverRankDirty = false;
   }
   requestAnimationFrame(loop);
 }
 
 wx.onMessage(data => {
-  console.log(data);
+  //console.log(data);
   if (data.command === 'getFriendCloudStorage') 
   {
-      onGetFriendCloudStorage(data.data);
+      onGetFriendCloudStorage(data);
+  }
+  else if (data.command == "renderGameOverRank")
+  {
+      onGetFriendCloudStorage(data);
+      renderGameOverRankDirty = true;
+      renderAllDirty = false;
+      gameOverRankGroup = [];
   }
   else if(data.command == 'rankTurnPage')
   {
@@ -517,14 +631,15 @@ wx.onMessage(data => {
   }
 });
 
-function onGetFriendCloudStorage(storageKey)
+function onGetFriendCloudStorage(data)
 {
+    var storageKey = "HighScore";
     wx.getFriendCloudStorage({ 
         keyList: [storageKey], 
         success:  function   (res) 
         { 
-            console.log("--success res:", res); 
-            console.log('获取CloudStorage:' + storageKey + "成功");
+            //console.log("--success res:", res); 
+            //console.log('获取CloudStorage:' + storageKey + "成功");
 
             totalGroup = [];
             for(var i = 0; i < res.data.length; ++i)
@@ -540,7 +655,7 @@ function onGetFriendCloudStorage(storageKey)
                         storageValue = kvData.wxgame.score;
                     }
                 }
-                totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null });
+                totalGroup.push({ key: i, name: userGameData.nickname, url: userGameData.avatarUrl, scroes: storageValue, avatar:null, isMe: false });
             }
             totalGroup.sort(sortScore);
             for(var i = 0; i < totalGroup.length; ++i)
@@ -548,7 +663,62 @@ function onGetFriendCloudStorage(storageKey)
                 totalGroup[i].key = i;
             }
 
-            renderDirty = true;
+            if (data.command === 'getFriendCloudStorage')
+            {
+              renderAllDirty = true;
+              renderGameOverRankDirty = false;
+            } 
+            else if(data.command == 'renderGameOverRank')
+            {
+              renderGameOverRankDirty = true;
+              renderAllDirty = false;
+
+              if(totalGroup.length <= 3)
+              {
+                gameOverRankGroup = totalGroup;
+              }
+              else
+              {
+                gameOverRankGroup = [];
+                //找到我在哪里
+                var me = data.data;
+                var myIndex = 0;
+                for(var i = 0; i < totalGroup.length; ++i)
+                {
+                    if(totalGroup[i].name == me)
+                    {
+                      myIndex = i;
+                      break;
+                    }
+                }
+
+                console.log(me + " " + myIndex);
+                var startIndex = 0;
+                //找到我附近的3个人
+                if(myIndex == totalGroup.length - 1)
+                {
+                  //我是最后一个
+                  startIndex = myIndex - 2;
+                }
+                else if(myIndex == 0)
+                {
+                  //我是第一个
+                  startIndex = myIndex;
+                }
+                else
+                {
+                  //我前面有一个，我后面还有一个
+                  startIndex = myIndex - 1;
+                }
+
+                for(var j = 0; j < 3; ++j)
+                {
+                  var temp = totalGroup[startIndex + j];
+                  temp.isMe = (startIndex + j) == myIndex;
+                  gameOverRankGroup.push(temp);
+                }
+              }
+            }
         }, 
         fail:  function   (res) 
         { 
@@ -556,7 +726,7 @@ function onGetFriendCloudStorage(storageKey)
         }, 
         complete:  function   (res) 
         { 
-            console.log( '--complete res:' , res); 
+            //console.log( '--complete res:' , res); 
         }, 
     }); 
 }

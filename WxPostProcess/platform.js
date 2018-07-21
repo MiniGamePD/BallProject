@@ -2,6 +2,8 @@
  * 请在白鹭引擎的Main.ts中调用 platform.login() 方法调用至此处。
  */
 
+var nickName = "unknow";
+
 class WxgamePlatform 
 {
     name = 'wxgame'
@@ -33,15 +35,45 @@ class WxgamePlatform
       return new Promise((resolve, reject) => {
         wx.checkSession(
           {
-            success: function () {
+            success: function () 
+            {
               //session 未过期，并且在本生命周期一直有效
+              wx.getUserInfo({
+                    withCredentials: true,
+                    success: function (res) {
+                        var userInfo = res.userInfo
+                        nickName = userInfo.nickName
+                        console.log("nickName " + nickName);
+                        var avatarUrl = userInfo.avatarUrl
+                        var gender = userInfo.gender //性别 0：未知、1：男、2：女
+                        var province = userInfo.province
+                        var city = userInfo.city
+                        var country = userInfo.country
+                        resolve(userInfo);
+                    }
+                })
             },
-            fail: function () {
+            fail: function () 
+            {
               //登录态过期
               wx.login(
                 {
                   success: (res) => {
                     resolve(res)
+                    wx.getUserInfo({
+                        withCredentials: true,
+                        success: function (res) {
+                            var userInfo = res.userInfo
+                            nickName = userInfo.nickName
+                            console.log("nickName " + nickName);
+                            var avatarUrl = userInfo.avatarUrl
+                            var gender = userInfo.gender //性别 0：未知、1：男、2：女
+                            var province = userInfo.province
+                            var city = userInfo.city
+                            var country = userInfo.country
+                            resolve(userInfo);
+                }
+            })
                   }
                 })
             }
@@ -49,23 +81,11 @@ class WxgamePlatform
       })
     }
 
-    getUserInfo() {
-        return new Promise((resolve, reject) => {
-            wx.getUserInfo({
-                withCredentials: true,
-                success: function (res) {
-                    var userInfo = res.userInfo
-                    var nickName = userInfo.nickName
-                    var avatarUrl = userInfo.avatarUrl
-                    var gender = userInfo.gender //性别 0：未知、1：男、2：女
-                    var province = userInfo.province
-                    var city = userInfo.city
-                    var country = userInfo.country
-                    resolve(userInfo);
-                }
-            })
-        })
-    }
+    // getUserInfo() {
+    //     return new Promise((resolve, reject) => {
+            
+    //     })
+    // }
 
     shareAppMsg1() 
     {
@@ -178,8 +198,8 @@ class WxgamePlatform
             KVDataList: [userKVData], 
             success:  function   (res) 
             { 
-                console.log("--success res:", res); 
-                console.log('设置CloudStorage:' + storageKey + '-' + storageValue + "成功");
+                //console.log("--success res:", res); 
+                //console.log('设置CloudStorage:' + storageKey + '-' + storageValue + "成功");
             }, 
             fail:  function   (res) 
             { 
@@ -187,7 +207,7 @@ class WxgamePlatform
             }, 
             complete:  function   (res) 
             { 
-                console.log( '--complete res:' , res); 
+                //console.log( '--complete res:' , res); 
             }, 
         }); 
     }
@@ -220,7 +240,7 @@ class WxgamePlatform
                 thirdVer = parseInt(temp[2]);
 
             var version = mainVer*10000+subVer*100+thirdVer;
-            console.log(version);
+            //console.log(version);
             return version >= limitVersion;
         }
         catch (e)
@@ -241,13 +261,22 @@ class WxgamePlatform
     {
         wx.vibrateShort();
     }
+
+    renderGameOverRank(key)
+    {
+        if(this.isWxVersionSatisfy(10992))
+        {
+            //console.log("renderGameOverRank " + nickName);
+            this.openDataContext.postMessage("renderGameOverRank", nickName);
+        }
+    }
 }
 
 class WxgameOpenDataContext {
 
     createDisplayObject(width,height)
     {
-        console.log("createDisplayObject:" + width + "," + height);
+        //console.log("createDisplayObject:" + width + "," + height);
         sharedCanvas.width = width;
         sharedCanvas.height = height;
         const bitmapdata = new egret.BitmapData(sharedCanvas);

@@ -37,6 +37,8 @@ declare interface Platform
     rankTurnPage(dir:number);
 
     vibrateShort();
+
+    renderGameOverRank(key:string);
 }
 
 class DebugPlatform implements Platform 
@@ -119,6 +121,11 @@ class DebugPlatform implements Platform
     }
 
     public vibrateShort()
+    {
+
+    }
+
+    public renderGameOverRank(key:string)
     {
 
     }

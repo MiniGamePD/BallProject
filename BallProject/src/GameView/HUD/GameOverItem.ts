@@ -173,58 +173,68 @@ class GameOverItem extends egret.DisplayObjectContainer
     {
         this.moreCoin = new egret.DisplayObjectContainer();
 
+        var adaptor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        var buttonWidth = GameMain.GetInstance().GetStageWidth() / 5 * 2 - 15 * adaptor;
+        var interval = GameMain.GetInstance().GetStageWidth() / 5 * 4 - buttonWidth * 2;
         this.moreCoinButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 
-            GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, this.OnClickMoreCoin, this);
+            buttonWidth, 130, 0, 0, this.OnClickMoreCoin, this);
         this.moreCoin.addChild(this.moreCoinButton);
 
         this.moreCoinText = new egret.TextField();
-        this.moreCoinText.x = -246 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-        this.moreCoinText.y = -10;
+        this.moreCoinText.x = -110 * adaptor
+        this.moreCoinText.y = -25;
         this.moreCoinText.size = 30;
         this.moreCoinText.textAlign = "left";
         this.moreCoinText.verticalAlign = "center";
         if(this.IsEnableShare())
         {
-            this.moreCoinText.text = "分享好友，金币翻倍$$$";
+            this.moreCoinText.textFlow = <Array<egret.ITextElement>>
+            [
+                { text: "分享好友\n", style: { "textColor": 0xFFFFFF, "size": 30 } },
+                { text: "金币翻倍", style: { "textColor": 0xFFC900, "size": 30 } },
+            ]
         }
         else
         {
-            this.moreCoinText.text = "挺好玩的，分享一波";
+            this.moreCoinText.text = "挺好玩的\n分享一波";
         }
         
         this.moreCoin.addChild(this.moreCoinText);
 
         this.moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
-        this.moreCoinIcon.x = 206 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.moreCoinIcon.x = 60 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.moreCoinIcon.width *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.moreCoinIcon.height *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.moreCoinIcon.anchorOffsetX = this.moreCoinIcon.width / 2;
         this.moreCoinIcon.anchorOffsetY = this.moreCoinIcon.height / 2;
         this.moreCoin.addChild(this.moreCoinIcon);
 
-        this.moreCoin.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.moreCoin.y = 460;
+        this.moreCoin.x = GameMain.GetInstance().GetStageWidth() / 2 - buttonWidth / 2 - interval / 2;
+        this.moreCoin.y = 770;
     }
 
     private CreateLottery()
     {
         this.lottery = new egret.DisplayObjectContainer();
 
+        var adaptor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        var buttonWidth = GameMain.GetInstance().GetStageWidth() / 5 * 2 - 15 * adaptor;
+        var interval = GameMain.GetInstance().GetStageWidth() / 5 * 4 - buttonWidth * 2;
         var bgButton = new ShapeBgButton(ShapeBgType.RoundRect, 0xFFFFFF00, 6, 16, null, 
-            GameMain.GetInstance().GetStageWidth() / 5 * 4, 130, 0, 0, this.OnClickLottery, this);
+            buttonWidth, 130, 0, 0, this.OnClickLottery, this);
         this.lottery.addChild(bgButton);
 
         var lotteryText = new egret.TextField();
-        lotteryText.x = -246 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-        lotteryText.y = -10;
+        lotteryText.x = -110 * adaptor;
+        lotteryText.y = -25;
         lotteryText.size = 30;
         lotteryText.textAlign = "left";
         lotteryText.verticalAlign = "center";
-        lotteryText.text = "获取强力弹球";
+        lotteryText.text = "获取\n强力弹球";
         this.lottery.addChild(lotteryText);
 
         var lotteryIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Shop");
-        lotteryIcon.x = 206 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        lotteryIcon.x = 60 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         lotteryIcon.y = 5;
         lotteryIcon.width *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         lotteryIcon.height *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
@@ -241,8 +251,8 @@ class GameOverItem extends egret.DisplayObjectContainer
         // costText.text = "200";
         // this.lottery.addChild(costText);
 
-        this.lottery.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.lottery.y = 610;
+        this.lottery.x = GameMain.GetInstance().GetStageWidth() / 2 + buttonWidth / 2 + interval / 2;
+        this.lottery.y = 770;
     }
 
     private CreateGotoLobby()
@@ -252,7 +262,7 @@ class GameOverItem extends egret.DisplayObjectContainer
             this.OnClickBackToLobby, this);
 
         this.gotoLobby.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.gotoLobby.y = 800;
+        this.gotoLobby.y = 930;
     }
 
     private CreateShop()
@@ -298,6 +308,9 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.CreateCoin();
         this.CreateHintFinger();
 
+        var rankMenu = platform.createOpenDataBitmap(GameMain.GetInstance().GetStageWidth() * 0.8,
+            320);
+        
         this.addChild(this.bgCover);
         this.addChild(this.score);
         this.addChild(this.historyHighScore);
@@ -305,6 +318,15 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.addChild(this.moreCoin);
         this.addChild(this.lottery);
         this.addChild(this.gotoLobby);
+        if (rankMenu != null && rankMenu != undefined)
+        {
+            rankMenu.anchorOffsetX = rankMenu.width / 2;
+            rankMenu.anchorOffsetY = rankMenu.height / 2;
+            rankMenu.x = GameMain.GetInstance().GetStageWidth() / 2;
+            rankMenu.y = 508;
+            this.addChild(rankMenu);
+            platform.renderGameOverRank("HighScore");
+        }
 
         //保存一下
         var playerdata = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
