@@ -1,6 +1,6 @@
 {
 	"id" : 12,
-	"name" : "剑圣",
+	"name" : "佐罗",
 	"textureName": "Ball_BladeMaster",
 	"maxLevel" : 3,
 	"emitSpeed" : [1000, 1100, 1200],
@@ -14,7 +14,7 @@
 	"skill_CriticalStrike_Rate" : [0.2, 0.2, 0.2], 
 	"skill_CriticalStrike_Damage" : [2, 3, 4],
 
-	"skillDes" : "剑刃风暴！20%概率造成暴击伤害！",
+	"skillDes" : "鬼斩！20%概率造成暴击伤害！",
 	"skillHead" : "伤害",
 	"skillLevellDes" : ["2", "3", "4"],
 

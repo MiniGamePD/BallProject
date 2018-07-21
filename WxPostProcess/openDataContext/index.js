@@ -527,7 +527,7 @@ function loop()
       for(var i = 0; i < 3; ++i)
       {
         //绘制底框
-        context.drawImage(assets.box, boxX, 0, boxWidth, stageHeight);
+        context.drawImage(assets.myPanel, boxX + i * boxWidth, 0, boxWidth, stageHeight);
       }
     }
     
