@@ -58,7 +58,7 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
         var networkConfigModule = <INetworkConfigModule>GameMain.GetInstance().GetModule(ModuleType.NETWORK_CONFIG);
         var networkConfig = networkConfigModule.GetNetWorkConfig();
         var Static_Limit = networkConfig.m_LotteryShareShowTipLimit;
-        return this.m_tTodayLotteryShareCnt < Static_Limit; 
+        return networkConfig.EnableShare && this.m_tTodayLotteryShareCnt < Static_Limit; 
     } 
 
     private OnResetToday(): void
@@ -339,7 +339,6 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
             this.m_tLastLoginTime = 0;
             this.m_tTodayLotteryShareCnt =0;
         }
-        this.coin = 1000;
         this.OnLoginDone();
     }
 

@@ -1,5 +1,6 @@
 class BallController
 {
+	private matchModule: BallMatchModule;
 	private resModule: IResModule;
 
 	private ballGameWorld: BallGameWorld;
@@ -29,12 +30,13 @@ class BallController
 	}
 
 
-	public Init(ballGameWorld: BallGameWorld, ballEmitter: BallEmitter, battleGround: egret.DisplayObjectContainer)
+	public Init(matchModule: BallMatchModule, ballGameWorld: BallGameWorld, ballEmitter: BallEmitter, battleGround: egret.DisplayObjectContainer)
 	{
+		this.matchModule = matchModule;
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 
 		this.emitDir = new egret.Point();
-		this.beginTouchPoint = new egret.Point(GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() * (4/5));
+		this.beginTouchPoint = new egret.Point(GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() * (4 / 5));
 		this.movePoint = new egret.Point();
 		this.tempPoint = new egret.Point();
 		this.ballGameWorld = ballGameWorld;
@@ -140,13 +142,16 @@ class BallController
 
 	private OnCtrlTouchMove()
 	{
-		this.emitDir.x = this.movePoint.x - this.beginTouchPoint.x;
-		this.emitDir.y = this.movePoint.y - this.beginTouchPoint.y;
-		if (this.emitDir.length > this.UIMoveMinis)
+		if (this.matchModule.GetMatchState() == BallMatchState.playing)
 		{
-			this.ballEmitter.SetEmitDir(this.emitDir);
+			this.emitDir.x = this.movePoint.x - this.beginTouchPoint.x;
+			this.emitDir.y = this.movePoint.y - this.beginTouchPoint.y;
+			if (this.emitDir.length > this.UIMoveMinis)
+			{
+				this.ballEmitter.SetEmitDir(this.emitDir);
+			}
+			this.RefreshUIMove();
 		}
-		this.RefreshUIMove();
 	}
 
 	private OnTouchMove(evt: egret.TouchEvent): void
@@ -226,9 +231,12 @@ class BallController
 
 	public OnTouchPosition(posX: number, posY: number)
 	{
-		this.emitDir.x = posX - this.ballEmitter.emitPos.x;
-		this.emitDir.y = posY - this.ballEmitter.emitPos.y;
-		this.ballEmitter.SetEmitDir(this.emitDir);
+		if (this.matchModule.GetMatchState() == BallMatchState.playing)
+		{
+			this.emitDir.x = posX - this.ballEmitter.emitPos.x;
+			this.emitDir.y = posY - this.ballEmitter.emitPos.y;
+			this.ballEmitter.SetEmitDir(this.emitDir);
+		}
 	}
 
 	public Update(deltaTime: number)

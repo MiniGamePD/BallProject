@@ -22,6 +22,9 @@ abstract class Box
 
 	public pause = false;
 	public pauseLeftTime = 0;
+	public pauseEffect: egret.DisplayObject;
+
+	protected boxCenterPosTemp: egret.Point;
 
 	public constructor(id: number, initPos: egret.Point, targetPos: egret.Point, health: number)
 	{
@@ -33,6 +36,7 @@ abstract class Box
 		this.targetPos = targetPos;
 		this.moveSpeed = BoxMoveSpeed;
 		this.SetColor(this.GetRandomBoxColor());
+		this.boxCenterPosTemp = new egret.Point();
 	}
 
 	public GetRandomBoxColor(): number
@@ -54,6 +58,13 @@ abstract class Box
 		{
 			this.healthDisplayObj.textColor = color;
 		}
+	}
+
+	public GetCenterPos(): egret.Point
+	{
+		this.boxCenterPosTemp.x = this.healthDisplayObj.x;
+		this.boxCenterPosTemp.y = this.healthDisplayObj.y;
+		return this.boxCenterPosTemp;
 	}
 
 	public Update(deltaTime: number)
@@ -90,6 +101,7 @@ abstract class Box
 
 	public OnEliminate()
 	{
+		Tools.DetachDisplayObjFromParent(this.pauseEffect);
 		this.PlayBoxBoomEffect();
 	}
 
@@ -146,10 +158,12 @@ abstract class Box
 		}
 	}
 
-	public Pause(pauseTime: number)
+	public Pause(pauseTime: number, pauseEffect?: egret.DisplayObject)
 	{
 		this.SetPause(true);
 		this.pauseLeftTime = pauseTime;
+		Tools.DetachDisplayObjFromParent(this.pauseEffect);
+		this.pauseEffect = pauseEffect;
 	}
 
 	private SetPause(pause: boolean)

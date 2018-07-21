@@ -41,8 +41,8 @@ class BoxEmitter
 	{
 	}
 
-	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer, 
-			ballDataMgr: BallDataMgr, matchView: BallMatchView)
+	public Init(ballGameWorld: BallGameWorld, battleGround: egret.DisplayObjectContainer,
+		ballDataMgr: BallDataMgr, matchView: BallMatchView)
 	{
 		this.resModule = <IResModule>GameMain.GetInstance().GetModule(ModuleType.RES);
 		this.soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
@@ -70,7 +70,7 @@ class BoxEmitter
 
 		this.hitSoundArray = [];
 		this.hitSoundChannelArray = [];
-		if(this.soundModule.SoundHitBoxResReady())
+		if (this.soundModule.SoundHitBoxResReady())
 		{
 			for (var i = 1; i <= 20; ++i)
 			{
@@ -79,7 +79,7 @@ class BoxEmitter
 				this.hitSoundChannelArray.push(null);
 			}
 		}
-		
+
 		this.RegisterEvent();
 	}
 
@@ -241,30 +241,30 @@ class BoxEmitter
 
 			platform.vibrateShort();
 
-			var availableIndex = -1;
-			for (var i = 0; i < this.hitSoundChannelArray.length; ++i)
-			{
-				if (this.hitSoundChannelArray[i] == null)
-				{
-					availableIndex = i;
-					break;
-				}
-			}
+			// var availableIndex = -1;
+			// for (var i = 0; i < this.hitSoundChannelArray.length; ++i)
+			// {
+			// 	if (this.hitSoundChannelArray[i] == null)
+			// 	{
+			// 		availableIndex = i;
+			// 		break;
+			// 	}
+			// }
 
-			if (availableIndex >= 0)
-			{
-				var channel = this.hitSoundArray[availableIndex].play(0, 1);
-				this.hitSoundChannelArray[availableIndex] = channel;
-				channel.addEventListener(egret.Event.SOUND_COMPLETE, this.onHitSoundComplete, this);
-				channel.volume = 0.5;
-			}
-			else
-			{
-				if (DEBUG)
-				{
-					console.log("No Available Hit Sound");
-				}
-			}
+			// if (availableIndex >= 0)
+			// {
+			// 	var channel = this.hitSoundArray[availableIndex].play(0, 1);
+			// 	this.hitSoundChannelArray[availableIndex] = channel;
+			// 	channel.addEventListener(egret.Event.SOUND_COMPLETE, this.onHitSoundComplete, this);
+			// 	channel.volume = 0.5;
+			// }
+			// else
+			// {
+			// 	if (DEBUG)
+			// 	{
+			// 		console.log("No Available Hit Sound");
+			// 	}
+			// }
 
 			// var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
 			// // var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
@@ -308,9 +308,33 @@ class BoxEmitter
 				this.ApplyDamageOnBox(box, 1, ballPhyBody)
 			}
 
-			if (box.health > 0 && !box.pause && this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit())
+			if (box.health > 0
+				&& !box.pause
+				&& this.ballDataMgr.IsTriggerSkill_PauseBoxOnHit()
+				&& (box.GetBoxType() == BoxType.Square || box.GetBoxType() == BoxType.Triangle))
 			{
-				box.Pause(this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time * 1000);
+				var pauseTime = this.ballDataMgr.ballConfig.skill_PauseBoxOnHit_Time * 1000;
+				var pauseEffect = this.resModule.CreateBitmapByName("Ball_BaBa");
+				pauseEffect.width = 50
+				pauseEffect.height = 50
+				Tools.SetAnchor(pauseEffect, AnchorType.Center);
+				pauseEffect.x = box.GetCenterPos().x;
+				pauseEffect.y = box.GetCenterPos().y;
+				this.battleGround.addChildAt(pauseEffect, 3);
+
+				var scaleParam = new PaScalingParam()
+				scaleParam.displayObj = pauseEffect;
+				scaleParam.targetScaleX = 0.7;
+				scaleParam.targetScaleY = 0.7;
+				scaleParam.duration = pauseTime;
+				scaleParam.interval = 100;
+				scaleParam.reverse = true;
+				scaleParam.needRemoveOnFinish = true;
+				var scaleEvent = new PlayProgramAnimationEvent()
+				scaleEvent.param = scaleParam;
+				GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+				box.Pause(pauseTime, pauseEffect);
 			}
 		}
 	}
@@ -357,7 +381,7 @@ class BoxEmitter
 		{
 			var posx = ballPhyBody.position[0];
 			var posy = ballPhyBody.position[1];
-			this.BoomDamagePartical(posx, posy);
+			this.BoomDamagePartical(posx, posy, range);
 			var point = new egret.Point();
 			for (var i = 0; i < this.boxList.length; ++i)
 			{
@@ -377,18 +401,56 @@ class BoxEmitter
 		}
 	}
 
-	public BoomDamagePartical(posx: number, posy: number)
+	public BoomDamagePartical(posx: number, posy: number, range: number)
 	{
-		var param = new PaPlayParticalParam;
-		param.textureName = "boom";
-		param.jsonName = "Ball_Boom";
-		param.duration = 1000;
-		param.emitDuration = 100;
-		param.posX = posx;
-		param.posY = posy;
-		var event = new PlayProgramAnimationEvent();
-		event.param = param;
-		GameMain.GetInstance().DispatchEvent(event);
+		var color = 0xd6340a;
+		var shape = new egret.Shape();
+		shape.graphics.lineStyle(4, color, 0.8);
+		shape.graphics.beginFill(color, 0.4);
+		shape.graphics.drawCircle(0, 0, range - 30);
+		shape.graphics.endFill();
+		shape.x = posx;
+		shape.y = posy;
+		this.battleGround.addChildAt(shape, 3);
+
+		var scaleTime = 350; // 放大时长
+		var alphaTime = 500; // 放大后，淡出的时长
+
+		shape.scaleX = 0;
+		shape.scaleY = 0;
+		var scaleParam = new PaScalingParam()
+		scaleParam.displayObj = shape;
+		scaleParam.targetScaleX = 1;
+		scaleParam.targetScaleY = 1;
+		scaleParam.duration = scaleTime;
+		scaleParam.interval = scaleTime;
+		scaleParam.reverse = true;
+		var scaleEvent = new PlayProgramAnimationEvent()
+		scaleEvent.param = scaleParam;
+		GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+		var alphaParam = new PaAlphaLoopParam()
+		alphaParam.displayObj = shape;
+		alphaParam.duration = alphaTime;
+		alphaParam.interval = alphaTime;
+		alphaParam.startAlpha = shape.alpha;
+		alphaParam.endAlpha = 0;
+		alphaParam.delayTime = scaleTime;
+		alphaParam.needRemoveOnFinish = true;
+		var alphaEvent = new PlayProgramAnimationEvent()
+		alphaEvent.param = alphaParam;
+		GameMain.GetInstance().DispatchEvent(alphaEvent);
+
+		// var param = new PaPlayParticalParam;
+		// param.textureName = "boom";
+		// param.jsonName = "Ball_Boom";
+		// param.duration = 1000;
+		// param.emitDuration = 100;
+		// param.posX = posx;
+		// param.posY = posy;
+		// var event = new PlayProgramAnimationEvent();
+		// event.param = param;
+		// GameMain.GetInstance().DispatchEvent(event);
 	}
 
 	private DeleteBox(box: Box, detachDisplay: boolean): boolean
@@ -520,6 +582,8 @@ class BoxEmitter
 			var scaleEvent = new PlayProgramAnimationEvent()
 			scaleEvent.param = scaleParam;
 			GameMain.GetInstance().DispatchEvent(scaleEvent);
+
+			Tools.DetachDisplayObjFromParent(nearBox.pauseEffect);
 
 			this.DeleteBox(nearBox, false);
 		}

@@ -102,7 +102,7 @@ class WxgamePlatform
     shareAppMsg2() 
     {
         wx.shareAppMessage({
-            title: '每次上厕所都玩到站不起来',
+            title: '每次上厕所，都玩到站不起来',
             imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share2.png',
             success()
             {
@@ -114,7 +114,7 @@ class WxgamePlatform
     shareAppMsg3() 
     {
         wx.shareAppMessage({
-            title: '今天不和这萌物分出胜负没完',
+            title: '不和这货分出胜负，没完！',
             imageUrl: 'https://littlegame-1257022815.cos.ap-shanghai.myqcloud.com/Share3.png',
             success()
             {
