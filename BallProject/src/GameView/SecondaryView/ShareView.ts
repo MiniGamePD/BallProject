@@ -72,9 +72,9 @@ class ShareView extends egret.DisplayObjectContainer
 		var LeftNum = this.playerDataModule.GetTodayLeftLotteryShowTipCnt();
 		this.TipText.textFlow = <Array<egret.ITextElement>>
 			[
-				{ text: "今天剩余", style: { "textColor": 0xFFFFFF, "size": 30 } },
-				{ text: LeftNum, style: { "textColor": 0xFFC900, "size": 30 } },
-				{ text: "次数", style: { "textColor": 0xFFFFFF, "size": 30 } },
+				{ text: "今天还剩", style: { "textColor": 0xFFFFFF, "size": 30 } },
+				{ text: LeftNum, style: { "textColor": 0xFFC900, "size": 30, "bold": true } },
+				{ text: "次奖励机会哦~", style: { "textColor": 0xFFFFFF, "size": 30 } },
 
 			]
 
@@ -139,6 +139,11 @@ class ShareView extends egret.DisplayObjectContainer
 	{
 		this.shareBg = this.resModule.CreateBitmap("pd_res_json.ShareGetCoinBg", GameMain.GetInstance().GetStageWidth() / 2, GameMain.GetInstance().GetStageHeight() / 2,
 			this, AnchorType.Center);
+
+		this.shareBg.width = 447 * this.adaptFactor;
+		this.shareBg.height = 442 * this.adaptFactor;
+		this.shareBg.anchorOffsetX = this.shareBg.width / 2;
+		this.shareBg.anchorOffsetY = this.shareBg.height / 2;
 
 		this.shareBg.scaleX = 0;
 		this.shareBg.scaleY = 0;
