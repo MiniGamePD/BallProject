@@ -83,24 +83,24 @@ class WxgamePlatform
 
     PlayRewardAd()
     {
-        let RewardVedio = wx.createRewardedVedeoAd({adunitId:'1234'});
+        let RewardVedio = wx.createRewardedVideoAd({adunitId:'1234'});
 
         return new Promise((resolve, reject)=>
         {
             RewardVedio.show().catch(err=> {
-                RewardVedio.load().then(()=> RewardVedio.show())
+                RewardVedio.load().then(()=> RewardVedio.show()).catch(err=>{console.log("try twice ,but failed" + err)})
             })
 
-            rewardedVideoAd.onError(err => {
+          RewardVedio.onError(err => {
                 console.log("get ad " + err);
               })
 
-            rewardedVideoAd.onLoad(() => {
+          RewardVedio.onLoad(() => {
                     console.log('激励视频 广告加载成功')
                   })
 
 
-                  RewardVedio.onClose()(res=> {
+                  RewardVedio.onClose(res=> {
                     if(res && res.isEnded || res == undefined)
                     {
                         //正常播放成功
