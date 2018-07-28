@@ -83,8 +83,16 @@ class WxgamePlatform
 
     PlayRewardAd()
     {
-        let RewardVedio = wx.createRewardedVideoAd({adunitId:'1234'});
+        let bannerad = wx.createBannerAd({
+          adUnitId:'adunit-fc46ade034da151a',
+          style:{left:0,top:0,width:1350}
+        })
 
+        bannerad.show().catch(err=>console.log("get banner add fail"));
+
+        let RewardVedio = wx.createRewardedVideoAd({adUnitId:'adunit-924684518cec6068'});
+
+        console.log("get reward vedio");
         return new Promise((resolve, reject)=>
         {
             RewardVedio.show().catch(err=> {
