@@ -81,6 +81,49 @@ class WxgamePlatform
       })
     }
 
+    PlayRewardAd()
+    {
+        let bannerad = wx.createBannerAd({
+          adUnitId:'adunit-fc46ade034da151a',
+          style:{left:0,top:0,width:1350}
+        })
+
+        bannerad.show().catch(err=>console.log("get banner add fail"));
+
+        let RewardVedio = wx.createRewardedVideoAd({adUnitId:'adunit-924684518cec6068'});
+
+        console.log("get reward vedio");
+        return new Promise((resolve, reject)=>
+        {
+            RewardVedio.show().catch(err=> {
+                RewardVedio.load().then(()=> RewardVedio.show()).catch(err=>{console.log("try twice ,but failed" + err)})
+            })
+
+          RewardVedio.onError(err => {
+                console.log("get ad " + err);
+              })
+
+          RewardVedio.onLoad(() => {
+                    console.log('激励视频 广告加载成功')
+                  })
+
+
+                  RewardVedio.onClose(res=> {
+                    if(res && res.isEnded || res == undefined)
+                    {
+                        //正常播放成功
+                        console.log("Play succeed");
+                        resolve(true);
+                    }
+                    else
+                    {
+                        console.log("cancle play");
+                        resolve(false);
+                    }
+                })      
+    
+        })
+    }
     // getUserInfo() {
     //     return new Promise((resolve, reject) => {
             

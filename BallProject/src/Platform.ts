@@ -8,7 +8,9 @@ declare interface Platform
 {
     getUserInfo(): Promise<any>;
 
-    login(): Promise<any>
+    login(): Promise<any>;
+
+    PlayRewardAd(): Promise<any>;
 
     shareAppMsg1();
 
@@ -51,6 +53,14 @@ class DebugPlatform implements Platform
     async login() 
     {
 
+    }
+
+    async PlayRewardAd()
+    {
+        return new Promise((resolve, reject)=>{
+            resolve(true);
+        }
+        )
     }
 
     public shareAppMsgRevive()
