@@ -351,9 +351,9 @@ class GameMain implements IGameMain {
 		this.mEgretMain.ShareAppMsg();
 	}
 
-	public ShareAppMsgRank(score:number)
+	public ShareAppMsgRank(score:number, forceScore:boolean)
 	{
-		this.mEgretMain.ShareAppMsgRank(score);
+		this.mEgretMain.ShareAppMsgRank(score, forceScore);
 	}
 
 	public ShareAppMsgRevive()

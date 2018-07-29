@@ -135,10 +135,10 @@ class Main extends egret.DisplayObjectContainer
             platform.shareAppMsg2();
     }
 
-    public ShareAppMsgRank(score:number)
+    public ShareAppMsgRank(score:number, forceScore:boolean)
     {
         var temp = Math.floor(Math.random() * 4);
-        if(temp == 0)
+        if(temp == 0 || forceScore)
             platform.shareAppMsgRank(score);
         else if(temp == 1)
             platform.shareAppMsg1();

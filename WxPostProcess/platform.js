@@ -43,7 +43,7 @@ class WxgamePlatform
                     success: function (res) {
                         var userInfo = res.userInfo
                         nickName = userInfo.nickName
-                        console.log("nickName " + nickName);
+                        //console.log("nickName " + nickName);
                         var avatarUrl = userInfo.avatarUrl
                         var gender = userInfo.gender //性别 0：未知、1：男、2：女
                         var province = userInfo.province
@@ -65,7 +65,7 @@ class WxgamePlatform
                         success: function (res) {
                             var userInfo = res.userInfo
                             nickName = userInfo.nickName
-                            console.log("nickName " + nickName);
+                            //console.log("nickName " + nickName);
                             var avatarUrl = userInfo.avatarUrl
                             var gender = userInfo.gender //性别 0：未知、1：男、2：女
                             var province = userInfo.province

@@ -309,7 +309,7 @@ class LobbyView extends GameView
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         if (playerData.GetHistoryHighScore() > 0)
         {
-            GameMain.GetInstance().ShareAppMsgRank(playerData.GetHistoryHighScore());
+            GameMain.GetInstance().ShareAppMsgRank(playerData.GetHistoryHighScore(), true);
         }
         else
         {

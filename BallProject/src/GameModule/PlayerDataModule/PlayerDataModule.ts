@@ -127,7 +127,8 @@ class PlayerDataModule extends ModuleBase implements IPlayerDataModule
 
     public UploadHistoryHighScore()
     {
-        if(this.breakRecordHistoryHighScore)
+        //如果没有分（0分）也强制上报一下，让他上榜，否则不在榜上，后面排行榜显示很多问题
+        if(this.breakRecordHistoryHighScore || this.historyHighScore == 0)
         {
             this.breakRecordHistoryHighScore = false;
             if(platform.canUseCloudStorage())

@@ -18,6 +18,7 @@ var assets = {
   //icon: "openDataContext/assets/icon.png",
   box: "openDataContext/assets/panel.png",
   myPanel: "openDataContext/assets/myPanel.png",
+  otherPanel: "openDataContext/assets/otherPanel.png",
   //buttonNext: "openDataContext/assets/nextPage.png",
   //buttonLast: "openDataContext/assets/lastPage.png",
   //title: "openDataContext/assets/rankingtitle.png",
@@ -502,6 +503,12 @@ function loop()
     //console.log(`stageWidth :${sharedCanvas.width}   stageHeight:${sharedCanvas.height}`)
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, sharedCanvas.width, sharedCanvas.height);
+
+    context.font = "bold " + fontSize + "px Arial";
+    context.fillStyle = "#FFFFFF";
+    context.lineWidth = 4;
+    context.strokeStyle = 'black';
+
     drawRankPanel();
     renderAllDirty = false;
   }
@@ -516,6 +523,8 @@ function loop()
     var boxX = 0;
     var boxWidth = stageWidth / 3;
     var avatarWidth = boxWidth * 0.7;
+    if(avatarWidth > stageHeight * 2 / 5)
+      avatarWidth = stageHeight * 2 / 5;
     context.font = "bold " + fontSize + "px Arial";
     context.fillStyle = "#FFFFFF";
     context.lineWidth = 4;
@@ -527,7 +536,7 @@ function loop()
       for(var i = 0; i < 3; ++i)
       {
         //绘制底框
-        context.drawImage(assets.myPanel, boxX + i * boxWidth, 0, boxWidth, stageHeight);
+        context.drawImage(assets.otherPanel, boxX + i * boxWidth, 0, boxWidth, stageHeight);
       }
     }
     
@@ -538,11 +547,11 @@ function loop()
       //绘制底框
       if(data.isMe)
       {
-        context.drawImage(assets.box, boxX, 0, boxWidth, stageHeight);
+        context.drawImage(assets.myPanel, boxX, 0, boxWidth, stageHeight);
       }
       else
       {
-        context.drawImage(assets.myPanel, boxX, 0, boxWidth, stageHeight);
+        context.drawImage(assets.otherPanel, boxX, 0, boxWidth, stageHeight);
       }
 
       //绘制排名
@@ -692,7 +701,7 @@ function onGetFriendCloudStorage(data)
                     }
                 }
 
-                console.log(me + " " + myIndex);
+                //console.log(me + " " + myIndex);
                 var startIndex = 0;
                 //找到我附近的3个人
                 if(myIndex == totalGroup.length - 1)
