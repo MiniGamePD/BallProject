@@ -241,37 +241,37 @@ class BoxEmitter
 
 			platform.vibrateShort();
 
-			// var availableIndex = -1;
-			// for (var i = 0; i < this.hitSoundChannelArray.length; ++i)
-			// {
-			// 	if (this.hitSoundChannelArray[i] == null)
-			// 	{
-			// 		availableIndex = i;
-			// 		break;
-			// 	}
-			// }
+			var availableIndex = -1;
+			for (var i = 0; i < this.hitSoundChannelArray.length; ++i)
+			{
+				if (this.hitSoundChannelArray[i] == null)
+				{
+					availableIndex = i;
+					break;
+				}
+			}
 
-			// if (availableIndex >= 0)
-			// {
-			// 	var channel = this.hitSoundArray[availableIndex].play(0, 1);
-			// 	this.hitSoundChannelArray[availableIndex] = channel;
-			// 	channel.addEventListener(egret.Event.SOUND_COMPLETE, this.onHitSoundComplete, this);
-			// 	channel.volume = 0.5;
-			// }
-			// else
-			// {
-			// 	if (DEBUG)
-			// 	{
-			// 		console.log("No Available Hit Sound");
-			// 	}
-			// }
+			if (availableIndex >= 0)
+			{
+				var channel = this.hitSoundArray[availableIndex].play(0, 1);
+				this.hitSoundChannelArray[availableIndex] = channel;
+				channel.addEventListener(egret.Event.SOUND_COMPLETE, this.onHitSoundComplete, this);
+				channel.volume = 0.5;
+			}
+			else
+			{
+				if (DEBUG)
+				{
+					console.log("No Available Hit Sound");
+				}
+			}
 
-			// var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
-			// // var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
-			// if (soundChannel != null)
-			// {
-			// 	//soundChannel.volume = 0.5;
-			// }
+			var soundChannel = this.soundModule.PlaySound("hitBox_mp3", 1);
+			// var soundChannel = this.soundModule.PlaySound("PillRotation_mp3", 1);
+			if (soundChannel != null)
+			{
+				//soundChannel.volume = 0.5;
+			}
 		}
 	}
 
