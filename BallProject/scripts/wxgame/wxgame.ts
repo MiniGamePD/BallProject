@@ -40,11 +40,17 @@ export class WxgamePlugin implements plugins.Command {
                     content += ';window.dragonBones = dragonBones';
                 }
 
-                if (filename == 'libs/modules/physics/physics.js' || filename == 'libs/modules/pyhsics/physics.min.js') {
+                if (filename == 'libs/modules/physics/physics.js') 
+                {
                     content = content.replace("!function (a) { if (\"object\" == typeof exports)", 
                         "!function (a) { if (\"object\" == typeof exports){");
                     content = content.replace("module.exports = a();",
                         "var temp = a();\nmodule.exports = temp;\nwindow.p2 = temp;\n}");
+                }
+                else if(filename == 'libs/modules/physics/physics.min.js')
+                {
+                    content = content.replace("!function(t){if(\"object\"==typeof exports)module.exports=t();",
+                        "!function(t){if(\"object\"==typeof exports){var temp=t();module.exports=temp;window.p2=temp;}");
                 }
 
                 content = "var egret = window.egret;" + content;
