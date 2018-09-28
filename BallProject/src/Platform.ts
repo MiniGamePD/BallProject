@@ -10,7 +10,11 @@ declare interface Platform
 
     login(): Promise<any>;
 
-    PlayRewardAd(): Promise<any>;
+    PlayRewardAd(adId:string): Promise<any>;
+
+    PlayBannerAd(adId:string);
+
+    HideBannerAd();
 
     shareAppMsg1();
 
@@ -62,6 +66,10 @@ class DebugPlatform implements Platform
         }
         )
     }
+
+    PlayBannerAd(adId:string){}
+
+    HideBannerAd(){}
 
     public shareAppMsgRevive()
     {

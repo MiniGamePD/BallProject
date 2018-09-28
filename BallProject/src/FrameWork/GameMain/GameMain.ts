@@ -346,6 +346,27 @@ class GameMain implements IGameMain {
         })
 	}
 
+	public PlayRewardAd(adId:string, finishFunc:Function, cancleFunc:Function, thisObject: any)
+	{	
+		platform.PlayRewardAd(adId).then(
+			res => 
+			{
+				//if(DEBUG)
+					console.log("RewardAd Finish");
+					console.log(finishFunc);
+					
+				if(finishFunc != undefined && finishFunc != null)
+					finishFunc(thisObject);
+			}).catch(err => 
+				{
+					//if(DEBUG)
+						console.log("RewardAd Cancle");													
+						console.log(cancleFunc);
+					if(cancleFunc != undefined && cancleFunc != null)
+						cancleFunc(thisObject);
+				});
+	}
+
 	public ShareAppMsg()
 	{
 		this.mEgretMain.ShareAppMsg();

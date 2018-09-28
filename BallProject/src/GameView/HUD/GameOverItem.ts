@@ -113,7 +113,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         scoreNum.text = playerDataModule.GetCurMatchScore();
         this.score.addChild(scoreNum);
 
-        this.score.x = 100 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.score.x = 90 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.score.y = 110;
     }
 
@@ -137,7 +137,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         scoreNum.x = 100;
         scoreNum.size = 40;
         scoreNum.textAlign = "left";
-        scoreNum.text = playerDataModule.GetHistoryHighScore().toString();
+        scoreNum.text = playerDataModule.GetHistoryHighScore().toFixed(0);
         this.historyHighScore.addChild(scoreNum);
 
         this.historyHighScore.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
@@ -163,14 +163,14 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.coin.addChild(coinNum);
 
         this.coin.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
-        this.coin.y = 230;
+        this.coin.y = 220;
 
         this.addtionalCoin = new egret.TextField();
         this.addtionalCoin.x = coinNum.textWidth + coinNum.x + 20;
         this.addtionalCoin.size = 40;
         this.addtionalCoin.textAlign = "left";
         this.addtionalCoin.textColor = 0xF3C300;
-        this.addtionalCoin.text = "+ " + playerDataModule.GetCoinCurGame().toString();
+        this.addtionalCoin.text = "+ " + playerDataModule.GetCoinCurGame().toFixed(0);        
     }
 
     private CreateMoreCoin()
@@ -190,23 +190,19 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.moreCoinText.size = 30;
         this.moreCoinText.textAlign = "left";
         this.moreCoinText.verticalAlign = "center";
-        if(this.IsEnableShare())
+        
         {
             this.moreCoinText.textFlow = <Array<egret.ITextElement>>
             [
-                { text: "分享好友\n", style: { "textColor": 0xFFFFFF, "size": 30 } },
+                { text: "观看视频\n", style: { "textColor": 0xFFFFFF, "size": 30 } },
                 { text: "金币翻倍", style: { "textColor": 0xFFC900, "size": 30 } },
             ]
-        }
-        else
-        {
-            this.moreCoinText.text = "挺好玩的\n分享一波";
-        }
+        }  
         
         this.moreCoin.addChild(this.moreCoinText);
 
-        this.moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Share");
-        this.moreCoinIcon.x = 60 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
+        this.moreCoinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.shopItemVideoImg");
+        this.moreCoinIcon.x = 63 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.moreCoinIcon.width *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.moreCoinIcon.height *= GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         this.moreCoinIcon.anchorOffsetX = this.moreCoinIcon.width / 2;
@@ -214,7 +210,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.moreCoin.addChild(this.moreCoinIcon);
 
         this.moreCoin.x = GameMain.GetInstance().GetStageWidth() / 2 - buttonWidth / 2 - interval / 2;
-        this.moreCoin.y = 770;
+        this.moreCoin.y = 760;
     }
 
     private CreateLottery()
@@ -256,7 +252,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         // this.lottery.addChild(costText);
 
         this.lottery.x = GameMain.GetInstance().GetStageWidth() / 2 + buttonWidth / 2 + interval / 2;
-        this.lottery.y = 770;
+        this.lottery.y = 760;
     }
 
     private CreateGotoLobby()
@@ -266,7 +262,7 @@ class GameOverItem extends egret.DisplayObjectContainer
             this.OnClickBackToLobby, this);
 
         this.gotoLobby.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.gotoLobby.y = 930;
+        this.gotoLobby.y = 920;
     }
 
     private CreateShop()
@@ -309,8 +305,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         this.CreateScore();
         this.CreateHistoryHighScore();
-        this.CreateCoin();
-        this.CreateHintFinger();
+        this.CreateCoin();        
 
         this.rankMenu = platform.createOpenDataBitmap(GameMain.GetInstance().GetStageWidth() * 0.8,
             320);
@@ -322,7 +317,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.rankMenuBg.height = 370;
         Tools.SetAnchor(this.rankMenuBg, AnchorType.Center);
         this.rankMenuBg.x = GameMain.GetInstance().GetStageWidth() / 2;
-        this.rankMenuBg.y = 488;
+        this.rankMenuBg.y = 478;
 
         this.rankMenuTitle = new egret.TextField();
         this.rankMenuTitle.text = "好友排行榜";
@@ -352,6 +347,9 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.addChild(this.moreCoin);
         this.addChild(this.lottery);
         this.addChild(this.gotoLobby);
+
+        this.CreateHintFinger();
+
         this.addChild(this.rankMenuBg);
         if (this.rankMenu != null && this.rankMenu != undefined)
         {
@@ -373,6 +371,9 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         var soundEvent: PlaySoundEvent = new PlaySoundEvent("GameOver_mp3", 1);
         GameMain.GetInstance().DispatchEvent(soundEvent);
+
+        //显示广告
+        platform.PlayBannerAd('adunit-fc46ade034da151a');
     }
 
     public ShowReviveMenu()
@@ -386,24 +387,16 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.removeChildren();
     }
 
+    private playingRewardAd:boolean = false;
     private OnClickMoreCoin(callbackObj:any)
     {
-        var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
-        if(playerData.GetHistoryHighScore() > 0)
-        {
-            GameMain.GetInstance().ShareAppMsgRank(playerData.GetHistoryHighScore(), false);
-        } 
-        else
-        {
-            GameMain.GetInstance().ShareAppMsg();
-        }   
-            
-        if(callbackObj.IsEnableShare())
-        {
-            var timer = new egret.Timer(500,1);
-            timer.addEventListener(egret.TimerEvent.TIMER, callbackObj.OnRealAddMoreCoin, callbackObj);
-            timer.start();
-        }
+        if(callbackObj.playingRewardAd)
+            return;
+
+        callbackObj.playingRewardAd = true;
+
+        GameMain.GetInstance().PlayRewardAd('adunit-924684518cec6068', 
+            callbackObj.OnRealAddMoreCoin, callbackObj.OnCancleAddMoreCoinRewardAd, callbackObj);                            
     }
 
     private OnClickRankShowOff()
@@ -413,25 +406,34 @@ class GameOverItem extends egret.DisplayObjectContainer
         GameMain.GetInstance().ShareAppMsgRank(playerData.GetHistoryHighScore(), true);
     }
 
-    private OnRealAddMoreCoin()
+    private OnRealAddMoreCoin(callbackobj:any)
     {
-        this.coin.addChild(this.addtionalCoin);
-        this.moreCoinText.text = "额外收益\n已到账";
-        this.moreCoinText.textColor = 0x888888;
+        console.log("OnRealAddMoreCoin");
+        callbackobj.playingRewardAd = false;
+
+        callbackobj.coin.addChild(callbackobj.addtionalCoin);
+        callbackobj.moreCoinText.text = "额外收益\n已到账";
+        callbackobj.moreCoinText.textColor = 0x888888;
 
         var adaptor = GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
         var buttonWidth = GameMain.GetInstance().GetStageWidth() / 5 * 2 - 15 * adaptor;
 
-        Tools.DetachDisplayObjFromParent(this.moreCoinButton);
-        this.moreCoinButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x88888800, 6, 16, null, 
+        Tools.DetachDisplayObjFromParent(callbackobj.moreCoinButton);
+        callbackobj.moreCoinButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x88888800, 6, 16, null, 
             buttonWidth, 130, 0, 0, null, null);
-        this.moreCoin.addChild(this.moreCoinButton);
+        callbackobj.moreCoin.addChild(callbackobj.moreCoinButton);
 
         //Tools.DetachDisplayObjFromParent(this.moreCoinIcon);
 
         var playerData = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerData.AddCoin(playerData.GetCoinCurGame());
         playerData.Save();
+    }
+
+    private OnCancleAddMoreCoinRewardAd(callbackobj:any)
+    {
+        console.log("OnCancleAddMoreCoinRewardAd");
+        callbackobj.playingRewardAd = false;
     }
 
     private OnClickLottery(callbackobj: any)
@@ -452,6 +454,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         {
             egret.log("OnClickBackToLobby");
         }
+        platform.HideBannerAd();
         GameMain.GetInstance().SwitchGameState(GameStateType.Lobby);
     }
 

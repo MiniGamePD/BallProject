@@ -3,6 +3,8 @@
  */
 
 var nickName = "unknow";
+var bannerAd;
+var rewardAd;
 
 class WxgamePlatform 
 {
@@ -43,7 +45,7 @@ class WxgamePlatform
                     success: function (res) {
                         var userInfo = res.userInfo
                         nickName = userInfo.nickName
-                        //console.log("nickName " + nickName);
+                        console.log("nickName " + nickName);
                         var avatarUrl = userInfo.avatarUrl
                         var gender = userInfo.gender //性别 0：未知、1：男、2：女
                         var province = userInfo.province
@@ -80,49 +82,82 @@ class WxgamePlatform
           })
       })
     }
-
-    PlayRewardAd()
+    
+    PlayBannerAd(adId)
     {
-        let bannerad = wx.createBannerAd({
-          adUnitId:'adunit-fc46ade034da151a',
-          style:{left:0,top:0,width:1350}
+		if(bannerAd != undefined)
+		{
+            bannerAd.show().catch(err=>console.log("get banner add fail"));
+            return;
+        }	
+
+        bannerAd = wx.createBannerAd({
+          adUnitId:adId,
+          style:{left:0,top:0,width:640}
         })
 
-        bannerad.show().catch(err=>console.log("get banner add fail"));
+        var sysInfo = wx.getSystemInfoSync();
 
-        let RewardVedio = wx.createRewardedVideoAd({adUnitId:'adunit-924684518cec6068'});
+        bannerAd.onResize(res => {
+            console.log(res.width, res.height)
+            console.log(bannerAd.style.realWidth, bannerAd.style.realHeight)
+            bannerAd.style.top = sysInfo.screenHeight - bannerAd.style.realHeight;
+            bannerAd.style.left = (sysInfo.screenWidth - bannerAd.style.realWidth) / 2;
+            bannerAd.show().catch(err=>console.log("get banner add fail"));
+        });
+
+        bannerAd.style.width = sysInfo.screenWidth * 2 / 3;
+    }
+
+    HideBannerAd()
+    {
+        if(bannerAd != undefined)
+        {
+            bannerAd.hide();
+        }
+    }
+
+    PlayRewardAd(adId)
+    {     
+        if(rewardAd == undefined) 
+        {
+            rewardAd = wx.createRewardedVideoAd({adUnitId:adId});
+        }
 
         console.log("get reward vedio");
         return new Promise((resolve, reject)=>
         {
-            RewardVedio.show().catch(err=> {
-                RewardVedio.load().then(()=> RewardVedio.show()).catch(err=>{console.log("try twice ,but failed" + err)})
-            })
+            rewardAd.show().catch(err=> {
+                rewardAd.load().then(()=> 
+                rewardAd.show()).catch(err=>
+                    {
+                        console.log("try twice, but failed" + err);
+                        reject(false);
+                    })
+                })
 
-          RewardVedio.onError(err => {
+            rewardAd.onError(err => {
                 console.log("get ad " + err);
-              })
+                reject(false);
+                })
 
-          RewardVedio.onLoad(() => {
-                    console.log('激励视频 广告加载成功')
-                  })
+            rewardAd.onLoad(() => {
+                console.log('激励视频 广告加载成功')
+                })
 
 
-                  RewardVedio.onClose(res=> {
-                    if(res && res.isEnded || res == undefined)
-                    {
-                        //正常播放成功
-                        console.log("Play succeed");
-                        resolve(true);
-                    }
-                    else
-                    {
-                        console.log("cancle play");
-                        resolve(false);
-                    }
-                })      
-    
-        })
+            rewardAd.onClose(res=> {
+                if(res && res.isEnded || res == undefined)
+                {
+                    //正常播放成功
+                    resolve(true);
+                }
+                else
+                {
+                    reject(false);
+                }        
+                })
+        })    
     }
     // getUserInfo() {
     //     return new Promise((resolve, reject) => {
