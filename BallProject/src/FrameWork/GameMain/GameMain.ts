@@ -351,17 +351,16 @@ class GameMain implements IGameMain {
 		platform.PlayRewardAd(adId).then(
 			res => 
 			{
-				//if(DEBUG)
+				if(DEBUG)
 					console.log("RewardAd Finish");
-					console.log(finishFunc);
-					
+
 				if(finishFunc != undefined && finishFunc != null)
 					finishFunc(thisObject);
 			}).catch(err => 
 				{
-					//if(DEBUG)
-						console.log("RewardAd Cancle");													
-						console.log(cancleFunc);
+					if(DEBUG)
+						console.log("RewardAd Cancle");	
+																		
 					if(cancleFunc != undefined && cancleFunc != null)
 						cancleFunc(thisObject);
 				});

@@ -76,9 +76,9 @@ class GameOverItem extends egret.DisplayObjectContainer
         title.y = -160;
         this.reviveMenu.addChild(title);
 
-        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.ShareRevive", 
+        var reviveButton = new ShapeBgButton(ShapeBgType.RoundRect, 0x00FFFF00, 6, 22, "pd_res_json.AdRevive", 
             570 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth, 140,
-            296, 52, this.OnClickShapeRevive, this);
+            295, 78, this.OnClickShapeRevive, this);
         reviveButton.y = -20;
         this.reviveMenu.addChild(reviveButton);
 
@@ -373,11 +373,30 @@ class GameOverItem extends egret.DisplayObjectContainer
         GameMain.GetInstance().DispatchEvent(soundEvent);
 
         //显示广告
+       this.ShowBannerAd();
+    }
+
+    private hasShowBannerAd = false;
+    private ShowBannerAd()
+    {
+        if(this.hasShowBannerAd)
+            return;
+        this.hasShowBannerAd = true;
         platform.PlayBannerAd('adunit-fc46ade034da151a');
+    }
+
+    private HideBannerAd()
+    {
+        if(this.hasShowBannerAd)
+        {
+            this.hasShowBannerAd = false;
+            platform.HideBannerAd();
+        }
     }
 
     public ShowReviveMenu()
     {
+        this.ShowBannerAd();
         this.addChild(this.bgCover);
         this.addChild(this.reviveMenu);
     }
@@ -396,7 +415,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         callbackObj.playingRewardAd = true;
 
         GameMain.GetInstance().PlayRewardAd('adunit-924684518cec6068', 
-            callbackObj.OnRealAddMoreCoin, callbackObj.OnCancleAddMoreCoinRewardAd, callbackObj);                            
+            callbackObj.OnRealAddMoreCoin, callbackObj.OnCancleRewardAd, callbackObj);                            
     }
 
     private OnClickRankShowOff()
@@ -407,8 +426,7 @@ class GameOverItem extends egret.DisplayObjectContainer
     }
 
     private OnRealAddMoreCoin(callbackobj:any)
-    {
-        console.log("OnRealAddMoreCoin");
+    {       
         callbackobj.playingRewardAd = false;
 
         callbackobj.coin.addChild(callbackobj.addtionalCoin);
@@ -430,9 +448,8 @@ class GameOverItem extends egret.DisplayObjectContainer
         playerData.Save();
     }
 
-    private OnCancleAddMoreCoinRewardAd(callbackobj:any)
-    {
-        console.log("OnCancleAddMoreCoinRewardAd");
+    private OnCancleRewardAd(callbackobj:any)
+    {        
         callbackobj.playingRewardAd = false;
     }
 
@@ -448,13 +465,13 @@ class GameOverItem extends egret.DisplayObjectContainer
         callbackobj.addChild(callbackobj.shop);
     }
 
-    private OnClickBackToLobby(): void
+    private OnClickBackToLobby(callbackObj:any): void
     {
         if (DEBUG)
         {
             egret.log("OnClickBackToLobby");
         }
-        platform.HideBannerAd();
+        callbackObj.HideBannerAd();
         GameMain.GetInstance().SwitchGameState(GameStateType.Lobby);
     }
 
@@ -480,18 +497,21 @@ class GameOverItem extends egret.DisplayObjectContainer
         {
             egret.log("OnClickShapeRevive");
         }
+ 
+        if(callbackObj.playingRewardAd)
+            return;
 
-        GameMain.GetInstance().ShareAppMsgRevive();
+        callbackObj.playingRewardAd = true;
 
-        GameMain.GetInstance().hasRevive = true;
-
-        var timer = new egret.Timer(500,1);
-        timer.addEventListener(egret.TimerEvent.TIMER, callbackObj.OnRealRevive, callbackObj);
-        timer.start();
+        GameMain.GetInstance().PlayRewardAd('adunit-924684518cec6068', 
+            callbackObj.OnRealRevive, callbackObj.OnCancleRewardAd, callbackObj);  
     }
 
-    private OnRealRevive()
+    private OnRealRevive(callbackobj:any)
     {
+        callbackobj.playingRewardAd = false;
+        callbackobj.HideBannerAd();
+        GameMain.GetInstance().hasRevive = true;
         var event = new ReviveEvent();
         GameMain.GetInstance().DispatchEvent(event);
     }
@@ -505,8 +525,9 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     private OnReallyGameOverEvent()
     {
-        var result = this.IsEnableShare(); // 是否超过了指定的时间
-        if (result && GameMain.GetInstance().hasRevive == false)
+        //因为有了广告，所有都显示复活界面了
+        //var result = this.IsEnableShare(); // 是否超过了指定的时间
+        if (/*result && */GameMain.GetInstance().hasRevive == false)
         {
             this.ShowReviveMenu();
         }
