@@ -65,8 +65,8 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.reviveMenu.addChild(bg);
 
         var title = new egret.TextField();
-        title.text = "失败了";
-        title.size = 60;
+        title.text = "跪了 ´◔ ‸◔´";
+        title.size = 45;
         title.width = GameMain.GetInstance().GetStageWidth();
         title.height = 60;
         title.textAlign = "center";
@@ -150,16 +150,21 @@ class GameOverItem extends egret.DisplayObjectContainer
         var playerDataModule = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
 
         this.coin = new egret.DisplayObjectContainer();
-        var coinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
-        coinIcon.width = 40;
-        coinIcon.height = 40;
-        this.coin.addChild(coinIcon);
+        // var coinIcon = (<IResModule>GameMain.GetInstance().GetModule(ModuleType.RES)).CreateBitmapByName("pd_res_json.Coin");
+        // coinIcon.width = 40;
+        // coinIcon.height = 40;
+        // this.coin.addChild(coinIcon);
 
         var coinNum = new egret.TextField();
-        coinNum.x = 60;
+        coinNum.x = 0;
         coinNum.size = 40;
         coinNum.textAlign = "left";
-        coinNum.text = playerDataModule.GetCoinCurGame().toString();
+        coinNum.verticalAlign = "middle";
+        coinNum.textFlow = <Array<egret.ITextElement>>
+			[
+				{ text: "金币  ", style: { "textColor": 0xFDCF46, "size": 35 } },
+				{ text: playerDataModule.GetCoinCurGame().toFixed(0), style: { "textColor": 0xFFFFFF, "size": 35 } },
+			]        
         this.coin.addChild(coinNum);
 
         this.coin.x = 350 * GameMain.GetInstance().GetStageWidth() / Screen_StanderScreenWidth;
@@ -169,6 +174,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.addtionalCoin.x = coinNum.textWidth + coinNum.x + 20;
         this.addtionalCoin.size = 40;
         this.addtionalCoin.textAlign = "left";
+        this.addtionalCoin.verticalAlign = "middle";
         this.addtionalCoin.textColor = 0xF3C300;
         this.addtionalCoin.text = "+ " + playerDataModule.GetCoinCurGame().toFixed(0);        
     }
@@ -367,10 +373,7 @@ class GameOverItem extends egret.DisplayObjectContainer
         //保存一下
         var playerdata = <IPlayerDataModule>GameMain.GetInstance().GetModule(ModuleType.PLAYER_DATA);
         playerdata.Save();
-        playerdata.UploadHistoryHighScore();
-
-        var soundEvent: PlaySoundEvent = new PlaySoundEvent("GameOver_mp3", 1);
-        GameMain.GetInstance().DispatchEvent(soundEvent);
+        playerdata.UploadHistoryHighScore();        
 
         //显示广告
        this.ShowBannerAd();
@@ -518,6 +521,9 @@ class GameOverItem extends egret.DisplayObjectContainer
 
     public OnGameOverEvent()
     {
+        var soundModule = <ISoundModule>GameMain.GetInstance().GetModule(ModuleType.SOUND);
+        soundModule.PlaySound("GameOver_mp3", 1);
+
         var timer = new egret.Timer(1000, 1);
         timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.OnReallyGameOverEvent, this);
         timer.start();
