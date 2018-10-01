@@ -67,7 +67,7 @@ class WxgamePlatform
                         success: function (res) {
                             var userInfo = res.userInfo
                             nickName = userInfo.nickName
-                            //console.log("nickName " + nickName);
+                            console.log("nickName " + nickName);
                             var avatarUrl = userInfo.avatarUrl
                             var gender = userInfo.gender //性别 0：未知、1：男、2：女
                             var province = userInfo.province
@@ -159,6 +159,33 @@ class WxgamePlatform
                 })
         })    
     }
+    
+    CreateUserInfoButton(imageUrl, styleLeft, styleTop, styleWidth, styleHeight, tapCallback)
+    {
+        let button = wx.createUserInfoButton({
+        type: 'image',
+        text: '获取用户信息',
+        image: imageUrl,
+        style:
+            {
+                left: styleLeft,
+                top: styleTop,
+                width: styleWidth,
+                height: styleHeight,
+                // lineHeight: 40,
+                // backgroundColor: '#ff0000',
+                // color: '#ffffff',
+                // textAlign: 'center',
+                // fontSize: 16,
+                // borderRadius: 4
+            }
+        })
+        button.onTap((res) => {
+            console.log(res);
+            tapCallback(res);
+        })
+    }
+    
     // getUserInfo() {
     //     return new Promise((resolve, reject) => {
             

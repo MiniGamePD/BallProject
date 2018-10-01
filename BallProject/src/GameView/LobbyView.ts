@@ -46,6 +46,13 @@ class LobbyView extends GameView
         GameMain.GetInstance().hasRevive = false;
 
         this.LoadConfig();
+
+        //platform.CreateUserInfoButton("resource/assets/Lobby_Login.png", 320, 568, 273, 86, this.OnTapLogin);
+    }
+
+    private OnTapLogin(res)
+    {
+        console.log("Ts:" + res);
     }
 
     public ReleaseView(): void 
@@ -325,7 +332,7 @@ class LobbyView extends GameView
     }
 
     private OnClickShop(callbackObj: any)
-    {
+    {        
         callbackObj.shop.OnOpenShop();
         callbackObj.addChild(callbackObj.shop);
     }

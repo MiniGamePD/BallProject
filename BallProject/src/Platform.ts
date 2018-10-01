@@ -45,6 +45,8 @@ declare interface Platform
     vibrateShort();
 
     renderGameOverRank(key:string);
+
+    CreateUserInfoButton(imageUrl:string, styleLeft:number, styleTop:number, styleWidth:number, styleHeight:number, tapCallbac:Function);
 }
 
 class DebugPlatform implements Platform 
@@ -147,6 +149,8 @@ class DebugPlatform implements Platform
     {
 
     }
+
+    CreateUserInfoButton(imageUrl:string, styleLeft:number, styleTop:number, styleWidth:number, styleHeight:number, tapCallbac:Function){}
 }
 
 if (!window.platform) 
