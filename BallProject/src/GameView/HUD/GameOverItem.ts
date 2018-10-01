@@ -157,7 +157,7 @@ class GameOverItem extends egret.DisplayObjectContainer
 
         var coinNum = new egret.TextField();
         coinNum.x = 0;
-        coinNum.size = 40;
+        coinNum.size = 35;
         coinNum.textAlign = "left";
         coinNum.verticalAlign = "middle";
         coinNum.textFlow = <Array<egret.ITextElement>>
@@ -171,12 +171,12 @@ class GameOverItem extends egret.DisplayObjectContainer
         this.coin.y = 220;
 
         this.addtionalCoin = new egret.TextField();
-        this.addtionalCoin.x = coinNum.textWidth + coinNum.x + 20;
-        this.addtionalCoin.size = 40;
+        this.addtionalCoin.x = coinNum.textWidth + coinNum.x;
+        this.addtionalCoin.size = 35;
         this.addtionalCoin.textAlign = "left";
         this.addtionalCoin.verticalAlign = "middle";
         this.addtionalCoin.textColor = 0xF3C300;
-        this.addtionalCoin.text = "+ " + playerDataModule.GetCoinCurGame().toFixed(0);        
+        this.addtionalCoin.text = " + " + playerDataModule.GetCoinCurGame().toFixed(0);        
     }
 
     private CreateMoreCoin()

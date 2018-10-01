@@ -142,8 +142,8 @@ class BallMatchView extends GameView
 			}
 			else if (evt.boxType == BoxType.LevelUp)
 			{
-                // var soundEvent = new PlaySoundEvent("LevelUp_mp3", 1)
-				// GameMain.GetInstance().DispatchEvent(soundEvent);
+                var soundEvent = new PlaySoundEvent("LevelUp_mp3", 1)
+				GameMain.GetInstance().DispatchEvent(soundEvent);
 				this.ShowTips("升级!射速提升", 0x59d61b);
 			}
             else if (evt.boxType == BoxType.Pause)
